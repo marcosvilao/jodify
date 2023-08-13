@@ -25,10 +25,10 @@ const createEvent = async (req, res) => {
         `;
 
         // Parsing event_Date in the format DD/MM/YYYY to YYYY-MM-DD
-        const [day, month, year] = event_Date.split('/');
-        const parsedDate = `${year}-${month}-${day}`;
+        // const [day, month, year] = event_Date.split('/');
+        // const parsedDate = `${year}-${month}-${day}`;
 
-        const values = [event_Title, event_Type, parsedDate, event_Location, ticket_Link, event_Image, event_Djs];
+        const values = [event_Title, event_Type, event_Date, event_Location, ticket_Link, event_Image, event_Djs];
 
         const result = await pool.query(query, values);
 
