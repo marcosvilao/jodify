@@ -2,6 +2,8 @@ const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
 
+require('dotenv').config()
+
 const eventRoutes = require('./routes/events.routes')
 
 const app = express();
@@ -20,4 +22,4 @@ app.use((err, req, res, next) => {
     })
 })
 
-app.listen(3000, () => console.log(`listening on port 3000`))
+app.listen(process.env.PORT, () => console.log(`listening on port ${process.env.PORT}`))
