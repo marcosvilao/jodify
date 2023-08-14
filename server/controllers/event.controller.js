@@ -22,7 +22,7 @@ const createEvent = async (req, res) => {
 
         // Assuming you have a PostgreSQL pool named 'pool'
         const query = `
-            INSERT INTO event(Event_title, Event_type, Event_date, Event_location, Ticket_link, Event_image, Event_djs, Event_city)
+            INSERT INTO event(event_title, event_type, event_date, event_location, ticket_link, event_image, event_djs, event_city)
             VALUES($1, $2, $3, $4, $5, $6, $7, $8)
             RETURNING id;
         `;
