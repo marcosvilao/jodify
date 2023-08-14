@@ -15,14 +15,14 @@ const getEvents = async (req, res, next) => {
 
 const createEvent = async (req, res) => {
     try {
-        const {event_Title, event_Type, event_Date, event_Location, ticket_Link, event_Image, event_Djs } = req.body;
+        const {event_Title, event_Type, event_Date, event_Location, ticket_Link, event_Image, event_Djs, event_City } = req.body;
  
 
 
 
         // Assuming you have a PostgreSQL pool named 'pool'
         const query = `
-            INSERT INTO event(Event_title, Event_type, Event_date, Event_location, Ticket_link, Event_image, Event_djs)
+            INSERT INTO event(Event_title, Event_type, Event_date, Event_location, Ticket_link, Event_image, Event_djs, Event_city)
             VALUES($1, $2, $3, $4, $5, $6, $7)
             RETURNING id;
         `;
@@ -31,7 +31,7 @@ const createEvent = async (req, res) => {
         // const [day, month, year] = event_Date.split('/');
         // const parsedDate = `${year}-${month}-${day}`;
 
-        const values = [event_Title, event_Type, event_Date, event_Location, ticket_Link, event_Image, event_Djs];
+        const values = [event_Title, event_Type, event_Date, event_Location, ticket_Link, event_Image, event_Djs, event_City];
 
         const result = await pool.query(query, values);
 
