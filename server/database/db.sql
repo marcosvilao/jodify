@@ -11,3 +11,9 @@ CREATE TABLE event (
     event_Djs VARCHAR(255)[] NOT NULL
 );
 
+CREATE TABLE city (
+    id SERIAL PRIMARY KEY,
+    eventID SERIAL PRIMARY KEY
+
+);
+

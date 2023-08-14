@@ -1,6 +1,10 @@
 const puppeteer = require('puppeteer');
-const pool = require('../server/db')
+const { Client } = require('pg');
+const {configDB} = require('../config')
+const fs = require('fs')
+const path = require('path')
 
+const dbName = 'verceldb'
 const eventscrap = async () => {
   const browser = await puppeteer.launch();
 try {
@@ -63,6 +67,7 @@ const buildEvents = async () => {
       event_Title.substring(event_Title.indexOf('(') + 1, event_Title.indexOf(')')).trim() : '';
     const ticket_Link = event.hrefValue;
     const event_Image = '';
+    const event_City = 'Buenos Aires'
 
     let event_Djs = event_Title.split(' + ')
       .map(dj => dj.trim())
@@ -87,56 +92,67 @@ const buildEvents = async () => {
       event_Location,
       ticket_Link,
       event_Image,
-      event_Djs
+      event_Djs,
+      event_City
     };
   });
   console.log(buildEvents.length)
   return builtEvents;
 };
 
-
-
-
-
 const insertBuiltEvents = async () => {
+  let cwd = path.join(__dirname);
+  console.log('hi');
+  const filePathSQLWrite = cwd + '/assets/imports/eventCreate_Scripts.txt';
+  let writeSQL = fs.createWriteStream(filePathSQLWrite);
   try {
+    const config = configDB();
     const builtEvents = await buildEvents(); // Replace this with your logic to build events
+    console.log('Database configuration:', config);
+    jodifyDB = new Client({
+      ...config,
+      database: dbName,
+    });
+
+    console.log('Connecting to the database...', jodifyDB);
+
+    await jodifyDB.connect();
+    console.log('Connection with the database established.');
 
     for (const eventData of builtEvents) {
       const query = `
         INSERT INTO event (
-            event_Title,
-            event_Type,
-            event_Date,
-            event_Location,
-            ticket_Link,
-            event_Image,
-            event_Djs
+          "event_title",
+          "event_type",
+          "event_date",
+          "event_location",
+          "ticket_link",
+          "event_image",
+          "event_djs",
+          "event_city"
         )
         VALUES (
-            $1, $2, $3, $4, $5, $6, $7
-        )
+          '${eventData.event_Title}',
+          '${eventData.event_Type}',
+          '${eventData.event_Date}',
+          '${eventData.event_Location}',
+          '${eventData.ticket_Link}',
+          '',
+          ARRAY[${eventData.event_Djs.map(dj => `'${dj}'`).join(', ')}],
+          '${eventData.event_City}'
+        );
       `;
 
-      const values = [
-        eventData.event_Title,
-        eventData.event_Type,
-        eventData.event_Date,
-        eventData.event_Location,
-        eventData.ticket_Link,
-        eventData.event_Image,
-        eventData.event_Djs
-      ];
-
-      const result = await pool.query(query, values);
-      console.log('Inserted data:', result.rowCount);
+      writeSQL.write(query + '\n');
     }
+
+    await jodifyDB.end();
   } catch (error) {
     console.error('Error inserting data:', error);
   }
 };
 
-// Call the function to insert built events
+
 insertBuiltEvents();
 
 
