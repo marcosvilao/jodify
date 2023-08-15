@@ -118,7 +118,7 @@ const searchEvent = async (req, res) => {
 
 const filterEvents = async (req, res) => {
     try {
-        const { date, city, type } = req.query;
+        const { date, city, type } = req.body;
         
         let query = "SELECT * FROM event WHERE 1=1";
         const values = [];
