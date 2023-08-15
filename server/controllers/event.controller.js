@@ -1,9 +1,9 @@
 const pool = require('../db')
 
-
 const getEvents = async (req, res, next) => {
     try {
         const allEvents = await pool.query('SELECT * from event')
+        console.log(allEvents.rows)
         if(allEvents.rows) res.status(200).json(allEvents.rows)
         else{
             res.status(404).send({message: 'Cannot receive events from Database, please try again'})
@@ -89,21 +89,23 @@ const deleteEvent = async (req, res) => {
 
 const searchEvent = async (req, res) => {
     try {
-        const searchQuery = req.query;
-        console.log(searchQuery)
+        const searchQuery = req.query.searchQuery;
 
         const query = `
         SELECT * FROM event
         WHERE event_title ILIKE $1
-        OR event_location ILIKE $1
-        OR $1 = ANY(event_djs);  -- Search within the array using ANY operator
+           OR event_location ILIKE $1
+           OR $1 = ANY(event_djs);
+        
     `;
 
         const values = [`%${searchQuery}%`]; // Using ILIKE for case-insensitive search
+        console.log(query, values)
 
         const result = await pool.query(query, values);
 
         const events = result.rows;
+        console.log(events)
 
         res.status(200).json({ events });
     } catch (error) {
