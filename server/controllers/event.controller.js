@@ -119,22 +119,26 @@ const filterEvents = async (req, res) => {
         let query = "SELECT * FROM event WHERE TRUE";
         const values = [];
 
+        let paramCount = 1; // Initialize parameter counter
+
         if (date) {
-          query += " AND event_date = $1";
+          query += ` AND event_date = $${paramCount}`;
           values.push(date);
+          paramCount++;
         } else {
           query += " AND (event_date IS NULL OR event_date = event_date)";
         }
 
         if (city) {
-          query += " AND event_city = $2";
+          query += ` AND event_city = $${paramCount}`;
           values.push(city);
+          paramCount++;
         } else {
           query += " AND (event_city IS NULL OR event_city = event_city)";
         }
 
         if (type) {
-          query += " AND event_type = $3";
+          query += ` AND event_type = $${paramCount}`;
           values.push(type);
         } else {
           query += " AND (event_type IS NULL OR event_type = event_type)";
@@ -152,6 +156,7 @@ const filterEvents = async (req, res) => {
         res.status(500).json({ error: "An error occurred while fetching events" });
     }
 };
+
 
 
 
