@@ -16,7 +16,8 @@
     "morgan": "^1.10.0",
     "path": "^0.12.7",
     "pg": "^8.11.2",
-    "puppeteer": "^21.0.3"
+    "puppeteer": "^21.0.3",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"

@@ -91,9 +91,38 @@ const deleteEvent = async (req, res) => {
     }
 };
 
+const searchEvent = async (req, res) => {
+    try {
+        const searchQuery = req.body.searchQuery;
+        console.log(searchQuery)
+
+        const query = `
+            SELECT * FROM event
+            WHERE event_title ILIKE $1
+            OR event_location ILIKE $1
+            OR event_djs ILIKE $1;
+        `;
+
+        const values = [`%${searchQuery}%`]; // Using ILIKE for case-insensitive search
+
+        const result = await pool.query(query, values);
+
+        const events = result.rows;
+
+        res.status(200).json({ events });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error searching for events' });
+    }
+};
+
+
+
+
 module.exports = {
     getEvents,
     createEvent,
     updateEvent,
-    deleteEvent
+    deleteEvent,
+    searchEvent
 }

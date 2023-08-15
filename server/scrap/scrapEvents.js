@@ -3,6 +3,8 @@ const { Client } = require('pg');
 const {configDB} = require('../config')
 const fs = require('fs')
 const path = require('path')
+const { v4: uuidv4 } = require('uuid');
+
 
 const dbName = 'verceldb'
 const eventscrap = async () => {
@@ -67,7 +69,7 @@ const buildEvents = async () => {
       event_Title.substring(event_Title.indexOf('(') + 1, event_Title.indexOf(')')).trim() : '';
     const ticket_Link = event.hrefValue;
     const event_Image = '';
-    const event_City = 'Buenos Aires'
+    const event_City = 'Bariloche'
 
     let event_Djs = event_Title.split(' + ')
       .map(dj => dj.trim())
@@ -119,19 +121,25 @@ const insertBuiltEvents = async () => {
     await jodifyDB.connect();
     console.log('Connection with the database established.');
 
+    
+
+
     for (const eventData of builtEvents) {
       const query = `
         INSERT INTO event (
-          "event_title",
-          "event_type",
-          "event_date",
-          "event_location",
-          "ticket_link",
-          "event_image",
-          "event_djs",
-          "event_city"
+          id,
+          event_title,
+          event_type,
+          event_date,
+          event_location,
+          ticket_link,
+          event_image,
+          event_djs,
+          event_city,
+          city_id
         )
         VALUES (
+          '${uuidv4()}',
           '${eventData.event_Title}',
           '${eventData.event_Type}',
           '${eventData.event_Date}',
@@ -139,7 +147,8 @@ const insertBuiltEvents = async () => {
           '${eventData.ticket_Link}',
           '',
           ARRAY[${eventData.event_Djs.map(dj => `'${dj}'`).join(', ')}],
-          '${eventData.event_City}'
+          '${eventData.event_City}',
+          '6268af73-1aea-4ad3-9e95-22d37e7f6458'
         );
       `;
 
@@ -149,6 +158,7 @@ const insertBuiltEvents = async () => {
     await jodifyDB.end();
   } catch (error) {
     console.error('Error inserting data:', error);
+    await jodifyDB.end();
   }
 };
 
