@@ -44,9 +44,6 @@ const createEvent = async (req, res) => {
     }
 };
 
-
-
-
 const updateEvent = async (req, res) => {
     try {
         const eventId = req.params.id; // Assuming 'id' is the parameter name
@@ -69,7 +66,6 @@ const updateEvent = async (req, res) => {
         res.status(500).json({ message: 'Error updating event' });
     }
 };
-
 
 const deleteEvent = async (req, res) => {
     try {
@@ -119,37 +115,44 @@ const searchEvent = async (req, res) => {
 const filterEvents = async (req, res) => {
     try {
         const { date, city, type } = req.query;
-        
-        let query = "SELECT * FROM event WHERE 1=1";
+
+        let query = "SELECT * FROM event WHERE TRUE";
         const values = [];
-        
+
         if (date) {
           query += " AND event_date = $1";
           values.push(date);
+        } else {
+          query += " AND (event_date IS NULL OR event_date = event_date)";
         }
-        
+
         if (city) {
           query += " AND event_city = $2";
           values.push(city);
+        } else {
+          query += " AND (event_city IS NULL OR event_city = event_city)";
         }
-        
+
         if (type) {
           query += " AND event_type = $3";
           values.push(type);
+        } else {
+          query += " AND (event_type IS NULL OR event_type = event_type)";
         }
 
         console.log(query);
         console.log(values);
-        
+
         const result = await pool.query(query, values);
         const events = result.rows;
-        
+
         res.json(events);
-      } catch (err) {
+    } catch (err) {
         console.error("Error fetching events:", err);
         res.status(500).json({ error: "An error occurred while fetching events" });
-      }
+    }
 };
+
 
 
 
