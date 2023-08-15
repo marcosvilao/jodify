@@ -3,6 +3,39 @@ const pool = require('../db')
 
 const getEvents = async (req, res, next) => {
     try {
+
+        const searchQuery = req.query.searchQuery;
+
+        if (req.query) {
+
+            if(searchQuery){
+
+                await searchEvent(req, res, next);
+
+            } else {
+
+                const { date, city, type } = req.query;
+
+                if (date || city || type) {
+
+                    await filterEvents(req, res, next);
+
+                }
+        }
+            
+        }  else {
+
+                await getEvent(req, res, next);
+            }
+        
+    } catch (error) {
+        console.error("Error handling events:", error);
+        res.status(500).json({ error: "An error occurred while handling events" });
+    }
+}
+
+const getEvent = async (req, res, next) => {
+    try {
         const allEvents = await pool.query('SELECT * from event')
         if(allEvents.rows) res.status(200).json(allEvents.rows)
         else{
