@@ -120,7 +120,7 @@ const filterEvents = async (req, res) => {
     try {
         const { date, city, type } = req.query;
         
-        let query = "SELECT * FROM events WHERE 1=1";
+        let query = "SELECT * FROM event WHERE 1=1";
         const values = [];
         
         if (date) {
