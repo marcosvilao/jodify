@@ -10,8 +10,8 @@ const getEvents = async (req, res, next) => {
 
             if(searchQuery){
 
-                const searchEvents = await searchEvent(req, res, next);
-
+                const searchEvents = await searchEvent(searchQuery);
+                console.log(searchEvent)
                 if(searchEvents){
 
                     res.status(200).json(searchEvents) 
@@ -27,7 +27,7 @@ const getEvents = async (req, res, next) => {
 
                 if (date || city || type) {
 
-                    const filterEvent = await filterEvents(req, res, next)
+                    const filterEvent = await filterEvents(date, city, type)
 
                     if(filterEvent){
 
@@ -148,11 +148,8 @@ const deleteEvent = async (req, res) => {
     }
 };
 
-const searchEvent = async (req, res, next) => {
+const searchEvent = async (search) => {
     try {
-        const searchQuery = req.query;
-        console.log(searchQuery)
-
         const query = `
         SELECT * FROM event
         WHERE event_title ILIKE $1
@@ -160,7 +157,7 @@ const searchEvent = async (req, res, next) => {
         OR $1 = ANY(event_djs);  -- Search within the array using ANY operator
     `;
 
-        const values = [`%${searchQuery}%`]; // Using ILIKE for case-insensitive search
+        const values = [`%${search}%`];
 
         const result = await pool.query(query, values);
 
@@ -173,10 +170,8 @@ const searchEvent = async (req, res, next) => {
     }
 };
 
-const filterEvents = async (req, res, next) => {
+const filterEvents = async (date, city, type) => {
     try {
-        const { date, city, type } = req.query;
-
         let query = "SELECT * FROM event WHERE TRUE";
         const values = [];
 
