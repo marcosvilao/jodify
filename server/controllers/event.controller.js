@@ -137,6 +137,8 @@ const filterEvents = async (req, res) => {
           query += " AND event_type = $3";
           values.push(type);
         }
+
+        console.log(query)
         
         const result = await pool.query(query, values);
         const events = result.rows;
