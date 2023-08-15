@@ -97,11 +97,11 @@ const searchEvent = async (req, res) => {
         console.log(searchQuery)
 
         const query = `
-            SELECT * FROM event
-            WHERE event_title ILIKE $1
-            OR event_location ILIKE $1
-            OR event_djs ILIKE $1;
-        `;
+        SELECT * FROM event
+        WHERE event_title ILIKE $1
+        OR event_location ILIKE $1
+        OR $1 = ANY(event_djs);  -- Search within the array using ANY operator
+    `;
 
         const values = [`%${searchQuery}%`]; // Using ILIKE for case-insensitive search
 
