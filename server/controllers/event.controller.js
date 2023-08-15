@@ -3,6 +3,67 @@ const pool = require('../db')
 
 const getEvents = async (req, res, next) => {
     try {
+
+        const searchQuery = req.query.searchQuery;
+
+        if (req.query) {
+
+            if(searchQuery){
+
+                const searchEvents = await searchEvent(searchQuery);
+                console.log(searchEvent)
+                if(searchEvents){
+
+                    res.status(200).json(searchEvents) 
+
+                 } else {
+
+                     res.status(404).send({message: 'Cannot receive events from Database, please try with another filter'})
+
+                 }
+            } else {
+
+                const { date, city, type } = req.query;
+
+                if (date || city || type) {
+
+                    const filterEvent = await filterEvents(date, city, type)
+
+                    if(filterEvent){
+
+                       res.status(200).json(filterEvent) 
+
+                    } else {
+
+                        res.status(404).send({message: 'Cannot receive events from Database, please try with another filter'})
+
+                    }
+                }
+        }
+            
+        }  else {
+
+                const events = await getEvent(req, res, next);
+
+                if (events) {
+
+                    res.status(200).json(events)
+
+                } else {
+
+                    res.status(404).send({message: 'Cannot receive events from Database, please try with another filter'})
+
+                }
+            }
+        
+    } catch (error) {
+        console.error("Error handling events:", error);
+        res.status(500).json({ error: "An error occurred while handling events" });
+    }
+}
+
+const getEvent = async (req, res, next) => {
+    try {
         const allEvents = await pool.query('SELECT * from event')
         if(allEvents.rows) res.status(200).json(allEvents.rows)
         else{
@@ -87,11 +148,8 @@ const deleteEvent = async (req, res) => {
     }
 };
 
-const searchEvent = async (req, res) => {
+const searchEvent = async (search) => {
     try {
-        const searchQuery = req.query;
-        console.log(searchQuery)
-
         const query = `
         SELECT * FROM event
         WHERE event_title ILIKE $1
@@ -99,23 +157,21 @@ const searchEvent = async (req, res) => {
         OR $1 = ANY(event_djs);  -- Search within the array using ANY operator
     `;
 
-        const values = [`%${searchQuery}%`]; // Using ILIKE for case-insensitive search
+        const values = [`%${search}%`];
 
         const result = await pool.query(query, values);
 
         const events = result.rows;
 
-        res.status(200).json({ events });
+        return events
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error searching for events' });
     }
 };
 
-const filterEvents = async (req, res) => {
+const filterEvents = async (date, city, type) => {
     try {
-        const { date, city, type } = req.query;
-
         let query = "SELECT * FROM event WHERE TRUE";
         const values = [];
 
@@ -150,7 +206,7 @@ const filterEvents = async (req, res) => {
         const result = await pool.query(query, values);
         const events = result.rows;
 
-        res.json(events);
+        return events
     } catch (err) {
         console.error("Error fetching events:", err);
         res.status(500).json({ error: "An error occurred while fetching events" });
