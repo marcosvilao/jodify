@@ -10,22 +10,37 @@ const getEvents = async (req, res, next) => {
 
             if(searchQuery){
 
-                await searchEvent(req, res, next);
-
+                const searchEvents = await searchEvent(req, res, next);
+                if(searchEvents){
+                    res.status(200).json(searchEvents) 
+                 } else {
+                     res.status(404).send({message: 'Cannot receive events from Database, please try with another filter'})
+                 }
             } else {
 
                 const { date, city, type } = req.query;
 
                 if (date || city || type) {
 
-                    await filterEvents(req, res, next);
+                    const filterEvent = await filterEvents(req, res, next);
+                    if(filterEvent){
+                       res.status(200).json(filterEvent) 
+                    } else {
+                        res.status(404).send({message: 'Cannot receive events from Database, please try with another filter'})
+                    }
+                    
 
                 }
         }
             
         }  else {
 
-                await getEvent(req, res, next);
+                const events = await getEvent(req, res, next);
+                if (events) {
+                    res.status(200).json(events)
+                } else {
+                    res.status(404).send({message: 'Cannot receive events from Database, please try with another filter'})
+                }
             }
         
     } catch (error) {
