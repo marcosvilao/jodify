@@ -116,6 +116,38 @@ const searchEvent = async (req, res) => {
     }
 };
 
+const filterEvents = async (req, res) => {
+    try {
+        const { date, city, type } = req.query;
+        
+        let query = "SELECT * FROM events WHERE 1=1";
+        const values = [];
+        
+        if (date) {
+          query += " AND event_date = $1";
+          values.push(date);
+        }
+        
+        if (city) {
+          query += " AND event_city = $2";
+          values.push(city);
+        }
+        
+        if (type) {
+          query += " AND event_type = $3";
+          values.push(type);
+        }
+        
+        const result = await pool.query(query, values);
+        const events = result.rows;
+        
+        res.json(events);
+      } catch (err) {
+        console.error("Error fetching events:", err);
+        res.status(500).json({ error: "An error occurred while fetching events" });
+      }
+    }
+
 
 
 
@@ -124,5 +156,6 @@ module.exports = {
     createEvent,
     updateEvent,
     deleteEvent,
-    searchEvent
+    searchEvent,
+    filterEvents
 }

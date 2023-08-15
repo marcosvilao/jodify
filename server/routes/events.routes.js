@@ -1,12 +1,14 @@
 const {Router} = require('express')
 
-const {getEvents, createEvent, updateEvent, deleteEvent, searchEvent} = require('../controllers/event.controller')
+const {getEvents, createEvent, updateEvent, deleteEvent, searchEvent, filterEvents} = require('../controllers/event.controller')
 
 const router = Router()
 
 router.get('/events', getEvents)
 
 router.get('/events/search', searchEvent)
+
+router.get('/events/filters', filterEvents)
 
 router.post('/events', createEvent)
 
