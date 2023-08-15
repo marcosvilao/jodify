@@ -93,7 +93,7 @@ const deleteEvent = async (req, res) => {
 
 const searchEvent = async (req, res) => {
     try {
-        const searchQuery = req.body.searchQuery;
+        const searchQuery = req.query;
         console.log(searchQuery)
 
         const query = `
@@ -118,7 +118,7 @@ const searchEvent = async (req, res) => {
 
 const filterEvents = async (req, res) => {
     try {
-        const { date, city, type } = req.body;
+        const { date, city, type } = req.query;
         
         let query = "SELECT * FROM event WHERE 1=1";
         const values = [];
@@ -138,7 +138,8 @@ const filterEvents = async (req, res) => {
           values.push(type);
         }
 
-        console.log(query)
+        console.log(query);
+        console.log(values);
         
         const result = await pool.query(query, values);
         const events = result.rows;
@@ -148,7 +149,8 @@ const filterEvents = async (req, res) => {
         console.error("Error fetching events:", err);
         res.status(500).json({ error: "An error occurred while fetching events" });
       }
-    }
+};
+
 
 
 
