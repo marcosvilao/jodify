@@ -166,7 +166,7 @@ const searchEvent = async (req, res, next) => {
 
         const events = result.rows;
 
-        res.status(200).json({ events });
+        return events
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error searching for events' });
