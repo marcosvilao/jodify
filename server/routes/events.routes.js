@@ -1,8 +1,15 @@
 const {Router} = require('express')
-
+const session = require('express-session');
+const passport = require('passport');
 const {getEvents, createEvent, updateEvent, deleteEvent, searchEvent, filterEvents} = require('../controllers/event.controller')
+const {getCities} = require('../controllers/city.controller')
+const {createUser, verifyUser} = require('../controllers/user.controller')
+const {checkAdmin} = require('../middlewares/authMiddleware'); // Replace with the correct path
+const {getTypes} = require ('../controllers/type.controller')
 
 const router = Router()
+
+//events
 
 router.get('/events', getEvents)
 
@@ -10,10 +17,40 @@ router.get('/events/search', searchEvent)
 
 router.get('/events/filters', filterEvents)
 
-router.post('/events', createEvent)
+router.post('/events', checkAdmin, createEvent)
 
-router.put('/events/:id', updateEvent)
+router.put('/events/:id', checkAdmin, updateEvent)
 
-router.delete('/events', deleteEvent)
+router.delete('/events', checkAdmin, deleteEvent)
+
+//users
+
+// router.post('/register', createUser)
+
+// router.get('/login', (req,res) => {
+//     res.render("login")
+// })
+
+
+// router.post('/login', passport.authenticate('local', {
+//     successRedirect: '/events',
+//     failureRedirect: '/login',
+//     failureMessage: true
+// }));
+
+
+//cities
+
+router.get('/cities', getCities)
+
+
+//tpyes
+
+router.get('/types', getTypes)
+
+
+
+
+
 
 module.exports = router
