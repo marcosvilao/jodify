@@ -1,11 +1,11 @@
 const express = require('express')
-const passport = require('passport');
+// const passport = require('passport');
 const morgan = require('morgan')
 const cors = require('cors')
-const session = require('express-session')
-const FileStore = require('session-file-store')(session)
-const {v4: uuidv4} = require('uuid')
-const passportConfig = require('./passport-config');
+// const session = require('express-session')
+// const FileStore = require('session-file-store')(session)
+// const {v4: uuidv4} = require('uuid')
+// const passportConfig = require('./passport-config');
 const flash = require('express-flash');
 const path = require('path');
 const bodyParser = require('body-parser')
@@ -51,4 +51,4 @@ app.use((err, req, res, next) => {
     })
 })
 
-app.listen(process.env.PORT, () => console.log(`listening on port ${process.env.PORT}`))
+app.listen(3001, () => console.log(`listening on port 3001`))
