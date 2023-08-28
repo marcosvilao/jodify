@@ -2,16 +2,43 @@ const pool = require('../db')
 
 const getEvents = async (req, res, next) => {
     try {
-        const allEvents = await pool.query('SELECT * from event')
-        console.log(allEvents.rows)
-        if(allEvents.rows) res.status(200).json(allEvents.rows)
-        else{
-            res.status(404).send({message: 'Cannot receive events from Database, please try again'})
+        const allEvents = await pool.query('SELECT * from event');
+        if (!allEvents.rows) {
+            res.status(404).send({ message: 'Cannot receive events from Database, please try again' });
+            return;
+        }
+
+        // Create an array to hold the grouped events
+        const groupedEventsArray = [];
+
+        // Iterate through each event and group them by event_date
+        const groupedEvents = {};
+        allEvents.rows.forEach(event => {
+            const eventDate = event.event_date;
+            if (!groupedEvents[eventDate]) {
+                groupedEvents[eventDate] = [];
             }
+            groupedEvents[eventDate].push(event);
+        });
+
+        // Convert the groupedEvents object into an array of objects
+        for (const date in groupedEvents) {
+            if (groupedEvents.hasOwnProperty(date)) {
+                const obj = {};
+                obj[date] = groupedEvents[date];
+                groupedEventsArray.push(obj);
+            }
+        }
+
+        console.log('events MOTHERFUCKER')
+
+        res.status(200).json(groupedEventsArray);
     } catch (error) {
-        next(error)
+        next(error);
     }
-}
+};
+
+
 
 const createEvent = async (req, res) => {
     try {
@@ -96,23 +123,36 @@ const searchEvent = async (req, res) => {
         WHERE event_title ILIKE $1
            OR event_location ILIKE $1
            OR $1 = ANY(event_djs);
-        
-    `;
+        `;
 
         const values = [`%${searchQuery}%`]; // Using ILIKE for case-insensitive search
-        console.log(query, values)
 
         const result = await pool.query(query, values);
 
         const events = result.rows;
-        console.log(events)
 
-        res.status(200).json({ events });
+        // Create an object to hold the grouped events
+        const groupedEvents = {};
+        
+        // Iterate through each event and group them by event_date
+        events.forEach(event => {
+            const eventDate = event.event_date;
+            if (!groupedEvents[eventDate]) {
+                groupedEvents[eventDate] = [];
+            }
+            groupedEvents[eventDate].push(event);
+        });
+
+        // Convert the groupedEvents object into an array of objects
+        const groupedEventsArray = Object.keys(groupedEvents).map(date => ({ [date]: groupedEvents[date] }));
+
+        res.status(200).json(groupedEventsArray);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error searching for events' });
     }
 };
+
 
 const filterEvents = async (req, res) => {
     try {
@@ -124,44 +164,52 @@ const filterEvents = async (req, res) => {
         let paramCount = 1; // Initialize parameter counter
 
         if (date) {
-          query += ` AND event_date = $${paramCount}`;
-          values.push(date);
-          paramCount++;
+            query += ` AND event_date = $${paramCount}`;
+            values.push(date);
+            paramCount++;
         } else {
-          query += " AND (event_date IS NULL OR event_date = event_date)";
+            query += " AND (event_date IS NULL OR event_date = event_date)";
         }
 
         if (city) {
-          query += ` AND event_city = $${paramCount}`;
-          values.push(city);
-          paramCount++;
+            query += ` AND city_id = $${paramCount}`;
+            values.push(city);
+            paramCount++;
         } else {
-          query += " AND (event_city IS NULL OR event_city = event_city)";
+            query += " AND (city_id IS NULL OR city_id = city_id)";
         }
 
         if (type) {
-          query += ` AND event_type = $${paramCount}`;
-          values.push(type);
+            query += ` AND event_type = $${paramCount}`;
+            values.push(type);
         } else {
-          query += " AND (event_type IS NULL OR event_type = event_type)";
+            query += " AND (event_type IS NULL OR event_type = event_type)";
         }
-
-        console.log(query);
-        console.log(values);
 
         const result = await pool.query(query, values);
         const events = result.rows;
 
-        res.json(events);
-    } catch (err) {
-        console.error("Error fetching events:", err);
+        // Create an object to hold the grouped events
+        const groupedEvents = {};
+
+        // Iterate through each event and group them by event_date
+        events.forEach(event => {
+            const eventDate = event.event_date;
+            if (!groupedEvents[eventDate]) {
+                groupedEvents[eventDate] = [];
+            }
+            groupedEvents[eventDate].push(event);
+        });
+
+        // Convert the groupedEvents object into an array of objects
+        const groupedEventsArray = Object.keys(groupedEvents).map(date => ({ [date]: groupedEvents[date] }));
+
+        res.status(200).json(groupedEventsArray);
+    } catch (error) {
+        console.error("Error fetching events:", error);
         res.status(500).json({ error: "An error occurred while fetching events" });
     }
 };
-
-
-
-
 
 
 
