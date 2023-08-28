@@ -3,8 +3,8 @@ const session = require('express-session');
 const passport = require('passport');
 const {getEvents, createEvent, updateEvent, deleteEvent, searchEvent, filterEvents} = require('../controllers/event.controller')
 const {getCities} = require('../controllers/city.controller')
-const {createUser, verifyUser} = require('../controllers/user.controller')
-const {checkAdmin} = require('../middlewares/authMiddleware'); // Replace with the correct path
+// const {createUser, verifyUser} = require('../controllers/user.controller')
+// const {checkAdmin} = require('../middlewares/authMiddleware'); 
 const {getTypes} = require ('../controllers/type.controller')
 
 const router = Router()
@@ -17,11 +17,11 @@ router.get('/events/search', searchEvent)
 
 router.get('/events/filters', filterEvents)
 
-router.post('/events', checkAdmin, createEvent)
+router.post('/events', createEvent)
 
-router.put('/events/:id', checkAdmin, updateEvent)
+router.put('/events/:id', updateEvent)
 
-router.delete('/events', checkAdmin, deleteEvent)
+router.delete('/events', deleteEvent)
 
 //users
 
