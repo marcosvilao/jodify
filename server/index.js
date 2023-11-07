@@ -25,10 +25,6 @@ app.use(cors())
 app.use(morgan('dev'))
 app.use(express.json())
 
-app.use(cors({
-    origin: 'https://jodify-client-r8zewd66s-markanight-s-team.vercel.app'
-  }));
-
 // app.use(flash());
 // app.use(
 //     session({
