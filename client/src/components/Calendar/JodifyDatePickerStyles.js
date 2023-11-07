@@ -57,7 +57,7 @@ export const DateRange = styled(StaticDateRangePicker)`
         color: ${theme.jodify_colors._text_white};
     }
 
-    .css-1hbyad5-MuiTypography-root {
+    .css-1bzq5ag {
     font-family: 'Roboto Condensed', sans-serif;
     color: transparent;
     font-size: 20px;
