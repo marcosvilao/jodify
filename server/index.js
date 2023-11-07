@@ -46,7 +46,6 @@ app.use(eventRoutes)
 
 
 app.use((err, req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
     return res.json({
         message: err.message
     })
