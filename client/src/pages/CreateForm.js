@@ -82,7 +82,7 @@ function CreateForm() {
   const searchLinkData = async () => {
       setIsLoading(true)
     try {
-      const response = await fetch('http://localhost:3001/get-event-data', {
+      const response = await fetch('https://jodify.vercel.app/get-event-data', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -120,7 +120,7 @@ function CreateForm() {
   const createEvent = async () => {
     setIsLoading(true)
   try {
-    const response = await fetch('http://localhost:3001/events', {
+    const response = await fetch('https://jodify.vercel.app/events', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

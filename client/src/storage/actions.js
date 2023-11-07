@@ -12,7 +12,7 @@ export const setSearchData = (results) => ({
 
 export const fetchCities = async () => {
     try {
-        const response = await fetch(`http://localhost:3001/cities`);
+        const response = await fetch(`https://jodify.vercel.app/cities`);
         if (response.ok) {
           const data = await response.json();
           return data
@@ -26,7 +26,7 @@ export const fetchCities = async () => {
 
 export const fetchTypes = async () => {
   try {
-      const response = await fetch(`http://localhost:3001/types`);
+      const response = await fetch(`https://jodify.vercel.app/types`);
       if (response.ok) {
         const data = await response.json();
         return data
