@@ -5,11 +5,14 @@ const linkScrap = async (link) => {
     let browser
     try {
         browser = await puppeteer.launch({
-          args: [
-            '--disable-web-security',
-          ],
-          headless: false,
-        });;
+            headless: true,
+            devtools: true,
+            args: [
+                '--disable-web-security',
+                '--disable-features=IsolateOrigins',
+                '--disable-site-isolation-trials'
+            ]
+        })
     } catch (error) {
         console.log(error)
     }
