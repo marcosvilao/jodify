@@ -4,7 +4,12 @@ const puppeteer = require('puppeteer');
 const linkScrap = async (link) => {
     let browser
     try {
-        browser = await puppeteer.launch();
+        browser = await puppeteer.launch({
+          args: [
+            '--disable-web-security',
+          ],
+          headless: false,
+        });;
     } catch (error) {
         console.log(error)
     }
