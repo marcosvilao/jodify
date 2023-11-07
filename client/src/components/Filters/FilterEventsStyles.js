@@ -1,4 +1,6 @@
 import styled, { css } from 'styled-components'
+import theme from '../../jodifyStyles'
+import ListItemText from '@mui/material/ListItemText';
 
 export const Wrapper = styled.div`
     margin: 0 auto;
@@ -19,17 +21,46 @@ export const Box = styled.div`
 `
 
 export const FilterWrapper = styled.div`
-    display: flex;
-    height: 10px;
-    padding: 10px;
-    gap: 9px;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 5px;
-    border: 1px solid;
+    display: flex; /* Use inline-flex to make it size based on content */
+    background: ${theme.jodify_colors._background_gray};
+    background-clip: padding-box;
+    border-radius: ${theme.jodify_borders._md_border_radius};
     cursor: pointer;
+    position: relative;
+    height: 33px;
+    align-items: center;
+    justify-content: center;
 
 
+
+    ${props => props.$hastypes && css`
+    &:before {
+        content: '';
+        position: absolute;
+        top: -1px;
+        right: -1px;
+        bottom: -1px;
+        left: -1px;
+        /* width: 80px; */
+        background: ${theme.jodify_colors._gradient}; /* Adjust the gradient colors */
+        border-radius: ${theme.jodify_borders._md_border_radius};;
+        z-index: -1;
+        border: 1px transparent;
+        /* height: 40px; */
+    }
+    `}
+`
+
+export const FilterText = styled.p`
+    width: fit-content;
+    margin: 0px 10px 4px 10px;
+    color: ${theme.jodify_colors._text_white}
+
+    ${props => props.$hastypes && css`
+    width: fit-content;
+    margin: 0px 10px 4px 10px;
+    color: ${theme.jodify_colors._text_white}
+    `}
 `
 
 export const GridWrapper = styled.div`
@@ -88,6 +119,17 @@ export const DateWrapper = styled.div`
     }
 
 `;
+
+export const OkBtn = styled.span`
+    cursor: pointer;
+    &:hover{
+        color: ${theme.jodify_colors._icons_primary};
+    }
+`
+
+export const ItemTextList = styled(ListItemText)`
+font-family: 'Roboto Condensed', sans-serif
+`
 
 
 

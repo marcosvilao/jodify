@@ -1,43 +1,63 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { GridWrapper } from './gridStyles';
+import { StickyHeader2 } from '../../pages/HomePageStyles';
 import Event from '../Event-card/Event';
 import EventNotFound from '../Event-not-found/EventNotFound';
 import { useSelector } from 'react-redux';
-import Loader from '../Loader/Loader';
+import { useDispatch } from 'react-redux';
+import { setEvents } from '../../storage/searchSlice';
+import theme from '../../jodifyStyles';
+import SkeletonLoader from '../Loader/SkeletonLoader';
 
 function Grid() {
-  const searchData = useSelector((state) => state.search.events.events);
-  const filterData = useSelector((state) => state.search.events);
-  const [events, setEvents] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [shouldFetch, setShouldFetch] = useState(true)
-  console.log(events)
+  const [displayEvents, setDisplayEvents] = useState([])
+  const dispatch = useDispatch()
+  let events = useSelector(state => state.search.events)
+  const filteredEvents = useSelector(state => state.search.filterEvents)
+  const searchedEvents = useSelector(state => state.search.searchEvents)
+  const isFiltering = useSelector(state => state.search.isFiltering)
+  const isSearching = useSelector(state => state.search.isSearching)
+
   useEffect(() => {
-    if (searchData) {
-      console.log('Filtering by search bar');
-      setEvents(searchData);
-    } else if (filterData) {
-      console.log('Filtering by filters');
-      setEvents(filterData);
-    } else if (shouldFetch) {
-      console.log('Fetching from API');
-      fetch('https://jodify.vercel.app/events')
+      fetch('http://localhost:3001/events')
         .then(response => response.json())
         .then(data => {
-          setEvents(data); // Update the state with fetched events
-          setShouldFetch(false); // Mark that fetching has been done
+          dispatch(setEvents(data));
         })
         .catch(error => {
           console.error('Error fetching events:', error);
         });
     }
-  }, [searchData, filterData, shouldFetch]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  , []);
+  
+  useEffect(() => {
+    if(isFiltering && !isSearching){
+      setDisplayEvents(filteredEvents)
+    }
+    else if(!isFiltering && isSearching){
+      setDisplayEvents(searchedEvents)
+    }
+    else if(isFiltering && isSearching){
+      setDisplayEvents(searchedEvents)
+    } else {
+      setDisplayEvents(events)
+    }
+    
+  }, [isFiltering, events, filteredEvents, isSearching, searchedEvents])
 
+  const load = () => {
+    if(isFiltering || isSearching){
+      return <EventNotFound />
+    } else {
+      return <SkeletonLoader/>
+    }
+  }
   
 
   return (
-    <div style={{marginTop: '1rem'}}>
-    {events.length ? events.map(dateObj => {
+    <div style={{marginTop: '0rem'}}>
+    {displayEvents.length ? displayEvents.map(dateObj => {
       const date = new Date(Object.keys(dateObj));
 
       const eventArray = dateObj[Object.keys(dateObj)];
@@ -47,12 +67,21 @@ function Grid() {
         day: 'numeric',   // "24"
         month: 'long'     // "Agosto"
       };
-
+      
       const formattedDate = date.toLocaleDateString('es-AR', options);
+      
+      const capitalizedDay = formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1, formattedDate.indexOf(','));
+      const capitalizedMonth = formattedDate.charAt(formattedDate.lastIndexOf(' ') + 1).toUpperCase() + formattedDate.slice(formattedDate.lastIndexOf(' ') + 2);
+      
+      const finalFormattedDate = `${capitalizedDay}, ${formattedDate.slice(formattedDate.indexOf(' ') + 1, formattedDate.lastIndexOf(' '))} ${capitalizedMonth}`;
+
 
       return (
-        <div key={date.getTime()}>
-          <h3 style={{paddingLeft: '5%'}}>{formattedDate}</h3>
+        <div key={date.getTime()} style={{marginBottom : '20px'}}>
+          <StickyHeader2>
+            <h3 style={{paddingLeft: '16px', fontFamily: 'Roboto Condensed, sans-serif', fontSize: '25px', color: theme.jodify_colors._text_white}}>{finalFormattedDate}</h3>
+          </StickyHeader2>
+          
           <GridWrapper>
             {eventArray.map(event => (
               <Event event={event} key={event.id} />
@@ -61,7 +90,7 @@ function Grid() {
         </div>
       );
     }) : (
-        <EventNotFound />
+        load()
       )}
   </div>
     

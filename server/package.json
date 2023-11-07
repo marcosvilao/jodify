@@ -4,7 +4,7 @@
   "description": "App para jodas techno",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --ignore sessions/ index.js",
+    "servers": "nodemon --ignore sessions/ index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
