@@ -4,7 +4,7 @@ const puppeteer = require('puppeteer');
 const linkScrap = async (link) => {
     let browser
     try {
-        browser = await puppeteer.launch({ headless: true });
+        browser = await puppeteer.launch();
     } catch (error) {
         console.log(error)
     }
