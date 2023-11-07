@@ -1,7 +1,7 @@
 const {Router} = require('express')
 const session = require('express-session');
 const passport = require('passport');
-const {getEvents, createEvent, updateEvent, deleteEvent, searchEvent, filterEvents} = require('../controllers/event.controller')
+const {getEvents, createEvent, updateEvent, deleteEvent, searchEvent, filterEvents, scrapLink} = require('../controllers/event.controller')
 const {getCities} = require('../controllers/city.controller')
 // const {createUser, verifyUser} = require('../controllers/user.controller')
 // const {checkAdmin} = require('../middlewares/authMiddleware'); 
@@ -22,6 +22,8 @@ router.post('/events', createEvent)
 router.put('/events/:id', updateEvent)
 
 router.delete('/events', deleteEvent)
+
+router.post('/get-event-data', scrapLink)
 
 //users
 

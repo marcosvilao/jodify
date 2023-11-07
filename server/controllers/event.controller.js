@@ -1,8 +1,17 @@
 const pool = require('../db')
+const {linkScrap} = require('../Brain/getEventData')
+const { v4: uuidv4 } = require('uuid');
+const { types } = require('pg');
+
 
 const getEvents = async (req, res, next) => {
     try {
-        const allEvents = await pool.query('SELECT * from event');
+        const currentDate = new Date();
+        currentDate.setHours(0,0,0,0)
+        console.log(currentDate.toLocaleString())
+        const query = ('SELECT * FROM event WHERE event_date >= $1');
+        const values = [currentDate];
+        const allEvents = await pool.query(query, values);
         if (!allEvents.rows) {
             res.status(404).send({ message: 'Cannot receive events from Database, please try again' });
             return;
@@ -30,6 +39,20 @@ const getEvents = async (req, res, next) => {
             }
         }
 
+                // Sort the groupedEventsArray by date
+                groupedEventsArray.sort((a, b) => {
+                    // Extract the date keys
+                    const dateA = Object.keys(a)[0];
+                    const dateB = Object.keys(b)[0];
+                    
+                    // Convert the date strings to Date objects for comparison
+                    const dateObjA = new Date(dateA);
+                    const dateObjB = new Date(dateB);
+        
+                    // Compare the Date objects
+                    return dateObjA - dateObjB;
+                });
+
         console.log('events MOTHERFUCKER')
 
         res.status(200).json(groupedEventsArray);
@@ -39,26 +62,41 @@ const getEvents = async (req, res, next) => {
 };
 
 
-
 const createEvent = async (req, res) => {
     try {
-        const {event_Title, event_Type, event_Date, event_Location, ticket_Link, event_Image, event_Djs, event_City } = req.body;
+        const {event_title, event_type, event_date, event_location, ticket_link, event_image, event_djs, event_city } = req.body.event;
+
+        const formattedType = event_type.join(' | ');
+
+        const checkQuery = `
+            SELECT * FROM event
+        `;
+        let events = await pool.query(checkQuery);
+        events = events.rows
+        let eventsMap = new Map()
+        console.log(events[0].event_date.toLocaleDateString())
+        const date = new Date(event_date)
+        console.log(date.toLocaleDateString())
+        for (const event of events) {
+            if(eventsMap.get(`${event.event_title.toLowerCase().trim()}_${event.event_date.toLocaleDateString()}`)){
+                eventsMap.get(`${event.event_title.toLowerCase().trim()}_${event.event_date.toLocaleDateString()}`).push(event)
+            } else {
+                eventsMap.set(`${event.event_title.toLowerCase().trim()}_${event.event_date.toLocaleDateString()}`, [event])
+            }
+        }
+
+        if(eventsMap.get(`${event_title.toLowerCase().trim()}_${date.toLocaleDateString()}`)){
+            res.status(404).send({ message: 'Ya existe este evento'});
+            return
+        }
  
-
-
-
-        // Assuming you have a PostgreSQL pool named 'pool'
         const query = `
-            INSERT INTO event(event_title, event_type, event_date, event_location, ticket_link, event_image, event_djs, event_city)
-            VALUES($1, $2, $3, $4, $5, $6, $7, $8)
+            INSERT INTO event(id, event_title, event_type, event_date, event_location, ticket_link, event_image, event_djs, city_id)
+            VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)
             RETURNING id;
         `;
 
-        // Parsing event_Date in the format DD/MM/YYYY to YYYY-MM-DD
-        // const [day, month, year] = event_Date.split('/');
-        // const parsedDate = `${year}-${month}-${day}`;
-
-        const values = [event_Title, event_Type, event_Date, event_Location, ticket_Link, event_Image, event_Djs, event_City];
+        const values = [uuidv4(), event_title, formattedType, event_date, event_location, ticket_link, event_image, event_djs, event_city.id];
 
         const result = await pool.query(query, values);
 
@@ -122,6 +160,7 @@ const searchEvent = async (req, res) => {
         SELECT * FROM event
         WHERE event_title ILIKE $1
            OR event_location ILIKE $1
+           OR event_type ILIKE $1
            OR $1 = ANY(event_djs);
         `;
 
@@ -212,6 +251,17 @@ const filterEvents = async (req, res) => {
 };
 
 
+const scrapLink = async (req, res) => {
+    try {
+        const LINK = req.body.link
+        let data = await linkScrap(LINK)
+        res.status(200).json(data)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
 
 module.exports = {
     getEvents,
@@ -219,5 +269,6 @@ module.exports = {
     updateEvent,
     deleteEvent,
     searchEvent,
-    filterEvents
+    filterEvents,
+    scrapLink
 }

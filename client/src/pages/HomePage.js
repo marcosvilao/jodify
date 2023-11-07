@@ -1,16 +1,21 @@
 import React from 'react'
 import Title from '../components/Jodify-Title/Title.jsx'
-import Searchfield from '../components/Search-field/Searchfield.jsx'
 import Grid from '../components/Events-grid/Grid.jsx'
 import { GlobalContainer } from '../jodifyStyles.js'
-import Filters from '../components/Filters/Filters.jsx'
+import SearchEvents from '../components/Search-field/SearchEvents.jsx'
+import FilterEvents from '../components/Filters/FilterEvents.jsx'
+import { StickyHeader } from './HomePageStyles.js'
 
 function HomePage() {
   return (
     <GlobalContainer>
     <Title/>
-    <Searchfield/>
-    <Filters/>
+    <StickyHeader>
+      <div style={{marginTop: '16px'}}>
+    <SearchEvents/>
+    <FilterEvents/>
+      </div>
+    </StickyHeader>
     <Grid/>
     </GlobalContainer>
   )

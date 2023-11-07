@@ -3,15 +3,14 @@ import {ModalContainer, CloseButton} from './ModalStyles';
 import { GridWrapper } from '../Events-grid/gridStyles';
 import { TextWrapper, CityWrapper } from '../Filters/FilterStyles';
 
-const CityModal = ({ isOpen, onClose, data}) => {
+const TypeModal = ({ isOpen, onClose, data, setType}) => {
 
     return (
       <ModalContainer isOpen={isOpen} className="slide-modal">
-        i am sliding
         <GridWrapper>
-          {data?.map(city => (
-                <CityWrapper key={city.id || city.name} onClick={() => handleClick(city.city_id ? city.city_id : city.type_name)}>
-                    <TextWrapper key={city}>{city.city_name}</TextWrapper>
+          {data?.map(type => (
+                <CityWrapper key={type.name} onClick={() => setType(type.type_name)}>
+                    <TextWrapper key={type}>{type.type_name}</TextWrapper>
                 </CityWrapper>
           ))}
         </GridWrapper>
@@ -20,7 +19,7 @@ const CityModal = ({ isOpen, onClose, data}) => {
     );
   };
   
-  export default CityModal;
+  export default TypeModal;
 
 
 
