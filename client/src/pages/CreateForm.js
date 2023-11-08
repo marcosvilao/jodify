@@ -84,6 +84,7 @@ function CreateForm() {
     try {
       const response = await fetch('https://jodify.vercel.app/get-event-data', {
         method: 'POST',
+        mode: 'no-cors',
         headers: {
           'Content-Type': 'application/json',
         },

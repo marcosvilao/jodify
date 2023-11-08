@@ -2,7 +2,20 @@ const puppeteer = require('puppeteer');
 
 
 const linkScrap = async (link) => {
-    const browser = await puppeteer.launch({ headless: "new" });
+    let browser
+    try {
+        browser = await puppeteer.launch({
+            headless: true,
+            devtools: true,
+            args: [
+                '--disable-web-security',
+                '--disable-features=IsolateOrigins',
+                '--disable-site-isolation-trials'
+            ]
+        })
+    } catch (error) {
+        console.log(error)
+    }
     try {
       const page = await browser.newPage();
       const response = await page.goto(link);

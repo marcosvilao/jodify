@@ -20,5 +20,14 @@ export const BasicText = styled(TextField)({
     },
     '& .css-mnn31' : {
       color: theme.jodify_colors._text_white
-    }
+    },
+    '& .css-repss6': {
+      color: theme.jodify_colors._text_white,
+      borderBottomColor: theme.jodify_colors._text_white,
+    },
+    '& .css-5d9ji1': {
+      color: theme.jodify_colors._text_white,
+      borderBottomColor: theme.jodify_colors._text_white,
+    },
+
   })
