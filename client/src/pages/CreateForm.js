@@ -21,7 +21,7 @@ import AddIcon from '@mui/icons-material/Add';
 import theme from '../jodifyStyles';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 
 
@@ -38,6 +38,18 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 
 function CreateForm() {
+
+  const custom = createTheme({
+    palette: {
+      jodify: {
+        main: theme.jodify_colors._background_gray,
+        light: '#E9DB5D',
+        dark: '#A29415',
+        contrastText: theme.jodify_colors._text_white,
+      },
+    },
+  });
+
   const [isCreateButtonDisabled, setCreateButtonDisabled] = useState(true);
   const [errorMessage, setErrorMessage] = useState('')
   const [createSuccess, setCreateSuccess] = useState(false)
@@ -318,6 +330,9 @@ function CreateForm() {
 
   return (
     <div style={{backgroundColor: theme.jodify_colors._background_black, height: '100vh', width: '100%'}}>
+      <ThemeProvider theme={custom}>
+
+
       <Box
       component="form"
       sx={{
@@ -367,17 +382,7 @@ function CreateForm() {
 
 
         <Autocomplete
-          sx={{
-            '.css-38raov-MuiButtonBase-root-MuiChip-root .MuiChip-deleteIcon':{
-              color: theme.jodify_colors._text_white
-            },
-            '.css-12rx5qu':{
-              color: theme.jodify_colors._text_white
-            },
-            '.css-vubbuv': {
-              color: theme.jodify_colors._text_white
-            }
-          }}
+          ChipProps={{color: 'jodify'}}
           freeSolo
           multiple
           id="tags-standard"
@@ -398,17 +403,7 @@ function CreateForm() {
 
 
         <Autocomplete
-        sx={{
-          '.css-38raov-MuiButtonBase-root-MuiChip-root .MuiChip-deleteIcon':{
-            color: theme.jodify_colors._text_white
-          },
-          '.css-12rx5qu':{
-            color: theme.jodify_colors._text_white
-          },
-          '.css-vubbuv': {
-            color: theme.jodify_colors._text_white
-          }
-        }}
+        ChipProps={{color: 'jodify'}}
           id="tags-standard"
           freeSolo
           multiple
@@ -474,6 +469,7 @@ function CreateForm() {
                     {errorMessage !== '' ? errorMessage : 'Error, hablale a Marcos'}
                 </Alert>
             </Snackbar>
+            </ThemeProvider>
     </div>
     
   )
