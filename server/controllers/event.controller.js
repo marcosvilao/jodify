@@ -74,14 +74,16 @@ const createEvent = async (req, res) => {
         let events = await pool.query(checkQuery);
         events = events.rows
         let eventsMap = new Map()
-        console.log(events[0].event_date.toLocaleDateString())
+
         const date = new Date(event_date)
         console.log(date.toLocaleDateString())
-        for (const event of events) {
-            if(eventsMap.get(`${event.event_title.toLowerCase().trim()}_${event.event_date.toLocaleDateString()}`)){
-                eventsMap.get(`${event.event_title.toLowerCase().trim()}_${event.event_date.toLocaleDateString()}`).push(event)
-            } else {
-                eventsMap.set(`${event.event_title.toLowerCase().trim()}_${event.event_date.toLocaleDateString()}`, [event])
+        if(events.length > 0){
+            for (const event of events) {
+                if(eventsMap.get(`${event.event_title.toLowerCase().trim()}_${event.event_date.toLocaleDateString()}`)){
+                    eventsMap.get(`${event.event_title.toLowerCase().trim()}_${event.event_date.toLocaleDateString()}`).push(event)
+                } else {
+                    eventsMap.set(`${event.event_title.toLowerCase().trim()}_${event.event_date.toLocaleDateString()}`, [event])
+                }
             }
         }
 
