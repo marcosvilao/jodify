@@ -187,7 +187,7 @@ function CreateForm() {
 
   useEffect(() => {
     if (link.includes('http') || link.includes('passline') || link.includes('venti')) {
-      searchLinkData();
+      // searchLinkData();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [link]);
@@ -369,6 +369,12 @@ function CreateForm() {
           sx={{
             '.css-38raov-MuiButtonBase-root-MuiChip-root .MuiChip-deleteIcon':{
               color: theme.jodify_colors._text_white
+            },
+            '.css-12rx5qu':{
+              color: theme.jodify_colors._text_white
+            },
+            '.css-vubbuv': {
+              color: theme.jodify_colors._text_white
             }
           }}
           freeSolo
@@ -393,6 +399,12 @@ function CreateForm() {
         <Autocomplete
         sx={{
           '.css-38raov-MuiButtonBase-root-MuiChip-root .MuiChip-deleteIcon':{
+            color: theme.jodify_colors._text_white
+          },
+          '.css-12rx5qu':{
+            color: theme.jodify_colors._text_white
+          },
+          '.css-vubbuv': {
             color: theme.jodify_colors._text_white
           }
         }}
