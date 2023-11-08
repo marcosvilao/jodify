@@ -300,18 +300,30 @@ function CreateForm() {
   };
 
 
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
+    console.log('starting')
     const file = e.target.files[0];
     if (file) {
+      console.log('file exist')
       if (file.type.startsWith('image/')) {
-        const fileURL = URL.createObjectURL(file);
-
-        setEvent((prevEvent) => ({
-          ...prevEvent,
-          event_image: fileURL || ''
-        }))
+        const formData = new FormData();
+        formData.append('event_image', file);
+        console.log('entering endpoint')
+        const response = await fetch('http://localhost:3001/upload', {
+          method: 'POST',
+          body: formData,
+        });
+  
+        if (response.ok) {
+          const result = await response.json();
+          setEvent((prevEvent) => ({
+            ...prevEvent,
+            event_image: result.fileURL || '',
+          }));
+        } else {
+          console.error('Error uploading the file.');
+        }
       } else {
-        // Handle the case when a non-image file is selected
         console.error('Selected file is not an image.');
       }
     }
