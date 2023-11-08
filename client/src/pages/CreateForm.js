@@ -352,6 +352,7 @@ function CreateForm() {
           value={event.event_city}
           renderInput={(params) => (
             <BasicText
+              required
               {...params}
               variant="standard"
               label='Ciudad'
@@ -361,16 +362,22 @@ function CreateForm() {
         />
 
 
-        <BasicText label='Link de Venta' placeholder='Ingresa el link del evento' variant='standard' value={link} onChange={handleLinkChange}/>
+        <BasicText required label='Link de Venta' placeholder='Ingresa el link del evento' variant='standard' value={link} onChange={handleLinkChange}/>
 
 
-        <BasicText label='Imagen' placeholder='Ingresa la url de la imagen' variant='standard' value={event.event_image} onChange={handleImageChange}/>
+        <BasicText required label='Imagen' placeholder='Ingresa la url de la imagen' variant='standard' value={event.event_image} onChange={handleImageChange}/>
 
 
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DayPick 
               label="Fecha del evento"
-              slotProps={{ textField: { variant: 'standard' } }}
+              slotProps={{ 
+                textField: { 
+                  variant: 'standard', 
+                  required: true, 
+                  sx: {
+                color: theme.jodify_colors._text_white
+              }}}}
               value={eventDate}
               onChange={handleDateChange}
               format="DD/MM/YYYY"
@@ -378,7 +385,7 @@ function CreateForm() {
         </LocalizationProvider>
 
 
-        <BasicText label='Ubicación' placeholder='Ingresa el nombre del complejo o dirección' variant='standard' onChange={e => handleLocationChange(e)} value={event.event_location}/>
+        <BasicText required label='Ubicación' placeholder='Ingresa el nombre del complejo o dirección' variant='standard' onChange={e => handleLocationChange(e)} value={event.event_location}/>
 
 
         <Autocomplete
@@ -392,6 +399,7 @@ function CreateForm() {
           value={event.event_djs || []}
           renderInput={(params) => (
             <BasicText
+              required
               {...params}
               variant="standard"
               label='Line up'
@@ -413,6 +421,7 @@ function CreateForm() {
           value={event.event_type}
           renderInput={(params) => (
             <BasicText
+              required
               {...params}
               variant="standard"
               label='Géneros musicales'

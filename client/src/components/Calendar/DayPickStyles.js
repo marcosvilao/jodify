@@ -4,6 +4,7 @@ import theme from '../../jodifyStyles';
 
 export const DayPick = styled(DatePicker)({
   background: theme.jodify_colors._background_black,
+    color: theme.jodify_colors._text_white,
     display: 'flex',
     width: '90%',
     '& .MuiInput-underline:after': {
