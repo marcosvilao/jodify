@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { DayPick } from '../components/Calendar/DayPickStyles'
 import { Box } from '@mui/material'
 import { BasicText } from '../components/Fields/StyleFields'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -22,6 +21,7 @@ import theme from '../jodifyStyles';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { DateField } from '@mui/x-date-pickers/DateField';
 
 
 
@@ -39,6 +39,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
+
 function CreateForm() {
 
 
@@ -53,6 +54,7 @@ function CreateForm() {
       },
     },
   });
+
 
   const [isCreateButtonDisabled, setCreateButtonDisabled] = useState(true);
   const [errorMessage, setErrorMessage] = useState('')
@@ -80,7 +82,6 @@ function CreateForm() {
  
   useEffect(() => {
     // Check if any of the required properties are empty
-    console.log(event.event_image)
     const isRequiredEmpty =
       event.event_title === '' ||
       event.event_date === '' ||
@@ -341,13 +342,19 @@ function CreateForm() {
     )    
   }
 
-  let eventDate = event.event_date ? dayjs(event.event_date) : null;
 
   return (
-    <div style={{backgroundColor: theme.jodify_colors._background_black, height: '100vh', width: '100%'}}>
+    <div 
+    style={{
+      backgroundColor: theme.jodify_colors._background_gray, 
+      height: '95vh', 
+      width: '100%', 
+      marginTop: '5%', 
+      borderRadius:theme.jodify_borders._lg_border_radius,
+      border: '2px solid',
+      borderColor: theme.jodify_colors._text_white
+      }}>
       <ThemeProvider theme={custom}>
-
-
       <Box
       component="form"
       sx={{
@@ -384,19 +391,7 @@ function CreateForm() {
 
 
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DayPick 
-              label="Fecha del evento"
-              slotProps={{ 
-                textField: { 
-                  variant: 'standard', 
-                  required: true, 
-                  sx: {
-                color: theme.jodify_colors._text_white
-              }}}}
-              value={eventDate}
-              onChange={handleDateChange}
-              format="DD/MM/YYYY"
-            />
+          <DateField onChange={handleDateChange} required variant='standard' format='DD/MM/YYYY' label="Fecha del evento" color='jodify'/>
         </LocalizationProvider>
 
 
