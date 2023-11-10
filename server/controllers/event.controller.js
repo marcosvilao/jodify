@@ -2,7 +2,6 @@ const pool = require('../db')
 const {linkScrap} = require('../Brain/getEventData')
 const { v4: uuidv4 } = require('uuid');
 const { types } = require('pg');
-const { put } = require('@vercel/blob')
 
 
 const getEvents = async (req, res, next) => {
