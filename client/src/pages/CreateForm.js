@@ -20,8 +20,10 @@ import AddIcon from '@mui/icons-material/Add';
 import theme from '../jodifyStyles';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme, styled, ThemeProvider } from '@mui/material/styles';
 import { DateField } from '@mui/x-date-pickers/DateField';
+import {DayPick} from '../components/Calendar/DayPickStyles'
+
 
 
 
@@ -41,8 +43,6 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 
 function CreateForm() {
-
-
 
   const custom = createTheme({
     palette: {
@@ -342,6 +342,8 @@ function CreateForm() {
     )    
   }
 
+  let eventDate = event.event_date ? dayjs(event.event_date) : null;
+
 
   return (
     <div 
@@ -351,7 +353,7 @@ function CreateForm() {
       width: '100%', 
       marginTop: '5%', 
       borderRadius:theme.jodify_borders._lg_border_radius,
-      border: '2px solid',
+      border: '1px solid',
       borderColor: theme.jodify_colors._text_white
       }}>
       <ThemeProvider theme={custom}>
@@ -391,7 +393,20 @@ function CreateForm() {
 
 
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DateField onChange={handleDateChange} required variant='standard' format='DD/MM/YYYY' label="Fecha del evento" color='jodify'/>
+            <DayPick 
+              label="Fecha del evento"
+              slots={{
+                textField: (params) => (
+                  <BasicText
+                  variant='standard'
+                    {...params}
+                  />
+                ),
+              }}
+              value={eventDate}
+              onChange={handleDateChange}
+              format="DD/MM/YYYY"
+            />
         </LocalizationProvider>
 
 
