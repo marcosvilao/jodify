@@ -8,6 +8,11 @@ export const DateRange = styled(StaticDateRangePicker)`
         background: ${theme.jodify_colors._gradient};
     }
 
+    .css-wlz8ci.Mui-selected {
+        color: ${theme.jodify_colors._text_white};
+        background: ${theme.jodify_colors._gradient};
+    }
+
     .MuiDateRangePickerDay-rangeIntervalDayHighlight {
         background: #343335;
 
@@ -25,11 +30,28 @@ export const DateRange = styled(StaticDateRangePicker)`
         color: ${theme.jodify_colors._text_white};
     }
 
+    .css-1rkk2qh.Mui-selected{
+        font-family: 'Roboto Condensed', sans-serif;
+        font-size: 31px;
+        color: ${theme.jodify_colors._text_white};
+    }
+
+    .css-14kvh3q{
+        font-family: 'Roboto Condensed', sans-serif;
+        font-size: 31px;
+        color: ${theme.jodify_colors._text_white};
+    }
+
     .css-grqin-MuiButtonBase-root-MuiPickersDay-root-MuiDateRangePickerDay-day.Mui-selected{
         background: ${theme.jodify_colors._gradient};
     }
 
     .css-138poq7-MuiPickersSlideTransition-root-MuiDayCalendar-slideTransition:not(.MuiDateRangeCalendar-dayDragging) .MuiDateRangePickerDay-dayOutsideRangeInterval{
+        color: ${theme.jodify_colors._text_white};
+        font-size: 13px;
+    }
+
+    .css-1nte4ka{
         color: ${theme.jodify_colors._text_white};
         font-size: 13px;
     }
@@ -44,12 +66,20 @@ export const DateRange = styled(StaticDateRangePicker)`
     }
 
     .css-rhmlg1-MuiTypography-root-MuiDayCalendar-weekDayLabel{
+        color: ${theme.jodify_colors._text_white};
+        font-size: 12px;
+    }
 
+    .css-10qkmc3{
         color: ${theme.jodify_colors._text_white};
         font-size: 12px;
     }
 
     .css-1nkg345-MuiButtonBase-root-MuiIconButton-root-MuiPickersArrowSwitcher-button{
+        color: ${theme.jodify_colors._text_white};
+    }
+
+    .css-1cw4hi4{
         color: ${theme.jodify_colors._text_white};
     }
 
@@ -85,6 +115,10 @@ export const DateRange = styled(StaticDateRangePicker)`
         font-family: 'Roboto Condensed', sans-serif;
     }
 
+    .css-16j77m4{
+        font-family: 'Roboto Condensed', sans-serif;
+    }
+
     .css-124wamg-MuiTypography-root-MuiPickersToolbarText-root{
         font-family: 'Roboto Condensed', sans-serif;
         color: ${theme.jodify_colors._text_white};
@@ -95,5 +129,6 @@ export const DateRange = styled(StaticDateRangePicker)`
         margin-top: 5px;
         font-family: 'Roboto Condensed', sans-serif;
         font-size: 31px;
+        color: ${theme.jodify_colors._text_white};
     }
 `
