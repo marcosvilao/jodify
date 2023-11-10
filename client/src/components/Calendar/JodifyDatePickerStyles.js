@@ -46,6 +46,10 @@ export const DateRange = styled(StaticDateRangePicker)`
         background: ${theme.jodify_colors._gradient};
     }
 
+    .css-1nte4ka.Mui-selected{
+        background: ${theme.jodify_colors._gradient};
+    }
+
     .css-138poq7-MuiPickersSlideTransition-root-MuiDayCalendar-slideTransition:not(.MuiDateRangeCalendar-dayDragging) .MuiDateRangePickerDay-dayOutsideRangeInterval{
         color: ${theme.jodify_colors._text_white};
         font-size: 13px;
@@ -130,5 +134,17 @@ export const DateRange = styled(StaticDateRangePicker)`
         font-family: 'Roboto Condensed', sans-serif;
         font-size: 31px;
         color: ${theme.jodify_colors._text_white};
+    }
+
+    .css-zq6grw{
+        margin-top: 5px;
+        font-family: 'Roboto Condensed', sans-serif;
+        font-size: 31px;
+        color: ${theme.jodify_colors._text_white};
+    }
+
+    .css-14kvh3q.Mui-selected{
+        color: ${theme.jodify_colors._text_white};
+        font-family: 'Roboto Condensed', sans-serif;
     }
 `
