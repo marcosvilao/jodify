@@ -35,6 +35,12 @@ export const DateRange = styled(StaticDateRangePicker)`
         font-size: 31px;
         color: ${theme.jodify_colors._text_white};
     }
+    
+    .css-1rkk2qh{
+        font-family: 'Roboto Condensed', sans-serif;
+        font-size: 31px;
+        color: ${theme.jodify_colors._text_white};
+    }
 
     .css-14kvh3q{
         font-family: 'Roboto Condensed', sans-serif;
@@ -144,6 +150,11 @@ export const DateRange = styled(StaticDateRangePicker)`
     }
 
     .css-14kvh3q.Mui-selected{
+        color: ${theme.jodify_colors._text_white};
+        font-family: 'Roboto Condensed', sans-serif;
+    }
+
+    .css-1ujsas3{
         color: ${theme.jodify_colors._text_white};
         font-family: 'Roboto Condensed', sans-serif;
     }
