@@ -2,6 +2,7 @@ const pool = require('../db')
 const {linkScrap} = require('../Brain/getEventData')
 const { v4: uuidv4 } = require('uuid');
 const { types } = require('pg');
+const { put } = require('@vercel/blob')
 
 
 const getEvents = async (req, res, next) => {
@@ -263,15 +264,6 @@ const scrapLink = async (req, res) => {
     }
 }
 
-const uploadImage = async (req, res) => {
-    if (!req.file) {
-      return res.status(400).send('No file uploaded.');
-    }
-  
-    const fileURL = `https://jodify.vercel.app//uploads/${req.file.filename}`; // This will be the URL to access the uploaded image
-    res.json({ fileURL });
-  };
-
 
 
 module.exports = {
@@ -281,6 +273,5 @@ module.exports = {
     deleteEvent,
     searchEvent,
     filterEvents,
-    scrapLink,
-    uploadImage
+    scrapLink
 }
