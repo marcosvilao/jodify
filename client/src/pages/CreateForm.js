@@ -25,6 +25,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 
 
+
+
 const Djs = [
 'Solomun',
 'Tale of us',
@@ -38,6 +40,8 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 
 function CreateForm() {
+
+
 
   const custom = createTheme({
     palette: {
@@ -73,9 +77,10 @@ function CreateForm() {
       event_city: ''
   })
 
-
+ 
   useEffect(() => {
     // Check if any of the required properties are empty
+    console.log(event.event_image)
     const isRequiredEmpty =
       event.event_title === '' ||
       event.event_date === '' ||
@@ -304,25 +309,23 @@ function CreateForm() {
     console.log('starting')
     const file = e.target.files[0];
     if (file) {
-      console.log('file exist')
       if (file.type.startsWith('image/')) {
         const formData = new FormData();
-        formData.append('event_image', file);
-        console.log('entering endpoint')
-        const response = await fetch('http://localhost:3001/upload', {
-          method: 'POST',
-          body: formData,
-        });
-  
-        if (response.ok) {
-          const result = await response.json();
+        formData.append('file', file);
+        formData.append(
+          'upload_preset', 'jodifyCloudinary'
+        );
+        formData.append('jodify', '')
+        fetch('https://api.cloudinary.com/v1_1/dtmjh1hbu/image/upload',
+        {
+          method: 'post',
+          body: formData
+        }).then((response) => response.json()).then((data) => {
           setEvent((prevEvent) => ({
             ...prevEvent,
-            event_image: result.fileURL || '',
+            event_image: data.url,
           }));
-        } else {
-          console.error('Error uploading the file.');
-        }
+        })
       } else {
         console.error('Selected file is not an image.');
       }
@@ -468,6 +471,7 @@ function CreateForm() {
         onChange={(e) => handleFileChange(e)}
         />
         </UploadBtn>
+
 
         <Stack spacing={1} direction="row" style={{marginTop: '10%'}}>
           <BtnJo onClick={handleClearEvent} variant="outlined">Limpiar</BtnJo>
