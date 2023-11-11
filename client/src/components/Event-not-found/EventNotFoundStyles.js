@@ -35,6 +35,8 @@ export const EventDescription = styled.div`
     gap: ${props => props.$twoLines ? '9px' : '3px'};
     position: relative;
     width: 244px;
+    margin-top: 10px;
+
 `
 
 export const TitleContainer = styled.div`
@@ -94,9 +96,13 @@ export const TypeContainer = styled.div`
     position: relative;
 `
 export const Error = styled.h3`
+gap: 10px;
+    display: flex;
+    align-items: center;
+    margin-left: 16px;
     color: ${theme.jodify_colors._text_white};
     font-family: "Roboto Condensed-Medium", Helvetica;
-    font-size: 13px;
+    font-size: 16px;
     font-weight: 550;
     letter-spacing: 0;
     line-height: 24px;

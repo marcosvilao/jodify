@@ -58,8 +58,9 @@ function Grid() {
   return (
     <div style={{marginTop: '0rem'}}>
     {displayEvents.length ? displayEvents.map(dateObj => {
-      const date = new Date(Object.keys(dateObj));
-
+      const dateString = Object.keys(dateObj)[0]; // Assuming there is only one key in dateObj
+      const date = new Date(dateString);
+      date.setHours(date.getHours() + 3);
       const eventArray = dateObj[Object.keys(dateObj)];
 
       const options = {
