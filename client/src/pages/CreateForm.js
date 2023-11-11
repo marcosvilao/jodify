@@ -20,8 +20,7 @@ import AddIcon from '@mui/icons-material/Add';
 import theme from '../jodifyStyles';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-import { createTheme, styled, ThemeProvider } from '@mui/material/styles';
-import { DateField } from '@mui/x-date-pickers/DateField';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {DayPick} from '../components/Calendar/DayPickStyles'
 
 
@@ -359,7 +358,7 @@ function CreateForm() {
       <Box
       component="form"
       sx={{
-        '& > :not(style)': {  width: '90%', display: 'flex', justifyContent: 'center', margin: '0 auto', marginTop: '10px'},
+        '& > :not(style)': {  width: '90%', display: 'flex', justifyContent: 'center', margin: '0 auto', marginTop: '0px'},
       }}
       noValidate
       autoComplete="off"

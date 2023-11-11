@@ -6,6 +6,7 @@ const { types } = require('pg');
 
 const getEvents = async (req, res, next) => {
     try {
+        console.log('getting data')
         const currentDate = new Date();
         currentDate.setHours(0,0,0,0)
         console.log(currentDate.toLocaleString())
@@ -23,7 +24,7 @@ const getEvents = async (req, res, next) => {
         // Iterate through each event and group them by event_date
         const groupedEvents = {};
         allEvents.rows.forEach(event => {
-            const eventDate = event.event_date;
+            let eventDate = event.event_date;
             if (!groupedEvents[eventDate]) {
                 groupedEvents[eventDate] = [];
             }
@@ -262,8 +263,6 @@ const scrapLink = async (req, res) => {
         console.log(error)
     }
 }
-
-
 
 module.exports = {
     getEvents,
