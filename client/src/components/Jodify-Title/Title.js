@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
 export const BrandContainer = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 20px;
     margin: 40px 16px 10px;
     /* margin-top: 10rem; */
     /* height: 1.2rem; */

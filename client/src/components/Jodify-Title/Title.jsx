@@ -1,6 +1,7 @@
 import React from 'react'
 import theme from '../../jodifyStyles'
 import {BrandContainer, Brand} from './Title'
+import logo from '../../assets/Jodify-logo.jpg'
 
 function Title() {
   const time = new Date().getHours().toLocaleString();
@@ -8,6 +9,10 @@ function Title() {
 
   return (
     <BrandContainer>
+        <a href="https://jodify-client.vercel.app/">
+          <img style={{borderRadius: theme.jodify_borders._lg_border_radius}} src={logo} alt="" width={100} height={100} />
+        </a>
+        
         <Brand color={theme.jodify_colors._text_white}>{timeTitle}</Brand>
     </BrandContainer>
   )
