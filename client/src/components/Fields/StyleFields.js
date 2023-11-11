@@ -12,12 +12,6 @@ export const BasicText = styled(TextField)({
     '& .css-1x51dt5-MuiInputBase-input-MuiInput-input': {
       color: theme.jodify_colors._text_white
     },
-    '& .css-38raov-MuiButtonBase-root-MuiChip-root': {
-      color: theme.jodify_colors._text_white
-    },
-    '& .css-66dh3a-MuiInputBase-input-MuiInput-input':{
-      color: theme.jodify_colors._text_white
-    },
     '& .css-mnn31' : {
       color: theme.jodify_colors._text_white
     },

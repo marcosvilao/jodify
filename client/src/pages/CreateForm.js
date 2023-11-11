@@ -151,8 +151,9 @@ function CreateForm() {
       setErrorMessage('')
       setIsLoading(false)
       setCreateSuccess(true)
+      handleClearEvent()
     } else if(response.status === 404) {
-      setErrorMessage('Este evento ya ha sido creado.')
+      setErrorMessage('Este evento fue creado.')
       setIsLoading(false)
       setError(true)
     }
@@ -294,6 +295,7 @@ function CreateForm() {
 
   const handleClearEvent = () => {
     setEvent({
+      ...event,
       event_title: '',
       event_type: [],
       event_date: '',
@@ -301,7 +303,6 @@ function CreateForm() {
       ticket_link: '',
       event_image: '',
       event_djs: [],
-      event_city: ''
     });
   };
 
@@ -334,6 +335,7 @@ function CreateForm() {
   };
 
 
+
   if(isLoading){
     return (
       <Box sx={{ display: 'flex', width: '90%', height: '100vh', justifyContent: 'center', alignItems: 'center', margin: '0 auto' }}>
@@ -349,18 +351,15 @@ function CreateForm() {
     <div 
     style={{
       backgroundColor: theme.jodify_colors._background_gray, 
-      height: '95vh', 
       width: '100%', 
-      marginTop: '5%', 
-      borderRadius:theme.jodify_borders._lg_border_radius,
-      border: '1px solid',
-      borderColor: theme.jodify_colors._text_white
+      marginTop: '2%', 
+      marginBottom: '2%'
       }}>
       <ThemeProvider theme={custom}>
       <Box
       component="form"
       sx={{
-        '& > :not(style)': { width: '90%', display: 'flex', justifyContent: 'center', margin: '0 auto', marginTop: '10px'},
+        '& > :not(style)': {  width: '90%', display: 'flex', justifyContent: 'center', margin: '0 auto', marginTop: '10px'},
       }}
       noValidate
       autoComplete="off"
@@ -376,6 +375,8 @@ function CreateForm() {
           value={event.event_city}
           renderInput={(params) => (
             <BasicText
+              error={event.event_city === ''}
+              helperText='tenes que elegir una ciudad'
               required
               {...params}
               variant="standard"
@@ -386,10 +387,10 @@ function CreateForm() {
         />
 
 
-        <BasicText required label='Link de Venta' placeholder='Ingresa el link del evento' variant='standard' value={link} onChange={handleLinkChange}/>
+        <BasicText helperText='Copia y pega aca el link de venta de entradas' error={event.ticket_link === ''} required label='Link de Venta' placeholder='Ingresa el link del evento' variant='standard' value={event.ticket_link} style={{color: 'success'}} onChange={handleLinkChange}/>
 
 
-        <BasicText required label='Imagen' placeholder='Ingresa la url de la imagen' variant='standard' value={event.event_image} onChange={handleImageChange}/>
+        <BasicText helperText='Copia y pega la url de la imagen o carga la imagen con el botón de carga' error={event.event_image === ''} required label='Imagen' placeholder='Ingresa la url de la imagen' variant='standard' value={event.event_image} onChange={handleImageChange}/>
 
 
         <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -398,6 +399,9 @@ function CreateForm() {
               slots={{
                 textField: (params) => (
                   <BasicText
+                  helperText='Ingresa la fecha del evento'
+                  error={true}
+                  required
                   variant='standard'
                     {...params}
                   />
@@ -410,7 +414,7 @@ function CreateForm() {
         </LocalizationProvider>
 
 
-        <BasicText required label='Ubicación' placeholder='Ingresa el nombre del complejo o dirección' variant='standard' onChange={e => handleLocationChange(e)} value={event.event_location}/>
+        <BasicText helperText='En este campo debes inlcluir el boliche y el partido, Ej: Crobar (Palermo)' error={event.event_location === ''} required label='Ubicación' placeholder='Ingresa el nombre del complejo o dirección' variant='standard' onChange={e => handleLocationChange(e)} value={event.event_location}/>
 
 
         <Autocomplete
@@ -424,6 +428,8 @@ function CreateForm() {
           value={event.event_djs || []}
           renderInput={(params) => (
             <BasicText
+              helperText='Seleccioná o escribí los Djs de esta fechita'
+              error={event.event_djs.length === 0}
               required
               {...params}
               variant="standard"
@@ -436,7 +442,7 @@ function CreateForm() {
 
 
         <Autocomplete
-        ChipProps={{color: 'jodify'}}
+          ChipProps={{color: 'jodify'}}
           id="tags-standard"
           freeSolo
           multiple
@@ -446,6 +452,8 @@ function CreateForm() {
           value={event.event_type}
           renderInput={(params) => (
             <BasicText
+              helperText='¿Que géneros de electronica se va a escuchar?( podes elegir mas de uno )'
+              error={event.event_type.length === 0}
               required
               {...params}
               variant="standard"
@@ -458,6 +466,8 @@ function CreateForm() {
      
         
         <BasicText
+          helperText='Este campo se rellena automaticamente ingresando el "Line up"'
+          error={event.event_title === ''}
           id="standard-textarea"
           label='Nombre del evento'
           placeholder='Edita el nombre del evento'
@@ -483,7 +493,7 @@ function CreateForm() {
         </UploadBtn>
 
 
-        <Stack spacing={1} direction="row" style={{marginTop: '10%'}}>
+        <Stack spacing={1} direction="row" style={{marginTop: '20px', marginBottom: '2%'}}>
           <BtnJo onClick={handleClearEvent} variant="outlined">Limpiar</BtnJo>
           <BtnFy disabled={isCreateButtonDisabled} onClick={handleCreateEvent} variant="contained">Crear</BtnFy>
         </Stack>
