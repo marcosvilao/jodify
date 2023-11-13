@@ -12,7 +12,8 @@ import theme from '../../jodifyStyles';
 import ClearIcon from '@mui/icons-material/Clear';
 import Tooltip from '@mui/material/Tooltip';
 import BackgroundFilters from './BackgroundFilters';
-
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import EventIcon from '@mui/icons-material/Event';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -276,6 +277,17 @@ function FilterEvents() {
                             height: '22px'
                             }}/>
                 </Tooltip>}
+                {filters.cities.length === 0 && 
+                <Tooltip title="Seleccioná una o varias ciudades">
+                    <ArrowDropDownIcon 
+                    onClick={FilterCities} 
+                    style={{
+                            color: theme.jodify_colors._icons_primary,
+                            margin: '3px 10px 4px -3px',
+                            width: '22px',
+                            height: '22px'
+                            }}/>
+                </Tooltip>}
             </FilterWrapper>
             <FilterWrapper 
             $hastypes={filters.types.length > 0 ? "true" : undefined}>
@@ -295,6 +307,17 @@ function FilterEvents() {
                                 height: '22px'
                             }}/>
                 </Tooltip>}
+                {filters.types.length === 0 && 
+                <Tooltip title="Seleccioná uno o varios géneros">
+                    <ArrowDropDownIcon 
+                    onClick={FilterTypes} 
+                    style={{
+                            color: theme.jodify_colors._icons_primary,
+                            margin: '3px 10px 4px -3px',
+                            width: '22px',
+                            height: '22px'
+                            }}/>
+                </Tooltip>}
             </FilterWrapper>
             <FilterWrapper $hastypes={filters.dates[0] || filters.dates[1] ? "true" : undefined}  >
                 <FilterText 
@@ -304,11 +327,21 @@ function FilterEvents() {
                     >{filters.dates[0]?.toDateString() === filters.dates[1]?.toDateString() && filters.dates[0] && filters.dates[1] ? `${filters.dates[0]?.toLocaleDateString('es-AR')}` : 
                     filters.dates[1] ? `${filters.dates[0]?.toLocaleDateString('es-AR')} - ${filters.dates[1]?.toLocaleDateString('es-AR')}` : 'Fecha'}
                 </FilterText>
-                {(filters.dates[0] || filters.dates[1]) && 
+                            {(filters.dates[0] || filters.dates[1]) && 
                             <Tooltip title="Limpiar">
                                 <ClearIcon onClick={clearDatesFilter}                             
                                 style={{
                                     color: theme.jodify_colors._text_white,
+                                    margin: '3px 10px 4px -3px',
+                                    width: '22px',
+                                    height: '22px'
+                                }}/>
+                            </Tooltip>}
+                            {(filters.dates.length === 0) && 
+                            <Tooltip title="Seleccioná un rango de fechas">
+                                <EventIcon onClick={FilterDates}                             
+                                style={{
+                                    color: theme.jodify_colors._icons_primary,
                                     margin: '3px 10px 4px -3px',
                                     width: '22px',
                                     height: '22px'
@@ -322,7 +355,7 @@ function FilterEvents() {
             )}
             
             {openTypesFilter && (
-                                <div ref={filterListRef} style={{marginTop: '40px', marginLeft: '80px', position: 'absolute'}}>
+                                <div ref={filterListRef} style={{marginTop: '40px', marginLeft: '108px', position: 'absolute'}}>
                                 <FilterList typeList={types} checkedItems={checkedTypes} setCheckedItems={setCheckedTypes} />
                                 </div>
             )}
