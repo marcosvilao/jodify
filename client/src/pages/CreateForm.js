@@ -349,23 +349,27 @@ function CreateForm() {
   return (
     <div 
     style={{
-      backgroundColor: theme.jodify_colors._background_gray, 
+      display:'flex',
+      backgroundColor: '#131313', 
+      justifyContent: 'center',
+      alignItems: 'center',
       width: '100%', 
-      marginTop: '2%', 
-      marginBottom: '2%'
+      height: '100%'
       }}>
       <ThemeProvider theme={custom}>
       <Box
       component="form"
       sx={{
-        '& > :not(style)': {  width: '90%', display: 'flex', justifyContent: 'center', margin: '0 auto', marginTop: '0px'},
+        '& > :not(style)': {maxWidth: '800px' , width: '90%', display: 'flex', justifyContent: 'center', margin: '0 auto', marginTop: '10px'},
       }}
       noValidate
       autoComplete="off"
     >          
+      
         <Event event={event} large={true} />
-
-
+      
+        <h5 style={{color: theme.jodify_colors._text_white}}>Tenes que rellenar todos los campos</h5>
+        
         <Autocomplete
           id="tags-standard"
           options={cities}
@@ -482,7 +486,7 @@ function CreateForm() {
           }}
         />
 
-        <UploadBtn component="label" variant="contained" startIcon={<AddIcon />}>
+        <UploadBtn component="label" variant="contained" startIcon={<AddIcon />} style={{marginTop: '20px', marginBottom: '2%'}}>
         Carga la imagen del evento
         <VisuallyHiddenInput 
         type="file" 
@@ -492,7 +496,7 @@ function CreateForm() {
         </UploadBtn>
 
 
-        <Stack spacing={1} direction="row" style={{marginTop: '20px', marginBottom: '2%'}}>
+        <Stack spacing={1} direction="row" style={{marginTop: '20px', marginBottom: '4%'}}>
           <BtnJo onClick={handleClearEvent} variant="outlined">Limpiar</BtnJo>
           <BtnFy disabled={isCreateButtonDisabled} onClick={handleCreateEvent} variant="contained">Crear</BtnFy>
         </Stack>
