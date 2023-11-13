@@ -1,5 +1,5 @@
 import React from 'react'
-import logo from '../../assets/jodify_logo.jpg'
+import logo from '../../assets/Jodify-logo.png'
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
 import { Card, EventImage, EventDescription, TitleContainer, TitleText, EventLocation, TypeContainer, LocationContainer, EventCaracteristics } from './EventStyles'
@@ -7,10 +7,11 @@ import { Card, EventImage, EventDescription, TitleContainer, TitleText, EventLoc
 function Event({event, large}) {
     const types = Array.isArray(event?.event_type) ? event?.event_type?.join(' | ') : event.event_type;
     const twoLines = event.event_title.length > 36
+    const eventLogo = event.event_image === '' ? logo : event.event_image
   return (
     <a href={event.ticket_link} target="_blank" rel="noopener noreferrer">
       <Card $islarge={large}>
-                <EventImage src={event.event_image !== 'undefined' ? event.event_image : logo} alt='No Image'/>
+                <EventImage src={eventLogo} alt='No hay imagen'/>
                 <EventDescription $twoLines={twoLines}>
                         <TitleContainer>
                         <TitleText>{event.event_title}</TitleText>
