@@ -43,7 +43,7 @@ export default function JodifyDatePicker({setOpen, setIsOpen, setDateFilter, set
               onClose={() => setIsOpen(false)}
               onAccept={() => getDates(dates)}
               defaultValue={defaultDates}
-              sx={{ fontSize: '16px', color: theme.jodify_colors._text_white ,marginTop: '275px' , bgcolor: theme.jodify_colors._background_gray, borderRadius: theme.jodify_borders._lg_border_radius }}
+              sx={{ fontSize: '16px', color: theme.jodify_colors._text_white ,marginTop: '200px' , bgcolor: theme.jodify_colors._background_gray, borderRadius: theme.jodify_borders._lg_border_radius }}
             />
             </LocalizationProvider>
             </Box>
