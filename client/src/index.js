@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import store from './storage/store'; // Import your Redux store
 import Modal from 'react-modal';
 import { LicenseInfo } from '@mui/x-license-pro';
+import { Analytics } from '@vercel/analytics/react';
 
 LicenseInfo.setLicenseKey('0bead84d3f16ad30d71410a8ae62882aTz03NzkzMixFPTE3MzA1NzY3MTEwMDAsUz1wcm8sTE09c3Vic2NyaXB0aW9uLEtWPTI=');
 
@@ -17,6 +18,7 @@ root.render(
     <React.StrictMode>
         <BrowserRouter>
           <App />
+          <Analytics/>
         </BrowserRouter>
     </React.StrictMode>
   </Provider>
