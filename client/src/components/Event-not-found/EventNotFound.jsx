@@ -9,7 +9,7 @@ function EventNotFound() {
             <EventImage src="https://previews.123rf.com/images/kaymosk/kaymosk1804/kaymosk180400006/100130939-error-404-page-not-found-error-with-glitch-effect-on-screen-vector-illustration-for-your-design.jpg" alt="No Image"/>
             <EventDescription>
                 <Error>
-                    No hay eventos con estos filtros de busqueda <SentimentVeryDissatisfiedOutlinedIcon style={{color : theme.jodify_colors._icons_primary}}/>
+                    No hay eventos con estos filtros
                 </Error>
             </EventDescription>
         </Card>

@@ -96,18 +96,16 @@ export const TypeContainer = styled.div`
     position: relative;
 `
 export const Error = styled.h3`
-gap: 10px;
     display: flex;
     align-items: center;
-    margin-left: 16px;
     color: ${theme.jodify_colors._text_white};
     font-family: "Roboto Condensed-Medium", Helvetica;
     font-size: 16px;
     font-weight: 550;
     letter-spacing: 0;
-    line-height: 24px;
+    line-height: 20px;
     margin-top: 1px;
     position: relative;
-    white-space: nowrap;
+    /* white-space: nowrap; */
     width: fit-content;
 `
