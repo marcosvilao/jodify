@@ -11,14 +11,14 @@
           city_id
         )
         VALUES (
-          '45c16f06-5077-4c3f-8b72-f1dd544866be',
-          'Foletto + CCB',
-          'Progre',
-          '2023/08/24',
-          'Afrika (Recoleta)',
-          'https://www.instagram.com/lajuanitarecords/',
-          'https://ugc.production.linktr.ee/jc00RkHQtOVz2O6BTciw_Captura%20de%20Pantalla%202023-08-01%20a%20la(s)%2014.51.26.png',
-          ARRAY['Foletto', 'CCB '],
+          '8bd6ee65-9604-4847-9f89-01c0af3a0a9e',
+          'George Privatti b2b Guille Placencia',
+          'Tech House',
+          '2023/11/12',
+          'Rio (Punta Carrasco)',
+          'https://wearebombo.app.link/GOg2FtcknEb',
+          'https://ugc.production.linktr.ee/4372799c-96f6-4f0e-81f0-b58817ab8951_IMG-8878.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['George Privatti b2b Guille Placencia', 'otros '],
           '258fd495-92d3-4119-aa37-0d1c684a0237'
         );
       
@@ -35,14 +35,14 @@
           city_id
         )
         VALUES (
-          'b20446e4-62f9-43d3-8459-8f190b4ad623',
-          'Dramer + Gatsbo',
+          '55c284d8-7277-495a-9033-d1c84a3cee07',
+          'Facundo Az + Har',
           'Progre',
-          '2023/08/24',
+          '2023/11/12',
           'Downtempo (Agronomía)',
-          'https://www.passline.com/eventos/downtempo-rooftop-pres-cabina-abierta-w-dramer-gatsbo-maxi-varela-diego-cabrini-kael?fbclid=PAAaaJdJrt_pGepxHu8DGn7b9lKzmT16VIrOdVdY2XgeiFAkCmGFzvkrVUy5U_aem_AQ-3LUd5-QZWhEPLofBuOLGaDZWZdMx-1HZBvl9xWzDvbjhjWIij2NtelBlOC3Yx',
-          'https://ugc.production.linktr.ee/5f80f35d-c490-4c74-918a-11865e101a58_IMG-8056.jpeg',
-          ARRAY['Dramer', 'Gatsbo', 'otros '],
+          'https://www.passline.com/sitio-evento/downtempo-rooftop-pres-domingo-12-de-noviembre',
+          'https://ugc.production.linktr.ee/50df2a3d-0056-4c37-b62a-5ad02ad3fede_IMG-8991.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Facundo Az', 'Har', 'otros '],
           '258fd495-92d3-4119-aa37-0d1c684a0237'
         );
       
@@ -59,110 +59,14 @@
           city_id
         )
         VALUES (
-          '0cb3500e-d445-4ce7-955a-16cef9e3e980',
-          'Danyo + Gonzalo Trejo',
-          'Techno',
-          '2023/08/24',
-          'Ro (Palermo)',
-          'https://espacioro.ar/',
-          'https://ugc.production.linktr.ee/16037ac0-2615-431a-9627-45fc7affc2a7_IMG-8057.jpeg',
-          ARRAY['Danyo', 'Gonzalo Trejo', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '5e80b72f-08c7-4581-bb0d-2ed6edc23f39',
-          'Denis Dick + Paloma Pierini',
-          'Deep House',
-          '2023/08/24',
-          'Renée Je T’Aime (Palermo)',
-          'https://instagram.com/renee.jetaime?igshid=MzRlODBiNWFlZA==',
-          'https://ugc.production.linktr.ee/03bc17ed-368b-4e92-93c6-a3fe9f61372d_IMG-8072.jpeg',
-          ARRAY['Denis Dick', 'Paloma Pierini', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '3a04506b-a616-4676-8ec5-3051a533769d',
-          'Jeudi Fou',
-          '',
-          '2023/undefined/Pierini',
-          'Jue 24/08',
-          'https://instagram.com/lfo.community?igshid=NTc4MTIwNjQ2YQ==',
-          'https://ugc.production.linktr.ee/194d7173-10db-41e5-8ddd-7ce0bf932d0c_IMG-9604.jpeg',
-          ARRAY['Jeudi Fou'],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '0c847e5e-0215-4bc2-a956-e289e6cc464b',
-          'Sisto + Muten',
-          'Tech House',
-          '2023/08/24',
-          'Avant Garden (Arcos de Palermo)',
-          'https://instagram.com/avantgartenba?igshid=NTc4MTIwNjQ2YQ==',
-          'https://ugc.production.linktr.ee/b30be96b-a5d5-4a9b-b606-86e43fef3db1_IMG-9625.jpeg',
-          ARRAY['Sisto', 'Muten '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'e8f4db70-f14f-4e82-bb2b-a573e3730e14',
-          'Risko + Maia Dros',
+          '4efe7e89-a60a-4831-88cb-4acfa357381e',
+          'Differ + Mitch Oliver',
           'House',
-          '2023/08/24',
-          'Francisca (Arcos de Palermo)',
-          'https://instagram.com/franciscadelfuego?igshid=MzRlODBiNWFlZA==',
-          'https://ugc.production.linktr.ee/453805e9-63af-491d-b1dc-6621021291a2_IMG-8067.jpeg',
-          ARRAY['Risko', 'Maia Dros', 'otros '],
+          '2023/11/16',
+          'Afrika (Recoleta)',
+          'https://www.instagram.com/lajuanitamusic/',
+          'https://ugc.production.linktr.ee/f86baf9a-82ff-42aa-b220-1af973c9e5e3_Captura-de-Pantalla-2023-11-09-a-la-s--10.37.49.png?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Differ', 'Mitch Oliver '],
           '258fd495-92d3-4119-aa37-0d1c684a0237'
         );
       
@@ -179,110 +83,14 @@
           city_id
         )
         VALUES (
-          '6bc93758-8161-4693-a204-adee381a4aca',
-          'Agustin Buttini + Bastian Cash',
-          'Tech House',
-          '2023/08/24',
-          'Bar Carnal (Palermo)',
-          'https://www.instagram.com/groovebeat.music/',
-          'undefined',
-          ARRAY['Agustin Buttini', 'Bastian Cash', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '3e1cf463-87de-4c28-a00f-3542dd55c84f',
-          'Adrián Gumy b2b Debb G',
-          'Techno',
-          '2023/08/24',
-          'Oveja Negra (Plaza Serrano)',
-          'https://instagram.com/nn.nonameoficial?igshid=NTc4MTIwNjQ2YQ==',
-          'https://ugc.production.linktr.ee/a015eb6f-f6d0-4646-9040-04245ba5f293_IMG-9609.jpeg',
-          ARRAY['Adrián Gumy b2b Debb G', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '24d92826-1033-4e02-a43e-dbe1944409a0',
-          'Guido Santiago + Palm b2b Sebastian Alberdi',
-          '',
-          '2023/08/24',
-          'Spiro 1051 (Adrogué)',
-          'https://linktr.ee/southsideproductions',
-          'https://ugc.production.linktr.ee/50891d50-0a7f-42d6-905f-ab0afc2e8319_IMG-9606.jpeg',
-          ARRAY['Guido Santiago', 'Palm b2b Sebastian Alberdi', 'otros'],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '79a8ea37-7139-46b6-92bb-e412f2ec9868',
-          'Oro Negro + Naza Talice',
-          'vinyl set',
-          '2023/08/24',
-          'Sótano de C (Chacarita)',
-          'https://instagram.com/elsotanodec?igshid=MzRlODBiNWFlZA==',
-          'https://ugc.production.linktr.ee/32da14ee-be94-4ce5-b4f0-fb8c4e9827c1_IMG-8042.jpeg',
-          ARRAY['Oro Negro', 'Naza Talice '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '1ef774e0-904c-4aad-88de-d52b65929b1c',
-          'John Cosani b2b Paul Deep + Franco Dalmati',
-          '',
-          '2023/08/25',
+          'd2522bee-13d5-4e65-a60a-fd77506654ba',
+          'Denis Hortvat + Indiegenas',
+          'Techno Melódico',
+          '2023/11/17',
           'Elements Club (Palermo)',
-          'https://venti.com.ar/evento/john-cosani-b2b-paul-deep-franco-dalmati-vicente-herrera/jodi',
-          'undefined',
-          ARRAY['John Cosani b2b Paul Deep', 'Franco Dalmati', 'otro'],
+          'https://venti.com.ar/evento/denis-horvat-indiegenas-juan-mandianes-b2b-sol-mazzeo/jodi',
+          'https://ugc.production.linktr.ee/98dd4248-c601-4ea2-8b8a-c0c919d547d8_a60873c9-0eae-4648-a7af-e89fcf9ab615-1695943678641-lg.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Denis Hortvat', 'Indiegenas', 'otros '],
           '258fd495-92d3-4119-aa37-0d1c684a0237'
         );
       
@@ -299,14 +107,14 @@
           city_id
         )
         VALUES (
-          '0ffcbd8f-074b-419f-973d-ff5e4e456e0c',
-          'Rattlesnakke + Tobey',
-          'Techno',
-          '2023/08/25',
-          'Ro (Palermo)',
-          'https://espacioro.ar/',
-          'https://ugc.production.linktr.ee/e5b46d22-21a6-4bf5-b42b-3fda05e5530c_IMG-8058.jpeg',
-          ARRAY['Rattlesnakke', 'Tobey', 'otro '],
+          '01478334-1618-4177-9b28-2d0f606d7b08',
+          'Monolink + Facundo Mohrr',
+          'Deep House',
+          '2023/11/17',
+          'Punta Carrasco',
+          'https://wearebombo.app.link/br9zccH1OCb',
+          'https://ugc.production.linktr.ee/70814ed3-5830-4bb5-94d5-76615f4eaca6_Captura-de-Pantalla-2023-09-05-a-la-s--22.08.58.png?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Monolink', 'Facundo Mohrr '],
           '258fd495-92d3-4119-aa37-0d1c684a0237'
         );
       
@@ -323,1718 +131,14 @@
           city_id
         )
         VALUES (
-          '002ab91a-0443-42ff-96c8-ef5a0f496f85',
-          'Graziano Raffa + Tiano',
+          '76cc6647-92f2-482b-a4ba-2fb7181067e6',
+          'John Cosani + Govinda',
           'Progre',
-          '2023/08/25',
-          'Tera (Belgrano)',
-          'https://www.passline.com/eventos/tera-258-pres-graziano-raffa',
-          'https://ugc.production.linktr.ee/ad4fbabd-4bf2-4d39-af6a-fae38bd9f7e5_IMG-8076.jpeg',
-          ARRAY['Graziano Raffa', 'Tiano', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '02e6594c-d5a9-460b-abfb-9139972ccf56',
-          'Marc Houle (Techno)',
-          'Techno',
-          '2023/08/25',
-          'Crobar (Palermo)',
-          'https://wearebombo.app.link/nqWILY0XqBb',
-          'https://ugc.production.linktr.ee/3221c5fb-7289-40b7-8314-9d5ae3358f55_IMG-7663.jpeg',
-          ARRAY['Marc Houle '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'f90ee164-1f78-4f93-b118-e7fcfb00656f',
-          'Transformation + Civa',
-          'Progre',
-          '2023/08/25',
-          'La Biblioteca (Monserrat)',
-          'https://www.passline.com/eventos/la-biblioteca-viernes-2508-progressive-ar',
-          'https://ugc.production.linktr.ee/7014171e-cab0-4acb-a881-3587f2c5bc97_IMG-7657.jpeg',
-          ARRAY['Transformation', 'Civa', 'otro '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '696c622d-bf8b-45ab-ae08-1fbb4d0438c9',
-          'Andrés Campo (Techno)',
-          'Techno',
-          '2023/08/25',
-          'Groove (Caba)',
-          'https://www.passline.com/eventos/andres-campo-3-horas-set-argentina-debut-groove?fbclid=PAAabapa52Zf59axee4--qC8RAfWiKZXtxvj9ZJ6kQ_j6eHu--ErTUyVTjb_Q_aem_ATDq682PAS3dJheT9ztmJskNma7q9W198lbCoKWIYUb_4NgyNnxuwsGBB_gZDZats48',
-          'https://ugc.production.linktr.ee/fb5d0295-6699-4a45-a2d7-cb8c0b0600c5_IMG-9085.jpeg',
-          ARRAY['Andrés Campo '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '400ad947-5d76-41cc-be66-40935c548889',
-          'Gonzalo Cesar + Manu DB',
-          'Tech House',
-          '2023/08/25',
-          'Oveja Negra (Plaza Serrano)',
-          'https://instagram.com/nn.nonameoficial?igshid=NTc4MTIwNjQ2YQ==',
-          'https://ugc.production.linktr.ee/494d1157-2ae7-4b5d-95ed-b3409733ed6a_IMG-9610.jpeg',
-          ARRAY['Gonzalo Cesar', 'Manu DB', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'c2b7cd29-9bb7-41d9-8977-544a83a1b5a0',
-          'Facundo Borras + David Calo',
-          'Progre',
-          '2023/08/25',
-          'Pylae (Palermo)',
-          'https://instagram.com/pylaerestobar?igshid=MzRlODBiNWFlZA==',
-          'https://ugc.production.linktr.ee/a286ef21-237d-4f4c-864c-0b71ac735732_IMG-8039.jpeg',
-          ARRAY['Facundo Borras', 'David Calo', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '9660befa-6f6d-423c-b9ec-7de3d7dae490',
-          'Gonza b2b Sadist + Kekar',
-          'Progre',
-          '2023/08/25',
-          'Downtempo (Agronomía)',
-          'https://www.passline.com/eventos/downtempo-rooftop-pres-viernes-25-agosto',
-          'https://ugc.production.linktr.ee/169886b6-5c14-46ce-866a-b438c3fb6b0c_IMG-8077.jpeg',
-          ARRAY['Gonza b2b Sadist', 'Kekar', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '83a4e742-fcbf-4dda-992a-ee5bc51afca8',
-          'Dj Masa + Alexny',
-          'Disco/House',
-          '2023/08/25',
-          'Francisca (Arcos de Palermo)',
-          'https://instagram.com/franciscadelfuego?igshid=MzRlODBiNWFlZA==',
-          'https://ugc.production.linktr.ee/0d11be46-17e0-4a98-a317-1b4f203f3b55_IMG-8068.jpeg',
-          ARRAY['Dj Masa', 'Alexny', 'otro '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'eb34e781-6352-4d7c-aa34-1529b8737a15',
-          'Nim + Anhauser',
-          'Progre',
-          '2023/08/25',
-          'Morocco (Costa Salguero)',
-          'https://venti.com.ar/evento/s2gthr-pres-nim-anhauser-morocco-viernes-25-08?fbclid=PAAaZy6Mg5JNt01KSmC-n_4x5g-4mj8BH_6VQOXNQPdqXWnb2yE-r-QrsAnSo_aem_AaO3e3pxWt5IshfEKxb7z0_X7iHx-9uCDkyRKfubBPsZtCoBEwYuvHxCmxHFlRV5Edk',
-          'https://ugc.production.linktr.ee/e912cd03-4828-4859-b22d-f390ad4aebfe_IMG-9395.jpeg',
-          ARRAY['Nim', 'Anhauser', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'f9d3405a-cbfe-4833-b28f-630354de4e3d',
-          'Martino Stefano + Stefano Repetto',
-          'Indie Dance/House',
-          '2023/08/25',
-          'Dune Park (Villa Crespo)',
-          'https://venti.com.ar/evento/dune-park-vol-vi',
-          'https://ugc.production.linktr.ee/d76f565e-54eb-4d1d-93b8-2fbb21544632_27488e7d-d892-4910-b373-321a1246f215-1692064498003-lg.jpeg',
-          ARRAY['Martino Stefano', 'Stefano Repetto', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'db8def57-97a2-4fec-bba7-035d87dc33e6',
-          'Angy Kore & Gabriel Padrevita',
-          'Psy',
-          '2023/08/25',
-          'Heiss (Niceto Vega)',
-          'https://venti.com.ar/evento/heiss-techno-angy-kore-gabriel-padrevita-nicol-s-salgado-juan-nuciforo-25-08-blow?fbclid=PAAaZrKgUCEbuatYFkQwG8H25qBC_zwJub54wUtcpDZNC-lF0mduYs3YCsykM_aem_AaN2jD2B0eS7CjngWOKfgngJ9M5kkm6pcRMfAL9I1IsHE2DM6A4z4QAYPR0YDUy6cGM',
-          'https://ugc.production.linktr.ee/b03f6b7a-5057-4d55-afc3-66e5cf8772a4_IMG-9391.jpeg',
-          ARRAY['Angy Kore & Gabriel Padrevita', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'd9f791ce-3f28-4c72-a5dd-2a8caa2009f9',
-          'Udolph + Evlay',
-          'Techno',
-          '2023/08/25',
-          'Club de Pescadores (Costanera Norte)',
-          'https://www.passline.com/eventos/numbers-004',
-          'undefined',
-          ARRAY['Udolph', 'Evlay', 'otro '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '671ef945-7c18-47e4-90b6-6676066dd2ec',
-          'AFTER 🟣 Eme Kulhnek + Not Signal',
-          'Techno',
-          '2023/08/25',
-          'Galeria Pub (Monserrat)',
-          'https://venti.com.ar/evento/eme-kulhnek-not-signal-reload-the-gallery?fbclid=PAAaYybsNFpTn6tvl7rbeHI1owzdxgnezLVmPmLqkCiA6ahxofJHqIn5E6y1c_aem_AY4TAx1X7z0X_vfJR8BR9LjaGUxAQh2F-osc1yIfZE7B3zs6TrsC-0PtwPl7_mmTE30',
-          'https://ugc.production.linktr.ee/e93a5405-1c77-4464-b570-ebbbcd94bf2a_IMG-8075.jpeg',
-          ARRAY['AFTER 🟣 Eme Kulhnek', 'Not Signal', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'e10e576a-f3d6-4725-b42a-0a2fd1c66b8e',
-          'AFTER 🟣 Milena Adamis (Techno)',
-          'Techno',
-          '2023/08/25',
-          'Boodah Club (Palermo)',
-          'https://www.instagram.com/moove_bsas',
-          'https://ugc.production.linktr.ee/f70e24f9-d8a6-4daf-b77c-096feda40721_Captura-de-Pantalla-2023-08-16-a-la-s--00.46.54.png',
-          ARRAY['AFTER 🟣 Milena Adamis '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '72b2e796-b3cb-4be7-8507-a0b49c3d6910',
-          'Mike Griego + Belu Clavero',
-          'Progre',
-          '2023/08/26',
-          'The Bow (Costanera)',
-          'https://linktr.ee/clubthebowba/?fbclid=PAAabFcGShL3ZjnxxhwDHq7_zosMWBJxwamI3BBL1Mzov-XZmPwGG8EWe6IuM_aem_ATjQ7tE9uTYl-zFhfYMDudrlaXG3yaNbfPI-iVSF8bpGK1xA04Z8X2ZZdE490JPBsUI',
-          'https://ugc.production.linktr.ee/9b637a57-6b8b-477c-9ce6-01107daf81b3_IMG-9097.jpeg',
-          ARRAY['Mike Griego', 'Belu Clavero', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'a1e79cca-ace6-4e7b-b801-2d429e21916a',
-          'Key City + Miro',
-          'Tech House',
-          '2023/08/26',
-          'Runa Club (Palermo)',
-          'https://www.passline.com/eventos/runa-x-key-city-saturday-2608/jodify-pr',
-          'https://ugc.production.linktr.ee/ff38f30d-5fcb-4c5a-b025-141df5cec1a7_8d2ade6f-ff96-4507-91c4-b5db01437636-runa-x-key-city-saturday-2608-img.jpeg',
-          ARRAY['Key City', 'Miro', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'bae6109f-25b7-4f92-8c8b-2b2eec609fc1',
-          'Emiliano Demarco + This & That',
-          'Techno Melódico',
-          '2023/08/26',
-          'Crobar (Palermo)',
-          'https://wearebombo.app.link/C1UnBCfnvCb',
-          'https://ugc.production.linktr.ee/a62e58e0-8b86-4700-a6ca-fe4e7b84aae2_IMG-8060.jpeg',
-          ARRAY['Emiliano Demarco', 'This & That', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '9e0b0de6-a5ca-4807-b2f0-a4083b9f2fa9',
-          'Pert + Del Olmo',
-          'Techno',
-          '2023/08/26',
-          'Ro (Palermo)',
-          'https://espacioro.ar/',
-          'https://ugc.production.linktr.ee/fbd5c626-be77-41a9-8b5d-294c213cd740_IMG-8059.jpeg',
-          ARRAY['Pert', 'Del Olmo', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'c4cbf3a7-54c6-46d4-a954-28389c9d1ce6',
-          '11:11 + Masine',
-          'Melodic Techno',
-          '2023/08/26',
-          'Tantra (Palermo)',
-          'https://instagram.com/tantra.ba?igshid=NTc4MTIwNjQ2YQ==',
-          'https://ugc.production.linktr.ee/20c09722-2903-4b7b-942f-50622123a06e_IMG-9608.jpeg',
-          ARRAY['11:11', 'Masine', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'e6664dc5-48ee-4597-bcb2-d385158921f7',
-          'Joaquín Suasnabar + Tojus b2b Ale Olmedo',
-          'Techno',
-          '2023/08/26',
-          'Creta (Caba)',
-          'https://instagram.com/cretacostanera?igshid=NTc4MTIwNjQ2YQ==',
-          'https://ugc.production.linktr.ee/9940ba92-7e50-49f9-96f8-9db89fddf2d3_IMG-9621.jpeg',
-          ARRAY['Joaquín Suasnabar', 'Tojus b2b Ale Olmedo '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'af918151-b436-4750-94e6-dabadee1d000',
-          'Gooty + Lucas Tello',
-          'Progre',
-          '2023/08/26',
-          'Lucille (Palermo)',
-          'https://www.passline.com/eventos/outflow-voidz-presentan',
-          'https://ugc.production.linktr.ee/f721c295-6521-4d15-9f01-162a1c76e613_IMG-7790.jpeg',
-          ARRAY['Gooty', 'Lucas Tello', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'a5e32b44-e33c-48cd-841c-739f6bfd9f8f',
-          'Balam + Richie Hell & Francisca Oyhanarte',
-          'Visual Art Expirience',
-          '2023/08/26',
-          'ArtLab (Chacarita)',
-          'https://www.passline.com/eventos/artlab-presenta-club-del-ritmo-richie-hell-francisca-oyhanarte-balam',
-          'https://ugc.production.linktr.ee/5592571d-fb20-43f4-a527-a4b314a70eae_IMG-8070.jpeg',
-          ARRAY['Balam', 'Richie Hell & Francisca Oyhanarte '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '3ff7a6b4-3cb4-40fb-a08c-e8f5818bb898',
-          'Emiliano Kasem + Sol de Muro',
-          'Tech House',
-          '2023/08/26',
-          'Dorsia (Puerto Madero)',
-          'https://www.passline.com/eventos/sabados-dorsia-emiliano-kasem-more',
-          'https://ugc.production.linktr.ee/572e5b03-6f7d-45d7-b26d-129ccd186463_IMG-8046.jpeg',
-          ARRAY['Emiliano Kasem', 'Sol de Muro', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'a3b326f7-1459-49da-85bf-0d3e7e09b9fe',
-          'Pinco + Victoria Whynot',
-          'Tech House',
-          '2023/08/26',
-          'Crobar Studio (Palermo)',
-          'https://wearebombo.app.link/Ih3EuWtnvCb',
-          'https://ugc.production.linktr.ee/65bec82f-f2d2-4935-b6d6-1478f9121aad_IMG-8061.jpeg',
-          ARRAY['Pinco', 'Victoria Whynot', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'c1a374a7-8c88-46d8-8a9e-a01c905aa30b',
-          'Cadelago + Ulises Espíndola',
-          'Tech House',
-          '2023/08/26',
-          'E Side (Temperley)',
-          'https://www.passline.com/eventos/eside-sab-2608-cadelago-ulises-espindola-damian-cotto-nicolas-cotto/eside-77815?fbclid=PAAaa6X9wDilcUlTdUITOMe2ZTFb3h8QBPxeQJ2v-5aLMhmoii6VhkLgslovY_aem_AQ8Y0aM9cGACPrWksACy9TOYzOEE0HMN0T_zDBIJsYAaMydl49lO8sVcIzcnh8b_FgM',
-          'https://ugc.production.linktr.ee/aaac696f-7c14-4d29-90b1-a5e27f0758fe_IMG-8053.jpeg',
-          ARRAY['Cadelago', 'Ulises Espíndola', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'e8b9490d-7661-4268-b205-c3265c449f37',
-          'Nicolás Benedetti + Titonio',
-          'Progre',
-          '2023/08/26',
-          'Downtempo (Agronomía)',
-          'https://www.passline.com/eventos/downtempo-rooftop-pres-nicolas-benedetti-titonio-frequenssive-fran-bonetti',
-          'https://ugc.production.linktr.ee/f4a0ea1f-cb9e-4f0b-80a8-e12437475d9d_IMG-8078.jpeg',
-          ARRAY['Nicolás Benedetti', 'Titonio', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '97b16be1-30c2-489b-9207-5479ce76bda6',
-          'Not a Headliner + Gresil',
-          'Techno',
-          '2023/08/26',
-          'Blow (Palermo)',
-          'https://tickets.underclub.com.ar/evento/fiama-molina-gresil-not-a-headliner',
-          'https://ugc.production.linktr.ee/2LqNgKwVTXGYzOA40rk1_1690895120411-lg.jpg',
-          ARRAY['Not a Headliner', 'Gresil', 'otro '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '230a44cc-1690-4aa4-83cd-ff2e365d4fec',
-          'CO3 + R.A.P.',
-          'Progre',
-          '2023/08/26',
-          'Francisca (Arcos de Palermo)',
-          'https://instagram.com/franciscadelfuego?igshid=MzRlODBiNWFlZA==',
-          'https://ugc.production.linktr.ee/90505b75-170e-494b-99e0-5ed5068a1ba9_IMG-8069.jpeg',
-          ARRAY['CO3', 'R.A.P. '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '1775d155-2041-446c-8751-5f98887b4ae4',
-          'Miguela + Øban’t',
-          'Techno',
-          '2023/08/26',
-          'Rincón Casa Cultural (Caba)',
-          'https://l.instagram.com/?u=https%3A%2F%2Fwww.passline.com%2Feventos%2Fctrlz-ed-005&amp;e=AT0V86lqmG7wfRfobgb6dNnS8KhfEIN6r6aV3n4OQ7uk0MxoNKJcInLJMw3N9V9fDbwcy8R1cHRDgUXfmFyJNHRepuMi8GHpqzkNCgc',
-          'https://ugc.production.linktr.ee/d5a89e54-84d9-4a03-b735-d0130c97502e_IMG-9238.jpeg',
-          ARRAY['Miguela', 'Øban’t', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'b8981cc3-1adc-4206-9b26-30674be58ac1',
-          'Clymb + Naza',
-          'Progre',
-          '2023/08/26',
-          'Cañitas (CABA)',
-          'https://www.passline.com/eventos/fusion-90-x-on-the-reg-clymb-naza',
-          'https://ugc.production.linktr.ee/785eae81-400f-49f1-97a3-aa439ca44ea6_IMG-8034.jpeg',
-          ARRAY['Clymb', 'Naza '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '33dafb38-5fa5-4919-b0ce-76e83755388a',
-          'Luis Caballero (Hybrid set)',
-          'Hybrid set',
-          '2023/08/26',
-          'Independence Pres (Palermo)',
-          'https://linktr.ee/independencemusic/?fbclid=PAAaZLEyjShu6yrYu1toZMOzzCBKaKR7eg8tC9I1Gx6D0g3x03fzaepkcrf9U_aem_Ab4mOMLgcRL-1RwYcDTwVpTe7LlDPsXcP8URYPpMuty5XLDATIgavMhaq4FJhX59CnE',
-          'https://ugc.production.linktr.ee/2a64be7b-6452-43b7-ad48-67157ecfe34f_IMG-9514.jpeg',
-          ARRAY['Luis Caballero ', 'otros'],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'f3ac3f54-2eac-407c-8dd7-4cf62cc7ad7a',
-          'Baunder + Antrim',
-          'Progre',
-          '2023/08/26',
-          'Dune Park (Caba)',
-          'https://venti.com.ar/evento/baunder-antrim-dune-park-26-08?fbclid=PAAaYA1swPjf0O9wm-Z-brkUn0_ev0OKi-2g4vYSX-hgSYOlwJ_tHfhw0-4Lc_aem_ASpXDtLz5Y6wG-7NonpbwuUOOdtfILDv5I7nTCQGx5gyMF3TBowLhpxMhynu9bvNlLA',
-          'https://ugc.production.linktr.ee/d90aedd5-5f39-4cc2-a8d3-50b6eeee9e84_IMG-9464.jpeg',
-          ARRAY['Baunder', 'Antrim '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '1abef594-7a50-4c61-b465-df848b3d92fa',
-          'Agustín Ficarra + Burgos',
-          'Progre',
-          '2023/08/26',
-          'Secret Location (Palermo)',
-          'https://wonder-ticket.com/allindeep?fbclid=PAAaYuMyisA1E2_QJJtB2bqCiTkfHKyo1mFSwDsyV7Ytnqe1aFEc-W2PRdfH0_aem_AbJ0qvrei_LKRai_uyeoW-BKNmoaBEV0u8wE8ImT9AVpyXdt8kj6W0sTz1Yvfg_pBrY',
-          'https://ugc.production.linktr.ee/955936f0-060c-47b4-abb0-592179464f6e_IMG-7765.jpeg',
-          ARRAY['Agustín Ficarra', 'Burgos', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '4417e0f2-3616-4805-b4ba-31efe72bf07a',
-          '🏳️‍🌈 Hysteria Rave (Hard Techno)',
-          'Hard Techno',
-          '2023/08/26',
-          'Guatemala 4516 (Palermo)',
-          'https://www.instagram.com/hysteria.rave',
-          'https://ugc.production.linktr.ee/cf794332-1607-4334-9548-0db0f3f5ba74_Captura-de-Pantalla-2023-08-16-a-la-s--00.53.42.png',
-          ARRAY['🏳️‍🌈 Hysteria Rave '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'c53e4681-3397-4abe-871e-c27519b1bf29',
-          '🏳️‍🌈 Pam Mac Allister + Dich Brothers',
-          'Tech House',
-          '2023/08/26',
-          'Club 69 (Palermo)',
-          'https://www.passline.com/sitio-evento/club-69-super-sabados-agosto-en-niceto-club-197038',
-          'https://ugc.production.linktr.ee/03d5609d-01e8-4d9c-9de7-88c4b001e29b_IMG-8045.jpeg',
-          ARRAY['🏳️‍🌈 Pam Mac Allister', 'Dich Brothers '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '80e8019f-7acc-4a82-b01f-8b899d7ae2f0',
-          'AFTER 🟣 Mazzeo + Camila Arach',
-          'Techno Melódico/Techno',
-          '2023/undefined/Pub',
-          '',
-          'https://venti.com.ar/evento/mazzeo-camila-arach-feddox-the-gallery?fbclid=PAAabvOo85wmuEhnELQOG3YMWc2u6EjQmVVbsGffIw6eInMZlKeYfLMdStLNA_aem_AY7dJEyBS-LE-tJMBtOBDhcTp02xo1Js93lSi5163MAlUqeD3e-6W2NMQlS2u1U0Kp8',
-          'https://ugc.production.linktr.ee/0d5a0111-e6fe-4437-9768-a414118d502e_IMG-8074.jpeg',
-          ARRAY['AFTER 🟣 Mazzeo', 'Camila Arach', 'otro  Sab 26/08 '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '3440d329-93f0-4660-9a5f-ba8e9eb39283',
-          'AFTER 🟣 Dich Brothers (Techno)',
-          'Techno',
-          '2023/08/26',
-          'Boodah Club (Palermo)',
-          'https://www.instagram.com/moove_bsas',
-          'https://ugc.production.linktr.ee/000c415a-1df7-4afc-9760-07612bf291fe_Captura-de-Pantalla-2023-08-16-a-la-s--00.50.15.png',
-          ARRAY['AFTER 🟣 Dich Brothers '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'e20d7ae1-5b35-4925-80be-278c46b522a1',
-          'Nicolás Taboada + Flor Coto',
-          'Techno',
-          '2023/08/27',
-          'Rio (Punta Carrasco)',
-          'https://wearebombo.app.link/wxuajJrfbCb',
-          'https://ugc.production.linktr.ee/17fb15f0-d386-4d63-a33c-42cc0a8b269d_IMG-7795.jpeg',
-          ARRAY['Nicolás Taboada', 'Flor Coto', 'otro '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'b413d712-1f81-4365-b747-4deafa841834',
-          'Colores + Fidelo90s & Ene.n',
-          'Techno',
-          '2023/08/27',
-          'Hood Zone (Tigre)',
-          'https://instagram.com/hoodzone.techno?igshid=NTc4MTIwNjQ2YQ==',
-          'https://ugc.production.linktr.ee/07bf9721-be7f-481a-ab00-9cbaec7bcf0c_IMG-9615.jpeg',
-          ARRAY['Colores', 'Fidelo90s & Ene.n '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'f6a1d07a-fd36-47d0-ada8-d95ed99608b6',
-          'Zonic + Juan Ferreyro',
-          'Tech House',
-          '2023/08/27',
-          'Groove (Palermo)',
-          'https://www.passline.com/eventos/sundays-20-by-groove-domingo-27-de-agosto-18?fbclid=PAAaYCspM73SiSz2lwErn06EjaoBHPYMg-ysAtsmMCR96IoMTvG8KoAE3WCXw_aem_AXhnFrC0RQJnGojbqsFAXxYf5boM22BXa7RcNAvbA3kgLxI7p2-yRI9e8z_F4OaBE_8',
-          'https://ugc.production.linktr.ee/48759d56-3f2f-4ef8-a72f-f015cee9c2ce_IMG-9622.jpeg',
-          ARRAY['Zonic', 'Juan Ferreyro', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '890aab30-5d6f-4af5-a1ba-a41adefc0e50',
-          'Figueras + Lucas Y',
-          'Progre',
-          '2023/08/31',
-          'Afrika (Recoleta)',
-          'https://www.instagram.com/lajuanitarecords/',
-          'https://ugc.production.linktr.ee/q6jcziwkQ6aghFJMA19o_Captura%20de%20Pantalla%202023-08-01%20a%20la(s)%2014.53.38.png',
-          ARRAY['Figueras', 'Lucas Y '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '1954336a-9b25-42cb-887a-95ee533e64ef',
-          'Martino Stefano + Fede Llobet b2b Mati Saldaño',
-          'Tech/Techno',
-          '2023/09/01',
-          'La bibloteca (San Telmo)',
-          'https://www.passline.com/eventos/la-biblioteca-viernes-109',
-          'undefined',
-          ARRAY['Martino Stefano', 'Fede Llobet b2b Mati Saldaño', 'otro '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '548a327d-94a8-4246-af4b-6b7c5bb814a5',
-          'Glowal + Folgar',
-          'Melodic House',
-          '2023/09/01',
-          'Crobar (Palermo)',
-          'https://wearebombo.app.link/G0XBV7fhYBb',
-          'https://ugc.production.linktr.ee/4357dbee-b103-4f76-a873-6af18b94268e_IMG-7664.jpeg',
-          ARRAY['Glowal', 'Folgar', 'otro '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '56fbcb5f-9291-4dd0-8587-dcdac0ebc49f',
-          'Unlighted + PVR',
-          'Techno',
-          '2023/09/01',
-          'Uniclub (Caba)',
-          'https://alpogo.com/evento/utopic-be-techno-en-uniclub-12109?fbclid=PAAaZyPWa7fOu-GOAH3p3xzzPhkcSOMICT9Sxru1PFsOrLejyWMVz_K_0eZZM_aem_ATNB1vmJOkQljM2XYJOGwTMdbei5wT1ga1IQwLhZaLPDePIb7EhV55GMlNbzErwj6Y8',
-          'https://ugc.production.linktr.ee/0b853a6a-ac4d-44f5-ba45-cc81f02d700c_IMG-9613.jpeg',
-          ARRAY['Unlighted', 'PVR', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '881b2987-07dc-4d5c-96a4-5eb1c39479a5',
-          'Frequenssive + Uncel T & Alva',
-          'Progre',
-          '2023/09/01',
-          'Pylae (Palermo)',
-          'https://instagram.com/pylaerestobar?igshid=MzRlODBiNWFlZA==',
-          'https://ugc.production.linktr.ee/8dfef4be-4786-42fc-9712-8ad3441316fa_IMG-8064.jpeg',
-          ARRAY['Frequenssive', 'Uncel T & Alva', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '1b865dbc-6e92-4b7c-bdba-2d71cc878649',
-          'Eme + Pagani',
-          'Minimal House',
-          '2023/09/01',
-          'Lomas de Zamora',
-          'https://instagram.com/southsideprod_?igshid=NTc4MTIwNjQ2YQ==',
-          'https://ugc.production.linktr.ee/3f128ff4-217c-4deb-8e67-305983d74776_IMG-9620.jpeg',
-          ARRAY['Eme', 'Pagani', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'a8887f20-7544-4b88-a173-1f99f30d90e8',
-          'Ppzz + Karma',
-          'Techno',
-          '2023/09/01',
-          'Vox (Monserrat)',
-          'https://instagram.com/mondlicht.techno?igshid=MzRlODBiNWFlZA==',
-          'https://ugc.production.linktr.ee/bf528d62-f68f-4d5e-a71d-dc03fb0bab54_IMG-8047.jpeg',
-          ARRAY['Ppzz', 'Karma', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '1671e01f-300e-4125-9cc5-8d4361cc0002',
-          'Hernan Paredes',
-          'Techno',
-          '2023/09/02',
-          'Club Bahrein (Congreso))',
-          'https://www.passline.com/eventos/sabado-2923-inauguracion-club-bahrein-20?fbclid=PAAaYoiguuGc4rPEYY_W8pmNQ9MmtPhQtEnVGuIN17DGo6ieE1arH03A2dF8U_aem_AeVNVefP1UsVFkdYHyyY224e-2WDblQ0QPmmMTwyHEsS8mLs6IVumWJ70hjTP_pAn-s',
-          'https://ugc.production.linktr.ee/339e3da8-b9d8-40fc-b1bf-624489d8217b_IMG-9244.jpeg',
-          ARRAY['Hernan Paredes', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '93b4988c-0a36-4fa8-9a8c-2292411e8d75',
-          'Mas Bass + Vicky Sand',
-          'Techno',
-          '2023/09/02',
-          'Dune Park (Villa Crespo)',
-          'https://venti.com.ar/evento/attacks-records-showcase?fbclid=PAAaYYgamnHnlPtyyRw7bMtD1K2pNaUvqoHWS0eq-xVAjw5QEHuztKrIWlbMg_aem_AUSg_4br5nZCwEVdyXYHa7oRJk09hXD2HCmd2bD-zF_glluys_OQmsMwMhdieJrHutM',
-          'https://ugc.production.linktr.ee/6862f5b5-7a34-49e5-8b41-5ba66f8b3a92_IMG-8033.jpeg',
-          ARRAY['Mas Bass', 'Vicky Sand', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'e4c8c40c-2775-419a-903c-ec42838648bc',
-          'Soundexile + Xul Nox',
-          'Melodic Techno',
-          '2023/09/02',
-          'The Bow (Punta Carrasco)',
-          'https://wearebombo.app.link/9ugAPVkCtCb?fbclid=PAAaadNSplc4yamAH2eB_kU3juLV6K3B2YkOoTIIVYc84aQsk5chqJV5KwiyQ_aem_AXhjc7kJivXQ44r-Snqc0cW5rWxNH1muPJMVuTre3Z35iNccAgoi3oPQlezAG1e4bNw&amp;_p=c11c31dc99016ceee41990fcedb4&amp;_i=npEMPYdZcUeVBdy3BhlUWeltq7SMiXV4RHcf1Rj',
-          'https://ugc.production.linktr.ee/0d660681-e222-4181-9aad-691acd15d273_IMG-9629.jpeg',
-          ARRAY['Soundexile', 'Xul Nox', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '0a6a0450-302b-4b83-8c24-d91aa341e94a',
-          'Sacha Rener + Juan Martin AR',
-          'Progre',
-          '2023/09/02',
-          'La bibloteca (San Telmo)',
-          'https://www.passline.com/eventos/la-biblioteca-sabado-209-inusual',
-          'undefined',
-          ARRAY['Sacha Rener', 'Juan Martin AR', 'otro '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'ba8ed6de-7f89-492a-b023-5eaf44c9bd40',
-          'Hernán Paredes + Abel Meyer b2b Sergio Athos',
-          'Techno',
-          '2023/09/02',
-          'Bahrein',
-          'https://instagram.com/technoir.ba?igshid=NTc4MTIwNjQ2YQ==',
-          'https://ugc.production.linktr.ee/f11d8f31-72fb-44d3-980e-c36ad184914e_IMG-9623.jpeg',
-          ARRAY['Hernán Paredes', 'Abel Meyer b2b Sergio Athos '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '129158d6-81d1-41f1-89fb-a38fffc47ef5',
-          'GMey + Harrizon',
-          'Psytrance',
-          '2023/09/02',
-          'CABA',
-          'https://instagram.com/livingroom_oficial?igshid=MzRlODBiNWFlZA==',
-          'https://ugc.production.linktr.ee/bb285bff-8f46-493e-a9c0-d17e28278065_IMG-8073.jpeg',
-          ARRAY['GMey', 'Harrizon', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '61bc5540-7ca2-47d0-bd3e-c6d258900e51',
-          'Aku + Ludmila',
-          'Progre',
-          '2023/09/02',
-          'Pylae (Palermo)',
-          'https://instagram.com/pylaerestobar?igshid=MzRlODBiNWFlZA==',
-          'https://ugc.production.linktr.ee/f4f26d84-8ef0-4383-a3e7-3733fe5106c9_IMG-8065.jpeg',
-          ARRAY['Aku', 'Ludmila', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '18afe4b4-fbf3-439b-99fa-e9267189ecc5',
-          'Hozho + Määt',
-          'Melodark Techno',
-          '2023/09/03',
-          'Rio (Punta Carrasco)',
-          'https://wearebombo.app.link/yfxI9XKnvCb',
-          'https://ugc.production.linktr.ee/e3e16e5a-d53b-4667-beeb-2425832fc5e1_IMG-8062.jpeg',
-          ARRAY['Hozho', 'Määt', 'otro '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '444c79ad-8083-4120-9ec4-eb239d35f9b3',
-          'Markus Schulz (Techno)',
-          'Techno',
-          '2023/09/08',
-          'Amerika (Palermo)',
-          'https://entradas.tuentrada.com/list/partnerAdvantage?code=Nightclubber23',
-          'https://ugc.production.linktr.ee/yEn1m45RSmOHU2tE5VtG_image',
-          ARRAY['Markus Schulz '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '20cde7cb-43a6-4455-9de0-048cbdf700ca',
-          'Ric Niels + Maezbi',
-          'Progre',
-          '2023/09/08',
-          'La bibloteca (San Telmo)',
-          'https://www.passline.com/eventos/la-biblioteca-progressive-ar-viernes-809',
-          'https://ugc.production.linktr.ee/8d8cd88d-dfa3-4b63-88ea-4b0eee8a9ee8_7b41b414-ec2f-45c3-8ccb-88e4fe841958-la-biblioteca-progressive-ar-viernes-809-198859-img.jpeg',
-          ARRAY['Ric Niels', 'Maezbi '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'f000bbf9-ffdd-4a6a-b1cf-c88214d62c77',
-          'Len Faki (Techno)',
-          'Techno',
-          '2023/09/08',
-          'Crobar (Palermo)',
-          'https://wearebombo.app.link/rZTo2oz97Bb',
-          'https://ugc.production.linktr.ee/ff8b80fd-4384-4b57-bf50-313be744021b_IMG-7775.jpeg',
-          ARRAY['Len Faki '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '14c49f4d-b918-4c87-8490-64daf262d9d7',
-          'P.O.T. (AR) b2b Nicolás Casalegno',
-          'AR',
-          '2023/09/08',
-          'Pylae (Palermo)',
-          'https://instagram.com/pylaerestobar?igshid=MzRlODBiNWFlZA==',
-          'https://ugc.production.linktr.ee/b380e0db-9a6c-4bc1-b0dd-c094524b1590_IMG-8066.jpeg',
-          ARRAY['P.O.T.  b2b Nicolás Casalegno', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '84b4eb0e-5c1f-4c7d-88a0-5cc126c12b05',
-          'No Time (Techno)',
-          'Techno',
-          '2023/09/08',
-          'Under Club (Palermo)',
-          'https://tickets.underclub.com.ar/evento/combo-no-time?ticket=edaeffa2-d237-419a-9934-6fb1ec64a60e',
-          'https://ugc.production.linktr.ee/6d749edf-2841-42a6-845a-0a6e38f7bf5c_77c87435-64f8-4c41-bd67-0f5df2e51746-1692306375500-lg.jpeg',
-          ARRAY['No Time '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '5a72f839-f2b6-4b2e-b992-de7c34562e87',
-          'Marcelo Vasami b2b Nicolás Rada + John Cosani',
-          'Progre',
-          '2023/09/09',
-          'Estadio Uno (La Plata)',
-          'https://wearebombo.app.link/nAobLxcovCb',
-          'https://ugc.production.linktr.ee/9fa94967-8ce5-4867-b0f0-0a96d0bde509_IMG-8063.jpeg',
-          ARRAY['Marcelo Vasami b2b Nicolás Rada', 'John Cosani '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '29e41957-308b-41d8-b730-00024c37261e',
-          'Bob Tosh + Indiegenas',
-          'Techno',
-          '2023/09/09',
-          'Jet',
-          'https://venti.com.ar/evento/goom-gum-bob-tosh-indiegenas-gueva/duskredes?fbclid=PAAaYcHMy6wHXVPDUIX4gTl1ro6iPO-zmtkoegxWE31asEkYDWVjsbm9qNgMs_aem_AaPoB9LzqdI9fTwYTDTpfVfsVOmlOb-rQSgXcqanEdpbBTNtTaHg9m61BiSWF93H-PI',
-          'https://ugc.production.linktr.ee/04af0814-1d79-42a4-b0a1-c0e4f12e3bf1_IMG-9396.jpeg',
-          ARRAY['Bob Tosh', 'Indiegenas', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'fdbbc683-cbdf-44e2-8b7d-7e843227e139',
-          'Brian Gros + Milka Lopez',
-          '',
-          '2023/09/09',
-          'Nuevo Bahrein (Congreso)',
-          'https://www.passline.com/eventos/sabado-9923-bunker-xxx-con-brian-gros-milka-lopez-sergio-athos-b2b-tovi',
-          'undefined',
-          ARRAY['Brian Gros', 'Milka Lopez', 'otros'],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '094d632f-3f37-481a-a72b-9910b02773b0',
-          'Lemonade + Fede Melidore',
-          'Progre',
-          '2023/09/09',
-          'Bower (Escobar)',
-          'https://www.passline.com/eventos/bower-pres-authentic-with-lemonade-fede-melidore-salinas?fbclid=PAAaZvmX-IzSdHADQckXrS7i0hP8bUHADp27EH1oyHh8j13S0Fwsc-hPZHDbI_aem_ATNX0GqIX4WEpGWIMWLkZGWJAJXwWC9nmHLYpfsE5b6fAO5fsMjKZoLEAdjgVOqSeaQ',
-          'https://ugc.production.linktr.ee/6bcb44bd-9c1e-4665-813f-3dc772dd64bb_IMG-9474.jpeg',
-          ARRAY['Lemonade', 'Fede Melidore', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'a03a0e19-15c0-49cd-8398-3fa78733d7e0',
-          'Nacho Varela & Cruz Vittor + Nahue Sintes',
-          'Progre',
-          '2023/09/09',
-          'Runa Club (Palermo)',
-          'https://www.passline.com/eventos/runa-x-belong-to-saturday-0909/beford-8',
-          'undefined',
-          ARRAY['Nacho Varela & Cruz Vittor', 'Nahue Sintes', 'otro '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '6c98f51c-3e5e-4698-b7d3-4fdfa04ad652',
-          'Sahar Z + Tinga',
-          'Progre',
-          '2023/09/15',
-          'Elements (Palermo)',
-          'https://venti.com.ar/evento/sahar-z-tinga-pau-grossi/jodi',
-          'https://ugc.production.linktr.ee/08c33baf-a651-4f62-b7ed-b81269705f1f_27415513-dbbd-44b9-a16b-ab61b9ac8b2d-1692062551829-lg.jpeg',
-          ARRAY['Sahar Z', 'Tinga', 'Pau Grossi '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '73d7614a-d421-4806-ad7c-8992dc5096c9',
-          'Pan-Pot (Techno)',
-          'Techno',
-          '2023/09/15',
-          'Crobar (Palermo)',
-          'https://wearebombo.app.link/04cKxCxhYBb',
-          'https://ugc.production.linktr.ee/748c2f3b-938e-4afc-82a9-5c04a21ded9f_IMG-7665.jpeg',
-          ARRAY['Pan-Pot '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '85a16af3-cf90-4104-b9ab-d36d99051392',
-          'EANP + Gonzalo Sacc',
-          'Progre',
-          '2023/09/15',
-          'Clique Club (Lanús)',
-          'https://linktr.ee/southsideproductions',
-          'https://ugc.production.linktr.ee/77c0cc89-61a6-4e7c-ab61-11bc8c92ae46_IMG-9607.jpeg',
-          ARRAY['EANP', 'Gonzalo Sacc', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'f0921cfa-ada6-464e-a551-012a5d2c69b4',
-          'Teenage Mutants (Future Techno)',
-          'Future Techno',
-          '2023/09/15',
-          'Uniclub (Caba)',
-          'https://alpogo.com/evento/teenage-mutants-3-horas-set-15-de-septiembre-uniclub-11888?fbclid=PAAaZ8WWrqDPXB_Xz4VcAW0ZDLbF9TT2pFzzaeXDsH3wc6KIZ8iCxmnMtWfvg_aem_AQO2eRL5mY2P9iaftXtbcC4Pi2PT17uNKXxs3AR8NSoS4M3oCFsE0Xp1DLq66kr3OfU',
-          'https://ugc.production.linktr.ee/b0697c33-8068-4eb4-b92e-4d19cb5dc644_IMG-9427.jpeg',
-          ARRAY['Teenage Mutants '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'b13e9498-753e-4f2b-93a3-f7e28a3b2aff',
-          'Ivan Aliaga + Tata Bustos',
-          'Progre',
-          '2023/09/16',
-          'Av Cordoba 1768 (Congreso)',
-          'https://www.passline.com/eventos/safari-1609',
-          'undefined',
-          ARRAY['Ivan Aliaga', 'Tata Bustos', 'otro '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '7df73584-66cd-43af-9eca-51b749511b1b',
-          'D3FAI + Milka Lopez',
-          'Techno',
-          '2023/09/16',
-          'Bahrein 2.0 (Congreso)',
-          'https://www.passline.com/eventos/sabado-16923-club-bahrein-20-d3fai-milka-lopez-sergio-athos',
-          'undefined',
-          ARRAY['D3FAI', 'Milka Lopez', 'otro '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'cf5136a8-1fa3-4e11-be36-ec3439f95c23',
-          'Ezequiel Arias + Maxi Vera & Martin Bernini',
-          '',
-          '2023/09/16',
+          '2023/11/17',
           'La Biblioteca (San Telmo)',
-          'https://www.passline.com/eventos/ezequiel-arias-by-style-sound-sabado-1609-la-biblioteca',
-          'undefined',
-          ARRAY['Ezequiel Arias', 'Maxi Vera & Martin Bernini'],
+          'https://www.passline.com/eventos/john-cosani-govinda-juan-visca-la-biblioteca',
+          'https://ugc.production.linktr.ee/24fa6965-5fee-4fa8-8071-d544bf372e3f_3003cf43-1bcb-40ba-ab91-dd53c7e78abd-john-cosani-govinda-juan-visca-la-biblioteca-210044-img.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['John Cosani', 'Govinda', 'otro '],
           '258fd495-92d3-4119-aa37-0d1c684a0237'
         );
       
@@ -2051,206 +155,14 @@
           city_id
         )
         VALUES (
-          '5645fb9b-11c1-4d10-8345-ff44b458d5da',
-          'Hot Since 82 + Sound Process',
-          'Tech House',
-          '2023/09/23',
-          'Mandarine Tent (Costanera)',
-          'https://wearebombo.app.link/x5r9gTh9qBb',
-          'https://ugc.production.linktr.ee/df408a14-540e-4f4e-8a9f-aa8986fca005_IMG-7778.jpeg',
-          ARRAY['Hot Since 82', 'Sound Process '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '81f1b3e3-ad25-458c-ae9c-56fae143f818',
-          'Guy J',
-          '',
-          '2023/09/23',
-          'Madero Boardwalk (Puerto Madero)',
-          'https://www.passline.com/eventos/pm-open-air-opening-party-feat-guy-j-23092023',
-          'https://ugc.production.linktr.ee/54916be7-7fd4-497a-97ef-bafd7db8dce1_IMG-7454.jpeg',
-          ARRAY['Guy J'],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'a1a2df86-1495-4b50-a7f9-6db966db133c',
-          'Michel Lauriola (Psy)',
-          'Psy',
-          '2023/09/23',
-          'Secret Location (San Telmo)',
-          'https://instagram.com/pulserecords.ar?igshid=NTc4MTIwNjQ2YQ==',
-          'https://ugc.production.linktr.ee/14af5d82-fbe1-40bd-83a7-8c25bd864e94_IMG-9421.jpeg',
-          ARRAY['Michel Lauriola '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '04402d42-c4f3-4bd0-953a-a1fd83ca1963',
-          'Jimi Jules (Deep House)',
-          'Deep House',
-          '2023/09/29',
-          'Palacio Alsina (Monserrat)',
-          'https://planout.ar/channel/ar/event/4095-im-here-29-9',
-          'https://ugc.production.linktr.ee/29a97bbe-5237-4584-87bd-b68f4f8d96ca_IMG-7780.jpeg',
-          ARRAY['Jimi Jules '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '3878289d-4b50-4d07-aef8-1a57e6a769ad',
-          'Green Velvet + Steve Lawler',
-          'Deep Tech House',
-          '2023/09/30',
-          'Moscu (Costanera)',
-          'https://www.tkt-store.com/event/lalaland-buenos-aires-2023',
-          'https://ugc.production.linktr.ee/NU5qOqBQpC7hXUihCgvs_51cdf68f-f51b-4265-9419-83943c64e2c8-lalaland-banner-webticketsonsale01-1.jpg',
-          ARRAY['Green Velvet', 'Steve Lawler', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'ed2d2bb7-6003-4f2d-8c82-c2198260efe8',
-          'Juan Hansen (Live)',
-          'Live',
-          '2023/09/30',
-          'Amerika (Palermo)',
-          'https://www.passline.com/eventos/crew-savage-x-juan-hansen-x-amk',
-          'https://ugc.production.linktr.ee/XRzirG8SbGLuXBRdROsC_crew-savage-x-juan-hansen-x-amk-img.jpg',
-          ARRAY['Juan Hansen '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '007474ae-7c31-4ad9-ab2d-ca7b4aa5a2d8',
-          'Paula Os + Abity',
-          'Progre',
-          '2023/09/30',
-          'La Biblioteca (Monserrat)',
-          'https://www.passline.com/eventos/paula-os-la-biblioteca-sabado-2608',
-          'https://ugc.production.linktr.ee/8d4abeb3-ddc3-4d5b-b4fb-f04ac9b13e68_IMG-7762.jpeg',
-          ARRAY['Paula Os', 'Abity', 'otro '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '1f5e153f-0f57-4edc-85f6-5eb98e2b3cd8',
-          'PECES RAROS + Kevin Di Serna',
-          '',
-          '2023/10/07',
-          'Estadio Obras (Belgrano)',
-          'https://livepass.com.ar/events/peces-raros-en-estadio-obras?fbclid=PAAabR7na6j5s5aAdWfkEqNIzGd70-QyaWxU01oQatpPLEbQALik1bWYQUyg8_aem_AT71mxRfNUZeb3VQGOtXAU_6kyTlkgmUDb6UOHbti-WreSK5H6d6iRT16tTdHCfe0KU',
-          'https://ugc.production.linktr.ee/yVTRw9SxSJ6eC0Pe5om6_image',
-          ARRAY['PECES RAROS', 'Kevin Di Serna'],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '86bc3ce3-7d65-44d7-957c-01a14787e1e6',
-          'Camelphat (Techno)',
+          '942d26d8-8dc0-4794-9cf9-60cf1ee1f4e7',
+          'Sol Ortega + E110101',
           'Techno',
-          '2023/10/07',
-          'The Bow (Punta Carrasco)',
-          'https://l.instagram.com/?u=https%3A%2F%2Fwearebombo.app.link%2F5H2yhS3MhCb%3Ffbclid%3DPAAaa4p5_cbKkJ4I4IpHqUuAkG78RDQ_ayNvFfiBea6d1E1UQAVN_JLUVFubM_aem_Ab5yysyn0f7l338NxrDTXqXe3PwOqqEO-hUiXejRDOxSt1M5rNcsd1gBbHkOgfspG7c&amp;e=AT3bL6e2HXcqjCKRYwN5RQj18Ynvv_Kb6',
-          'https://ugc.production.linktr.ee/0c80002f-21b2-45a8-8c35-ab0c9d8a274b_IMG-9515.jpeg',
-          ARRAY['Camelphat '],
+          '2023/11/17',
+          'Deseo (Palermo)',
+          'https://www.passline.com/eventos/detroit-classic-gallery-214294?fbclid=PAAaawaEb217c6h-XVWVhSIxJzzfC_jFdUaHCz6DdeH72N0ZSuy4wIpRUAPLY_aem_AWtqInojhr_vMQH_E5JMBPAiVoCBgW2BqxaPJW03ZJ1n9hp8vF8IOiIkRdoPHI4J9_A',
+          'https://ugc.production.linktr.ee/05a46697-28be-4eb0-b5c4-d196a499b987_IMG-8801.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Sol Ortega', 'E110101 '],
           '258fd495-92d3-4119-aa37-0d1c684a0237'
         );
       
@@ -2267,14 +179,14 @@
           city_id
         )
         VALUES (
-          'fdb92625-5abf-44b6-9c30-c313f0c2360b',
-          'Âme (Deep House)',
-          'Deep House',
-          '2023/10/12',
-          'BNN (Costanera Norte)',
-          'https://www.passline.com/eventos/desert-in-me-x-ame-x-bnn',
-          'https://ugc.production.linktr.ee/dea44370-e3f1-4243-8e0b-a52ea59835a3_IMG-7777.jpeg',
-          ARRAY['Âme '],
+          'ebf86e48-c41d-47a4-a3d6-24868fc294cd',
+          'Franco Smith + Blashear',
+          'Techno',
+          '2023/11/17',
+          'Groove (Caba)',
+          'https://www.passline.com/eventos/t78-3-horas-set-argentina-debut-groove?fbclid=PAAaa2VOlTlnZbRQ3u0X_WtWBBNLgw_YciDiRJOV0w5_8qrg33cqBZTSOW0iM_aem_AUbSOvmlKOnQPG8huj0Lwzq7Wkf4X2VAl53o9sWKGLgv87ZX6b0TCpt6oEW5jW33MsY',
+          'https://ugc.production.linktr.ee/387da05f-e7f6-44fd-b098-0ae46f102623_IMG-0432.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Franco Smith', 'Blashear '],
           '258fd495-92d3-4119-aa37-0d1c684a0237'
         );
       
@@ -2291,38 +203,14 @@
           city_id
         )
         VALUES (
-          'f2bba199-de35-463c-8843-b28d529ba79f',
-          'Patrice Baumel + Juanchi Baez',
-          'Techno Melódico',
-          '2023/10/13',
-          'Palacio Alsina (Centro)',
-          'https://planout.ar/channel/ar/event/1543-sonora-flama-pres--patrice-baumel-alsina',
-          'https://ugc.production.linktr.ee/17325d95-13dc-4253-97ac-7a51dd76c940_8d887343-2a43-4bde-9465-9e1560be24b1-flyer-ticketera-planout--preview.jpeg',
-          ARRAY['Patrice Baumel', 'Juanchi Baez', 'Be Saint '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'b6c46695-dd2b-49ca-b51f-686f4c944491',
-          'Purple Disco Machine (House)',
+          '4a31b3a9-a026-4f23-807b-3de746f5e8d2',
+          'Enzo Siragusa + Mateo Dufour',
           'House',
-          '2023/10/14',
-          'Madero Boardwalk (Puerto Madero)',
-          'https://venti.com.ar/evento/s2gthr-open-air-festival-purple-disco-machine-madero-boardwalk-s-bado-14-10-23hs?fbclid=PAAaaZHiShRAygmEKsqNiX-X6GE14U6kxExAZqT-d1Ow7KVgbxZkBPSBHIgZk_aem_ARjoiOMNawY2nR9pbp6iKSff-K3WSotyjsPvs6ecWuwHjYDgM5PCReyZPILvfBF0Hgk',
-          'https://ugc.production.linktr.ee/D9gwkrkwT9eMIDlpaoOE_image',
-          ARRAY['Purple Disco Machine '],
+          '2023/11/17',
+          'Crobar (Palermo)',
+          'https://wearebombo.app.link/zCgs2oA2bEb',
+          'https://ugc.production.linktr.ee/30002b35-17d6-4210-bb58-566fa061be26_IMG-8822.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Enzo Siragusa', 'Mateo Dufour '],
           '258fd495-92d3-4119-aa37-0d1c684a0237'
         );
       
@@ -2339,14 +227,14 @@
           city_id
         )
         VALUES (
-          'cd316f3b-71c4-444c-b8ff-b22f597a4e4d',
-          'Nico Moreno (Techno)',
-          'Techno',
-          '2023/11/03',
-          'Amerika (Almagro)',
-          'https://venti.com.ar/evento/under-club-nico-moreno',
-          'https://ugc.production.linktr.ee/c7c0f2a9-f444-4a4b-9390-d80872d1ccba_IMG_7415.jpeg',
-          ARRAY['Nico Moreno '],
+          'a5908377-071a-472d-8824-76d611fdc4c7',
+          'Cera Khin + Hrddmat',
+          'Trance',
+          '2023/11/17',
+          'Heiss',
+          'https://venti.com.ar/evento/cera-khin-hrddmat-schvartz-man-17-11-blow?fbclid=PAAaZMYp6a5iuE7w97-pcl85OkWnveIrXgGYbM7eWWq-rLzD_cctKkNX0rE-8_aem_AY-1BB46CXBXGIVe7Bk0g9EXW5EU5RQLFeVjbGWqltymdbVa0ypssN2uVzFJGaCAN4g',
+          'https://ugc.production.linktr.ee/4adeef09-673c-4ce6-af08-472bc86a178d_IMG-0441.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Cera Khin', 'Hrddmat', 'otros '],
           '258fd495-92d3-4119-aa37-0d1c684a0237'
         );
       
@@ -2363,38 +251,14 @@
           city_id
         )
         VALUES (
-          'c92c1ce4-2cae-4c9d-9ac6-f5203f51f9c7',
-          'Charlotte De Witte (Techno)',
+          '9565b8ac-2457-462f-8f17-e2b2f5b3ba20',
+          'Julieta Kopp 7 horas (Techno)',
           'Techno',
-          '2023/11/04',
-          'Mandarine Park (Punta Carrasco)',
-          'https://wearebombo.app.link/gxidAYg6FBb?fbclid=PAAaa_UcG8JOHsZEe_ZqggcB9TL4KYSjEJYudLnt4CcdHfWuFyHhGO4b1TuZk_aem_AeN2vATd4eijN221bacfgcWsabbvgSSfdXkZf8zqhD1bg4pUfJ90_1RfMb8RTGCY3zo&amp;_p=c11c31dc99016ceee41990fcedb4&amp;_i=Dhxn8i3uhAhcjQW4tTNFpqgLoeGlzgcBVCoZDiL',
-          'https://ugc.production.linktr.ee/d61c8ffa-0bc1-48a2-88c9-3f66daf00e20_IMG-8993.jpeg',
-          ARRAY['Charlotte De Witte '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
-
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '264c3717-6dad-42d8-aed9-17739d1c4ad5',
-          'Mall Grab & Anita B Queen (Techno)',
-          'Techno',
-          '2023/11/10',
+          '2023/11/18',
           'Under Club (Palermo)',
-          'https://tickets.underclub.com.ar/evento/dia-uno-70-horas-techno-mall-grab-anita-b-queen',
-          'https://ugc.production.linktr.ee/X36y3c1Qx6oCiqnytQUz_1677771440122-lg.jpg',
-          ARRAY['Mall Grab & Anita B Queen '],
+          'https://tickets.underclub.com.ar/evento/julieta-kopp-7-horas',
+          'https://ugc.production.linktr.ee/9aa2ecbf-68cc-4d14-aca3-dbfad5b3763e_473c637a-2c88-41a0-97f9-384a7941f7de-1697016626969-lg.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Julieta Kopp 7 horas '],
           '258fd495-92d3-4119-aa37-0d1c684a0237'
         );
       
@@ -2411,14 +275,14 @@
           city_id
         )
         VALUES (
-          '0697aef1-0a2e-4f49-ac67-ae51e89123d0',
-          'Solomun',
-          '',
-          '2023/11/11',
-          'Mandarine Park',
-          'https://l.instagram.com/?u=https%3A%2F%2Fwearebombo.app.link%2FDDzWiSQ0IBb%3Ffbclid%3DPAAab9JkT38igWcdoJfL7Mcen-4QOc02f2G40HAxaZ8zk6gnvy1TAzZ2cilhM_aem_ATB8awp0O6CaUO4FKXFJoXt5Fth1pzq1QUfkBmCtqTPLO3p1p9YSGSb4oAj3T6f5Sfw&amp;e=AT2x_OekdUFAuAiPixHWCMV_vsNmY5W7f',
-          'https://ugc.production.linktr.ee/527fb787-4c78-4ded-ab06-ba151bf33dcd_IMG-9101.jpeg',
-          ARRAY['Solomun'],
+          'aca4f812-765b-4a86-91a3-3a0e2d68e8d9',
+          'Massano (Techno Melódico)',
+          'Techno Melódico',
+          '2023/11/18',
+          'The Bow (Punta Carrasco)',
+          'https://instagram.com/clubthebowba?igshid=MzRlODBiNWFlZA==',
+          'https://ugc.production.linktr.ee/ed064609-d5db-4037-b5f4-41136d45f33a_IMG-0909.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Massano '],
           '258fd495-92d3-4119-aa37-0d1c684a0237'
         );
       
@@ -2435,13 +299,205 @@
           city_id
         )
         VALUES (
-          '41183bfc-d515-4a17-a575-ad8405fd428f',
+          '14dfd61d-708a-4680-b225-963c3fa06431',
+          'Transformation + NAHS',
+          'Progressive',
+          '2023/11/18',
+          'La Biblioteca (San Telmo)',
+          'https://www.passline.com/eventos/style-sound-sabado-1811-la-biblioteca',
+          'https://ugc.production.linktr.ee/801c4d5e-332c-4dc5-ae66-585b219ae530_ecc7ab1e-e2e7-41f3-8fa2-ca6dde4885d2-style-sound-sabado-1811-la-biblioteca-216012-img.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Transformation', 'NAHS', 'otros '],
+          '258fd495-92d3-4119-aa37-0d1c684a0237'
+        );
+      
+
+        INSERT INTO event (
+          id,
+          event_title,
+          event_type,
+          event_date,
+          event_location,
+          ticket_link,
+          event_image,
+          event_djs,
+          city_id
+        )
+        VALUES (
+          '61339cf7-78a4-490d-95cb-7a1a9e32d1f0',
+          'Pole Folder + Kamilo Sanclamente b2b Emi Galvan',
+          'Progre',
+          '2023/11/19',
+          'Deseo (Villa Ortuzar)',
+          'https://www.passline.com/eventos/pole-folder-kamilo-sanclemente-b2b-emi-galvan-more/jodify-318702',
+          'undefined',
+          ARRAY['Pole Folder', 'Kamilo Sanclamente b2b Emi Galvan', 'otros '],
+          '258fd495-92d3-4119-aa37-0d1c684a0237'
+        );
+      
+
+        INSERT INTO event (
+          id,
+          event_title,
+          event_type,
+          event_date,
+          event_location,
+          ticket_link,
+          event_image,
+          event_djs,
+          city_id
+        )
+        VALUES (
+          '617c1d7e-9c54-4924-83f7-04ee72035e89',
+          'Ilario Alicante + Discip',
+          'Tech House',
+          '2023/11/19',
+          'Rio (Punta Carrasco)',
+          'https://wearebombo.app.link/KLO5x46ErDb',
+          'https://ugc.production.linktr.ee/ea0a6d01-d9fc-4771-9054-f889872ae27f_IMG-8462.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Ilario Alicante', 'Discip', 'otros '],
+          '258fd495-92d3-4119-aa37-0d1c684a0237'
+        );
+      
+
+        INSERT INTO event (
+          id,
+          event_title,
+          event_type,
+          event_date,
+          event_location,
+          ticket_link,
+          event_image,
+          event_djs,
+          city_id
+        )
+        VALUES (
+          'dc5d6201-e026-422c-9786-623979bcec3d',
+          'Paax + Nacho Varela & Cruz Vittor',
+          'Deep House',
+          '2023/11/19',
+          'BNN (Costanera Norte)',
+          'https://venti.com.ar/evento/desert-in-me-x-paax-tulum-nacho-varela-cruz-vittor-x-bnn?fbclid=PAAaa1CuxPRIpY5UvsZgEdq8A_fGtgNonWqPJUqT7nxE3w6zN7rQ-LmhvsKws_aem_AYKmlRWVBQ8v9PGA43yfNCvqohoSpoclE27rl7LmGyVRX5TTttYXXMw7zaolSIQQNus',
+          'https://ugc.production.linktr.ee/9fc179eb-e5c6-40da-85b4-25fc8ccc7194_IMG-8879.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Paax', 'Nacho Varela & Cruz Vittor', 'otros '],
+          '258fd495-92d3-4119-aa37-0d1c684a0237'
+        );
+      
+
+        INSERT INTO event (
+          id,
+          event_title,
+          event_type,
+          event_date,
+          event_location,
+          ticket_link,
+          event_image,
+          event_djs,
+          city_id
+        )
+        VALUES (
+          '57661536-f365-42d5-b95a-6f6228bba2fd',
+          'Gomboc & Under Club (Techno)',
+          'Techno',
+          '2023/11/19',
+          'Under Club (Palermo)',
+          'https://tickets.underclub.com.ar/evento/gomboc-under-club-dist-franco-rossi-ruiz-osc1',
+          'https://ugc.production.linktr.ee/29b8925e-81b3-44ad-ab34-cc5f2237f208_9925e693-65eb-4e00-af8f-827239c07499-1697017767383-lg.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Gomboc & Under Club '],
+          '258fd495-92d3-4119-aa37-0d1c684a0237'
+        );
+      
+
+        INSERT INTO event (
+          id,
+          event_title,
+          event_type,
+          event_date,
+          event_location,
+          ticket_link,
+          event_image,
+          event_djs,
+          city_id
+        )
+        VALUES (
+          '64a9bc08-5652-4427-b00c-23b38dbe7fd3',
+          'Mayro + Maezbi',
+          'Progre',
+          '2023/11/19',
+          'La Biblioteca (San Telmo)',
+          'https://www.passline.com/eventos/progressive-ar-domingo-1911-la-biblioteca?fbclid=PAAaae7eNm_X_37y9F2c1bfhGUu118XD6OnShBvjspCJyQ82PE-DP4HFhw_wY_aem_AYLnt7s8rMUov5ogzU0tDBE-yppvM1eCDlGE8yuImU8_dxrKUqOWNip4ZFzWkTBrSfg',
+          'https://ugc.production.linktr.ee/9079d8f6-f1d9-41b2-9c32-496e4527526c_IMG-8876.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Mayro', 'Maezbi', 'otros '],
+          '258fd495-92d3-4119-aa37-0d1c684a0237'
+        );
+      
+
+        INSERT INTO event (
+          id,
+          event_title,
+          event_type,
+          event_date,
+          event_location,
+          ticket_link,
+          event_image,
+          event_djs,
+          city_id
+        )
+        VALUES (
+          '5f562cc2-828f-482a-9903-43396fb8df87',
+          'Temple Gate + Le Brousse',
+          'Progre',
+          '2023/11/23',
+          'Afrika (Recoleta)',
+          'https://www.instagram.com/lajuanitamusic/',
+          'https://ugc.production.linktr.ee/41af6e0c-5551-479f-9c9b-7ddd66c643f6_Captura-de-Pantalla-2023-11-09-a-la-s--10.38.58.png?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Temple Gate', 'Le Brousse '],
+          '258fd495-92d3-4119-aa37-0d1c684a0237'
+        );
+      
+
+        INSERT INTO event (
+          id,
+          event_title,
+          event_type,
+          event_date,
+          event_location,
+          ticket_link,
+          event_image,
+          event_djs,
+          city_id
+        )
+        VALUES (
+          '914a8d74-3cea-414f-8cf8-74863d3361ab',
+          'Brigado Crew (Progre/Techno Melódico)',
+          'Progre/Techno Melódico',
+          '2023/11/24',
+          'Amk Club (Almagro)',
+          'https://venti.com.ar/evento/omnia-pres-brigado-crew-all-night-long-parte-2?utm_medium=linktreebutton&amp;utm_source=linktree&amp;utm_campaign=brigado+crew+%7C+all+night+long+%7C+parte+2+by+omnia',
+          'https://ugc.production.linktr.ee/39f988bf-2f47-4ac1-ba0d-61cc394b6280_a176d885-090a-4bdc-a42a-7434c8161b31-1697033442427-lg.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Brigado Crew '],
+          '258fd495-92d3-4119-aa37-0d1c684a0237'
+        );
+      
+
+        INSERT INTO event (
+          id,
+          event_title,
+          event_type,
+          event_date,
+          event_location,
+          ticket_link,
+          event_image,
+          event_djs,
+          city_id
+        )
+        VALUES (
+          'b18a1c75-b89d-443e-bccf-327d6bb40d8c',
           'Stephan Jolk + Tiello b2b Ccinni',
           'Techno Melódico',
           '2023/11/24',
           'Palacio Alsina (Monserrat)',
           'https://planout.ar/channel/ar/event/1416-sonora-flama-pres--stephan-jolk-alsina',
-          'https://ugc.production.linktr.ee/629029b4-6ba0-4c24-b019-394a4f137ea9_5d0beb9c-4c7f-4cb3-9ed5-d6a99db02081-sonora-flama-pres--stephan-jolk-alsina--preview.jpeg',
+          'https://ugc.production.linktr.ee/629029b4-6ba0-4c24-b019-394a4f137ea9_5d0beb9c-4c7f-4cb3-9ed5-d6a99db02081-sonora-flama-pres--stephan-jolk-alsina--preview.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
           ARRAY['Stephan Jolk', 'Tiello b2b Ccinni '],
           '258fd495-92d3-4119-aa37-0d1c684a0237'
         );
@@ -2459,13 +515,301 @@
           city_id
         )
         VALUES (
-          'e2a938f4-51a9-4594-8740-47c121934611',
+          '158be2cb-6e5c-4bd4-91ea-0e6c2153c53a',
+          'Udolph (Techno)',
+          'Techno',
+          '2023/11/24',
+          'La Biblio (San Telmo)',
+          'https://instagram.com/lapime.ba?igshid=aWszNnJkMXdpbjZo',
+          'https://ugc.production.linktr.ee/ccb20ec2-cdb6-4b81-bcc7-53f9359924f6_IMG-8969.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Udolph '],
+          '258fd495-92d3-4119-aa37-0d1c684a0237'
+        );
+      
+
+        INSERT INTO event (
+          id,
+          event_title,
+          event_type,
+          event_date,
+          event_location,
+          ticket_link,
+          event_image,
+          event_djs,
+          city_id
+        )
+        VALUES (
+          '38c4b9aa-37ba-47d9-924f-117eb269eebf',
+          'Arapu + Momo Trosman',
+          'House',
+          '2023/11/24',
+          'Crobar (Palermo)',
+          'https://wearebombo.app.link/Ugc6kQHFAEb',
+          'https://ugc.production.linktr.ee/43681ceb-9f47-4926-a35d-021dfcd4f45e_IMG-8980.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Arapu', 'Momo Trosman', 'otros '],
+          '258fd495-92d3-4119-aa37-0d1c684a0237'
+        );
+      
+
+        INSERT INTO event (
+          id,
+          event_title,
+          event_type,
+          event_date,
+          event_location,
+          ticket_link,
+          event_image,
+          event_djs,
+          city_id
+        )
+        VALUES (
+          '11a3eb2f-d7a0-43f1-9152-9dfdfa03ffd9',
+          'Facukid',
+          '',
+          '2023/undefined/Aniversario',
+          'Vie 24/11',
+          'https://www.passline.com/eventos/rym-aniversario?fbclid=PAAaZhgNTGWYXk4fOnk1LADXTR89FmYIMqWg8yM3JfMk75P8g2ZdIUZsWvd6M_aem_AbAjUneKtw1P3r4sBOlrtVSPsnJFlino4S2PmNFOYNQNLBtMCERb-aVvRlUo4lJ_-WY',
+          'https://ugc.production.linktr.ee/9200e87e-fb2c-424c-bb2d-412b237ff1d9_IMG-1283.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Facukid'],
+          '258fd495-92d3-4119-aa37-0d1c684a0237'
+        );
+      
+
+        INSERT INTO event (
+          id,
+          event_title,
+          event_type,
+          event_date,
+          event_location,
+          ticket_link,
+          event_image,
+          event_djs,
+          city_id
+        )
+        VALUES (
+          'abc31118-9361-4d51-965f-afde88061589',
+          'Oguz + Reveillon',
+          'Techno',
+          '2023/11/24',
+          'Crobar Studio (Palermo)',
+          'https://wearebombo.app.link/pGsJVbK1ZDb',
+          'https://ugc.production.linktr.ee/3d4464fd-b254-49ff-91d6-60f5a7d38989_IMG-8696.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Oguz', 'Reveillon', 'otros '],
+          '258fd495-92d3-4119-aa37-0d1c684a0237'
+        );
+      
+
+        INSERT INTO event (
+          id,
+          event_title,
+          event_type,
+          event_date,
+          event_location,
+          ticket_link,
+          event_image,
+          event_djs,
+          city_id
+        )
+        VALUES (
+          'e2d0ae5b-82bc-415d-b785-a6fb84882649',
+          'Fizz Music (House)',
+          'House',
+          '2023/11/24',
+          'Otra Historia (Villa Ortuzar)',
+          'https://otrahistoria.com.ar/evento/fizz-music/',
+          'https://ugc.production.linktr.ee/1f2f9ae7-c2a4-4e16-a52c-06dcc6d70778_cc36aa71-ac51-4ca6-be84-05c373b95945-Sin-titulo-1.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Fizz Music '],
+          '258fd495-92d3-4119-aa37-0d1c684a0237'
+        );
+      
+
+        INSERT INTO event (
+          id,
+          event_title,
+          event_type,
+          event_date,
+          event_location,
+          ticket_link,
+          event_image,
+          event_djs,
+          city_id
+        )
+        VALUES (
+          'e7639b48-c567-47c4-8791-57a3c6fe4b86',
+          'Ezequiel Arias+ Pechieu',
+          'Progre',
+          '2023/11/24',
+          'Club Elements (Palermo)',
+          'https://venti.com.ar/evento/ezequiel-arias-pechieu-papier/jodi',
+          'https://ugc.production.linktr.ee/30c8ab5f-9261-455b-bcb0-c35fb9af625e_88e944a2-1ae0-4b9e-a807-09684167666d-1698115465108-lg.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Ezequiel Arias+ Pechieu', 'otros '],
+          '258fd495-92d3-4119-aa37-0d1c684a0237'
+        );
+      
+
+        INSERT INTO event (
+          id,
+          event_title,
+          event_type,
+          event_date,
+          event_location,
+          ticket_link,
+          event_image,
+          event_djs,
+          city_id
+        )
+        VALUES (
+          '9377b5c8-76cb-4462-90ac-1cf4d559281e',
+          'Wave',
+          '',
+          '2023/11/24',
+          'Uniclub (Palermo)',
+          'https://alpogo.com/evento/wave-en-uniclub-12651',
+          'https://ugc.production.linktr.ee/46034268-1699-464b-908a-d8bd07c4684d_IMG-8872.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Wave'],
+          '258fd495-92d3-4119-aa37-0d1c684a0237'
+        );
+      
+
+        INSERT INTO event (
+          id,
+          event_title,
+          event_type,
+          event_date,
+          event_location,
+          ticket_link,
+          event_image,
+          event_djs,
+          city_id
+        )
+        VALUES (
+          '470621de-c380-4b8d-b26e-fc6c28ebcab4',
+          'Pacha 🍒 Buenos Aires Festival',
+          '',
+          '2023/11/25',
+          'Pacha (Costanera Norte)',
+          'https://www.tkt-store.com/event/pacha-buenos-aires-festival-2023',
+          'https://ugc.production.linktr.ee/f7d292ca-246b-41a0-acf8-b1c4e31c824a_1d6bbd83-01cf-407d-a1b5-8cb67000b95a-144b04a3-af0a-4b19-ad0e-3530dd90047b-pacha-banner-web-2.png?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Pacha 🍒 Buenos Aires Festival'],
+          '258fd495-92d3-4119-aa37-0d1c684a0237'
+        );
+      
+
+        INSERT INTO event (
+          id,
+          event_title,
+          event_type,
+          event_date,
+          event_location,
+          ticket_link,
+          event_image,
+          event_djs,
+          city_id
+        )
+        VALUES (
+          'e33333a1-09ab-42df-8b1c-8dd93a402566',
+          'Antrim (Progre)',
+          'Progre',
+          '2023/11/25',
+          'La Biblioteca (San Telmo)',
+          'https://www.passline.com/eventos/antrim-sabado-2511-la-biblioteca',
+          'https://ugc.production.linktr.ee/6dcc9ad1-944d-437f-962a-e8aab7c5ae49_61dad5cb-8c35-4e7a-a969-59bcdc87f183-antrim-sabado-2511-la-biblioteca-213334-img.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Antrim '],
+          '258fd495-92d3-4119-aa37-0d1c684a0237'
+        );
+      
+
+        INSERT INTO event (
+          id,
+          event_title,
+          event_type,
+          event_date,
+          event_location,
+          ticket_link,
+          event_image,
+          event_djs,
+          city_id
+        )
+        VALUES (
+          '20d73c6e-0031-4bd8-9bd0-8948fdc92f0b',
+          'Emi Galván + Mai Lawson',
+          'Progre',
+          '2023/11/25',
+          'Crobar (Palermo)',
+          'https://wearebombo.app.link/FXCheCYFAEb',
+          'https://ugc.production.linktr.ee/042afaed-db68-46dc-b98e-315a84758eed_IMG-8981.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Emi Galván', 'Mai Lawson', 'otros '],
+          '258fd495-92d3-4119-aa37-0d1c684a0237'
+        );
+      
+
+        INSERT INTO event (
+          id,
+          event_title,
+          event_type,
+          event_date,
+          event_location,
+          ticket_link,
+          event_image,
+          event_djs,
+          city_id
+        )
+        VALUES (
+          '0a4ba78e-f51e-4074-b39e-774109caad5b',
+          'Milena Adamis',
+          'Techno',
+          '2023/11/25',
+          'Secret Location (Zona Oeste)',
+          'https://www.passline.com/eventos/oeste-techno-aniversario?fbclid=PAAaYqn9q-t1J-2sZt1Er1q9qW5fBhXDAaD_IAQdoZMbIbMy37pIFeyabnkdk_aem_AYLBWSF302vsPoMSJnlzy3g34zUN4bGE_3JEstxnG4Ama9OfAVsVeLEio5U_9rsmwn4',
+          'https://ugc.production.linktr.ee/cc3dc1d9-f23a-45a1-ab9a-a58d02c296f0_IMG-8864.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Milena Adamis', 'otros '],
+          '258fd495-92d3-4119-aa37-0d1c684a0237'
+        );
+      
+
+        INSERT INTO event (
+          id,
+          event_title,
+          event_type,
+          event_date,
+          event_location,
+          ticket_link,
+          event_image,
+          event_djs,
+          city_id
+        )
+        VALUES (
+          '1e5931fb-3b80-428f-9cff-49aa2bd8bef8',
+          'D3fai + Cloz b2b D’Losantos',
+          'Techno/Techno Melódico',
+          '2023/11/25',
+          'Crobar Studio (Palermo)',
+          'https://wearebombo.app.link/VWoCmibGAEb',
+          'https://ugc.production.linktr.ee/6fb4168b-948f-474e-9cff-c314d592bd2b_IMG-8982.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['D3fai', 'Cloz b2b D’Losantos', 'otros '],
+          '258fd495-92d3-4119-aa37-0d1c684a0237'
+        );
+      
+
+        INSERT INTO event (
+          id,
+          event_title,
+          event_type,
+          event_date,
+          event_location,
+          ticket_link,
+          event_image,
+          event_djs,
+          city_id
+        )
+        VALUES (
+          '0b58b130-f394-4b06-9e1c-fe96663c39b9',
           'Fisher',
           '',
           '2023/11/25',
           'Mandarine Park',
           'https://linktr.ee/mandarinepark?fbclid=PAAabj6W8DtN9hb0Vdh0P71CtmMbXWRWlGZHdaobGgJQxnOD-XwO1-4L-5pfc_aem_AStg95zvQPB5BWoTnk2IBn-X2HJUA1SCTDfp7agTwvsHGmge6oUMbFnO4H3Gn8H8LuY',
-          'https://ugc.production.linktr.ee/2a8a3547-ac9d-4907-aff2-431e68e771d3_IMG-9432.jpeg',
+          'https://ugc.production.linktr.ee/2a8a3547-ac9d-4907-aff2-431e68e771d3_IMG-9432.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
           ARRAY['Fisher'],
           '258fd495-92d3-4119-aa37-0d1c684a0237'
         );
@@ -2483,13 +827,301 @@
           city_id
         )
         VALUES (
-          'af19fc0f-18c9-40d8-8523-2c4c29c389dd',
+          'bfd1bdc6-ddee-4c79-bb85-c880bdd63b3a',
+          'Mariano Dc 7 horas (Techno)',
+          'Techno',
+          '2023/11/25',
+          'Under Club (Palermo)',
+          'https://tickets.underclub.com.ar/evento/mariano-dc-7-horas-set',
+          'https://ugc.production.linktr.ee/46fc3c0e-ab4b-4abe-9f17-c99fdd88005c_ad3196f6-33cd-4966-85ed-0142ba300871-1697016763191-lg.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Mariano Dc 7 horas '],
+          '258fd495-92d3-4119-aa37-0d1c684a0237'
+        );
+      
+
+        INSERT INTO event (
+          id,
+          event_title,
+          event_type,
+          event_date,
+          event_location,
+          ticket_link,
+          event_image,
+          event_djs,
+          city_id
+        )
+        VALUES (
+          '159cc589-fb6e-49d6-a514-eedd90b4e8c2',
+          'Nicolás Taboada + Beico',
+          'Techno',
+          '2023/11/26',
+          'Rio (Punta Carrasco)',
+          'https://wearebombo.app.link/azuXn4yIAEb',
+          'https://ugc.production.linktr.ee/6b2aa7f2-d7f3-49ce-981e-97edacfc17d5_IMG-8984.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Nicolás Taboada', 'Beico', 'otros '],
+          '258fd495-92d3-4119-aa37-0d1c684a0237'
+        );
+      
+
+        INSERT INTO event (
+          id,
+          event_title,
+          event_type,
+          event_date,
+          event_location,
+          ticket_link,
+          event_image,
+          event_djs,
+          city_id
+        )
+        VALUES (
+          'a06b0ffa-e2e8-442f-9a67-b05f778f6f2d',
+          'Concept Mooving (Poolparty) (Tech)',
+          'Poolparty',
+          '2023/11/26',
+          'Zona Oeste',
+          'https://instagram.com/keepitflowing.producciones?igshid=NTc4MTIwNjQ2YQ==',
+          'https://ugc.production.linktr.ee/ed7012a2-860a-4c02-af28-b755e182812f_IMG-0374.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Concept Mooving  '],
+          '258fd495-92d3-4119-aa37-0d1c684a0237'
+        );
+      
+
+        INSERT INTO event (
+          id,
+          event_title,
+          event_type,
+          event_date,
+          event_location,
+          ticket_link,
+          event_image,
+          event_djs,
+          city_id
+        )
+        VALUES (
+          'b882167e-ceed-4534-acd9-b847bc8e45ea',
+          'Ariel Rodz + Mazzeo',
+          'Progre/Tech House',
+          '2023/11/26',
+          'Área Costanera (Quilmes)',
+          'https://www.passline.com/eventos/eden-festival?fbclid=PAAabXtw3lM47eZnNXXtK6_inEQOjLVqTqEDrEPt4GCBFu_JpVS1KuPjW44jQ_aem_AfSCbKRaaBK3nASOAflYvIwsZIGZsy4kxYUZ26QDgf4vW5obXz30DEghyq1toxjGessc3VEu9YHz_aaAHov0pw9R',
+          'https://ugc.production.linktr.ee/c852615a-f298-4ade-b289-1d156a4c0e92_IMG-8967.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Ariel Rodz', 'Mazzeo', 'otros '],
+          '258fd495-92d3-4119-aa37-0d1c684a0237'
+        );
+      
+
+        INSERT INTO event (
+          id,
+          event_title,
+          event_type,
+          event_date,
+          event_location,
+          ticket_link,
+          event_image,
+          event_djs,
+          city_id
+        )
+        VALUES (
+          'c021e3a9-88ec-4cc9-9aad-95fd42a9660d',
+          'Cocuns b2b Bessone + Papier b2b Lucas Salgado',
+          'House/Progre',
+          '2023/11/30',
+          'Afrika (Recoleta)',
+          'https://www.instagram.com/lajuanitamusic/',
+          'https://ugc.production.linktr.ee/18a5d453-5d10-4623-b79c-b491ecd4d044_Captura-de-Pantalla-2023-11-09-a-la-s--10.41.25.png?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Cocuns b2b Bessone', 'Papier b2b Lucas Salgado '],
+          '258fd495-92d3-4119-aa37-0d1c684a0237'
+        );
+      
+
+        INSERT INTO event (
+          id,
+          event_title,
+          event_type,
+          event_date,
+          event_location,
+          ticket_link,
+          event_image,
+          event_djs,
+          city_id
+        )
+        VALUES (
+          'c66e4ef1-ea1c-4faa-b6db-50e9c3747318',
+          'Carlita + DJ Tennis',
+          'Tech House/Deep House',
+          '2023/12/01',
+          'Palacio Alsina (Centro)',
+          'https://planout.ar/channel/ar/event/1084-crew-savage-x-carlita-dj-tennis-x-palacio-alsina?pr=1454',
+          'https://ugc.production.linktr.ee/505eb6cb-6c2c-4c12-bc75-ba9775a60b0a_e0c339d7-0695-47c7-9b73-3fada8caf6bb-imagen-png-20-2--preview.png?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Carlita', 'DJ Tennis', 'otros '],
+          '258fd495-92d3-4119-aa37-0d1c684a0237'
+        );
+      
+
+        INSERT INTO event (
+          id,
+          event_title,
+          event_type,
+          event_date,
+          event_location,
+          ticket_link,
+          event_image,
+          event_djs,
+          city_id
+        )
+        VALUES (
+          'a1c2b37d-7e3c-4ab7-ab32-eec267f81b33',
+          'Mita Gami+ This & That',
+          'Deep House',
+          '2023/12/01',
+          'Club Elements (Palermo)',
+          'https://venti.com.ar/evento/mita-gami-this-that-tina-nach/jodi',
+          'https://ugc.production.linktr.ee/efa9cc06-be49-48b0-a419-c11f5f27b89e_308c067a-7cb2-4f28-b324-3f69c5fc3916-1699376146897-lg.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Mita Gami+ This & That', 'otros '],
+          '258fd495-92d3-4119-aa37-0d1c684a0237'
+        );
+      
+
+        INSERT INTO event (
+          id,
+          event_title,
+          event_type,
+          event_date,
+          event_location,
+          ticket_link,
+          event_image,
+          event_djs,
+          city_id
+        )
+        VALUES (
+          'd379c074-f6b9-43af-8201-53f3ed25b251',
+          'Chris Liebing + Udolph',
+          'Techno',
+          '2023/12/01',
+          'Crobar (Palermo)',
+          'https://wearebombo.app.link/PXs8wv4PqEb',
+          'https://ugc.production.linktr.ee/99d7b96a-bfff-47fc-bbe3-8a6a30a28486_IMG-8909.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Chris Liebing', 'Udolph', 'otros '],
+          '258fd495-92d3-4119-aa37-0d1c684a0237'
+        );
+      
+
+        INSERT INTO event (
+          id,
+          event_title,
+          event_type,
+          event_date,
+          event_location,
+          ticket_link,
+          event_image,
+          event_djs,
+          city_id
+        )
+        VALUES (
+          'f82b1283-f5b5-40a1-9656-a38b6aa7f66b',
+          'Fiesta Bruta (Tech House)',
+          'Tech House',
+          '2023/12/01',
+          'La Biblioteca',
+          'https://www.passline.com/eventos/fiesta-bruta-viernes-112-la-biblioteca',
+          'https://ugc.production.linktr.ee/e2be7e1f-1d0e-48c5-8cf6-8cc0529b1ea1_f8a22367-152e-4126-b684-e616e7dd8fbf-fiesta-bruta-viernes-112-la-biblioteca-217071-img.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Fiesta Bruta '],
+          '258fd495-92d3-4119-aa37-0d1c684a0237'
+        );
+      
+
+        INSERT INTO event (
+          id,
+          event_title,
+          event_type,
+          event_date,
+          event_location,
+          ticket_link,
+          event_image,
+          event_djs,
+          city_id
+        )
+        VALUES (
+          '76e8c760-8d9f-4b2d-bcc6-81f92e88c844',
+          'Kindergarden (Tech House)',
+          'Tech House',
+          '2023/12/02',
+          'Crobar Studio (Palermo)',
+          'https://wearebombo.app.link/ytdFbOxGAEb',
+          'https://ugc.production.linktr.ee/712c5930-bbb9-44ef-b037-c5276fdeb4f5_IMG-8983.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Kindergarden '],
+          '258fd495-92d3-4119-aa37-0d1c684a0237'
+        );
+      
+
+        INSERT INTO event (
+          id,
+          event_title,
+          event_type,
+          event_date,
+          event_location,
+          ticket_link,
+          event_image,
+          event_djs,
+          city_id
+        )
+        VALUES (
+          'b147bcda-2d6b-47c4-9680-c43d835f97f3',
+          'Lexlay + Súper',
+          'Tech House',
+          '2023/12/03',
+          'Rio (Punta Carrasco)',
+          'https://wearebombo.app.link/qienXzHHqEb',
+          'https://ugc.production.linktr.ee/28837739-8abc-449d-a260-a84c30509826_IMG-8907.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Lexlay', 'Súper '],
+          '258fd495-92d3-4119-aa37-0d1c684a0237'
+        );
+      
+
+        INSERT INTO event (
+          id,
+          event_title,
+          event_type,
+          event_date,
+          event_location,
+          ticket_link,
+          event_image,
+          event_djs,
+          city_id
+        )
+        VALUES (
+          '3ce4935e-156e-4039-af21-ddf75c810fbd',
+          'Franzizca + Djs Pareja',
+          'Techno',
+          '2023/12/07',
+          'Teatro Vorterix (Chacarita)',
+          'https://www.allaccess.com.ar/event/numbers-festival',
+          'https://ugc.production.linktr.ee/a0c8d2d3-96ee-4435-8837-b224fe2087d3_eccc754d-445e-4244-a4ac-aeb0c2b22935-8645c7ff-be5c-446d-b80e-909dfb2cad77-num71223storyvorterix1920.720.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Franzizca', 'Djs Pareja', 'otros '],
+          '258fd495-92d3-4119-aa37-0d1c684a0237'
+        );
+      
+
+        INSERT INTO event (
+          id,
+          event_title,
+          event_type,
+          event_date,
+          event_location,
+          ticket_link,
+          event_image,
+          event_djs,
+          city_id
+        )
+        VALUES (
+          '90e40eef-32af-484a-b41a-e79d73f108fe',
           'Matador + Korolova',
           '',
           '2023/12/07',
           'Madero Boardwalk',
           'https://venti.com.ar/evento/s2gthr-open-air-korolova-friends-madero-boardwalk-jue-07-12-23hs?fbclid=PAAaYRLbSM6ZgbF8npfTxZ3vkQ9dpbjZqNCNYIhNw8aLx2-Hobhq2d1joeK-w_aem_AXigRuZYMU-tvYzcDIIfcsEDl5sCKVBNa2N0W6pbBZjOArhxVI8xW3X-JeSt38tVPPk',
-          'https://ugc.production.linktr.ee/a124fa64-37ee-435b-8b72-f2edbbf761b2_IMG-9627.jpeg',
+          'https://ugc.production.linktr.ee/a124fa64-37ee-435b-8b72-f2edbbf761b2_IMG-9627.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
           ARRAY['Matador', 'Korolova', 'otros'],
           '258fd495-92d3-4119-aa37-0d1c684a0237'
         );
@@ -2507,14 +1139,182 @@
           city_id
         )
         VALUES (
-          '54bfaec4-7fd2-48bb-bf71-460b13f637c2',
-          'Boris Brejcha in Concert',
+          '0952f0ba-5c62-4823-b5e4-d15a0e131c59',
+          'Boris Brejcha + Ann Clu',
           '',
           '2023/12/08',
-          'Mandarine Park',
-          'https://argentina.borisbrejchainconcert.com/?fbclid=PAAaYShMYAt4XoPf_IxJgJAqViKPk_v5i7sWN9CT72D-tJKgoqDuzhkUIdNy8_aem_AaNh5CC7jpVm_4wawjljb1cZElLE2BAqccHy4ceSSTbf82QLzrd59MIm7l5M64bn_Jg',
-          'https://ugc.production.linktr.ee/96817e68-ea5c-40bc-b8ea-5c17a787535b_IMG-9397.jpeg',
-          ARRAY['Boris Brejcha in Concert'],
+          'Punta Carrasco',
+          'https://wearebombo.app.link/wHakcx84ECb',
+          'https://ugc.production.linktr.ee/96817e68-ea5c-40bc-b8ea-5c17a787535b_IMG-9397.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Boris Brejcha', 'Ann Clu'],
+          '258fd495-92d3-4119-aa37-0d1c684a0237'
+        );
+      
+
+        INSERT INTO event (
+          id,
+          event_title,
+          event_type,
+          event_date,
+          event_location,
+          ticket_link,
+          event_image,
+          event_djs,
+          city_id
+        )
+        VALUES (
+          'ee8238f5-fe15-4299-b666-ffa36d586de1',
+          'Ina b2b Apollo + Franco Smith',
+          'Progre',
+          '2023/12/09',
+          'Niceto Humboldt (Caba)',
+          'https://linktr.ee/voltash',
+          'https://ugc.production.linktr.ee/934ec9f9-dae7-4b07-883f-27266cc73849_IMG-1281.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Ina b2b Apollo', 'Franco Smith', 'otros '],
+          '258fd495-92d3-4119-aa37-0d1c684a0237'
+        );
+      
+
+        INSERT INTO event (
+          id,
+          event_title,
+          event_type,
+          event_date,
+          event_location,
+          ticket_link,
+          event_image,
+          event_djs,
+          city_id
+        )
+        VALUES (
+          'f05bdbf1-7545-476b-ab65-05244eb0c939',
+          'Rebekah (Psy Trance)',
+          'Psy Trance',
+          '2023/12/15',
+          'Amerika (Caba)',
+          'https://venti.com.ar/evento/heiss-xxl?fbclid=PAAaavhd9BJiFBqLeblJHm4viMWwc-AWP_TQF5VN2BybZ2BVNTTcET6E9Z3fM_aem_AVSUy8DST55wp-2Rqe6uhLhP9H7qNiiPbMIIiHcg2RbgT3UiI_j46qllUvg1aRahx4I',
+          'https://ugc.production.linktr.ee/4bce26ce-ac24-486e-8459-f0fdf5252d3a_IMG-0809.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Rebekah '],
+          '258fd495-92d3-4119-aa37-0d1c684a0237'
+        );
+      
+
+        INSERT INTO event (
+          id,
+          event_title,
+          event_type,
+          event_date,
+          event_location,
+          ticket_link,
+          event_image,
+          event_djs,
+          city_id
+        )
+        VALUES (
+          '3805c619-dea4-4efe-8c10-10f4ddb0efed',
+          'Festival Numbers (Techno)',
+          'Techno',
+          '2023/12/15',
+          'Club De Pescadores (Costanera)',
+          'https://www.passline.com/eventos/numbers-festival-club-de-pescadores',
+          'https://ugc.production.linktr.ee/9b5f5b4d-7a08-43ae-a9ad-dcb0ae2da867_Captura-de-Pantalla-2023-11-08-a-la-s--18.56.20.png?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Festival Numbers '],
+          '258fd495-92d3-4119-aa37-0d1c684a0237'
+        );
+      
+
+        INSERT INTO event (
+          id,
+          event_title,
+          event_type,
+          event_date,
+          event_location,
+          ticket_link,
+          event_image,
+          event_djs,
+          city_id
+        )
+        VALUES (
+          '615b5b09-aac6-4611-b883-df53e2d9599a',
+          'Carl Cox + Roberto Ceratti',
+          'Techno',
+          '2023/undefined/Boardwalk',
+          '',
+          'https://venti.com.ar/evento/sonora-pres-carl-cox-madero-boardwalk',
+          'https://ugc.production.linktr.ee/fdf50c56-71aa-4e5a-a308-d58444f25ffe_Captura-de-Pantalla-2023-09-20-a-la-s--16.47.45.png?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Carl Cox', 'Roberto Ceratti - Sab 16/12'],
+          '258fd495-92d3-4119-aa37-0d1c684a0237'
+        );
+      
+
+        INSERT INTO event (
+          id,
+          event_title,
+          event_type,
+          event_date,
+          event_location,
+          ticket_link,
+          event_image,
+          event_djs,
+          city_id
+        )
+        VALUES (
+          '7a0b52a0-e97a-4f10-b79f-886d900608df',
+          'ZAC + Mazzeo',
+          'Progre/Techno Melódico',
+          '2023/12/16',
+          'La Costa (Quilmes)',
+          'https://www.passline.com/sitio-evento/la-costa-1612',
+          'https://ugc.production.linktr.ee/07c8e048-d78f-4511-962b-3b1ab1c5e36f_Captura-de-Pantalla-2023-10-31-a-la-s--20.02.03.png?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['ZAC', 'Mazzeo', 'otros '],
+          '258fd495-92d3-4119-aa37-0d1c684a0237'
+        );
+      
+
+        INSERT INTO event (
+          id,
+          event_title,
+          event_type,
+          event_date,
+          event_location,
+          ticket_link,
+          event_image,
+          event_djs,
+          city_id
+        )
+        VALUES (
+          '1cd75d51-2eb3-43bd-81fc-32128e7c2711',
+          'Zac + Mazzeo',
+          'Techno/Techno Melódico',
+          '2023/12/16',
+          'Multiespacio Costanera (Quilmes)',
+          'https://www.passline.com/eventos/la-costa-1612/andres-acosta-337060?fbclid=PAAaZ5wWJUqiU4KKmD1D8ycCwMz43QVANop0VW9I5jkcezmwARUbAiqf-Im-0_aem_AUvAZfRB8x9-MBMMJz_fdRlHQGvA2ILjaLSxf_qflOhanusixuVNuydSoH_a0VhH69E',
+          'https://ugc.production.linktr.ee/d4a4d37a-9672-4955-8743-3a8dbc271dce_IMG-8799.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Zac', 'Mazzeo', 'otros '],
+          '258fd495-92d3-4119-aa37-0d1c684a0237'
+        );
+      
+
+        INSERT INTO event (
+          id,
+          event_title,
+          event_type,
+          event_date,
+          event_location,
+          ticket_link,
+          event_image,
+          event_djs,
+          city_id
+        )
+        VALUES (
+          'c81c3787-a5dc-4414-8737-09df0f9cb17d',
+          'Cloonee + Fabri Tacc',
+          'Tech House',
+          '2023/12/17',
+          'Rio (Punta Carrasco)',
+          'https://wearebombo.app.link/NK75I212bEb',
+          'https://ugc.production.linktr.ee/48dc8c72-f684-452d-b1c7-45f814cf8996_IMG-8823.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
+          ARRAY['Cloonee', 'Fabri Tacc '],
           '258fd495-92d3-4119-aa37-0d1c684a0237'
         );
       
