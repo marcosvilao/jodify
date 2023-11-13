@@ -1,8 +1,9 @@
-
 import React, { useState, useEffect } from 'react';
 import { Wrapper, SearchContainer, SearchInput, SearchButton, Span } from './SearchEventsStyles';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSearchEvents, setIsSearching } from '../../storage/searchSlice';
+import SearchIcon from '@mui/icons-material/Search';
+import theme from '../../jodifyStyles';
 
 function SearchEvents() {
   const [isInputClicked, setIsInputClicked] = useState(false);
@@ -92,7 +93,8 @@ function SearchEvents() {
     <Wrapper>
       <SearchContainer $isInputClicked={isInputClicked}>
         <SearchButton $isInputClicked={isInputClicked} onSubmit={handleSubmit}>
-          <Span $isInputClicked={isInputClicked} className="material-symbols-outlined">search</Span>
+          <SearchIcon style={{color: theme.jodify_colors._icons_primary, position: 'relative',
+    marginLeft: '10px'}}/>
         </SearchButton>
         <SearchInput
           $isInputClicked={isInputClicked}

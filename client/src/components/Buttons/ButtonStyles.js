@@ -12,12 +12,10 @@ export const VisuallyHiddenInput = styled('input')({
     bottom: 0,
     left: 0,
     whiteSpace: 'nowrap',
-    width: 1
+    width: '40px'
 });
   
 export const UploadBtn = styled(Button)({
-    marginTop: '40px',
-    width: '100%',
 });
 
 export const BtnJo = styled(Button)({

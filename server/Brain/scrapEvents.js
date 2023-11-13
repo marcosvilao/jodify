@@ -129,7 +129,7 @@ const buildEvents = async () => {
 
 const insertBuiltEvents = async () => {
   let cwd = path.join(__dirname);
-  const filePathSQLWrite = cwd + '/assets/imports/eventCreate_Scripts.txt';
+  const filePathSQLWrite = cwd + '/imports/eventCreate_Scripts.txt';
   let writeSQL = fs.createWriteStream(filePathSQLWrite);
   try {
     const config = configDB();
@@ -183,7 +183,7 @@ const insertBuiltEvents = async () => {
 };
 
 
-insertBuiltEvents();
+
 
 
 

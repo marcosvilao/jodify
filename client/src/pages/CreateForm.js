@@ -16,7 +16,7 @@ import { fetchCities, fetchTypes } from '../storage/actions';
 import dayjs from 'dayjs';
 import { UploadBtn } from '../components/Buttons/ButtonStyles';
 import { VisuallyHiddenInput } from '../components/Buttons/ButtonStyles';
-import AddIcon from '@mui/icons-material/Add';
+import FileUploadIcon from '@mui/icons-material/FileUpload';
 import theme from '../jodifyStyles';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
@@ -396,6 +396,16 @@ function CreateForm() {
         <BasicText helperText='Copia y pega la url de la imagen o carga la imagen con el botón de carga' error={event.event_image === ''} required label='Imagen' placeholder='Ingresa la url de la imagen' variant='standard' value={event.event_image} onChange={handleImageChange}/>
 
 
+        <UploadBtn component="label" variant="contained"  style={{width: '60px' , marginTop: '20px', marginBottom: '2%', background: theme.jodify_colors._icons_primary}}>
+        <FileUploadIcon />
+        <VisuallyHiddenInput 
+        type="file" 
+        accept="image/*"
+        onChange={(e) => handleFileChange(e)}
+        />
+        </UploadBtn>    
+
+
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DayPick 
               label="Fecha del evento"
@@ -403,7 +413,7 @@ function CreateForm() {
                 textField: (params) => (
                   <BasicText
                   helperText='Ingresa la fecha del evento'
-                  error={true}
+                  error={event.event_date === ''}
                   required
                   variant='standard'
                     {...params}
@@ -485,15 +495,6 @@ function CreateForm() {
             ),
           }}
         />
-
-        <UploadBtn component="label" variant="contained" startIcon={<AddIcon />} style={{marginTop: '20px', marginBottom: '2%'}}>
-        Carga la imagen del evento
-        <VisuallyHiddenInput 
-        type="file" 
-        accept="image/*"
-        onChange={(e) => handleFileChange(e)}
-        />
-        </UploadBtn>
 
 
         <Stack spacing={1} direction="row" style={{marginTop: '20px', marginBottom: '4%'}}>
