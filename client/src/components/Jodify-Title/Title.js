@@ -5,11 +5,8 @@ export const BrandContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* gap: 20px; */
-    /* margin: 0px 10px 00px; */
-    /* margin-top: 10rem; */
-    /* height: 1.2rem; */
-    /* width: 100vw; */
+    margin-top: 16px;
+
 `
 export const Brand = styled.h1`
     width: fit-content;

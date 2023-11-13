@@ -117,6 +117,7 @@ export const TypeContainer = styled.div`
     display: inline-flex;
     flex: 0 0 auto;
     gap: 8px;
-    justify-content: center;
+    width: 90%;
     position: relative;
+    overflow-x: hidden;
 `
