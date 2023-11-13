@@ -53,7 +53,7 @@ export const FilterWrapper = styled.div`
 
 export const FilterText = styled.p`
     width: fit-content;
-    margin: 0px 10px 4px 10px;
+    margin: 0px 10px 3px 10px;
     color: ${theme.jodify_colors._text_white}
 
     ${props => props.$hastypes && css`
