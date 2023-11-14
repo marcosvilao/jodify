@@ -51,7 +51,7 @@ const theme = {
         _container_width_lg: '90%',
     },
     fonts : {
-        _title_font_family: '"Round-Bold", Helvetica, sans-serif'
+        _title_font_family: '"Roboto Condensed", sans-serif'
     }
 }
 

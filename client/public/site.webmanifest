@@ -1,6 +1,7 @@
 {
   "display": "standalone",
   "short_name": "Jodify",
+  "OrientationLockType": "portrait",
   "icons": [
     {
       "src": "../manifest-icon-192.maskable.png",
