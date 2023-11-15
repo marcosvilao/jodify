@@ -263,6 +263,14 @@ function CreateForm() {
     }))
   }
 
+  const handleTitleChange = (e) => {
+    const title = e.target.value;
+    setEvent((prevEvent) => ({
+      ...prevEvent,
+      event_title: title,
+    }));
+  };
+
 
   const handleCreateEvent = () => {
     createEvent()
@@ -488,6 +496,7 @@ function CreateForm() {
           multiline
           variant="standard"
           value={event.event_title}
+          onChange={handleTitleChange}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">

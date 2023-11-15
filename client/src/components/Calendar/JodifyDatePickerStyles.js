@@ -56,10 +56,10 @@ export const DateRange = styled(StaticDateRangePicker)`
         background: ${theme.jodify_colors._gradient};
     }
 
-    .css-138poq7-MuiPickersSlideTransition-root-MuiDayCalendar-slideTransition:not(.MuiDateRangeCalendar-dayDragging) .MuiDateRangePickerDay-dayOutsideRangeInterval{
+    /* .css-138poq7-MuiPickersSlideTransition-root-MuiDayCalendar-slideTransition:not(.MuiDateRangeCalendar-dayDragging) .MuiDateRangePickerDay-dayOutsideRangeInterval{
         color: ${theme.jodify_colors._text_white};
         font-size: 13px;
-    }
+    } */
 
     .css-1nte4ka{
         color: ${theme.jodify_colors._text_white};
