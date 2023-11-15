@@ -26,6 +26,7 @@ function Event({ event, large }) {
   const twoLines = event.event_title.length > 36;
   const ThreeLines = event.event_title.length > 66;
   const truncatedTitle = truncateText(event.event_title, 66);
+  const truncateTypes = truncateText(types, 66);
   const eventLogo = event.event_image === '' ? logo : event.event_image;
 
   return (
@@ -44,7 +45,7 @@ function Event({ event, large }) {
             </LocationContainer>
             <TypeContainer>
               <MusicNoteIcon sx={{ width: '18px', height: '18px' }} />
-              <EventLocation>{types}</EventLocation>
+              <EventLocation>{truncateTypes}</EventLocation>
             </TypeContainer>
           </EventCaracteristics>
         </EventDescription>
