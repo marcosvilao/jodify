@@ -74,10 +74,6 @@ function FilterEvents({cities, types}) {
         }, [filters])
         
 
-      useEffect(() => {
-        setCheckedCities([0])
-      }, [events]);
-
     const FilterTypes = (event) => {
         event.stopPropagation()
         setOpenTypesFilter(!openTypesFilter);
@@ -157,12 +153,9 @@ function FilterEvents({cities, types}) {
           });
       };
 
-      
+
       useEffect(() => {
-        if(cities.length > 0 && types.lengt>0){
             updateFilters();
-        }
-        
       // eslint-disable-next-line react-hooks/exhaustive-deps
       }, [checkedTypes, checkedCities]);
 
