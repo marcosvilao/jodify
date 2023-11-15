@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Box } from '@mui/material';
 import { FilterWrapper, FilterText } from './FilterEventsStyles'
 import FilterList from './FilterList';
-import { fetchCities, fetchTypes } from '../../storage/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilterEvents, setIsFiltering, setIsSearching } from '../../storage/searchSlice';
 import JodifyDatePicker from '../Calendar/JodifyDatePicker';
@@ -17,16 +16,14 @@ const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
 
-function FilterEvents() {
+function FilterEvents({cities, types}) {
     const dispatch = useDispatch()
     const [open, setOpen] = React.useState(false);
     const events = useSelector((state) => state.search.events)
     const [isFilterOpen, setisFilterOpen] = useState(false)
     const [checkedTypes, setCheckedTypes] = useState([]);
     const [checkedCities, setCheckedCities] = useState([]);
-    const [cities, setCities] = useState([])
     const [selectedCities, setSelectedCities] = useState([])
-    const [types, setTypes] = useState([])
     const [dates, setDates] = useState([])
     const [openTypesFilter, setOpenTypesFilter] = useState(false);
     const [openCitiesFilter, setOpenCitiesFilter] = useState(false)
@@ -76,15 +73,6 @@ function FilterEvents() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [filters])
         
-    
-
-    useEffect(() => {
-        async function fetchData() {
-          setCities(await fetchCities());
-          setTypes(await fetchTypes());
-        }
-        fetchData();
-      }, []);
 
       useEffect(() => {
         setCheckedCities([0])
