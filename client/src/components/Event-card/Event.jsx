@@ -24,8 +24,8 @@ function truncateText(text, maxLength) {
 function Event({ event, large }) {
   const types = Array.isArray(event?.event_type) ? event?.event_type?.join(' | ') : event.event_type;
   const twoLines = event.event_title.length > 36;
-  const ThreeLines = event.event_title.length > 66;
   const truncatedTitle = truncateText(event.event_title, 66);
+  const truncateType = truncateText(types, 33);
   const eventLogo = event.event_image === '' ? logo : event.event_image;
 
   return (
@@ -34,7 +34,7 @@ function Event({ event, large }) {
         <EventImage src={eventLogo} alt="No hay imagen" />
         <EventDescription $twoLines={twoLines}>
           <TitleContainer>
-            <TitleText>{ThreeLines ? truncatedTitle : event.event_title}</TitleText>
+            <TitleText>{truncatedTitle}</TitleText>
           </TitleContainer>
 
           <EventCaracteristics>
@@ -44,7 +44,7 @@ function Event({ event, large }) {
             </LocationContainer>
             <TypeContainer>
               <MusicNoteIcon sx={{ width: '18px', height: '18px' }} />
-              <EventLocation>{types}</EventLocation>
+              <EventLocation>{truncateType}</EventLocation>
             </TypeContainer>
           </EventCaracteristics>
         </EventDescription>
