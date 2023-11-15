@@ -32,7 +32,7 @@ export default function JodifyDatePicker({setOpen, setIsOpen, setDateFilter, set
 
 
             <Box
-            sx={{zIndex: '3',position: 'absolute', height: '511px', width: '320px', marginLeft: '13px'}}
+            sx={{zIndex: '3',position: 'absolute', height: '511px', width: '320px', marginLeft: '5%'}}
             >
               <LocalizationProvider dateAdapter={AdapterDayjs} locale={esLocale}>
               <DateRange

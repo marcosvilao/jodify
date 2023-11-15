@@ -302,6 +302,7 @@ function CreateForm() {
       ticket_link: '',
       event_image: '',
       event_djs: [],
+      event_city: ''
     });
   };
 
