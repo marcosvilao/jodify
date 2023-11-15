@@ -86,6 +86,10 @@ function FilterEvents() {
         fetchData();
       }, []);
 
+      useEffect(() => {
+        setCheckedCities([0])
+      }, [cities, events]);
+
     const FilterTypes = (event) => {
         event.stopPropagation()
         setOpenTypesFilter(!openTypesFilter);
