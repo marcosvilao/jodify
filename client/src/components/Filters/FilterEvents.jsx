@@ -321,7 +321,7 @@ function FilterEvents() {
             )}
             
             {openTypesFilter && (
-                                <div ref={filterListRef} style={{marginTop: '40px', marginLeft: '108px', position: 'absolute'}}>
+                                <div ref={filterListRef} style={{marginTop: '40px', marginLeft: '80px', position: 'absolute'}}>
                                 <FilterList typeList={types} checkedItems={checkedTypes} setCheckedItems={setCheckedTypes} />
                                 </div>
             )}

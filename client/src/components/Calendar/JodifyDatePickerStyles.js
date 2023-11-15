@@ -152,11 +152,12 @@ export const DateRange = styled(StaticDateRangePicker)`
     .css-14kvh3q.Mui-selected{
         color: ${theme.jodify_colors._text_white};
         font-family: 'Roboto Condensed', sans-serif;
-        content: 'Inicio';
     }
 
     .css-1ujsas3{
         color: ${theme.jodify_colors._text_white};
         font-family: 'Roboto Condensed', sans-serif;
     }
+
+    
 `

@@ -7,6 +7,7 @@ import theme from '../../jodifyStyles';
 import { DateRange } from './JodifyDatePickerStyles';
 import { useState} from 'react';
 import esLocale from 'date-fns/locale/es';
+import { esES } from '@mui/x-date-pickers';
 
 
 
@@ -31,10 +32,12 @@ export default function JodifyDatePicker({setOpen, setIsOpen, setDateFilter, set
 
 
             <Box
-            sx={{zIndex: '3',position: 'absolute', height: '511px', width: '320px', marginLeft: '16px'}}
+            sx={{zIndex: '3',position: 'absolute', height: '511px', width: '320px', marginLeft: '13px'}}
             >
               <LocalizationProvider dateAdapter={AdapterDayjs} locale={esLocale}>
               <DateRange
+              // localeText={esES.components.MuiLocalizationProvider.defaultProps.localeText}
+              localeText={{ start: 'Inicio', end: 'Fin' }}
               locale={esLocale}
               label="disabled"
               toolbarTitle="Seleccionar rango de fechas"
