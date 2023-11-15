@@ -98,7 +98,7 @@ function SearchEvents() {
         </SearchButton>
         <SearchInput
           $isInputClicked={isInputClicked}
-          placeholder='Busca un DJ o tu boliche preferido'
+          placeholder='Buscá un evento, artista o club'
           value={inputValue}
           onChange={handleInputChange}
           onClick={handleInputClick}
