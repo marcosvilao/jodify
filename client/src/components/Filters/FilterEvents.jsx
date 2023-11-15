@@ -76,7 +76,7 @@ function FilterEvents({cities, types}) {
 
       useEffect(() => {
         setCheckedCities([0])
-      }, [cities, events]);
+      }, [events]);
 
     const FilterTypes = (event) => {
         event.stopPropagation()
@@ -147,7 +147,7 @@ function FilterEvents({cities, types}) {
 
     const updateFilters = () => {
         const selectedTypes = checkedTypes.map(index => types[index].type_name);
-        const selectedCities = checkedCities.map(index => cities[index].id);
+        const selectedCities = checkedCities.map(index => cities[index]?.id);
         setSelectedCities(checkedCities.map(index => cities[index].city_name))
     
         setfilters({
@@ -159,7 +159,10 @@ function FilterEvents({cities, types}) {
     
       // useEffect to watch for changes in checkedTypes and checkedCities
       useEffect(() => {
-        updateFilters();
+        if(cities && types){
+            updateFilters();
+        }
+        
       // eslint-disable-next-line react-hooks/exhaustive-deps
       }, [checkedTypes, checkedCities]);
 
