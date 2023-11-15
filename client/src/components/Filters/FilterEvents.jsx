@@ -156,10 +156,10 @@ function FilterEvents({cities, types}) {
             cities: selectedCities,
           });
       };
-    
-      // useEffect to watch for changes in checkedTypes and checkedCities
+
+      
       useEffect(() => {
-        if(cities && types){
+        if(cities.length > 0 && types.lengt>0){
             updateFilters();
         }
         
