@@ -7,7 +7,6 @@ import theme from '../../jodifyStyles';
 import { DateRange } from './JodifyDatePickerStyles';
 import { useState} from 'react';
 import esLocale from 'date-fns/locale/es';
-import { esES } from '@mui/x-date-pickers';
 
 
 
@@ -36,7 +35,7 @@ export default function JodifyDatePicker({setOpen, setIsOpen, setDateFilter, set
             >
               <LocalizationProvider dateAdapter={AdapterDayjs} locale={esLocale}>
               <DateRange
-              // localeText={esES.components.MuiLocalizationProvider.defaultProps.localeText}
+              disablePast
               localeText={{ start: 'Inicio', end: 'Fin' }}
               locale={esLocale}
               label="disabled"
