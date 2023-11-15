@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Box } from '@mui/material';
 import { FilterWrapper, FilterText } from './FilterEventsStyles'
 import FilterList from './FilterList';
+import { fetchCities, fetchTypes } from '../../storage/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilterEvents, setIsFiltering, setIsSearching } from '../../storage/searchSlice';
 import JodifyDatePicker from '../Calendar/JodifyDatePicker';
@@ -16,14 +17,16 @@ const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
 
-function FilterEvents({cities, types}) {
+function FilterEvents() {
     const dispatch = useDispatch()
     const [open, setOpen] = React.useState(false);
     const events = useSelector((state) => state.search.events)
     const [isFilterOpen, setisFilterOpen] = useState(false)
     const [checkedTypes, setCheckedTypes] = useState([]);
     const [checkedCities, setCheckedCities] = useState([]);
+    const [cities, setCities] = useState([])
     const [selectedCities, setSelectedCities] = useState([])
+    const [types, setTypes] = useState([])
     const [dates, setDates] = useState([])
     const [openTypesFilter, setOpenTypesFilter] = useState(false);
     const [openCitiesFilter, setOpenCitiesFilter] = useState(false)
@@ -73,6 +76,15 @@ function FilterEvents({cities, types}) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [filters])
         
+    
+
+    useEffect(() => {
+        async function fetchData() {
+          setCities(await fetchCities());
+          setTypes(await fetchTypes());
+        }
+        fetchData();
+      }, []);
 
     const FilterTypes = (event) => {
         event.stopPropagation()
@@ -143,8 +155,8 @@ function FilterEvents({cities, types}) {
 
     const updateFilters = () => {
         const selectedTypes = checkedTypes.map(index => types[index].type_name);
-        const selectedCities = checkedCities.map(index => cities[index]?.id);
-        setSelectedCities(checkedCities.map(index => cities[index]?.city_name))
+        const selectedCities = checkedCities.map(index => cities[index].id);
+        setSelectedCities(checkedCities.map(index => cities[index].city_name))
     
         setfilters({
             ...filters,
@@ -152,10 +164,10 @@ function FilterEvents({cities, types}) {
             cities: selectedCities,
           });
       };
-
-
+    
+      // useEffect to watch for changes in checkedTypes and checkedCities
       useEffect(() => {
-            updateFilters();
+        updateFilters();
       // eslint-disable-next-line react-hooks/exhaustive-deps
       }, [checkedTypes, checkedCities]);
 
