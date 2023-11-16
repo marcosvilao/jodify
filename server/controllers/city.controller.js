@@ -1,8 +1,9 @@
-const pool = require('../db')
+const pool = require('../db');
 
 const getCities = async (req, res, next) => {
     try {
-        const allCities = await pool.query('SELECT * from city');
+        const allCities = await pool.query('SELECT * FROM city ORDER BY city_name ASC');
+        
         if (allCities.rows.length > 0) {
             res.status(200).json(allCities.rows);
         } else {
@@ -15,8 +16,6 @@ const getCities = async (req, res, next) => {
 
 module.exports = {
     getCities
-}
-
-
+};
 
 
