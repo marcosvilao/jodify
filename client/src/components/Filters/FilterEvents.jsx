@@ -6,16 +6,11 @@ import { fetchCities, fetchTypes } from '../../storage/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilterEvents, setIsFiltering, setIsSearching } from '../../storage/searchSlice';
 import JodifyDatePicker from '../Calendar/JodifyDatePicker';
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
 import theme from '../../jodifyStyles';
 import ClearIcon from '@mui/icons-material/Clear';
 import Tooltip from '@mui/material/Tooltip';
 import BackgroundFilters from './BackgroundFilters';
 
-const Alert = React.forwardRef(function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-  });
 
 function FilterEvents() {
     const dispatch = useDispatch()
@@ -39,6 +34,10 @@ function FilterEvents() {
     const filterEvents = (filters) => {
         const filteredEvents = events.map((eventGroup) => {
             const date = Object.keys(eventGroup)[0];
+            const originalDate = new Date(date);
+            const newDate = new Date(originalDate);
+            newDate.setDate(originalDate.getDate() + 1);
+            newDate.setHours(0, 0, 0, 0);
             const eventsForDate = eventGroup[date];
             
             const filteredEventsForDate = eventsForDate.filter((event) => {
@@ -46,7 +45,7 @@ function FilterEvents() {
                 if (
                     (filters.cities.length === 0 || filters.cities.includes(event.city_id)) &&
                     (filters.types.length === 0 || eventTypes.some(type => filters.types.includes(type))) &&
-                    (filters.dates.length === 0 || (new Date(filters.dates[0]) <= new Date(event.event_date) && new Date(event.event_date) <= new Date(filters.dates[1])))
+                    (filters.dates.length === 0 || (new Date(filters.dates[0]) <= new Date(newDate) && new Date(newDate) <= new Date(filters.dates[1])))
                 ) {
                     return true; // Include the event
                 }
@@ -185,14 +184,6 @@ function FilterEvents() {
       // eslint-disable-next-line react-hooks/exhaustive-deps
       }, [dates])
       
-
-      const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-          return;
-        }
-    
-        setOpen(false);
-      };
 
     useEffect(() => {
 
@@ -340,11 +331,6 @@ function FilterEvents() {
 
             {isFilterOpen && <BackgroundFilters/>
             }
-            <Snackbar open={open} autoHideDuration={5000} onClose={handleClose} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
-                <Alert onClose={handleClose} severity="info" sx={{marginBottom: '10px', marginLeft: '9px', marginRight: '9px', background: theme.jodify_colors._gradient, borderRadius: theme.jodify_borders._md_border_radius, fontFamily: "'Roboto Condensed', sans-serif" }}>
-                    No te olvides de seleccionar la segunda fecha del rango.
-                </Alert>
-            </Snackbar>
         </Box>
     )
 }
