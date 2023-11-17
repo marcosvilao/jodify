@@ -1,13 +1,15 @@
 import React from 'react'
 import theme from '../../jodifyStyles';
+import { useSelector } from 'react-redux';
 
 function EventNotFound() {
+  const isSearching = useSelector(state => state.search.isSearching)
   return (
     <div
     style={{
         display: 'flex',
         width: '100%',
-        marginTop: '50%',
+        marginTop: isSearching ? '10%' : '50%',
         height: '14px',
         justifyContent: 'center',
         }}
