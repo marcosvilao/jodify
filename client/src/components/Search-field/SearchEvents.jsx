@@ -48,7 +48,8 @@ function SearchEvents() {
         const filteredEventsForDate = eventsForDate.filter((event) => {
           const matchDJs = event.event_djs.some(dj => dj.toLowerCase().includes(filterString));
           const matchLocation = event.event_location.toLowerCase().includes(filterString);
-            if (matchDJs || matchLocation) {
+          const matchTitle = event.event_title.toLowerCase().includes(filterString);
+            if (matchDJs || matchLocation || matchTitle) {
                 return true; 
             }
 
