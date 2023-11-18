@@ -250,7 +250,7 @@ function FilterEvents() {
                 flexWrap: 'wrap'
             }}
         >
-            <FilterWrapper $hastypes={filters.cities.length > 0 ? "true" : undefined}>
+            <FilterWrapper onClick={!openCitiesFilter && FilterCities} $hastypes={filters.cities.length > 0 ? "true" : undefined}>
                 <FilterText
                 $hastypes={filters.cities.length > 0 ? "true" : undefined} 
                 onClick={FilterCities} 
@@ -267,7 +267,8 @@ function FilterEvents() {
                             }}/>
                 </Tooltip>}
             </FilterWrapper>
-            <FilterWrapper 
+            <FilterWrapper
+            onClick={!openTypesFilter && FilterTypes} 
             $hastypes={filters.types.length > 0 ? "true" : undefined}>
                 <FilterText 
                 $hastypes={filters.cities.length > 0 ? "true" : undefined} 
@@ -286,7 +287,7 @@ function FilterEvents() {
                             }}/>
                 </Tooltip>}
             </FilterWrapper>
-            <FilterWrapper $hastypes={filters.dates[0] || filters.dates[1] ? "true" : undefined}  >
+            <FilterWrapper onClick={!openDatesFilter && FilterDates} $hastypes={filters.dates[0] || filters.dates[1] ? "true" : undefined}  >
                 <FilterText 
                     $hastypes={filters.cities.length > 0 ? "true" : undefined} 
                     onClick={FilterDates} 
@@ -329,7 +330,7 @@ function FilterEvents() {
 
             )}
 
-            {isFilterOpen && <BackgroundFilters/>
+            {isFilterOpen && <BackgroundFilters closeDateFilter={setOpenDatesFilter}/>
             }
         </Box>
     )

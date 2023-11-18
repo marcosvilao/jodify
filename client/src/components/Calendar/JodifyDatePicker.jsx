@@ -27,7 +27,7 @@ export default function JodifyDatePicker({setOpen, setIsOpen, setDateFilter, set
 
 
             <Box
-            sx={{zIndex: '3',position: 'absolute', height: '511px', width: '320px', marginLeft: '5%'}}
+            sx={{zIndex: '3',position: 'fixed', marginTop: '60vh', width: '320px', marginLeft: '5%'}}
             >
               <LocalizationProvider dateAdapter={AdapterDayjs} locale={esLocale}>
               <DateRange
@@ -41,7 +41,7 @@ export default function JodifyDatePicker({setOpen, setIsOpen, setDateFilter, set
               onClose={() => setIsOpen(false)}
               onAccept={() => getDates(dates)}
               defaultValue={defaultDates}
-              sx={{ fontSize: '16px', color: theme.jodify_colors._text_white ,marginTop: '200px' , bgcolor: theme.jodify_colors._background_gray, borderRadius: theme.jodify_borders._lg_border_radius }}
+              sx={{ fontSize: '16px', color: theme.jodify_colors._text_white , bgcolor: theme.jodify_colors._background_gray, borderRadius: theme.jodify_borders._lg_border_radius }}
             />
             </LocalizationProvider>
             </Box>
