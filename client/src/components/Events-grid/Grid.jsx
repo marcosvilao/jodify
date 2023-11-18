@@ -19,7 +19,7 @@ function Grid() {
   const isSearching = useSelector(state => state.search.isSearching)
 
   useEffect(() => {
-      fetch('http://localhost:3001/events')
+      fetch('https://jodify.vercel.app/events')
         .then(response => response.json())
         .then(data => {
           dispatch(setEvents(data));
