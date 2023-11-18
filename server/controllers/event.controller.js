@@ -8,8 +8,7 @@ const getEvents = async (req, res, next) => {
     try {
         console.log('getting data')
         const currentDate = new Date();
-        currentDate.setHours(0,0,0,0)
-        console.log(currentDate.toLocaleString())
+        currentDate.setUTCHours(-12, 0, 0, 0);
         const query = ('SELECT * FROM event WHERE event_date >= $1');
         const values = [currentDate];
         const allEvents = await pool.query(query, values);
@@ -18,10 +17,8 @@ const getEvents = async (req, res, next) => {
             return;
         }
 
-        // Create an array to hold the grouped events
         const groupedEventsArray = [];
 
-        // Iterate through each event and group them by event_date
         const groupedEvents = {};
         allEvents.rows.forEach(event => {
             let eventDate = event.event_date;
@@ -31,7 +28,6 @@ const getEvents = async (req, res, next) => {
             groupedEvents[eventDate].push(event);
         });
 
-        // Convert the groupedEvents object into an array of objects
         for (const date in groupedEvents) {
             if (groupedEvents.hasOwnProperty(date)) {
                 const obj = {};
@@ -40,21 +36,16 @@ const getEvents = async (req, res, next) => {
             }
         }
 
-                // Sort the groupedEventsArray by date
                 groupedEventsArray.sort((a, b) => {
-                    // Extract the date keys
                     const dateA = Object.keys(a)[0];
                     const dateB = Object.keys(b)[0];
                     
-                    // Convert the date strings to Date objects for comparison
                     const dateObjA = new Date(dateA);
                     const dateObjB = new Date(dateB);
         
-                    // Compare the Date objects
                     return dateObjA - dateObjB;
                 });
 
-        console.log('events MOTHERFUCKER')
 
         res.status(200).json(groupedEventsArray);
     } catch (error) {

@@ -34,7 +34,8 @@ export const EventDescription = styled.div`
     flex-direction: column;
     gap: ${props => props.$twoLines ? '9px' : '3px'};
     position: relative;
-    width: 244px;
+    
+    width: ${props => props.$width ? '244px' : 'max-width'} ;
 `
 
 export const EventCaracteristics = styled.div`
@@ -45,7 +46,7 @@ export const EventCaracteristics = styled.div`
     flex-direction: column;
     gap: 0px;
     position: relative;
-    width: 244px;
+    width: 100%;
 `
 
 export const TitleContainer = styled.div`
