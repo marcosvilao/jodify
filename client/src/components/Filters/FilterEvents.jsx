@@ -250,7 +250,7 @@ function FilterEvents() {
                 flexWrap: 'wrap'
             }}
         >
-            <FilterWrapper onClick={!openCitiesFilter && FilterCities} $hastypes={filters.cities.length > 0 ? "true" : undefined}>
+            <FilterWrapper onClick={filters.cities.length === 0 ? FilterCities : null} $hastypes={filters.cities.length > 0 ? "true" : undefined}>
                 <FilterText
                 $hastypes={filters.cities.length > 0 ? "true" : undefined} 
                 onClick={FilterCities} 
@@ -268,7 +268,7 @@ function FilterEvents() {
                 </Tooltip>}
             </FilterWrapper>
             <FilterWrapper
-            onClick={!openTypesFilter && FilterTypes} 
+            onClick={filters.types.length === 0 ? FilterTypes : null} 
             $hastypes={filters.types.length > 0 ? "true" : undefined}>
                 <FilterText 
                 $hastypes={filters.cities.length > 0 ? "true" : undefined} 
@@ -287,7 +287,7 @@ function FilterEvents() {
                             }}/>
                 </Tooltip>}
             </FilterWrapper>
-            <FilterWrapper onClick={!openDatesFilter && FilterDates} $hastypes={filters.dates[0] || filters.dates[1] ? "true" : undefined}  >
+            <FilterWrapper onClick={filters.dates.length === 0 ? FilterDates : null} $hastypes={filters.dates[0] || filters.dates[1] ? "true" : undefined}  >
                 <FilterText 
                     $hastypes={filters.cities.length > 0 ? "true" : undefined} 
                     onClick={FilterDates} 
