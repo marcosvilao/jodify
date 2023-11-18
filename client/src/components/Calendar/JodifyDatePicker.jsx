@@ -15,6 +15,9 @@ export default function JodifyDatePicker({setOpen, setIsOpen, setDateFilter, set
   const [dates, setDates] = useState(setDefaultValues)
   const defaultDates = setDefaultValues.length > 0 ? setDefaultValues.map(date => dayjs(date)) : undefined
   const getDates = (value) => {
+      if(!value[0] && !value[1]){
+        return
+      }
       if(!value[1]){
         value[1] = value[0]
       }
