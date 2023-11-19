@@ -26,11 +26,9 @@ export default function JodifyDatePicker({setOpen, setIsOpen, setDateFilter, set
   };
 
   return (
-    
-
 
             <Box
-            sx={{zIndex: '3',position: 'absolute', marginTop: '60vh', marginLeft: '5%'}}
+            sx={{zIndex: '3',position: 'fixed', marginTop: '40vh', marginLeft: '5%'}}
             >
               <LocalizationProvider dateAdapter={AdapterDayjs} locale={esLocale}>
               <DateRange

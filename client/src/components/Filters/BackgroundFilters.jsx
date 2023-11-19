@@ -11,7 +11,7 @@ function BackgroundFilters({closeDateFilter}) {
     <Box
     sx={{
         width: '1200px',
-        height: '1000%',
+        height: '100000px',
         background: theme.jodify_colors._background_black,
         position: 'fixed',
         opacity: '0.5'
