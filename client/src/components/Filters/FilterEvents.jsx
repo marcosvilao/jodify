@@ -85,6 +85,13 @@ function FilterEvents() {
         fetchData();
       }, []);
 
+      useEffect(() => {
+        if(cities.length > 0 && events.length > 0){
+            setCheckedCities([1])
+        }
+      }, [cities, events])
+      
+
     const FilterTypes = (event) => {
         event.stopPropagation()
         setOpenTypesFilter(!openTypesFilter);
@@ -154,7 +161,7 @@ function FilterEvents() {
 
     const updateFilters = () => {
         const selectedTypes = checkedTypes.map(index => types[index].type_name);
-        const selectedCities = checkedCities.map(index => cities[index]?.id);
+        const selectedCities = checkedCities?.map(index => cities[index]?.id);
         setSelectedCities(checkedCities.map(index => cities[index]?.city_name))
     
         setfilters({
