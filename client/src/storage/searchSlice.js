@@ -8,7 +8,7 @@ const searchSlice = createSlice({
     filterEvents: [],
     cities: [],
     types: [],
-    isFiltering: false,
+    isFiltering: true,
     isSearching: false
   },
   reducers: {
