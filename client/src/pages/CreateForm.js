@@ -316,7 +316,6 @@ function CreateForm() {
 
 
   const handleFileChange = async (e) => {
-    console.log('starting')
     const file = e.target.files[0];
     if (file) {
       if (file.type.startsWith('image/')) {
@@ -331,9 +330,14 @@ function CreateForm() {
           method: 'post',
           body: formData
         }).then((response) => response.json()).then((data) => {
+
+          const secureUrl = data.url.startsWith('http://')
+            ? data.url.replace(/^http:/, 'https:')
+            : data.url;
+
           setEvent((prevEvent) => ({
             ...prevEvent,
-            event_image: data.url,
+            event_image: secureUrl,
           }));
         })
       } else {
