@@ -47,7 +47,7 @@ function Grid() {
   }, [isFiltering, events, filteredEvents, isSearching, searchedEvents])
 
   const load = () => {
-    if(isFiltering || isSearching){
+    if((isFiltering || isSearching) && events.length > 0){
       return <EventNotFound />
     } else {
       return <SkeletonLoader/>
