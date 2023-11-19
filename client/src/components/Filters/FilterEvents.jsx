@@ -75,14 +75,15 @@ function FilterEvents() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [filters])
         
-    
 
+    
     useEffect(() => {
         async function fetchData() {
           setCities(await fetchCities());
           setTypes(await fetchTypes());
         }
         fetchData();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       }, []);
 
       useEffect(() => {
@@ -261,7 +262,7 @@ function FilterEvents() {
                 <FilterText
                 $hastypes={filters.cities.length > 0 ? "true" : undefined} 
                 onClick={FilterCities} 
-                ref={filterRef}>{filters.cities.length > 1 ? `${selectedCities[0]} + ${filters.cities.length - 1}` : (filters.cities.length === 1 ? `${selectedCities[0] ? selectedCities[0] : 'Ciudad'}` : 'Ciudad')}</FilterText>
+                ref={filterRef}>{filters.cities.length > 1 ? `${selectedCities[0]} + ${filters.cities.length - 1}` : (filters.cities.length === 1 ? `${selectedCities[0] ? selectedCities[0] : 'CABA | GBA'}` : 'Ciudad')}</FilterText>
                 {filters.cities.length > 0 && 
                 <Tooltip title="Limpiar">
                     <ClearIcon 
