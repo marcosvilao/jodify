@@ -8,7 +8,7 @@ const getEvents = async (req, res, next) => {
     try {
         console.log('getting data')
         const currentDate = new Date();
-        currentDate.setUTCHours(-14, 0, 0, 0);
+        currentDate.setUTCHours(-22, 0, 0, 0);
         const query = ('SELECT * FROM event WHERE event_date >= $1');
         const values = [currentDate];
         const allEvents = await pool.query(query, values);
