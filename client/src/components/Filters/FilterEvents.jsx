@@ -36,6 +36,7 @@ function FilterEvents() {
             const date = Object.keys(eventGroup)[0];
             const originalDate = new Date(date);
             const newDate = new Date(originalDate);
+            newDate.setDate(originalDate.getDate() - 1);
             newDate.setHours(9, 0, 0, 0);
             const eventsForDate = eventGroup[date];
             
