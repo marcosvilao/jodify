@@ -58,6 +58,9 @@ const createEvent = async (req, res) => {
     try {
         const {event_title, event_type, event_date, event_location, ticket_link, event_image, event_djs, event_city } = req.body.event;
 
+        const formattedEventDate = new Date(event_date);
+        formattedEventDate.setHours(9, 0, 0);
+
         const formattedType = event_type.join(' | ');
 
         const checkQuery = `
@@ -67,19 +70,18 @@ const createEvent = async (req, res) => {
         events = events.rows
         let eventsMap = new Map()
 
-        const date = new Date(event_date)
-        console.log(date.toLocaleDateString())
+
         if(events.length > 0){
             for (const event of events) {
-                if(eventsMap.get(`${event.event_title.toLowerCase().trim()}_${event.event_date.toLocaleDateString()}`)){
-                    eventsMap.get(`${event.event_title.toLowerCase().trim()}_${event.event_date.toLocaleDateString()}`).push(event)
+                if(eventsMap.get(`${event.ticket_link.toLowerCase().trim()}`)){
+                    eventsMap.get(`${event.ticket_link.toLowerCase().trim()}`).push(event)
                 } else {
-                    eventsMap.set(`${event.event_title.toLowerCase().trim()}_${event.event_date.toLocaleDateString()}`, [event])
+                    eventsMap.set(`${event.ticket_link.toLowerCase().trim()}`, [event])
                 }
             }
         }
 
-        if(eventsMap.get(`${event_title.toLowerCase().trim()}_${date.toLocaleDateString()}`)){
+        if(eventsMap.get(`${ticket_link.toLowerCase().trim()}`).length){
             res.status(404).send({ message: 'Ya existe este evento'});
             return
         }
@@ -90,7 +92,7 @@ const createEvent = async (req, res) => {
             RETURNING id;
         `;
 
-        const values = [uuidv4(), event_title, formattedType, event_date, event_location, ticket_link, event_image, event_djs, event_city.id];
+        const values = [uuidv4(), event_title, formattedType, formattedEventDate, event_location, ticket_link, event_image, event_djs, event_city.id];
 
         const result = await pool.query(query, values);
 
