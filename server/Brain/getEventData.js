@@ -68,7 +68,6 @@ const linkScrap = async (link) => {
           // Format the date in DD/MM/YYYY format
           dateText = `${day}/${month}/${year}`;
 
-          console.log(dateText);
         }
         }
       } else {
@@ -111,7 +110,7 @@ const linkScrap = async (link) => {
         image: jpgImgSrc || null,
         date: dateText ? dateText : null,
       };
-      console.log(result)
+
       return result;
     } catch (error) {
       console.error(error);
