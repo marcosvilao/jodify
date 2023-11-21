@@ -11,7 +11,6 @@ const getEvents = async (req, res, next) => {
         const options = { timeZone: 'America/Argentina/Buenos_Aires' };
         const argentinaTime = currentDate.toLocaleString('en-US', options);
         const query = ('SELECT * FROM event WHERE event_date >= $1');
-        console.log(argentinaTime)
         const values = [argentinaTime];
         const allEvents = await pool.query(query, values);
         if (!allEvents.rows) {
