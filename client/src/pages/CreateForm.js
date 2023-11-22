@@ -155,6 +155,10 @@ function CreateForm() {
       setErrorMessage('Este evento fue creado.')
       setIsLoading(false)
       setError(true)
+    } else if(response.status === 500) {
+      setErrorMessage('Hablale a Marcos')
+      setIsLoading(false)
+      setError(true)
     }
   } catch (error) {
     setIsLoading(false)
