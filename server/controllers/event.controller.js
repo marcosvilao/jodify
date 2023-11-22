@@ -80,7 +80,7 @@ const createEvent = async (req, res) => {
             }
         }
 
-        if(eventsMap.get(`${ticket_link.toLowerCase().trim()}`).length){
+        if(eventsMap.get(`${ticket_link.toLowerCase().trim()}`)){
             res.status(404).send({ message: 'Ya existe este evento'});
             return
         }
