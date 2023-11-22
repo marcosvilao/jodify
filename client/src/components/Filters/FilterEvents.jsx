@@ -88,7 +88,7 @@ function FilterEvents() {
 
       useEffect(() => {
         if(cities.length > 0 && events.length > 0){
-            setCheckedCities([1])
+            setCheckedCities([2])
         }
       }, [cities, events])
       
