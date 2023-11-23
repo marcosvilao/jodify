@@ -152,7 +152,7 @@ function CreateForm() {
       setCreateSuccess(true)
       handleClearEvent()
     } else if(response.status === 404) {
-      setErrorMessage('Este evento fue creado.')
+      setErrorMessage('Ya existe este evento')
       setIsLoading(false)
       setError(true)
     } else if(response.status === 500) {

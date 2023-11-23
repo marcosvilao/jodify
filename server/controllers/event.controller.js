@@ -59,13 +59,17 @@ const createEvent = async (req, res) => {
 
         const formattedEventDate = new Date(event_date);
         formattedEventDate.setHours(9, 0, 0);
+        const currentDate = new Date();
+        currentDate.setDate(currentDate.getDate() - 1);
+        const options = { timeZone: 'America/Argentina/Buenos_Aires' };
+        const argentinaTime = currentDate.toLocaleString('en-US', options);
 
         const formattedType = event_type.join(' | ');
 
-        const checkQuery = `
-            SELECT * FROM event
-        `;
-        let events = await pool.query(checkQuery);
+        const querydate = ('SELECT * FROM event WHERE event_date >= $1');
+        const valuesdate = [argentinaTime];
+
+        let events = await pool.query(querydate, valuesdate);
         events = events.rows
         let eventsMap = new Map()
 
@@ -80,7 +84,7 @@ const createEvent = async (req, res) => {
             }
         }
 
-        if(eventsMap.get(`${ticket_link.toLowerCase().trim()}`)){
+        if (eventsMap.get(`${ticket_link.toLowerCase().trim()}`) && (!ticket_link.toLowerCase().includes('instagram') && !ticket_link.toLowerCase().includes('espacioro'))) {
             res.status(404).send({ message: 'Ya existe este evento'});
             return
         }
