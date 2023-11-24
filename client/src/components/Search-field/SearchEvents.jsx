@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Wrapper, SearchContainer, SearchInput, SearchButton, Span } from './SearchEventsStyles';
+import { Wrapper, SearchContainer, SearchInput, SearchButton } from './SearchEventsStyles';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSearchEvents, setIsSearching } from '../../storage/searchSlice';
 import SearchIcon from '@mui/icons-material/Search';
 import theme from '../../jodifyStyles';
 
-function SearchEvents() {
+function SearchEvents({setSearch}) {
   const [isInputClicked, setIsInputClicked] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const events = useSelector(state => state.search.events);
@@ -70,30 +69,14 @@ function SearchEvents() {
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
     const lowerCaseInput = event.target.value.toLowerCase();
-    const filteredEvents = filterEvents(lowerCaseInput)
-    if(lowerCaseInput !== '') {
-      dispatch(setIsSearching(true));
-      dispatch(setSearchEvents(filteredEvents));
-    } else if(lowerCaseInput === ''){
-      dispatch(setIsSearching(false));
-    }
+    setSearch(lowerCaseInput)
   };
 
-  const handleSubmit = () => {
-    const lowerCaseInput = inputValue.toLowerCase();
-    const filteredEvents = filterEvents(lowerCaseInput)
-    if(lowerCaseInput !== '') {
-      dispatch(setIsSearching(true));
-      dispatch(setSearchEvents(filteredEvents));
-    } else {
-      dispatch(setIsSearching(false));
-    }
-  }
 
   return (
     <Wrapper>
       <SearchContainer $isInputClicked={isInputClicked}>
-        <SearchButton $isInputClicked={isInputClicked} onSubmit={handleSubmit}>
+        <SearchButton $isInputClicked={isInputClicked}>
           <SearchIcon style={{color: theme.jodify_colors._icons_primary, position: 'relative',
     marginLeft: '10px'}}/>
         </SearchButton>

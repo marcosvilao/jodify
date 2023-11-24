@@ -9,23 +9,16 @@ const searchSlice = createSlice({
     cities: [],
     types: [],
     isFiltering: false,
-    isSearching: false
   },
   reducers: {
     setEvents: (state, action) => {
       state.events = action.payload;
-    },
-    setSearchEvents: (state, action) => {
-      state.searchEvents = action.payload;
     },
     setFilterEvents: (state, action) => {
       state.filterEvents = action.payload;
     },
     setIsFiltering: (state, action) => {
       state.isFiltering = action.payload;
-    },
-    setIsSearching: (state, action) => {
-      state.isSearching = action.payload;
     },
     setCities: (state, action) => {
       state.cities = action.payload;
@@ -36,5 +29,5 @@ const searchSlice = createSlice({
   },
 });
 
-export const { setEvents, setSearchEvents, setFilterEvents, setIsFiltering, setIsSearching, setCities, setTypes } = searchSlice.actions;
+export const { setEvents, setFilterEvents, setIsFiltering, setCities, setTypes } = searchSlice.actions;
 export default searchSlice.reducer;
