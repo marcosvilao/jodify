@@ -4,12 +4,13 @@ import { FilterWrapper, FilterText } from './FilterEventsStyles'
 import FilterList from './FilterList';
 import { fetchCities, fetchTypes } from '../../storage/actions';
 import { useDispatch, useSelector } from 'react-redux';
-import { setFilterEvents, setIsFiltering, setIsSearching } from '../../storage/searchSlice';
+import { setFilterEvents, setIsFiltering} from '../../storage/searchSlice';
 import JodifyDatePicker from '../Calendar/JodifyDatePicker';
 import theme from '../../jodifyStyles';
 import ClearIcon from '@mui/icons-material/Clear';
 import Tooltip from '@mui/material/Tooltip';
 import BackgroundFilters from './BackgroundFilters';
+import SearchEvents from '../Search-field/SearchEvents';
 
 
 function FilterEvents() {
@@ -26,6 +27,7 @@ function FilterEvents() {
     const [openTypesFilter, setOpenTypesFilter] = useState(false);
     const [openCitiesFilter, setOpenCitiesFilter] = useState(false)
     const [openDatesFilter, setOpenDatesFilter] = useState(false)
+    const [searchString, setSearchString] = useState('');
     const [filters, setfilters] = useState({
         types : [],
         cities : [],
@@ -42,10 +44,14 @@ function FilterEvents() {
             
             const filteredEventsForDate = eventsForDate.filter((event) => {
                 const eventTypes = event.event_type.split(" | ");
+                const matchDJs = event.event_djs.some(dj => dj.toLowerCase().includes(searchString));
+                const matchLocation = event.event_location.toLowerCase().includes(searchString);
+                const matchTitle = event.event_title.toLowerCase().includes(searchString);
                 if (
                     (filters.cities.length === 0 || filters.cities.includes(event.city_id)) &&
                     (filters.types.length === 0 || eventTypes.some(type => filters.types.includes(type))) &&
-                    (filters.dates.length === 0 || (new Date(filters.dates[0]) <= new Date(newDate) && new Date(newDate) <= new Date(filters.dates[1])))
+                    (filters.dates.length === 0 || (new Date(filters.dates[0]) <= new Date(newDate) && new Date(newDate) <= new Date(filters.dates[1]))) &&
+                    (matchDJs || matchLocation || matchTitle)
                 ) {
                     return true; // Include the event
                 }
@@ -64,189 +70,194 @@ function FilterEvents() {
         }
   
         useEffect(() => {
-            const filteredEvents = filterEvents(filters)
-            if(filters.cities.length !== 0 || filters.types.length !== 0 || filters.dates.length !== 0){
+            const filteredEvents = filterEvents(filters, searchString)
+            if(filters.cities.length !== 0 || filters.types.length !== 0 || filters.dates.length !== 0 || searchString !== ''){
                 dispatch(setIsFiltering(true))
-                dispatch(setIsSearching(false))
             } else {
                 dispatch(setIsFiltering(false))
             }
             dispatch(setFilterEvents(filteredEvents))
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, [filters])
+        }, [filters, searchString])
         
 
     
-    useEffect(() => {
-        async function fetchData() {
-          setCities(await fetchCities());
-          setTypes(await fetchTypes());
-        }
-        fetchData();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, []);
-
-      useEffect(() => {
-        if(cities.length > 0 && events.length > 0){
-            setCheckedCities([2])
-        }
-      }, [cities, events])
-      
-
-    const FilterTypes = (event) => {
-        event.stopPropagation()
-        setOpenTypesFilter(!openTypesFilter);
-        if(openCitiesFilter){
-            setOpenCitiesFilter(!openCitiesFilter);
-        }
-        if(openDatesFilter){
-            setOpenDatesFilter(!openDatesFilter);
-        }
-    }
-
-    const FilterDates = (event) => {
-        event.stopPropagation()
-        setOpenDatesFilter(!openDatesFilter);
-        if(openCitiesFilter){
-            setOpenCitiesFilter(!openCitiesFilter);
-        }
-        if(openTypesFilter){
-            setOpenTypesFilter(!openTypesFilter);
-        }
-    }
-
-    useEffect(() => {
-        if(openCitiesFilter || openTypesFilter || openDatesFilter) {
-            setisFilterOpen(true)
-        } else {
-            setisFilterOpen(false)
-        }
-    }, [openCitiesFilter, openTypesFilter, openDatesFilter])
-    
-
-
-    const FilterCities = (event) => {
-        event.stopPropagation()
-        setOpenCitiesFilter(!openCitiesFilter);
-        if(openTypesFilter){
-            setOpenTypesFilter(!openTypesFilter);
-        }
-        if(openDatesFilter){
-            setOpenDatesFilter(!openDatesFilter);
-        }
-    }
-
-    const filterRef = useRef(null);
-    const filterListRef = useRef(null);
-
-    useEffect(() => {
-        const handleDocumentClick = (event) => {
-            if (
-                filterRef.current && 
-                !filterRef.current.contains(event.target) &&
-                filterListRef.current && 
-                !filterListRef.current.contains(event.target)
-            ) {
-                setOpenTypesFilter(false);
-                setOpenCitiesFilter(false);
-                setOpenDatesFilter(false);
+        useEffect(() => {
+            async function fetchData() {
+            setCities(await fetchCities());
+            setTypes(await fetchTypes());
             }
+            fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, []);
+
+        useEffect(() => {
+            if(cities.length > 0 && events.length > 0){
+                setCheckedCities([2])
+            }
+        }, [cities, events])
+
+        const setSearchFilter = (string) => {
+            setSearchString(string);
         };
+        
 
-        document.addEventListener('click', handleDocumentClick);
+        const FilterTypes = (event) => {
+            event.stopPropagation()
+            setOpenTypesFilter(!openTypesFilter);
+            if(openCitiesFilter){
+                setOpenCitiesFilter(!openCitiesFilter);
+            }
+            if(openDatesFilter){
+                setOpenDatesFilter(!openDatesFilter);
+            }
+        }
 
-        return () => {
-            document.removeEventListener('click', handleDocumentClick);
-        };
-    }, []);
+        const FilterDates = (event) => {
+            event.stopPropagation()
+            setOpenDatesFilter(!openDatesFilter);
+            if(openCitiesFilter){
+                setOpenCitiesFilter(!openCitiesFilter);
+            }
+            if(openTypesFilter){
+                setOpenTypesFilter(!openTypesFilter);
+            }
+        }
 
-    const updateFilters = () => {
-        const selectedTypes = checkedTypes.map(index => types[index].type_name);
-        const selectedCities = checkedCities?.map(index => cities[index]?.id);
-        setSelectedCities(checkedCities.map(index => cities[index]?.city_name))
-    
-        setfilters({
-            ...filters,
-            types: selectedTypes,
-            cities: selectedCities,
-          });
-      };
-    
-      // useEffect to watch for changes in checkedTypes and checkedCities
-      useEffect(() => {
-        updateFilters();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, [checkedTypes, checkedCities]);
-
-      useEffect(() => {
-            if(dates[0] && !dates[1]){
-                setOpen(true)
+        useEffect(() => {
+            if(openCitiesFilter || openTypesFilter || openDatesFilter) {
+                setisFilterOpen(true)
             } else {
-                setfilters({
-                            ...filters,
-                            dates 
-                            });
+                setisFilterOpen(false)
             }
+        }, [openCitiesFilter, openTypesFilter, openDatesFilter])
+        
 
-          
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, [dates])
-      
 
-    useEffect(() => {
-
-        const storedCheckedTypes = JSON.parse(localStorage.getItem('checkedTypes'));
-        const storedCheckedCities = JSON.parse(localStorage.getItem('checkedCities'));
-      
-        if (storedCheckedTypes) {
-          setCheckedTypes(storedCheckedTypes);
+        const FilterCities = (event) => {
+            event.stopPropagation()
+            setOpenCitiesFilter(!openCitiesFilter);
+            if(openTypesFilter){
+                setOpenTypesFilter(!openTypesFilter);
+            }
+            if(openDatesFilter){
+                setOpenDatesFilter(!openDatesFilter);
+            }
         }
-        if (storedCheckedCities) {
-            setCheckedCities(storedCheckedCities);
-          }
-      }, []);
-      
-      useEffect(() => {
-        // Store the checked items in local storage whenever it changes
-        localStorage.setItem('checkedTypes', JSON.stringify(checkedTypes));
-      }, [checkedTypes]);
 
-      useEffect(() => {
-        // Store the checked items in local storage whenever it changes
-        localStorage.setItem('checkedCities', JSON.stringify(checkedCities));
-      }, [checkedCities]);
+        const filterRef = useRef(null);
+        const filterListRef = useRef(null);
 
-      const clearTypesFilter = () => {
-        setCheckedTypes([]);
-        setfilters({
-          ...filters,
-          types: []
+        useEffect(() => {
+            const handleDocumentClick = (event) => {
+                if (
+                    filterRef.current && 
+                    !filterRef.current.contains(event.target) &&
+                    filterListRef.current && 
+                    !filterListRef.current.contains(event.target)
+                ) {
+                    setOpenTypesFilter(false);
+                    setOpenCitiesFilter(false);
+                    setOpenDatesFilter(false);
+                }
+            };
 
-        });
-        setOpenTypesFilter(false);
-      }
+            document.addEventListener('click', handleDocumentClick);
 
-      const clearCitiesFilter = () => {
-        setCheckedCities([]);
-        setfilters({
-          ...filters,
-          cities: []
+            return () => {
+                document.removeEventListener('click', handleDocumentClick);
+            };
+        }, []);
 
-        });
-        setOpenCitiesFilter(false);
-      }
+        const updateFilters = () => {
+            const selectedTypes = checkedTypes.map(index => types[index].type_name);
+            const selectedCities = checkedCities?.map(index => cities[index]?.id);
+            setSelectedCities(checkedCities.map(index => cities[index]?.city_name))
+        
+            setfilters({
+                ...filters,
+                types: selectedTypes,
+                cities: selectedCities,
+            });
+        };
+        
+        // useEffect to watch for changes in checkedTypes and checkedCities
+        useEffect(() => {
+            updateFilters();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [checkedTypes, checkedCities]);
 
-      const clearDatesFilter = () => {
-        setDates([]);
-        setfilters({
-          ...filters,
-          dates: [],
-        });
-        setOpenDatesFilter(false);
-      }
+        useEffect(() => {
+                if(dates[0] && !dates[1]){
+                    setOpen(true)
+                } else {
+                    setfilters({
+                                ...filters,
+                                dates 
+                                });
+                }
+
+            
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [dates])
+        
+
+        useEffect(() => {
+
+            const storedCheckedTypes = JSON.parse(localStorage.getItem('checkedTypes'));
+            const storedCheckedCities = JSON.parse(localStorage.getItem('checkedCities'));
+        
+            if (storedCheckedTypes) {
+            setCheckedTypes(storedCheckedTypes);
+            }
+            if (storedCheckedCities) {
+                setCheckedCities(storedCheckedCities);
+            }
+        }, []);
+        
+        useEffect(() => {
+            // Store the checked items in local storage whenever it changes
+            localStorage.setItem('checkedTypes', JSON.stringify(checkedTypes));
+        }, [checkedTypes]);
+
+        useEffect(() => {
+            // Store the checked items in local storage whenever it changes
+            localStorage.setItem('checkedCities', JSON.stringify(checkedCities));
+        }, [checkedCities]);
+
+        const clearTypesFilter = () => {
+            setCheckedTypes([]);
+            setfilters({
+            ...filters,
+            types: []
+
+            });
+            setOpenTypesFilter(false);
+        }
+
+        const clearCitiesFilter = () => {
+            setCheckedCities([]);
+            setfilters({
+            ...filters,
+            cities: []
+
+            });
+            setOpenCitiesFilter(false);
+        }
+
+        const clearDatesFilter = () => {
+            setDates([]);
+            setfilters({
+            ...filters,
+            dates: [],
+            });
+            setOpenDatesFilter(false);
+        }
 
 
     return (
+        <div>
+        <SearchEvents setSearch={setSearchFilter}/>
         <Box
             sx={{
                 margin: '16px auto',
@@ -341,6 +352,7 @@ function FilterEvents() {
             {isFilterOpen && <BackgroundFilters closeDateFilter={setOpenDatesFilter}/>
             }
         </Box>
+        </div>
     )
 }
 

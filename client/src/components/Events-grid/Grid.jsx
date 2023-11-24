@@ -14,9 +14,7 @@ function Grid() {
   const dispatch = useDispatch()
   let events = useSelector(state => state.search.events)
   const filteredEvents = useSelector(state => state.search.filterEvents)
-  const searchedEvents = useSelector(state => state.search.searchEvents)
   const isFiltering = useSelector(state => state.search.isFiltering)
-  const isSearching = useSelector(state => state.search.isSearching)
 
   useEffect(() => {
       fetch('https://jodify.vercel.app/events')
@@ -32,22 +30,16 @@ function Grid() {
   , []);
   
   useEffect(() => {
-    if(isFiltering && !isSearching){
+    if(isFiltering){
       setDisplayEvents(filteredEvents)
-    }
-    else if(!isFiltering && isSearching){
-      setDisplayEvents(searchedEvents)
-    }
-    else if(isFiltering && isSearching){
-      setDisplayEvents(searchedEvents)
     } else {
       setDisplayEvents(events)
     }
     
-  }, [isFiltering, events, filteredEvents, isSearching, searchedEvents])
+  }, [isFiltering, events, filteredEvents])
 
   const load = () => {
-    if((isFiltering || isSearching) && events.length > 0){
+    if(isFiltering && events.length > 0){
       return <EventNotFound />
     } else {
       return <SkeletonLoader/>

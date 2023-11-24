@@ -12,7 +12,7 @@ function HomePage() {
     <Title/>
     <StickyHeader>
       <div style={{marginTop: '16px'}}>
-    <SearchEvents/>
+    {/* <SearchEvents/> */}
     <FilterEvents/>
       </div>
     </StickyHeader>
