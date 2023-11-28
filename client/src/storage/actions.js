@@ -40,7 +40,7 @@ export const fetchTypes = async () => {
 
 export const fetchDjs = async () => {
   try {
-      const response = await fetch(`http://localhost:3001/djs`);
+      const response = await fetch(`https://jodify.vercel.app/djs`);
       if (response.ok) {
         const data = await response.json();
         return data
@@ -54,7 +54,7 @@ export const fetchDjs = async () => {
 
 export const fetchPromoters = async () => {
   try {
-      const response = await fetch(`http://localhost:3001/promoters`);
+      const response = await fetch(`https://jodify.vercel.app/promoters`);
       if (response.ok) {
         const data = await response.json();
         return data
