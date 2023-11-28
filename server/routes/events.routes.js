@@ -5,7 +5,9 @@ const {getEvents, createEvent, updateEvent, deleteEvent, searchEvent, filterEven
 const {getCities} = require('../controllers/city.controller')
 // const {createUser, verifyUser} = require('../controllers/user.controller')
 // const {checkAdmin} = require('../middlewares/authMiddleware'); 
-const {getTypes} = require ('../controllers/type.controller')
+const {getTypes} = require ('../controllers/type.controller');
+const { getDjs } = require('../controllers/djs.controller');
+const { getPromoters } = require('../controllers/promoters.controller');
 
 
 const router = Router()
@@ -55,6 +57,16 @@ router.get('/cities', getCities)
 //tpyes
 
 router.get('/types', getTypes)
+
+//djs
+
+router.get('/djs', getDjs)
+
+//promoters
+
+router.get('/promoters', getPromoters)
+
+
 
 
 

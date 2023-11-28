@@ -12,7 +12,7 @@ import '../components/Buttons/buttonStyles.css'
 import { useEffect } from 'react';
 import Event from '../components/Event-card/Event';
 import CircularProgress from '@mui/material/CircularProgress';
-import { fetchCities, fetchTypes } from '../storage/actions';
+import { fetchCities, fetchDjs, fetchPromoters, fetchTypes } from '../storage/actions';
 import dayjs from 'dayjs';
 import { UploadBtn } from '../components/Buttons/ButtonStyles';
 import { VisuallyHiddenInput } from '../components/Buttons/ButtonStyles';
@@ -61,6 +61,8 @@ function CreateForm() {
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState(false)
   const [cities, setCities] = useState([])
+  const [djs, setDjs] = useState([])
+  const [promoters, setPromoters] = useState([])
   const [types, setTypes] = useState([])
   const [link, setlink] = useState('')
   const [fetchedData, setFetchedData] = useState({
@@ -75,8 +77,11 @@ function CreateForm() {
       ticket_link: '',
       event_image: '',
       event_djs: [],
-      event_city: ''
+      event_city: '',
+      event_promoter: ''
   })
+
+  console.log(event)
 
  
   useEffect(() => {
@@ -89,7 +94,8 @@ function CreateForm() {
       event.event_type.length === 0 ||
       event.ticket_link === '' ||
       event.event_image === '' ||
-      event.event_djs.length === 0
+      event.event_djs.length === 0 ||
+      event.event_promoter === ''
   
     // Set the disabled state based on the condition
     setCreateButtonDisabled(isRequiredEmpty);
@@ -191,8 +197,13 @@ function CreateForm() {
     async function fetchData() {
       setCities(await fetchCities());
       const data = await fetchTypes()
+      const data1 = await fetchDjs()
+      const data2 = await fetchPromoters()
       const types = data.map(type => type.type_name)
+      const djs = data1.map(dj => dj.name)
+      setPromoters(data2)
       setTypes(types);
+      setDjs(djs)
     }
     fetchData();
   }, []);
@@ -242,6 +253,13 @@ function CreateForm() {
     setEvent((prevEvent) => ({
       ...prevEvent,
       event_city: newValue || '', // Set to the selected city or an empty string if cleared
+    }));
+  };
+
+  const handlePromoterChange = (e, newValue) => {
+    setEvent((prevEvent) => ({
+      ...prevEvent,
+      event_promoter: newValue || '', // Set to the selected city or an empty string if cleared
     }));
   };
 
@@ -314,7 +332,8 @@ function CreateForm() {
       ticket_link: '',
       event_image: '',
       event_djs: [],
-      event_city: ''
+      event_city: '',
+      event_promoter: ''
     });
   };
 
@@ -406,6 +425,25 @@ function CreateForm() {
           )}
         />
 
+        <Autocomplete
+          id="tags-standard"
+          options={promoters}
+          getOptionLabel={(option) => option.name || ''}
+          onChange={handlePromoterChange}
+          value={event.event_promoter}
+          renderInput={(params) => (
+            <BasicText
+              error={event.event_promoter === ''}
+              helperText='tenes que elegir una productora'
+              required
+              {...params}
+              variant="standard"
+              label='Productora'
+              placeholder='Elige una productora'
+            />
+          )}
+        />
+
 
         <BasicText helperText='Copia y pega aca el link de venta de entradas' error={event.ticket_link === ''} required label='Link de Venta' placeholder='Ingresa el link del evento' variant='standard' value={event.ticket_link} style={{color: 'success'}} onChange={handleLinkChange}/>
 
@@ -452,7 +490,7 @@ function CreateForm() {
           freeSolo
           multiple
           id="tags-standard"
-          options={Djs}
+          options={djs}
           getOptionLabel={(option) => option}
           onChange={handleDjsChange}
           value={event.event_djs || []}

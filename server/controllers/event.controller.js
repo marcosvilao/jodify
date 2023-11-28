@@ -55,7 +55,7 @@ const getEvents = async (req, res, next) => {
 
 const createEvent = async (req, res) => {
     try {
-        const {event_title, event_type, event_date, event_location, ticket_link, event_image, event_djs, event_city } = req.body.event;
+        const {event_title, event_type, event_date, event_location, ticket_link, event_image, event_djs, event_city, event_promoter } = req.body.event;
 
         const formattedEventDate = new Date(event_date);
         formattedEventDate.setHours(9, 0, 0);
@@ -90,12 +90,12 @@ const createEvent = async (req, res) => {
         }
  
         const query = `
-            INSERT INTO event(id, event_title, event_type, event_date, event_location, ticket_link, event_image, event_djs, city_id)
-            VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)
+            INSERT INTO event(id, event_title, event_type, event_date, event_location, ticket_link, event_image, event_djs, city_id, promoter_id)
+            VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
             RETURNING id;
         `;
 
-        const values = [uuidv4(), event_title, formattedType, formattedEventDate, event_location, ticket_link, event_image, event_djs, event_city.id];
+        const values = [uuidv4(), event_title, formattedType, formattedEventDate, event_location, ticket_link, event_image, event_djs, event_city.id, event_promoter.id];
 
         const result = await pool.query(query, values);
 
