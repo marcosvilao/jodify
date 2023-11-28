@@ -37,3 +37,31 @@ export const fetchTypes = async () => {
       console.error('Error fetching data:', error);
     }
 }
+
+export const fetchDjs = async () => {
+  try {
+      const response = await fetch(`http://localhost:3001/djs`);
+      if (response.ok) {
+        const data = await response.json();
+        return data
+      } else {
+        console.error('Error fetching data');
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+}
+
+export const fetchPromoters = async () => {
+  try {
+      const response = await fetch(`http://localhost:3001/promoters`);
+      if (response.ok) {
+        const data = await response.json();
+        return data
+      } else {
+        console.error('Error fetching data');
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+}

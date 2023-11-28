@@ -1,1320 +1,3160 @@
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '8bd6ee65-9604-4847-9f89-01c0af3a0a9e',
-          'George Privatti b2b Guille Placencia',
-          'Tech House',
-          '2023/11/12',
-          'Rio (Punta Carrasco)',
-          'https://wearebombo.app.link/GOg2FtcknEb',
-          'https://ugc.production.linktr.ee/4372799c-96f6-4f0e-81f0-b58817ab8951_IMG-8878.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['George Privatti b2b Guille Placencia', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '7am | Tickets',
+                'https://www.instagram.com/7am.pass'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '55c284d8-7277-495a-9033-d1c84a3cee07',
-          'Facundo Az + Har',
-          'Progre',
-          '2023/11/12',
-          'Downtempo (Agronomía)',
-          'https://www.passline.com/sitio-evento/downtempo-rooftop-pres-domingo-12-de-noviembre',
-          'https://ugc.production.linktr.ee/50df2a3d-0056-4c37-b62a-5ad02ad3fede_IMG-8991.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Facundo Az', 'Har', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Cuarto Nativo',
+                'https://www.instagram.com/cuartonativo'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '4efe7e89-a60a-4831-88cb-4acfa357381e',
-          'Differ + Mitch Oliver',
-          'House',
-          '2023/11/16',
-          'Afrika (Recoleta)',
-          'https://www.instagram.com/lajuanitamusic/',
-          'https://ugc.production.linktr.ee/f86baf9a-82ff-42aa-b220-1af973c9e5e3_Captura-de-Pantalla-2023-11-09-a-la-s--10.37.49.png?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Differ', 'Mitch Oliver '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Código Nuevo Producciones',
+                'https://www.instagram.com/codigonuevo.prod'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'd2522bee-13d5-4e65-a60a-fd77506654ba',
-          'Denis Hortvat + Indiegenas',
-          'Techno Melódico',
-          '2023/11/17',
-          'Elements Club (Palermo)',
-          'https://venti.com.ar/evento/denis-horvat-indiegenas-juan-mandianes-b2b-sol-mazzeo/jodi',
-          'https://ugc.production.linktr.ee/98dd4248-c601-4ea2-8b8a-c0c919d547d8_a60873c9-0eae-4648-a7af-e89fcf9ab615-1695943678641-lg.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Denis Hortvat', 'Indiegenas', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Fiesta | Housemusic | Amor 🤍',
+                'https://www.instagram.com/bracohouse'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '01478334-1618-4177-9b28-2d0f606d7b08',
-          'Monolink + Facundo Mohrr',
-          'Deep House',
-          '2023/11/17',
-          'Punta Carrasco',
-          'https://wearebombo.app.link/br9zccH1OCb',
-          'https://ugc.production.linktr.ee/70814ed3-5830-4bb5-94d5-76615f4eaca6_Captura-de-Pantalla-2023-09-05-a-la-s--22.08.58.png?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Monolink', 'Facundo Mohrr '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '𝐃𝐑𝐄𝐀𝐌 𝐏𝐋𝐀𝐂𝐄 | Productora de Eventos',
+                'https://www.instagram.com/dreamplace.tdl'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '76cc6647-92f2-482b-a4ba-2fb7181067e6',
-          'John Cosani + Govinda',
-          'Progre',
-          '2023/11/17',
-          'La Biblioteca (San Telmo)',
-          'https://www.passline.com/eventos/john-cosani-govinda-juan-visca-la-biblioteca',
-          'https://ugc.production.linktr.ee/24fa6965-5fee-4fa8-8071-d544bf372e3f_3003cf43-1bcb-40ba-ab91-dd53c7e78abd-john-cosani-govinda-juan-visca-la-biblioteca-210044-img.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['John Cosani', 'Govinda', 'otro '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'ᴊᴜsᴛꜰᴇᴇʟ ᴘʀᴏᴅᴜᴄᴛɪᴏɴs',
+                'https://www.instagram.com/justfeel_ok'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '942d26d8-8dc0-4794-9cf9-60cf1ee1f4e7',
-          'Sol Ortega + E110101',
-          'Techno',
-          '2023/11/17',
-          'Deseo (Palermo)',
-          'https://www.passline.com/eventos/detroit-classic-gallery-214294?fbclid=PAAaawaEb217c6h-XVWVhSIxJzzfC_jFdUaHCz6DdeH72N0ZSuy4wIpRUAPLY_aem_AWtqInojhr_vMQH_E5JMBPAiVoCBgW2BqxaPJW03ZJ1n9hp8vF8IOiIkRdoPHI4J9_A',
-          'https://ugc.production.linktr.ee/05a46697-28be-4eb0-b5c4-d196a499b987_IMG-8801.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Sol Ortega', 'E110101 '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'JUST FEEL',
+                'https://www.instagram.com/justfeel______'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'ebf86e48-c41d-47a4-a3d6-24868fc294cd',
-          'Franco Smith + Blashear',
-          'Techno',
-          '2023/11/17',
-          'Groove (Caba)',
-          'https://www.passline.com/eventos/t78-3-horas-set-argentina-debut-groove?fbclid=PAAaa2VOlTlnZbRQ3u0X_WtWBBNLgw_YciDiRJOV0w5_8qrg33cqBZTSOW0iM_aem_AUbSOvmlKOnQPG8huj0Lwzq7Wkf4X2VAl53o9sWKGLgv87ZX6b0TCpt6oEW5jW33MsY',
-          'https://ugc.production.linktr.ee/387da05f-e7f6-44fd-b098-0ae46f102623_IMG-0432.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Franco Smith', 'Blashear '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'UnderBeat Session',
+                'https://www.instagram.com/underbeatsession'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '4a31b3a9-a026-4f23-807b-3de746f5e8d2',
-          'Enzo Siragusa + Mateo Dufour',
-          'House',
-          '2023/11/17',
-          'Crobar (Palermo)',
-          'https://wearebombo.app.link/zCgs2oA2bEb',
-          'https://ugc.production.linktr.ee/30002b35-17d6-4210-bb58-566fa061be26_IMG-8822.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Enzo Siragusa', 'Mateo Dufour '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Mundo Aparte',
+                'https://www.instagram.com/mundoaparte.oficial'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'a5908377-071a-472d-8824-76d611fdc4c7',
-          'Cera Khin + Hrddmat',
-          'Trance',
-          '2023/11/17',
-          'Heiss',
-          'https://venti.com.ar/evento/cera-khin-hrddmat-schvartz-man-17-11-blow?fbclid=PAAaZMYp6a5iuE7w97-pcl85OkWnveIrXgGYbM7eWWq-rLzD_cctKkNX0rE-8_aem_AY-1BB46CXBXGIVe7Bk0g9EXW5EU5RQLFeVjbGWqltymdbVa0ypssN2uVzFJGaCAN4g',
-          'https://ugc.production.linktr.ee/4adeef09-673c-4ce6-af08-472bc86a178d_IMG-0441.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Cera Khin', 'Hrddmat', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Skyland',
+                'https://www.instagram.com/skyland.oficial'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '9565b8ac-2457-462f-8f17-e2b2f5b3ba20',
-          'Julieta Kopp 7 horas (Techno)',
-          'Techno',
-          '2023/11/18',
-          'Under Club (Palermo)',
-          'https://tickets.underclub.com.ar/evento/julieta-kopp-7-horas',
-          'https://ugc.production.linktr.ee/9aa2ecbf-68cc-4d14-aca3-dbfad5b3763e_473c637a-2c88-41a0-97f9-384a7941f7de-1697016626969-lg.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Julieta Kopp 7 horas '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'La Crew Ros.',
+                'https://www.instagram.com/lacrewros'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'aca4f812-765b-4a86-91a3-3a0e2d68e8d9',
-          'Massano (Techno Melódico)',
-          'Techno Melódico',
-          '2023/11/18',
-          'The Bow (Punta Carrasco)',
-          'https://instagram.com/clubthebowba?igshid=MzRlODBiNWFlZA==',
-          'https://ugc.production.linktr.ee/ed064609-d5db-4037-b5f4-41136d45f33a_IMG-0909.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Massano '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Turbo Entrada',
+                'https://www.instagram.com/turboentrada'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '14dfd61d-708a-4680-b225-963c3fa06431',
-          'Transformation + NAHS',
-          'Progressive',
-          '2023/11/18',
-          'La Biblioteca (San Telmo)',
-          'https://www.passline.com/eventos/style-sound-sabado-1811-la-biblioteca',
-          'https://ugc.production.linktr.ee/801c4d5e-332c-4dc5-ae66-585b219ae530_ecc7ab1e-e2e7-41f3-8fa2-ca6dde4885d2-style-sound-sabado-1811-la-biblioteca-216012-img.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Transformation', 'NAHS', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'FrancisClub',
+                'https://www.instagram.com/francisclub__'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '61339cf7-78a4-490d-95cb-7a1a9e32d1f0',
-          'Pole Folder + Kamilo Sanclamente b2b Emi Galvan',
-          'Progre',
-          '2023/11/19',
-          'Deseo (Villa Ortuzar)',
-          'https://www.passline.com/eventos/pole-folder-kamilo-sanclemente-b2b-emi-galvan-more/jodify-318702',
-          'undefined',
-          ARRAY['Pole Folder', 'Kamilo Sanclamente b2b Emi Galvan', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Magic eventos',
+                'https://www.instagram.com/magiceventosbariloche'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '617c1d7e-9c54-4924-83f7-04ee72035e89',
-          'Ilario Alicante + Discip',
-          'Tech House',
-          '2023/11/19',
-          'Rio (Punta Carrasco)',
-          'https://wearebombo.app.link/KLO5x46ErDb',
-          'https://ugc.production.linktr.ee/ea0a6d01-d9fc-4771-9054-f889872ae27f_IMG-8462.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Ilario Alicante', 'Discip', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Recámara Producciones',
+                'https://www.instagram.com/recamaraproducciones'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'dc5d6201-e026-422c-9786-623979bcec3d',
-          'Paax + Nacho Varela & Cruz Vittor',
-          'Deep House',
-          '2023/11/19',
-          'BNN (Costanera Norte)',
-          'https://venti.com.ar/evento/desert-in-me-x-paax-tulum-nacho-varela-cruz-vittor-x-bnn?fbclid=PAAaa1CuxPRIpY5UvsZgEdq8A_fGtgNonWqPJUqT7nxE3w6zN7rQ-LmhvsKws_aem_AYKmlRWVBQ8v9PGA43yfNCvqohoSpoclE27rl7LmGyVRX5TTttYXXMw7zaolSIQQNus',
-          'https://ugc.production.linktr.ee/9fc179eb-e5c6-40da-85b4-25fc8ccc7194_IMG-8879.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Paax', 'Nacho Varela & Cruz Vittor', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'VICTORIA WHYNOT',
+                'https://www.instagram.com/victoriawhynot'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '57661536-f365-42d5-b95a-6f6228bba2fd',
-          'Gomboc & Under Club (Techno)',
-          'Techno',
-          '2023/11/19',
-          'Under Club (Palermo)',
-          'https://tickets.underclub.com.ar/evento/gomboc-under-club-dist-franco-rossi-ruiz-osc1',
-          'https://ugc.production.linktr.ee/29b8925e-81b3-44ad-ab34-cc5f2237f208_9925e693-65eb-4e00-af8f-827239c07499-1697017767383-lg.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Gomboc & Under Club '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'German Rivera',
+                'https://www.instagram.com/germanrrivera'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '64a9bc08-5652-4427-b00c-23b38dbe7fd3',
-          'Mayro + Maezbi',
-          'Progre',
-          '2023/11/19',
-          'La Biblioteca (San Telmo)',
-          'https://www.passline.com/eventos/progressive-ar-domingo-1911-la-biblioteca?fbclid=PAAaae7eNm_X_37y9F2c1bfhGUu118XD6OnShBvjspCJyQ82PE-DP4HFhw_wY_aem_AYLnt7s8rMUov5ogzU0tDBE-yppvM1eCDlGE8yuImU8_dxrKUqOWNip4ZFzWkTBrSfg',
-          'https://ugc.production.linktr.ee/9079d8f6-f1d9-41b2-9c32-496e4527526c_IMG-8876.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Mayro', 'Maezbi', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'AuditorioSur Eside',
+                'https://www.instagram.com/auditoriosur_eside'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '5f562cc2-828f-482a-9903-43396fb8df87',
-          'Temple Gate + Le Brousse',
-          'Progre',
-          '2023/11/23',
-          'Afrika (Recoleta)',
-          'https://www.instagram.com/lajuanitamusic/',
-          'https://ugc.production.linktr.ee/41af6e0c-5551-479f-9c9b-7ddd66c643f6_Captura-de-Pantalla-2023-11-09-a-la-s--10.38.58.png?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Temple Gate', 'Le Brousse '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'privatepartybche',
+                'https://www.instagram.com/privatepartybche'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '914a8d74-3cea-414f-8cf8-74863d3361ab',
-          'Brigado Crew (Progre/Techno Melódico)',
-          'Progre/Techno Melódico',
-          '2023/11/24',
-          'Amk Club (Almagro)',
-          'https://venti.com.ar/evento/omnia-pres-brigado-crew-all-night-long-parte-2?utm_medium=linktreebutton&amp;utm_source=linktree&amp;utm_campaign=brigado+crew+%7C+all+night+long+%7C+parte+2+by+omnia',
-          'https://ugc.production.linktr.ee/39f988bf-2f47-4ac1-ba0d-61cc394b6280_a176d885-090a-4bdc-a42a-7434c8161b31-1697033442427-lg.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Brigado Crew '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '*WARRIORS*',
+                'https://www.instagram.com/warriors_productora'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'b18a1c75-b89d-443e-bccf-327d6bb40d8c',
-          'Stephan Jolk + Tiello b2b Ccinni',
-          'Techno Melódico',
-          '2023/11/24',
-          'Palacio Alsina (Monserrat)',
-          'https://planout.ar/channel/ar/event/1416-sonora-flama-pres--stephan-jolk-alsina',
-          'https://ugc.production.linktr.ee/629029b4-6ba0-4c24-b019-394a4f137ea9_5d0beb9c-4c7f-4cb3-9ed5-d6a99db02081-sonora-flama-pres--stephan-jolk-alsina--preview.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Stephan Jolk', 'Tiello b2b Ccinni '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Punta Music',
+                'https://www.instagram.com/punta.music'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '158be2cb-6e5c-4bd4-91ea-0e6c2153c53a',
-          'Udolph (Techno)',
-          'Techno',
-          '2023/11/24',
-          'La Biblio (San Telmo)',
-          'https://instagram.com/lapime.ba?igshid=aWszNnJkMXdpbjZo',
-          'https://ugc.production.linktr.ee/ccb20ec2-cdb6-4b81-bcc7-53f9359924f6_IMG-8969.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Udolph '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Morocco',
+                'https://www.instagram.com/moroccocostanera'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '38c4b9aa-37ba-47d9-924f-117eb269eebf',
-          'Arapu + Momo Trosman',
-          'House',
-          '2023/11/24',
-          'Crobar (Palermo)',
-          'https://wearebombo.app.link/Ugc6kQHFAEb',
-          'https://ugc.production.linktr.ee/43681ceb-9f47-4926-a35d-021dfcd4f45e_IMG-8980.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Arapu', 'Momo Trosman', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Labia producciones',
+                'https://www.instagram.com/labia.producciones'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '11a3eb2f-d7a0-43f1-9152-9dfdfa03ffd9',
-          'Facukid',
-          '',
-          '2023/undefined/Aniversario',
-          'Vie 24/11',
-          'https://www.passline.com/eventos/rym-aniversario?fbclid=PAAaZhgNTGWYXk4fOnk1LADXTR89FmYIMqWg8yM3JfMk75P8g2ZdIUZsWvd6M_aem_AbAjUneKtw1P3r4sBOlrtVSPsnJFlino4S2PmNFOYNQNLBtMCERb-aVvRlUo4lJ_-WY',
-          'https://ugc.production.linktr.ee/9200e87e-fb2c-424c-bb2d-412b237ff1d9_IMG-1283.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Facukid'],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'limbo',
+                'https://www.instagram.com/limbo.prd'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'abc31118-9361-4d51-965f-afde88061589',
-          'Oguz + Reveillon',
-          'Techno',
-          '2023/11/24',
-          'Crobar Studio (Palermo)',
-          'https://wearebombo.app.link/pGsJVbK1ZDb',
-          'https://ugc.production.linktr.ee/3d4464fd-b254-49ff-91d6-60f5a7d38989_IMG-8696.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Oguz', 'Reveillon', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'K E N Y A',
+                'https://www.instagram.com/kenya.rooftop'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'e2d0ae5b-82bc-415d-b785-a6fb84882649',
-          'Fizz Music (House)',
-          'House',
-          '2023/11/24',
-          'Otra Historia (Villa Ortuzar)',
-          'https://otrahistoria.com.ar/evento/fizz-music/',
-          'https://ugc.production.linktr.ee/1f2f9ae7-c2a4-4e16-a52c-06dcc6d70778_cc36aa71-ac51-4ca6-be84-05c373b95945-Sin-titulo-1.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Fizz Music '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Unique Community 🇦🇷',
+                'https://www.instagram.com/unique.communityba'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'e7639b48-c567-47c4-8791-57a3c6fe4b86',
-          'Ezequiel Arias+ Pechieu',
-          'Progre',
-          '2023/11/24',
-          'Club Elements (Palermo)',
-          'https://venti.com.ar/evento/ezequiel-arias-pechieu-papier/jodi',
-          'https://ugc.production.linktr.ee/30c8ab5f-9261-455b-bcb0-c35fb9af625e_88e944a2-1ae0-4b9e-a807-09684167666d-1698115465108-lg.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Ezequiel Arias+ Pechieu', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Francine Smith 🌈🎧🦄',
+                'https://www.instagram.com/franie.smith'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '9377b5c8-76cb-4462-90ac-1cf4d559281e',
-          'Wave',
-          '',
-          '2023/11/24',
-          'Uniclub (Palermo)',
-          'https://alpogo.com/evento/wave-en-uniclub-12651',
-          'https://ugc.production.linktr.ee/46034268-1699-464b-908a-d8bd07c4684d_IMG-8872.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Wave'],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'ARCANA',
+                'https://www.instagram.com/arcana.experience'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '470621de-c380-4b8d-b26e-fc6c28ebcab4',
-          'Pacha 🍒 Buenos Aires Festival',
-          '',
-          '2023/11/25',
-          'Pacha (Costanera Norte)',
-          'https://www.tkt-store.com/event/pacha-buenos-aires-festival-2023',
-          'https://ugc.production.linktr.ee/f7d292ca-246b-41a0-acf8-b1c4e31c824a_1d6bbd83-01cf-407d-a1b5-8cb67000b95a-144b04a3-af0a-4b19-ad0e-3530dd90047b-pacha-banner-web-2.png?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Pacha 🍒 Buenos Aires Festival'],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'JET ( OFFICIAL SITE )',
+                'https://www.instagram.com/jetbuenosaires'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'e33333a1-09ab-42df-8b1c-8dd93a402566',
-          'Antrim (Progre)',
-          'Progre',
-          '2023/11/25',
-          'La Biblioteca (San Telmo)',
-          'https://www.passline.com/eventos/antrim-sabado-2511-la-biblioteca',
-          'https://ugc.production.linktr.ee/6dcc9ad1-944d-437f-962a-e8aab7c5ae49_61dad5cb-8c35-4e7a-a969-59bcdc87f183-antrim-sabado-2511-la-biblioteca-213334-img.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Antrim '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'SONORA',
+                'https://www.instagram.com/sonoramusicarg'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '20d73c6e-0031-4bd8-9bd0-8948fdc92f0b',
-          'Emi Galván + Mai Lawson',
-          'Progre',
-          '2023/11/25',
-          'Crobar (Palermo)',
-          'https://wearebombo.app.link/FXCheCYFAEb',
-          'https://ugc.production.linktr.ee/042afaed-db68-46dc-b98e-315a84758eed_IMG-8981.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Emi Galván', 'Mai Lawson', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'BUHO producciones',
+                'https://www.instagram.com/buho.produ'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '0a4ba78e-f51e-4074-b39e-774109caad5b',
-          'Milena Adamis',
-          'Techno',
-          '2023/11/25',
-          'Secret Location (Zona Oeste)',
-          'https://www.passline.com/eventos/oeste-techno-aniversario?fbclid=PAAaYqn9q-t1J-2sZt1Er1q9qW5fBhXDAaD_IAQdoZMbIbMy37pIFeyabnkdk_aem_AYLBWSF302vsPoMSJnlzy3g34zUN4bGE_3JEstxnG4Ama9OfAVsVeLEio5U_9rsmwn4',
-          'https://ugc.production.linktr.ee/cc3dc1d9-f23a-45a1-ab9a-a58d02c296f0_IMG-8864.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Milena Adamis', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '𝗠𝘂𝘂𝘃 𝗦𝗲𝘀𝘀𝗶𝗼𝗻𝘀',
+                'https://www.instagram.com/muuvsessions'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '1e5931fb-3b80-428f-9cff-49aa2bd8bef8',
-          'D3fai + Cloz b2b D’Losantos',
-          'Techno/Techno Melódico',
-          '2023/11/25',
-          'Crobar Studio (Palermo)',
-          'https://wearebombo.app.link/VWoCmibGAEb',
-          'https://ugc.production.linktr.ee/6fb4168b-948f-474e-9cff-c314d592bd2b_IMG-8982.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['D3fai', 'Cloz b2b D’Losantos', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'A Y B Å K',
+                'https://www.instagram.com/aybak.productions'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '0b58b130-f394-4b06-9e1c-fe96663c39b9',
-          'Fisher',
-          '',
-          '2023/11/25',
-          'Mandarine Park',
-          'https://linktr.ee/mandarinepark?fbclid=PAAabj6W8DtN9hb0Vdh0P71CtmMbXWRWlGZHdaobGgJQxnOD-XwO1-4L-5pfc_aem_AStg95zvQPB5BWoTnk2IBn-X2HJUA1SCTDfp7agTwvsHGmge6oUMbFnO4H3Gn8H8LuY',
-          'https://ugc.production.linktr.ee/2a8a3547-ac9d-4907-aff2-431e68e771d3_IMG-9432.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Fisher'],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'EL SEXTO',
+                'https://www.instagram.com/elsextorecords'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'bfd1bdc6-ddee-4c79-bb85-c880bdd63b3a',
-          'Mariano Dc 7 horas (Techno)',
-          'Techno',
-          '2023/11/25',
-          'Under Club (Palermo)',
-          'https://tickets.underclub.com.ar/evento/mariano-dc-7-horas-set',
-          'https://ugc.production.linktr.ee/46fc3c0e-ab4b-4abe-9f17-c99fdd88005c_ad3196f6-33cd-4966-85ed-0142ba300871-1697016763191-lg.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Mariano Dc 7 horas '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'HIGHLIFE',
+                'https://www.instagram.com/highlifebsas'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '159cc589-fb6e-49d6-a514-eedd90b4e8c2',
-          'Nicolás Taboada + Beico',
-          'Techno',
-          '2023/11/26',
-          'Rio (Punta Carrasco)',
-          'https://wearebombo.app.link/azuXn4yIAEb',
-          'https://ugc.production.linktr.ee/6b2aa7f2-d7f3-49ce-981e-97edacfc17d5_IMG-8984.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Nicolás Taboada', 'Beico', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Pampa Warro',
+                'https://www.instagram.com/pampawarro'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'a06b0ffa-e2e8-442f-9a67-b05f778f6f2d',
-          'Concept Mooving (Poolparty) (Tech)',
-          'Poolparty',
-          '2023/11/26',
-          'Zona Oeste',
-          'https://instagram.com/keepitflowing.producciones?igshid=NTc4MTIwNjQ2YQ==',
-          'https://ugc.production.linktr.ee/ed7012a2-860a-4c02-af28-b755e182812f_IMG-0374.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Concept Mooving  '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Ele Multiespacio',
+                'https://www.instagram.com/ele_multiespacio'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'b882167e-ceed-4534-acd9-b847bc8e45ea',
-          'Ariel Rodz + Mazzeo',
-          'Progre/Tech House',
-          '2023/11/26',
-          'Área Costanera (Quilmes)',
-          'https://www.passline.com/eventos/eden-festival?fbclid=PAAabXtw3lM47eZnNXXtK6_inEQOjLVqTqEDrEPt4GCBFu_JpVS1KuPjW44jQ_aem_AfSCbKRaaBK3nASOAflYvIwsZIGZsy4kxYUZ26QDgf4vW5obXz30DEghyq1toxjGessc3VEu9YHz_aaAHov0pw9R',
-          'https://ugc.production.linktr.ee/c852615a-f298-4ade-b289-1d156a4c0e92_IMG-8967.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Ariel Rodz', 'Mazzeo', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'TERRA FURIA',
+                'https://www.instagram.com/terrafuria'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'c021e3a9-88ec-4cc9-9aad-95fd42a9660d',
-          'Cocuns b2b Bessone + Papier b2b Lucas Salgado',
-          'House/Progre',
-          '2023/11/30',
-          'Afrika (Recoleta)',
-          'https://www.instagram.com/lajuanitamusic/',
-          'https://ugc.production.linktr.ee/18a5d453-5d10-4623-b79c-b491ecd4d044_Captura-de-Pantalla-2023-11-09-a-la-s--10.41.25.png?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Cocuns b2b Bessone', 'Papier b2b Lucas Salgado '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'PX traveling experience',
+                'https://www.instagram.com/px.traveling'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'c66e4ef1-ea1c-4faa-b6db-50e9c3747318',
-          'Carlita + DJ Tennis',
-          'Tech House/Deep House',
-          '2023/12/01',
-          'Palacio Alsina (Centro)',
-          'https://planout.ar/channel/ar/event/1084-crew-savage-x-carlita-dj-tennis-x-palacio-alsina?pr=1454',
-          'https://ugc.production.linktr.ee/505eb6cb-6c2c-4c12-bc75-ba9775a60b0a_e0c339d7-0695-47c7-9b73-3fada8caf6bb-imagen-png-20-2--preview.png?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Carlita', 'DJ Tennis', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Enfants',
+                'https://www.instagram.com/enfants.ba'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'a1c2b37d-7e3c-4ab7-ab32-eec267f81b33',
-          'Mita Gami+ This & That',
-          'Deep House',
-          '2023/12/01',
-          'Club Elements (Palermo)',
-          'https://venti.com.ar/evento/mita-gami-this-that-tina-nach/jodi',
-          'https://ugc.production.linktr.ee/efa9cc06-be49-48b0-a419-c11f5f27b89e_308c067a-7cb2-4f28-b324-3f69c5fc3916-1699376146897-lg.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Mita Gami+ This & That', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Moodhelpers',
+                'https://www.instagram.com/moodhelpers'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'd379c074-f6b9-43af-8201-53f3ed25b251',
-          'Chris Liebing + Udolph',
-          'Techno',
-          '2023/12/01',
-          'Crobar (Palermo)',
-          'https://wearebombo.app.link/PXs8wv4PqEb',
-          'https://ugc.production.linktr.ee/99d7b96a-bfff-47fc-bbe3-8a6a30a28486_IMG-8909.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Chris Liebing', 'Udolph', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'HOP OFICIAL',
+                'https://www.instagram.com/hop_oficial'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'f82b1283-f5b5-40a1-9656-a38b6aa7f66b',
-          'Fiesta Bruta (Tech House)',
-          'Tech House',
-          '2023/12/01',
-          'La Biblioteca',
-          'https://www.passline.com/eventos/fiesta-bruta-viernes-112-la-biblioteca',
-          'https://ugc.production.linktr.ee/e2be7e1f-1d0e-48c5-8cf6-8cc0529b1ea1_f8a22367-152e-4126-b684-e616e7dd8fbf-fiesta-bruta-viernes-112-la-biblioteca-217071-img.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Fiesta Bruta '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Dream Machine',
+                'https://www.instagram.com/dream.machine_label'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '76e8c760-8d9f-4b2d-bcc6-81f92e88c844',
-          'Kindergarden (Tech House)',
-          'Tech House',
-          '2023/12/02',
-          'Crobar Studio (Palermo)',
-          'https://wearebombo.app.link/ytdFbOxGAEb',
-          'https://ugc.production.linktr.ee/712c5930-bbb9-44ef-b037-c5276fdeb4f5_IMG-8983.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Kindergarden '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'A.L.D.E.A. Music Experience + By DJ MAG L.A.',
+                'https://www.instagram.com/aldea.me'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'b147bcda-2d6b-47c4-9680-c43d835f97f3',
-          'Lexlay + Súper',
-          'Tech House',
-          '2023/12/03',
-          'Rio (Punta Carrasco)',
-          'https://wearebombo.app.link/qienXzHHqEb',
-          'https://ugc.production.linktr.ee/28837739-8abc-449d-a260-a84c30509826_IMG-8907.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Lexlay', 'Súper '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Frere BA Eventos',
+                'https://www.instagram.com/frere.events'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '3ce4935e-156e-4039-af21-ddf75c810fbd',
-          'Franzizca + Djs Pareja',
-          'Techno',
-          '2023/12/07',
-          'Teatro Vorterix (Chacarita)',
-          'https://www.allaccess.com.ar/event/numbers-festival',
-          'https://ugc.production.linktr.ee/a0c8d2d3-96ee-4435-8837-b224fe2087d3_eccc754d-445e-4244-a4ac-aeb0c2b22935-8645c7ff-be5c-446d-b80e-909dfb2cad77-num71223storyvorterix1920.720.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Franzizca', 'Djs Pareja', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'SMOOTH (Bs.As.)',
+                'https://www.instagram.com/smooth.bsas'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '90e40eef-32af-484a-b41a-e79d73f108fe',
-          'Matador + Korolova',
-          '',
-          '2023/12/07',
-          'Madero Boardwalk',
-          'https://venti.com.ar/evento/s2gthr-open-air-korolova-friends-madero-boardwalk-jue-07-12-23hs?fbclid=PAAaYRLbSM6ZgbF8npfTxZ3vkQ9dpbjZqNCNYIhNw8aLx2-Hobhq2d1joeK-w_aem_AXigRuZYMU-tvYzcDIIfcsEDl5sCKVBNa2N0W6pbBZjOArhxVI8xW3X-JeSt38tVPPk',
-          'https://ugc.production.linktr.ee/a124fa64-37ee-435b-8b72-f2edbbf761b2_IMG-9627.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Matador', 'Korolova', 'otros'],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Diofaro',
+                'https://www.instagram.com/diofaro'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '0952f0ba-5c62-4823-b5e4-d15a0e131c59',
-          'Boris Brejcha + Ann Clu',
-          '',
-          '2023/12/08',
-          'Punta Carrasco',
-          'https://wearebombo.app.link/wHakcx84ECb',
-          'https://ugc.production.linktr.ee/96817e68-ea5c-40bc-b8ea-5c17a787535b_IMG-9397.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Boris Brejcha', 'Ann Clu'],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Valentina Castillo',
+                'https://www.instagram.com/eros.techno'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'ee8238f5-fe15-4299-b666-ffa36d586de1',
-          'Ina b2b Apollo + Franco Smith',
-          'Progre',
-          '2023/12/09',
-          'Niceto Humboldt (Caba)',
-          'https://linktr.ee/voltash',
-          'https://ugc.production.linktr.ee/934ec9f9-dae7-4b07-883f-27266cc73849_IMG-1281.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Ina b2b Apollo', 'Franco Smith', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'metaphysis ♡》',
+                'https://www.instagram.com/metaphysis_0'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'f05bdbf1-7545-476b-ab65-05244eb0c939',
-          'Rebekah (Psy Trance)',
-          'Psy Trance',
-          '2023/12/15',
-          'Amerika (Caba)',
-          'https://venti.com.ar/evento/heiss-xxl?fbclid=PAAaavhd9BJiFBqLeblJHm4viMWwc-AWP_TQF5VN2BybZ2BVNTTcET6E9Z3fM_aem_AVSUy8DST55wp-2Rqe6uhLhP9H7qNiiPbMIIiHcg2RbgT3UiI_j46qllUvg1aRahx4I',
-          'https://ugc.production.linktr.ee/4bce26ce-ac24-486e-8459-f0fdf5252d3a_IMG-0809.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Rebekah '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Tauro Nena',
+                'https://www.instagram.com/tauronena_'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '3805c619-dea4-4efe-8c10-10f4ddb0efed',
-          'Festival Numbers (Techno)',
-          'Techno',
-          '2023/12/15',
-          'Club De Pescadores (Costanera)',
-          'https://www.passline.com/eventos/numbers-festival-club-de-pescadores',
-          'https://ugc.production.linktr.ee/9b5f5b4d-7a08-43ae-a9ad-dcb0ae2da867_Captura-de-Pantalla-2023-11-08-a-la-s--18.56.20.png?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Festival Numbers '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'THE AFTER',
+                'https://www.instagram.com/extended.time.ba'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '615b5b09-aac6-4611-b883-df53e2d9599a',
-          'Carl Cox + Roberto Ceratti',
-          'Techno',
-          '2023/undefined/Boardwalk',
-          '',
-          'https://venti.com.ar/evento/sonora-pres-carl-cox-madero-boardwalk',
-          'https://ugc.production.linktr.ee/fdf50c56-71aa-4e5a-a308-d58444f25ffe_Captura-de-Pantalla-2023-09-20-a-la-s--16.47.45.png?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Carl Cox', 'Roberto Ceratti - Sab 16/12'],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Astronomy',
+                'https://www.instagram.com/astronomy.oficial'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '7a0b52a0-e97a-4f10-b79f-886d900608df',
-          'ZAC + Mazzeo',
-          'Progre/Techno Melódico',
-          '2023/12/16',
-          'La Costa (Quilmes)',
-          'https://www.passline.com/sitio-evento/la-costa-1612',
-          'https://ugc.production.linktr.ee/07c8e048-d78f-4511-962b-3b1ab1c5e36f_Captura-de-Pantalla-2023-10-31-a-la-s--20.02.03.png?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['ZAC', 'Mazzeo', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Scandalo',
+                'https://www.instagram.com/scandaloproducciones'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          '1cd75d51-2eb3-43bd-81fc-32128e7c2711',
-          'Zac + Mazzeo',
-          'Techno/Techno Melódico',
-          '2023/12/16',
-          'Multiespacio Costanera (Quilmes)',
-          'https://www.passline.com/eventos/la-costa-1612/andres-acosta-337060?fbclid=PAAaZ5wWJUqiU4KKmD1D8ycCwMz43QVANop0VW9I5jkcezmwARUbAiqf-Im-0_aem_AUvAZfRB8x9-MBMMJz_fdRlHQGvA2ILjaLSxf_qflOhanusixuVNuydSoH_a0VhH69E',
-          'https://ugc.production.linktr.ee/d4a4d37a-9672-4955-8743-3a8dbc271dce_IMG-8799.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Zac', 'Mazzeo', 'otros '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Urbeat',
+                'https://www.instagram.com/urbeat.techno'
+            );
 
-        INSERT INTO event (
-          id,
-          event_title,
-          event_type,
-          event_date,
-          event_location,
-          ticket_link,
-          event_image,
-          event_djs,
-          city_id
-        )
-        VALUES (
-          'c81c3787-a5dc-4414-8737-09df0f9cb17d',
-          'Cloonee + Fabri Tacc',
-          'Tech House',
-          '2023/12/17',
-          'Rio (Punta Carrasco)',
-          'https://wearebombo.app.link/NK75I212bEb',
-          'https://ugc.production.linktr.ee/48dc8c72-f684-452d-b1c7-45f814cf8996_IMG-8823.jpeg?io=true&amp;size=thumbnail-stack-v1_0',
-          ARRAY['Cloonee', 'Fabri Tacc '],
-          '258fd495-92d3-4119-aa37-0d1c684a0237'
-        );
-      
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Feedback Undergroove',
+                'https://www.instagram.com/feedback.undergroove'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Fizz music',
+                'https://www.instagram.com/fizz__music'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '𝘉𝘌𝘓𝘖𝘕𝘎 𝙏𝙊 𝙈𝙐𝙎𝙄𝘾',
+                'https://www.instagram.com/belongto_music'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Melodic Soul',
+                'https://www.instagram.com/melodicsoul_'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '𝙈𝘼𝙍𝙏𝙄𝙉 𝙃𝙐𝙏𝙉𝙄𝙆',
+                'https://www.instagram.com/fiestasdeelectronicauruguay'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'FUNGI',
+                'https://www.instagram.com/fungi.techno'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Feel In The Blank',
+                'https://www.instagram.com/fitb____'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'La Costa Festival',
+                'https://www.instagram.com/lacosta.festival'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Confianza',
+                'https://www.instagram.com/confianza.producciones'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Reset Club',
+                'https://www.instagram.com/resetcluub'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'GO ON',
+                'https://www.instagram.com/join.go.on'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Veinticuatro Siete',
+                'https://www.instagram.com/veinticuatrosiete.prod'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '• R H Y T H M I C •',
+                'https://www.instagram.com/rhythmic.oficial'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'dECIBELES',
+                'https://www.instagram.com/decibelesclub'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Crossing South Producciones',
+                'https://www.instagram.com/crossingsouthpr'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '𝐄𝐃𝐄𝐍',
+                'https://www.instagram.com/edenproducciones.ofc'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'SOUNDAKA',
+                'https://www.instagram.com/soundakaofficial'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'SEKTOR13',
+                'https://www.instagram.com/sektor13___'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Heaven',
+                'https://www.instagram.com/_heaven.ofc'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '🔶GOLDEN HOUR®',
+                'https://www.instagram.com/golden.hour.ar'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'MR. JONES',
+                'https://www.instagram.com/mrjones_mdp'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'ONLY CLUB | NORMANDINA',
+                'https://www.instagram.com/only_normandina'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'El Calamar Loco',
+                'https://www.instagram.com/elcalamarloco'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Club Quba',
+                'https://www.instagram.com/club_quba'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'LB Studio',
+                'https://www.instagram.com/lbstudio.ok'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'After Beach',
+                'https://www.instagram.com/samsarabeach.mdq'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'MUTE ➖ Club de Mar',
+                'https://www.instagram.com/mutemardelplata'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'WeCan-fest',
+                'https://www.instagram.com/wecan_fest'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'EXIT MANAGEMENT & BOOKING AGENCY',
+                'https://www.instagram.com/exit.management'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'CYCLES',
+                'https://www.instagram.com/cycles________'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'LUST ᴍᴜsɪᴄ ᴇxᴘᴇʀɪᴇɴᴄᴇ',
+                'https://www.instagram.com/lust.experience'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'OPPOSITE',
+                'https://www.instagram.com/opposite_ba'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'VOLTASH - Techno en Buenos Aires',
+                'https://www.instagram.com/voltash.ciclo'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Bendito Sonido',
+                'https://www.instagram.com/bendito.arg'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '𝗔𝗖𝗜𝗗 𝗟𝗘𝗠𝗢𝗡 🍋',
+                'https://www.instagram.com/acidlemon.prod'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'GPS after',
+                'https://www.instagram.com/gpsafter'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'F R A C T A L',
+                'https://www.instagram.com/fractal.prod'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '5D💜',
+                'https://www.instagram.com/5d.prod'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'ᴠᴀᴅᴏʀᴍɪ_ᴘʀᴏᴅᴜᴄᴄɪᴏɴᴇs®️',
+                'https://www.instagram.com/vadormi_producciones'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'G A R D E N O F S O U N D',
+                'https://www.instagram.com/gardenofsound.music'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'CLUBBING',
+                'https://www.instagram.com/clubbingofc'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '',
+                'https://www.instagram.com/panter.producciones'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Bienvenidos a Casa.',
+                'https://www.instagram.com/casatonicagintoneria'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Capital Electrónica',
+                'https://www.instagram.com/capitalelectronica'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Ciclic Producciones - Bariloche',
+                'https://www.instagram.com/ciclic_community'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Valhöll',
+                'https://www.instagram.com/valholl_prod'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '𝗢𝗻.𝗺𝘃𝗺𝗻𝘁',
+                'https://www.instagram.com/on.mvmnt'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'FREQUENZ',
+                'https://www.instagram.com/frequenzcollective'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'MID90s',
+                'https://www.instagram.com/mid90s_ba'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'STAB TECHNO',
+                'https://www.instagram.com/stabtechno'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'techno star',
+                'https://www.instagram.com/technostar.arg'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'kook label',
+                'https://www.instagram.com/kook.label'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Chrystal Label',
+                'https://www.instagram.com/chrystal.label'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Bealive Producciones',
+                'https://www.instagram.com/bealive.prod'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Svb',
+                'https://www.instagram.com/svb_bsas'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'MØRK',
+                'https://www.instagram.com/mork.techno'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Glue House',
+                'https://www.instagram.com/gluehouse_'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'BlackSheep',
+                'https://www.instagram.com/blacksheep.pub'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'KINDERGARDEN RECORDS',
+                'https://www.instagram.com/kindergarden.rec'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Techno Please',
+                'https://www.instagram.com/technoplease_'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'LA FEM',
+                'https://www.instagram.com/lafem__ba'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'KORA',
+                'https://www.instagram.com/kora.producciones'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Fusion 90 - Talento Nacional',
+                'https://www.instagram.com/fusion90_'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Green Goblin Festival',
+                'https://www.instagram.com/greengoblin.ofc'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Legs Producciones - Neptune',
+                'https://www.instagram.com/neptune_legs'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Symbiøtic 🦠',
+                'https://www.instagram.com/symbiotic.ciclo'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'INERCIA GROUP',
+                'https://www.instagram.com/inerciagroup'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Groova',
+                'https://www.instagram.com/groova.arg/'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '- ᴀᴍᴇ ʟᴇ ʙᴇᴀᴛ -',
+                'https://www.instagram.com/amelebeat'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Plan Out',
+                'https://www.instagram.com/planout.ar'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '🏔️❄️ WINTER EDITION ❄️🏔️ 10/8 ❤️‍🔥',
+                'https://www.instagram.com/patagoniapicnic'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'All in Deep',
+                'https://www.instagram.com/all.indeep'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'LOOP |',
+                'https://www.instagram.com/loop_baires'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'External Producciones',
+                'https://www.instagram.com/_external__'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'ÁGORA GROUP',
+                'https://www.instagram.com/agora.group_'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '𝗗 𝗜 𝗞 𝗘 𝗬',
+                'https://www.instagram.com/dikeyorg'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'NBAproducciones',
+                'https://www.instagram.com/nbagroup_'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'OESTE TECHNO',
+                'https://www.instagram.com/oeste_techno'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'SAVANT',
+                'https://www.instagram.com/ciclosavant'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'SAFARI',
+                'https://www.instagram.com/safariproductora'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'DCG',
+                'https://www.instagram.com/detroitclassicgallery'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'MYST',
+                'https://www.instagram.com/myst.lp'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'BLOOM PRODUCE',
+                'https://www.instagram.com/bloom.produce'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'CLUB BUENOS AIRES',
+                'https://www.instagram.com/club_baires'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Moon Travel',
+                'https://www.instagram.com/moontravel'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'BUEN VIAJE PRODUCCIONES 🪐',
+                'https://www.instagram.com/buen.viaje.prod'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Martin Angrisano (ARG)',
+                'https://www.instagram.com/martin.angrisano.music'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Movida Electrónica Neuquen',
+                'https://www.instagram.com/movidaelectronicanqn'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'BookingTechno',
+                'https://www.instagram.com/bookingtechno'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'ATTACK Rec. 🔪',
+                'https://www.instagram.com/attack.records'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '𝗖𝗔𝗣-𝗣𝗿𝗼𝗱𝘂𝗰𝗰𝗶𝗼𝗻𝗲𝘀',
+                'https://www.instagram.com/capproducciones'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Issa Producciones',
+                'https://www.instagram.com/issa.productora'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Release Your Mind',
+                'https://www.instagram.com/rymmusic.ba'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'suite_122',
+                'https://www.instagram.com/suite_122/'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Chucaro Salón de Eventos',
+                'https://www.instagram.com/elchucaroeventos/'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'DISSONANT',
+                'https://www.instagram.com/dissonant.ofc/'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'S&L',
+                'https://www.instagram.com/slowandlouder/'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'BEFORE DAWN',
+                'https://www.instagram.com/beforedawn.music/'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'A P R Ê S',
+                'https://www.instagram.com/aprescatedral/'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'La Playa Festival',
+                'https://www.instagram.com/laplayaok/'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'THE CLUB 23',
+                'https://www.instagram.com/theclub.2.3'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'The Club',
+                'https://www.instagram.com/theclub_mza'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'GAP Mar Del Plata',
+                'https://www.instagram.com/gapmardelplata'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '𝙇𝘼 𝙋𝙄𝙈𝙀',
+                'https://www.instagram.com/lapime.ba'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'P̵U̵L̵S̵E̵',
+                'https://www.instagram.com/pulserecords.ar'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'ATMOS',
+                'https://www.instagram.com/frecuenciatmos'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'PYLAE PROGRESSIVE BAR',
+                'https://www.instagram.com/pylaerestobar'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Lotus Alto',
+                'https://www.instagram.com/lotus_alto'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Wabi Fun Club',
+                'https://www.instagram.com/wabifunclub'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'KIKA CLUB OFICIAL',
+                'https://www.instagram.com/kikaoficialok'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'TODO PRODUCCIONES',
+                'https://www.instagram.com/todoproducciones'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Techno Mdz',
+                'https://www.instagram.com/techno.mdz'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Boiler Producciones',
+                'https://www.instagram.com/boiler.producciones'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Vortex Club',
+                'https://www.instagram.com/vortex_club_mdz'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'AQUA San Luis oficial',
+                'https://www.instagram.com/aquasanluis'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Bruck’s | bar & pub',
+                'https://www.instagram.com/brucks.tuc'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'CONTROL Z',
+                'https://www.instagram.com/ctrlz.ciclo'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Rave Techno',
+                'https://www.instagram.com/rave.tucuman'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'MISTIC',
+                'https://www.instagram.com/mistic.arg'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'D™',
+                'https://www.instagram.com/dmensions.tm'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Rarest',
+                'https://www.instagram.com/rarest.producciones'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'MAKE ME FLY',
+                'https://www.instagram.com/makemefly.ok'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Happy Session',
+                'https://www.instagram.com/happysessionok'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'VISION',
+                'https://www.instagram.com/vision.festival'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Lignée Bar',
+                'https://www.instagram.com/lignee.bar'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'J L CLUB',
+                'https://www.instagram.com/j_l_club'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'LFO COMMUNITY',
+                'https://www.instagram.com/lfo.community'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'CLUB TOTAL',
+                'https://www.instagram.com/totalclubtotal'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'EnsoProgreAr',
+                'https://www.instagram.com/cicloenso'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'UTOPIC🔹',
+                'https://www.instagram.com/utopic_ar'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'BRUTA',
+                'https://www.instagram.com/fiestabruta'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Lino',
+                'https://www.instagram.com/lino.cultura'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'BIGBANG Event Producer',
+                'https://www.instagram.com/bigbang_event_producer'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '.WAV',
+                'https://www.instagram.com/wavproducciones'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'MUELLE COSTANERA',
+                'https://www.instagram.com/muelle_costanera'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '𝐇𝐨𝐨𝐝 𝐙𝐨𝐧𝐞',
+                'https://www.instagram.com/hoodzone.techno'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '🪩 KIKA CLUB 🥂',
+                'https://www.instagram.com/kikacluboficial'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Fiestas con groove y mística 🛸',
+                'https://www.instagram.com/pulsoproductora'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'S U O И O',
+                'https://www.instagram.com/suono.ar'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'CLAP MUSIC',
+                'https://www.instagram.com/clapmusic_'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Francisca del Fuego',
+                'https://www.instagram.com/franciscadelfuego'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Dementia Records',
+                'https://www.instagram.com/dementia.records'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '𝗣𝗿𝗼𝗱𝘂𝗰𝘁𝗼𝗿𝗮 𝗱𝗲 𝗘𝘃𝗲𝗻𝘁𝗼𝘀',
+                'https://www.instagram.com/budagroup_'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Centro Cultural DVNE PARK ®',
+                'https://www.instagram.com/duneparkclub'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '🇦🇷 𝘾𝙈 𝙋𝙧𝙤𝙙𝙪𝙘𝙘𝙞𝙤𝙣𝙚𝙨.',
+                'https://www.instagram.com/cm__producciones'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Flama Bookings',
+                'https://www.instagram.com/flama_bookings'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Wertz Records Official',
+                'https://www.instagram.com/wertzgroup'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'BUEN VIAJE ®️',
+                'https://www.instagram.com/buenviajeprod'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Zet producciones',
+                'https://www.instagram.com/zet.producciones'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'RAVE PRODUCTION | Producciones',
+                'https://www.instagram.com/raveproduction___'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Sótano',
+                'https://www.instagram.com/elsotanodec'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '',
+                'https://www.instagram.com/ccomplejoartmedia'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'PLUR',
+                'https://www.instagram.com/plur.ofc'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Private Techno',
+                'https://www.instagram.com/private.techno'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'KTK PRODUCCIONES 🇦🇷',
+                'https://www.instagram.com/ktk_producciones'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Pulsar Producciones',
+                'https://www.instagram.com/pulsar.producciones'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'FREAK ME OUT',
+                'https://www.instagram.com/freakmeoutarg'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'kenya House Music',
+                'https://www.instagram.com/kenya_house_music'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Ciclo Nexo',
+                'https://www.instagram.com/ciclo.nexo'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Successes Producciones',
+                'https://www.instagram.com/successesproducciones'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'RUNA CLUB  ®️',
+                'https://www.instagram.com/runa.club'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '',
+                'https://www.instagram.com/levels.producciones'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Look Me',
+                'https://www.instagram.com/lookme.experience'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Folck Producciones',
+                'https://www.instagram.com/folck_producciones'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Cadencia',
+                'https://www.instagram.com/cadencia.concept'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Nirvana Producciones',
+                'https://www.instagram.com/nirvana_producciones'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'FUSS',
+                'https://www.instagram.com/fuss.arg'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'LAS PALAPAS',
+                'https://www.instagram.com/laspalapas_'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'G R O O V E',
+                'https://www.instagram.com/chirolasgroove'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'inclub',
+                'https://www.instagram.com/inclub.cba'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Mad Producciones',
+                'https://www.instagram.com/bemadok'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'RED FALLS',
+                'https://www.instagram.com/redfalls.project'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '#Peish',
+                'https://www.instagram.com/peishpro'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Rue Rêves',
+                'https://www.instagram.com/ruerevesmusic'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '𝗜𝗡𝗗𝗜𝗔 𝗛𝗢𝗨𝗦𝗘 - Club',
+                'https://www.instagram.com/india.house.club'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'BlackBox',
+                'https://www.instagram.com/__.blackbox.__'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'ICONIC CLUB',
+                'https://www.instagram.com/iconic.club'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'The Second Wave',
+                'https://www.instagram.com/tsw.ciclo'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'SOMNUS',
+                'https://www.instagram.com/somnus.wav'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'PUERTA',
+                'https://www.instagram.com/puerta_bassmusic'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '',
+                'https://www.instagram.com/911club.ba'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Artlab',
+                'https://www.instagram.com/artlabpro'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Febo Asoma',
+                'https://www.instagram.com/feboasoma.ciclo'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'VOIDZ OFICIAL',
+                'https://www.instagram.com/voidz.oficial'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'AUDIOSIVE',
+                'https://www.instagram.com/audiosive'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'KOI CLUB',
+                'https://www.instagram.com/clubkoi_'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'ZYKLUS Producciones',
+                'https://www.instagram.com/zyklus.producciones'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'BLOW',
+                'https://www.instagram.com/blow_sj'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'ᴍᴜɴᴀ | ᴛᴇᴄʜɴᴏ ᴇxᴘᴇʀɪᴇɴᴄᴇ',
+                'https://www.instagram.com/muna.prod'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Medusa Club',
+                'https://www.instagram.com/medusaclub__'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Corner Pichincha',
+                'https://www.instagram.com/corner.pichincha'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'One Beat',
+                'https://www.instagram.com/onebeat.ros'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Stafford Cerveceria',
+                'https://www.instagram.com/staffordcerveceriaok'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '🇯 🇴 🇹 🇦 .  Ciudad de La Plata',
+                'https://www.instagram.com/jota.culturalocal'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'PABÜ',
+                'https://www.instagram.com/pabu.producciones'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'SOUTHSIDE PROD.',
+                'https://www.instagram.com/southsideprod_'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'MIRAGE BS AS',
+                'https://www.instagram.com/miragebsas'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Crëta',
+                'https://www.instagram.com/cretacostanera'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Renée Je T'Aime | Lounge Bar',
+                'https://www.instagram.com/renee.jetaime'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'DROOP 🇦🇷',
+                'https://www.instagram.com/droop.ba'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '⛩️ 𝙠𝙚𝙣𝙮𝙖 𝙊𝙛𝙞𝙘𝙞𝙖𝙡',
+                'https://www.instagram.com/kenya_oficial_ok'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'MUSIC FR🌑M THE FUTURE',
+                'https://www.instagram.com/music.fromthefuture'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Elena Projects',
+                'https://www.instagram.com/elenaprojects_'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'BONAIRE',
+                'https://www.instagram.com/bonaireba'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '𝐙𝐨𝐮𝐤 𝐊𝐢𝐤𝐚',
+                'https://www.instagram.com/zouk.kika'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Living Room',
+                'https://www.instagram.com/livingroom_oficial'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Code One',
+                'https://www.instagram.com/codeone_ar'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Above In The Clouds ⛅',
+                'https://www.instagram.com/aboveintheclouds.official'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'TECHNOTERAPIA.RAVE ☠☠',
+                'https://www.instagram.com/technoterapia.rave'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '☢ UNDER RⒶVE ☢',
+                'https://www.instagram.com/under_rave'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Agency Hysteria Rave',
+                'https://www.instagram.com/ravee.agency'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'PATAGONIA ELECTRONIKA',
+                'https://www.instagram.com/patagoniaelectronika'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'FURIA ROOFTOP',
+                'https://www.instagram.com/furiarooftop'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'SMILE GROUP | CLUB MUSEUM | FURIA | SMILE TNGRS | LA BIBLIOTECA',
+                'https://www.instagram.com/smilegroup__'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Club La Tranquera',
+                'https://www.instagram.com/clublatranquera'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Etnia',
+                'https://www.instagram.com/etnia.ciclo'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'FEUER',
+                'https://www.instagram.com/feuer555'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Cut Club',
+                'https://www.instagram.com/cutclubb'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '⚡️ Sundays 2.0 by GROOVE',
+                'https://www.instagram.com/groove.2.0'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Club 132',
+                'https://www.instagram.com/club132official'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'CRUDX FESTIVAL',
+                'https://www.instagram.com/crudxfestival'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'CULTURAL ∆UROR∆',
+                'https://www.instagram.com/culturalaurora.art'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'ROOM!',
+                'https://www.instagram.com/room.mza'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'EL ATICO',
+                'https://www.instagram.com/elatico_club'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'UNDER BERLIN',
+                'https://www.instagram.com/underberlin.rave'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Aquabarra Lado B',
+                'https://www.instagram.com/aquabarra'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Casa de Piedra',
+                'https://www.instagram.com/complejocdp'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'ROOFTOP Güemes',
+                'https://www.instagram.com/wearerooftop'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Amnesia',
+                'https://www.instagram.com/amnesia.club'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '999',
+                'https://www.instagram.com/999ciclo'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'FIN DEL MUNDO PRODUCCIONES',
+                'https://www.instagram.com/fdmushproducciones'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'The Bass Producciones 🎧🎧',
+                'https://www.instagram.com/thebass.produ'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Ｔｈｉｓ ｉｓ ＴΞＣＨＮＯ 🇦🇷',
+                'https://www.instagram.com/thisistechnobb'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Club del Progre',
+                'https://www.instagram.com/clubdelprogre'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '𝐃𝐲𝐧𝐚𝐦𝐢𝐜 𝐒𝐨𝐮𝐧𝐝 𝐏𝐫𝐨𝐝𝐮𝐜𝐜𝐢𝐨𝐧𝐞𝐬',
+                'https://www.instagram.com/_dynamicsound'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Roomie Club',
+                'https://www.instagram.com/roomie.club'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'CHAUVIN',
+                'https://www.instagram.com/chauvin.mardelplata'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'kyara Producciones',
+                'https://www.instagram.com/kyaraproducciones'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'La Pistita',
+                'https://www.instagram.com/lapistita'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'DEEPER SESSIONS',
+                'https://www.instagram.com/deeper.sessions'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'dahaus!',
+                'https://www.instagram.com/dahausclub'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'HUM | CLUB DE MUSICA',
+                'https://www.instagram.com/humclubdemusica'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Rᴏᴏғᴛᴏᴘ',
+                'https://www.instagram.com/rooftop.rosario'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'COSMOS',
+                'https://www.instagram.com/cosmos.ros'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Beirut Bar',
+                'https://www.instagram.com/cc.beirut'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'HAMA',
+                'https://www.instagram.com/hama.mdq'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'OCIO',
+                'https://www.instagram.com/ocio.ciclo'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '🍄 F U N G U S 🍄',
+                'https://www.instagram.com/fungus.beer'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Juanana producciones',
+                'https://www.instagram.com/under.psyco.lp'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'DELICIA 🌈',
+                'https://www.instagram.com/delicia.technopride'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'TECHNOMIC',
+                'https://www.instagram.com/techno_mic'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Hida 🌱',
+                'https://www.instagram.com/hida.producciones'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'John Doe SESSIONS',
+                'https://www.instagram.com/johndoesessions'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'BLASTKICK',
+                'https://www.instagram.com/blastkick'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '¢ℓυв 𝐗𝐒',
+                'https://www.instagram.com/xsclub.oficial'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'ʜᴇʀᴇ ᴀɴᴅ ɴᴏᴡ',
+                'https://www.instagram.com/hereandnow.prod'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Technoir.Buenos Aires',
+                'https://www.instagram.com/technoir.ba'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Interestelpsy',
+                'https://www.instagram.com/interestelpsy'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Techno Rave 🌡️',
+                'https://www.instagram.com/catarsick.rave'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '𝐋𝐞𝐯𝐞𝐥 𝐔𝐩 𝐄𝐱𝐩𝐞𝐫𝐢𝐞𝐧𝐜𝐞',
+                'https://www.instagram.com/levelup.experience'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Penhouse',
+                'https://www.instagram.com/penhousecrew'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'CIRCUS',
+                'https://www.instagram.com/circus_ofc'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Lowbpm.',
+                'https://www.instagram.com/lowbpm_music'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'BOWER',
+                'https://www.instagram.com/bower.group'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'I S I S ELECTRONIC MUSIC 🇦🇷',
+                'https://www.instagram.com/ciclo.isis'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Galeria.musicBsAs - Arg🇦🇷',
+                'https://www.instagram.com/galeria.musicbsas'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'MOOVE',
+                'https://www.instagram.com/moove_bsas'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Club 69 Buenos Aires',
+                'https://www.instagram.com/club69.ba'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'KEEP IT FLOWING 📀',
+                'https://www.instagram.com/keepitflowing.producciones'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'H y s t e r i a - R a v e',
+                'https://www.instagram.com/hysteria.rave'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'WAVE | Dubstep Drum and Bass EDM Trap Fiesta buenos aires',
+                'https://www.instagram.com/wavebassrave'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Tantra Palermo',
+                'https://www.instagram.com/tantra.ba'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'dream drums',
+                'https://www.instagram.com/dream_drums_ba'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'StyleSound',
+                'https://www.instagram.com/style.sound'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'PRODUCTORA',
+                'https://www.instagram.com/nn.nonameoficial'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Dorsia Club',
+                'https://www.instagram.com/dorsiacluboficial'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Gonza Velazco',
+                'https://www.instagram.com/clubscalabrini'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Hooking fridays',
+                'https://www.instagram.com/hooking_ok'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Numbers.',
+                'https://www.instagram.com/numbers____'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'TERA',
+                'https://www.instagram.com/tera.buenosaires'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Hipico Pm',
+                'https://www.instagram.com/boho.produce'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'MONDLICHT',
+                'https://www.instagram.com/mondlicht.techno'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Key Producciones',
+                'https://www.instagram.com/keyproducciones'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'AWARE',
+                'https://www.instagram.com/aware.prod'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Avant Garten',
+                'https://www.instagram.com/avantgartenba'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'La Biblioteca',
+                'https://www.instagram.com/labiblioteca.ba'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Inspire Producciones',
+                'https://www.instagram.com/inspire.producciones'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'ZEGRE',
+                'https://www.instagram.com/zegrefusion'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'HEISS TECHNO',
+                'https://www.instagram.com/heiss.techno'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'deseo',
+                'https://www.instagram.com/deseobsas'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Roca Bruja',
+                'https://www.instagram.com/rocabruja_'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Groovebeat Records',
+                'https://www.instagram.com/groovebeat.music'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Sin Genero',
+                'https://www.instagram.com/singenero__'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'NASTY PARTY',
+                'https://www.instagram.com/nastypartyy'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Downtempo Rooftop',
+                'https://www.instagram.com/downtempo.rooftop'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'L V R Z 🛸',
+                'https://www.instagram.com/barcarnal'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '𝗦𝗪𝗜𝗧𝗖𝗛 𝗖𝗟𝗨𝗕',
+                'https://www.instagram.com/switch.rosario'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '𝐂𝐋𝐔𝐁 𝐃𝐄 𝐀𝐌𝐈𝐆𝐎𝐒',
+                'https://www.instagram.com/clubdeamigos.pro'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'HEXA',
+                'https://www.instagram.com/hexa.ar'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Movida Electrónica San Juan',
+                'https://www.instagram.com/mesjoficial'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '4GET Producciones',
+                'https://www.instagram.com/4getprods'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'R9 Producciones',
+                'https://www.instagram.com/r9.producciones'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'RO',
+                'https://www.instagram.com/rotechnobar'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'RAVE SESSIONS®',
+                'https://www.instagram.com/ravesessions'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Meed Producciones',
+                'https://www.instagram.com/meedproducciones'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'INDEPENDENCE | INDEPENDANCE 🇦🇷',
+                'https://www.instagram.com/independence.music'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Organik Music Festival 🌿',
+                'https://www.instagram.com/organik.music'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '🪬 NEW VISION producciones',
+                'https://www.instagram.com/new.visionprod'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Fruta',
+                'https://www.instagram.com/fruta.oficial'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'M Y S T I C 🔮',
+                'https://www.instagram.com/mystic.cba'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'North Agency',
+                'https://www.instagram.com/north_agency_'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Madness Producciones',
+                'https://www.instagram.com/madness_prods'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Endless Sound',
+                'https://www.instagram.com/endlesssound'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'ONCE',
+                'https://www.instagram.com/once.clubb'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'La Juanita Music',
+                'https://www.instagram.com/lajuanitamusic/'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                '𝟮𝗚𝗧𝗛𝗥',
+                'https://www.instagram.com/2gthr.ba'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Under Club',
+                'https://www.instagram.com/under.club.oficial'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'L E T E O (Λήθη)',
+                'https://www.instagram.com/leteoofficial'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Al Fin Lunes Producciones',
+                'https://www.instagram.com/alfinlunes.prod'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'O M N I A',
+                'https://www.instagram.com/omnia_producciones'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'UNDERGATE',
+                'https://www.instagram.com/undergate.oficial'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'VIBES ®',
+                'https://www.instagram.com/thepartynameisvibes'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'LA ESTACIÓN',
+                'https://www.instagram.com/laestacioncordoba'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'destinoarena',
+                'https://www.instagram.com/destinoarena'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'ELEMENTS BA',
+                'https://www.instagram.com/elementsclub.ba'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Estamos Felices',
+                'https://www.instagram.com/estamosfelices'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Buenas Noches Producciones',
+                'https://www.instagram.com/buenasnochespro'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'AFRIKA CLUB',
+                'https://www.instagram.com/afrika.club.arg'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'PGSV Producciones',
+                'https://www.instagram.com/pgsv_prod'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'DUSK',
+                'https://www.instagram.com/dusk.prod'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'FLAMA PRODUCE',
+                'https://www.instagram.com/flama.produce'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Lado B producciones',
+                'https://www.instagram.com/ladob_producciones'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Club Bahrein Oficial',
+                'https://www.instagram.com/clubbahreinoficial'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'THE BOW CLUB 🇦🇷',
+                'https://www.instagram.com/clubthebowba'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Crobar Club 🇦🇷',
+                'https://www.instagram.com/crobarclub'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Rio Electronic Music',
+                'https://www.instagram.com/rioelectronicmusic'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'H Á B I T A T 🍃',
+                'https://www.instagram.com/habitat_ba'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Mandarine Park Oficial',
+                'https://www.instagram.com/mandarineparkoficial'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'SVG Entertainment',
+                'https://www.instagram.com/svg_prod'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'Desert In Me',
+                'https://www.instagram.com/desertinme'
+            );
+
+            INSERT INTO promoters (
+                "name",
+                "social_link"
+            ) VALUES (
+                'asterland.after',
+                'https://www.instagram.com/asterland.after'
+            );
