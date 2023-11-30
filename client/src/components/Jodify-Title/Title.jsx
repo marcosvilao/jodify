@@ -19,8 +19,8 @@ function Title() {
           style={{ borderRadius: theme.jodify_borders._lg_border_radius }}
           src={logo}
           alt=""
-          width={80}
-          height={80}
+          width="60px"
+          height="60px"
         />
       </a>
 
