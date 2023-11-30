@@ -500,7 +500,9 @@ function CreateForm() {
             </UploadBtn>
           ) : (
             <Box sx={{ display: "flex" }}>
-              <CircularProgress />
+              <CircularProgress            style={{
+                color: theme.jodify_colors._icons_primary,
+              }} />
             </Box>
           )}
 
