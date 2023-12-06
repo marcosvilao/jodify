@@ -84,7 +84,7 @@ export const TitleText = styled.p`
     position: relative;
     white-space: normal; 
     word-wrap: break-word; 
-    max-width: 100%; 
+    max-width: 90%; 
     line-height: 1.2;
 `;
 
