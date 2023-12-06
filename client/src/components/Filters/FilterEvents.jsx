@@ -275,7 +275,7 @@ function FilterEvents() {
                 <FilterText
                 $hastypes={filters.cities.length > 0 ? "true" : undefined} 
                 onClick={FilterCities} 
-                ref={filterRef}>{filters.cities.length > 1 ? `${selectedCities[0]} + ${filters.cities.length - 1}` : (filters.cities.length === 1 ? `${selectedCities[0] ? selectedCities[0] : 'CABA | GBA'}` : 'Ciudad')}</FilterText>
+                ref={filterRef}>{filters.cities.length > 1 ? `${selectedCities[0]} + ${filters.cities.length - 1}` : (filters.cities.length === 1 ? `${selectedCities[0] ? selectedCities[0] : 'CABA | GBA'}` : 'Ubicación')}</FilterText>
                 {filters.cities.length > 0 && 
                 <Tooltip title="Limpiar">
                     <ClearIcon 
