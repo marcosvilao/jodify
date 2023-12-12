@@ -56,38 +56,29 @@ const getEvents = async (req, res, next) => {
 const createEvent = async (req, res) => {
     try {
         const {event_title, event_type, event_date, event_location, ticket_link, event_image, event_djs, event_city, event_promoter } = req.body.event;
-
+      
         const formattedEventDate = new Date(event_date);
-        formattedEventDate.setHours(9, 0, 0);
-        const currentDate = new Date();
-        currentDate.setDate(currentDate.getDate() - 1);
-        const options = { timeZone: 'America/Argentina/Buenos_Aires' };
-        const argentinaTime = currentDate.toLocaleString('en-US', options);
+        let promoter;
+        
+        if(event_promoter.length > 0){
+            promoter = event_promoter.map(promoter => promoter.id)
+        } else {
+            promoter = null
+        }
 
         const formattedType = event_type.join(' | ');
 
-        const querydate = ('SELECT * FROM event WHERE event_date >= $1');
-        const valuesdate = [argentinaTime];
+        const querydate = ('SELECT ticket_link FROM event WHERE ticket_link = $1');
+        const valuesLink = [ticket_link];
 
-        let events = await pool.query(querydate, valuesdate);
-        events = events.rows
-        let eventsMap = new Map()
+        let duplicateEvent = await pool.query(querydate, valuesLink);
+        duplicateEvent = duplicateEvent.rows
 
-
-        if(events.length > 0){
-            for (const event of events) {
-                if(eventsMap.get(`${event.ticket_link.toLowerCase().trim()}`)){
-                    eventsMap.get(`${event.ticket_link.toLowerCase().trim()}`).push(event)
-                } else {
-                    eventsMap.set(`${event.ticket_link.toLowerCase().trim()}`, [event])
-                }
-            }
-        }
-
-        if (eventsMap.get(`${ticket_link.toLowerCase().trim()}`) && (!ticket_link.toLowerCase().includes('instagram') && !ticket_link.toLowerCase().includes('espacioro'))) {
+        if(duplicateEvent.length > 0 && !duplicateEvent[0]?.toLowerCase().includes('instagram') && !duplicateEvent[0]?.toLowerCase().includes('espacioro')){
             res.status(404).send({ message: 'Ya existe este evento'});
             return
         }
+
  
         const query = `
             INSERT INTO event(id, event_title, event_type, event_date, event_location, ticket_link, event_image, event_djs, city_id, promoter_id)
@@ -95,7 +86,7 @@ const createEvent = async (req, res) => {
             RETURNING id;
         `;
 
-        const values = [uuidv4(), event_title, formattedType, formattedEventDate, event_location, ticket_link, event_image, event_djs, event_city.id, event_promoter.id];
+        const values = [uuidv4(), event_title, formattedType, formattedEventDate, event_location, ticket_link, event_image, event_djs, event_city.id, promoter];
 
         const result = await pool.query(query, values);
 

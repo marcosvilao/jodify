@@ -29,13 +29,6 @@ import { DayPick } from "../components/Calendar/DayPickStyles";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 
-const Djs = [
-  "Solomun",
-  "Tale of us",
-  "Guy J",
-  "Charlotte De Witte",
-  "Miss Monique",
-];
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -77,10 +70,9 @@ function CreateForm() {
     event_image: "",
     event_djs: [],
     event_city: "",
-    event_promoter: "",
+    event_promoter: [],
   });
 
-  console.log(event);
 
   useEffect(() => {
     // Check if any of the required properties are empty
@@ -92,8 +84,7 @@ function CreateForm() {
       event.event_type.length === 0 ||
       event.ticket_link === "" ||
       event.event_image === "" ||
-      event.event_djs.length === 0 ||
-      event.event_promoter === "";
+      event.event_djs.length === 0 
 
     // Set the disabled state based on the condition
     setCreateButtonDisabled(isRequiredEmpty);
@@ -142,7 +133,7 @@ function CreateForm() {
   const createEvent = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch("https://jodify.vercel.app/events", {
+      const response = await fetch("http://localhost:3001/events", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -252,28 +243,28 @@ function CreateForm() {
   const handleCityChange = (e, newValue) => {
     setEvent((prevEvent) => ({
       ...prevEvent,
-      event_city: newValue || "", // Set to the selected city or an empty string if cleared
+      event_city: newValue || "", 
     }));
   };
 
   const handlePromoterChange = (e, newValue) => {
     setEvent((prevEvent) => ({
       ...prevEvent,
-      event_promoter: newValue || "", // Set to the selected city or an empty string if cleared
+      event_promoter: newValue || [], 
     }));
   };
 
   const handleDjsChange = (e, newValue) => {
     setEvent((prevEvent) => ({
       ...prevEvent,
-      event_djs: newValue || [], // Set to the selected DJs or an empty array if cleared
+      event_djs: newValue || [], 
     }));
   };
 
   const handleTypesChange = (e, newValue) => {
     setEvent((prevEvent) => ({
       ...prevEvent,
-      event_type: newValue || [], // Set to the selected DJs or an empty array if cleared
+      event_type: newValue || [], 
     }));
   };
 
@@ -331,7 +322,7 @@ function CreateForm() {
       event_image: "",
       event_djs: [],
       event_city: "",
-      event_promoter: "",
+      event_promoter: [],
     });
   };
 
@@ -439,6 +430,8 @@ function CreateForm() {
           />
 
           <Autocomplete
+            ChipProps={{ color: "jodify" }}
+            multiple
             id="tags-standard"
             options={promoters}
             getOptionLabel={(option) => option.name || ""}
@@ -446,9 +439,7 @@ function CreateForm() {
             value={event.event_promoter}
             renderInput={(params) => (
               <BasicText
-                error={event.event_promoter === ""}
-                helperText="tenes que elegir una productora"
-                required
+                helperText="tenes que elegir una productora, podes dejar en blanco"
                 {...params}
                 variant="standard"
                 label="Productora"
