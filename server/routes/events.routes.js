@@ -7,7 +7,7 @@ const {getCities} = require('../controllers/city.controller')
 // const {checkAdmin} = require('../middlewares/authMiddleware'); 
 const {getTypes} = require ('../controllers/type.controller');
 const { getDjs } = require('../controllers/djs.controller');
-const { getPromoters } = require('../controllers/promoters.controller');
+const { getPromoters, postPromoters } = require('../controllers/promoters.controller');
 
 
 const router = Router()
@@ -29,8 +29,6 @@ router.put('/events/:id', updateEvent)
 router.delete('/events', deleteEvent)
 
 router.post('/get-event-data', scrapLink)
-
-
 
 
 //users
@@ -65,6 +63,8 @@ router.get('/djs', getDjs)
 //promoters
 
 router.get('/promoters', getPromoters)
+
+router.post('/create-promoters', postPromoters)
 
 
 
