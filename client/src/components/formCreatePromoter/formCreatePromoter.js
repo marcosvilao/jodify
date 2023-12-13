@@ -51,7 +51,7 @@ function FormCreatePromoter() {
       });
     } else {
       axios
-        .post("http://localhost:3001/create-promoters", dataPost)
+        .post("https://jodify.vercel.app/create-promoters", dataPost)
         .then((res) => {
           console.log(res);
           Swal.fire({
