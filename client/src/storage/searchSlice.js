@@ -12,7 +12,24 @@ const searchSlice = createSlice({
   },
   reducers: {
     setEvents: (state, action) => {
-      state.events = action.payload;
+      action.payload.forEach(dateObject => {
+
+        const dateKey = Object.keys(dateObject)[0];
+        const eventsArray = dateObject[dateKey];
+
+
+        const existingDateIndex = state.events.findIndex(
+          existingDateObject => Object.keys(existingDateObject)[0] === dateKey
+        );
+
+        if (existingDateIndex === -1) {
+
+          state.events.push({ [dateKey]: eventsArray });
+        } else {
+
+          state.events[existingDateIndex][dateKey].push(...eventsArray);
+        }
+      });
     },
     setFilterEvents: (state, action) => {
       state.filterEvents = action.payload;

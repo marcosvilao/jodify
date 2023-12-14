@@ -16,7 +16,7 @@ const router = Router()
 
 //events
 
-router.get('/events', getEvents)
+router.get('/events/:page', getEvents)
 
 router.get('/events/search', searchEvent)
 

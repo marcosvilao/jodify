@@ -8,26 +8,63 @@ import { useDispatch } from 'react-redux';
 import { setEvents } from '../../storage/searchSlice';
 import theme from '../../jodifyStyles';
 import SkeletonLoader from '../Loader/SkeletonLoader';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 function Grid() {
+  const [dataLengh, setdataLength] = useState(0)
+  const [page, setPage] = useState(0)
+  const [totalPages, settotalPages] = useState(null)
+  const [hasMore, setHasMore] = useState(true)
+  const [loading, setLoading] = useState(false);
   const [displayEvents, setDisplayEvents] = useState([])
   const dispatch = useDispatch()
   let events = useSelector(state => state.search.events)
   const filteredEvents = useSelector(state => state.search.filterEvents)
   const isFiltering = useSelector(state => state.search.isFiltering)
 
+  const displayLength = () => {
+    let count = 0
+    displayEvents.forEach(dateObject => {
+        const dateKey = Object.keys(dateObject)[0];
+        const eventsArray = dateObject[dateKey];
+        count = count + eventsArray.length
+    })
+    setdataLength(count)
+  }
+
+  const fetchEvents = () => {
+    fetch(`http://localhost:3001/events/${page}`)
+  .then(response => response.json())
+  .then(data => {
+    console.log(data)
+    settotalPages(data.total_pages)
+    dispatch(setEvents(data.results));
+    setLoading(false);
+    setPage(prevsetOff => prevsetOff + 1)
+  })
+  .catch(error => {
+    console.error('Error fetching events:', error);
+  });
+  }
+
   useEffect(() => {
-      fetch('https://jodify.vercel.app/events')
-        .then(response => response.json())
-        .then(data => {
-          dispatch(setEvents(data));
-        })
-        .catch(error => {
-          console.error('Error fetching events:', error);
-        });
+    setHasMore(page === totalPages)
+  }, [totalPages, page])
+  
+  
+
+  useEffect(() => {
+    console.log(page)
+    fetchEvents()
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   , []);
+
+  useEffect(() => {
+    displayLength()
+  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  , [displayEvents]);
   
   useEffect(() => {
     if(isFiltering){
@@ -45,10 +82,18 @@ function Grid() {
       return <SkeletonLoader/>
     }
   }
+
+
   
 
   return (
     <div style={{marginTop: '0rem'}}>
+      <InfiniteScroll
+      dataLength={dataLengh}
+      hasMore={hasMore}
+      next={() => fetchEvents()}
+      loader={'loading'}
+      >
     {displayEvents.length ? displayEvents.map(dateObj => {
       const dateString = Object.keys(dateObj)[0]; // Assuming there is only one key in dateObj
       const date = new Date(dateString);
@@ -56,9 +101,9 @@ function Grid() {
       const eventArray = dateObj[Object.keys(dateObj)];
 
       const options = {
-        weekday: 'long',  // "Jueves"
-        day: 'numeric',   // "24"
-        month: 'long'     // "Agosto"
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long' 
       };
       
       const formattedDate = date.toLocaleDateString('es-AR', options);
@@ -76,15 +121,22 @@ function Grid() {
           </StickyHeader2>
           
           <GridWrapper>
+          
             {eventArray.map(event => (
               <Event event={event} key={event.id} />
             ))}
+      
           </GridWrapper>
+          
         </div>
       );
+      
+        
+      
     }) : (
         load()
       )}
+      </InfiniteScroll>
   </div>
     
   )

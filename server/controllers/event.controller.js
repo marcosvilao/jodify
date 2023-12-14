@@ -6,12 +6,19 @@ const { types } = require('pg');
 
 const getEvents = async (req, res, next) => {
     try {
+        const {page} = req.params
+        const offset = page * 20
+        console.log(page)
         const currentDate = new Date();
         currentDate.setDate(currentDate.getDate() - 1);
         const options = { timeZone: 'America/Argentina/Buenos_Aires' };
         const argentinaTime = currentDate.toLocaleString('en-US', options);
-        const query = ('SELECT * FROM event WHERE event_date >= $1');
-        const values = [argentinaTime];
+        const eventCountQuery = ('SELECT COUNT(*) FROM event where event_date >= $1')
+        const countValues = [argentinaTime]
+        const eventsCount = await pool.query(eventCountQuery, countValues);
+        console.log(eventsCount)
+        const query = ('SELECT * FROM event WHERE event_date >= $1 ORDER BY event_date ASC LIMIT 20 OFFSET $2');
+        const values = [argentinaTime, offset];
         const allEvents = await pool.query(query, values);
         if (!allEvents.rows) {
             res.status(404).send({ message: 'Cannot receive events from Database, please try again' });
@@ -45,8 +52,16 @@ const getEvents = async (req, res, next) => {
                     return dateObjA - dateObjB;
                 });
 
+        const result = {
+            page: page,
+            results : groupedEventsArray,
+            total_pages : eventsCount.rows[0].count/20,
+            total_results : eventsCount.rows[0].count
+        }
+        console.log(result)
 
-        res.status(200).json(groupedEventsArray);
+
+        res.status(200).json(result);
     } catch (error) {
         next(error);
     }
