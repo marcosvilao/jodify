@@ -58,6 +58,7 @@ const createEvent = async (req, res) => {
         const {event_title, event_type, event_date, event_location, ticket_link, event_image, event_djs, event_city, event_promoter } = req.body.event;
       
         const formattedEventDate = new Date(event_date);
+        formattedEventDate.setHours(9, 0, 0);
         let promoter;
         
         if(event_promoter.length > 0){
@@ -74,7 +75,7 @@ const createEvent = async (req, res) => {
         let duplicateEvent = await pool.query(querydate, valuesLink);
         duplicateEvent = duplicateEvent.rows
 
-        if(duplicateEvent.length > 0 && !duplicateEvent[0]?.toLowerCase().includes('instagram') && !duplicateEvent[0]?.toLowerCase().includes('espacioro')){
+        if(duplicateEvent.length > 0 && !duplicateEvent[0]?.ticket_link.toLowerCase().includes('instagram') && !duplicateEvent[0]?.ticket_link.toLowerCase().includes('espacioro')){
             res.status(404).send({ message: 'Ya existe este evento'});
             return
         }
