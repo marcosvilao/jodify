@@ -55,21 +55,25 @@ const getEvents = async (req, res, next) => {
 
 const getEventsPromoters = async (req, res) => {
   try {
-    // Obtener la fecha actual en la zona horaria de Argentina (GMT-3)
     const todayInArgentina = DateTime.local()
       .setZone("America/Argentina/Buenos_Aires")
+      .toISODate();
+
+    const oneWeekFromNow = DateTime.local()
+      .setZone("America/Argentina/Buenos_Aires")
+      .plus({ days: 7 }) // Obtener la fecha una semana desde hoy
       .toISODate();
 
     const result = await pool.query(`
         SELECT e.*, p.* 
         FROM event e
         LEFT JOIN promoters p ON p.id = ANY(CAST(e.promoter_id AS uuid[]))
-        WHERE DATE(e.event_date) = '${todayInArgentina}'
-        ORDER BY
-          CASE
-            WHEN p.priority IS NOT NULL THEN p.priority -- Ordenar por prioridad definida
-            ELSE 9999 -- Poner los valores NULL al final
-          END
+        WHERE DATE(e.event_date) BETWEEN '${todayInArgentina}' AND '${oneWeekFromNow}'
+        ORDER BY DATE(e.event_date), 
+                 CASE
+                   WHEN p.priority IS NOT NULL THEN p.priority
+                   ELSE 9999
+                 END
       `);
 
     if (result && result.rows && Array.isArray(result.rows)) {
