@@ -9,7 +9,7 @@ function TableWeekEvents() {
   useEffect(() => {
     if (dataEvents === false) {
       axios
-        .get("http://localhost:3001/events-promoters")
+        .get("https://jodify.vercel.app/events-promoters")
         .then((res) => {
           setDataEvents(res.data);
         })
