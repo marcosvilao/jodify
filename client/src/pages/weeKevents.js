@@ -1,5 +1,5 @@
 import React from "react";
-import TableWeekEvents from "../components/tableWeekEvents/tableWeekEvents";
+import TableWeekEvents from "../components/weekEvents/tableWeekEvents";
 
 function WeekEvents() {
   return <TableWeekEvents />;
