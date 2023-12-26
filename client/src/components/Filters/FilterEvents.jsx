@@ -15,6 +15,7 @@ import SearchEvents from '../Search-field/SearchEvents';
 
 function FilterEvents() {
     const dispatch = useDispatch()
+    const [page, setPage] = useState(0)
     const [open, setOpen] = React.useState(false);
     const events = useSelector((state) => state.search.events)
     const [isFilterOpen, setisFilterOpen] = useState(false)
@@ -33,39 +34,31 @@ function FilterEvents() {
         cities : [],
         dates : []
     })
-    const filterEvents = (filters) => {
-        const filteredEvents = events.map((eventGroup) => {
-            const date = Object.keys(eventGroup)[0];
-            const originalDate = new Date(date);
-            const newDate = new Date(originalDate);
-            newDate.setDate(originalDate.getDate());
-            newDate.setHours(9, 0, 0, 0);
-            const eventsForDate = eventGroup[date];
-            
-            const filteredEventsForDate = eventsForDate.filter((event) => {
-                const eventTypes = event.event_type.split(" | ");
-                const matchDJs = event.event_djs.some(dj => dj.toLowerCase().includes(searchString));
-                const matchLocation = event.event_location.toLowerCase().includes(searchString);
-                const matchTitle = event.event_title.toLowerCase().includes(searchString);
-                if (
-                    (filters.cities.length === 0 || filters.cities.includes(event.city_id)) &&
-                    (filters.types.length === 0 || eventTypes.some(type => filters.types.includes(type))) &&
-                    (filters.dates.length === 0 || (new Date(filters.dates[0]) <= new Date(newDate) && new Date(newDate) <= new Date(filters.dates[1]))) &&
-                    (matchDJs || matchLocation || matchTitle)
-                ) {
-                    return true; // Include the event
-                }
-                return false; // Exclude the event
-            });
-    
-            if (filteredEventsForDate.length > 0) {
-                return { [date]: filteredEventsForDate };
-            }
-    
-            return null; // Date has no matching events
-        }).filter((eventGroup) => eventGroup !== null);
 
-        return filteredEvents;
+    const getFilterEvents = async (filters) => {
+        const response = await fetch(`http://localhost:3001/events/filters/${page}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ filters }),
+      });
+
+      console.log(response.data)
+    }
+
+    const filterEvents = async (filters) => {
+
+        let filtersData = {
+            dates : filters.dates,
+            cities : filters.cities,
+            types : filters.types,
+            searchkey : searchString
+        }
+
+        const filterEvents = await getFilterEvents(filtersData)
+
+        console.log(filterEvents)
 
         }
   
