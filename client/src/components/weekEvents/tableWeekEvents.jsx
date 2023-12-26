@@ -21,39 +21,9 @@ function TableWeekEvents() {
 
   const columns = [
     {
-      field: "evento",
-      headerName: "Evento",
-      width: 500,
-      editable: false,
-    },
-    {
-      field: "lugar",
-      headerName: "Lugar    ",
-      width: 300,
-      editable: false,
-    },
-    {
       field: "fecha",
       headerName: "Fecha",
       width: 110,
-      editable: false,
-    },
-    {
-      field: "djs",
-      headerName: "Djs",
-      width: 300,
-      editable: false,
-    },
-    {
-      field: "genero",
-      headerName: "Genero",
-      width: 300,
-      editable: false,
-    },
-    {
-      field: "ticketlink",
-      headerName: "Ticket Link",
-      width: 300,
       editable: false,
     },
     {
@@ -68,6 +38,30 @@ function TableWeekEvents() {
       width: 300,
       editable: false,
     },
+    {
+      field: "evento",
+      headerName: "Evento",
+      width: 600,
+      editable: false,
+    },
+    {
+      field: "lugar",
+      headerName: "Lugar    ",
+      width: 400,
+      editable: false,
+    },
+    {
+      field: "djs",
+      headerName: "Djs",
+      width: 800,
+      editable: false,
+    },
+    {
+      field: "genero",
+      headerName: "Genero",
+      width: 400,
+      editable: false,
+    },
   ];
 
   const rows2 = [];
@@ -76,7 +70,7 @@ function TableWeekEvents() {
     let id = 0;
     dataEvents.eventos.map((i) => {
       console.log(i);
-      let resultadoDjs = i.event_djs.join(" ");
+      let resultadoDjs = i.event_djs.join(" / ");
       rows2.push({
         id: id,
         evento: i.event_title,
@@ -84,7 +78,6 @@ function TableWeekEvents() {
         fecha: i.event_date,
         djs: resultadoDjs,
         genero: i.event_type,
-        ticketlink: i.ticket_link,
         productora: i.name,
         intagram: i.instagram,
       });
