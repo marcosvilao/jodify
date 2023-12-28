@@ -150,49 +150,37 @@ const getEventsPromoters = async (req, res) => {
 
 const createEvent = async (req, res) => {
   try {
-    const {
-      event_title,
-      event_type,
-      event_date,
-      event_location,
-      ticket_link,
-      event_image,
-      event_djs,
-      event_city,
-      event_promoter,
-    } = req.body.event;
+      const {event_title, event_type, event_date, event_location, ticket_link, event_image, event_djs, event_city, event_promoter } = req.body.event;
 
-    const formattedEventDate = new Date(event_date);
-    let promoter;
+      const formattedEventDate = new Date(event_date);
+      formattedEventDate.setHours(9, 0, 0);
+      let promoter;
 
-    if (event_promoter.length > 0) {
-      promoter = event_promoter.map((promoter) => promoter.id);
-    } else {
-      promoter = null;
-    }
+      if(event_promoter.length > 0){
+          promoter = event_promoter.map(promoter => promoter.id)
+      } else {
+          promoter = null
+      }
 
-    const formattedType = event_type.join(" | ");
+      const formattedType = event_type.join(' | ');
 
-    const querydate = "SELECT ticket_link FROM event WHERE ticket_link = $1";
-    const valuesLink = [ticket_link];
+      const querydate = ('SELECT ticket_link FROM event WHERE ticket_link = $1');
+      const valuesLink = [ticket_link];
 
-    let duplicateEvent = await pool.query(querydate, valuesLink);
-    duplicateEvent = duplicateEvent.rows;
+      let duplicateEvent = await pool.query(querydate, valuesLink);
+      duplicateEvent = duplicateEvent.rows
 
-    if (
-      duplicateEvent.length > 0 &&
-      !duplicateEvent[0]?.toLowerCase().includes("instagram") &&
-      !duplicateEvent[0]?.toLowerCase().includes("espacioro")
-    ) {
-      res.status(404).send({ message: "Ya existe este evento" });
-      return;
-    }
+      if(duplicateEvent.length > 0 && !duplicateEvent[0]?.ticket_link.toLowerCase().includes('instagram') && !duplicateEvent[0]?.ticket_link.toLowerCase().includes('espacioro')){
+          res.status(404).send({ message: 'Ya existe este evento'});
+          return
+      }
 
-    const query = `
-            INSERT INTO event(id, event_title, event_type, event_date, event_location, ticket_link, event_image, event_djs, city_id, promoter_id)
-            VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
-            RETURNING id;
-        `;
+
+      const query = `
+          INSERT INTO event(id, event_title, event_type, event_date, event_location, ticket_link, event_image, event_djs, city_id, promoter_id)
+          VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+          RETURNING id;
+      `;
 
     const values = [
       uuidv4(),
