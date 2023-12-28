@@ -93,7 +93,9 @@ function FilterEvents() {
 
         useEffect(() => {
             if(cities.length > 0 && events.length > 0){
-                setCheckedCities([2])
+                let elementToFind = '258fd495-92d3-4119-aa37-0d1c684a0237';
+                let index = cities.findIndex(item => item.id === elementToFind);
+                setCheckedCities([index])
             }
         }, [cities, events])
 
@@ -273,7 +275,7 @@ function FilterEvents() {
                 <FilterText
                 $hastypes={filters.cities.length > 0 ? "true" : undefined} 
                 onClick={FilterCities} 
-                ref={filterRef}>{filters.cities.length > 1 ? `${selectedCities[0]} + ${filters.cities.length - 1}` : (filters.cities.length === 1 ? `${selectedCities[0] ? selectedCities[0] : 'CABA | GBA'}` : 'Ciudad')}</FilterText>
+                ref={filterRef}>{filters.cities.length > 1 ? `${selectedCities[0]} + ${filters.cities.length - 1}` : (filters.cities.length === 1 ? `${selectedCities[0] ? selectedCities[0] : 'CABA | GBA'}` : 'Ubicación')}</FilterText>
                 {filters.cities.length > 0 && 
                 <Tooltip title="Limpiar">
                     <ClearIcon 
