@@ -19,7 +19,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
 }
 
 .form h1 {
@@ -64,6 +63,26 @@
   line-height: normal;
   margin-bottom: 20px;
   padding-left: 15px;
+}
+
+.containerPform {
+  width: 363px;
+  display: flex;
+  align-items: center;
+  justify-content: none;
+  flex-direction: column;
+}
+
+.containerPform p {
+  color: var(--On-Backround-1, #f8f8f8);
+  font-family: Roboto Condensed;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  width: 100%;
+  margin: 0px;
+  margin-bottom: 5px;
 }
 
 .form button {

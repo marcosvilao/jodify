@@ -54,11 +54,21 @@ function FormRegisterUser() {
 
           <input placeholder="Repetir contraseña" />
 
+          <div className={styles.containerPform}>
+            <p>Al menos 8 caracteres</p>
+
+            <p>Al menos 1 mayúscula</p>
+
+            <p>Al menos 1 número</p>
+          </div>
+
           <button>Registrarse</button>
 
           <div className={styles.containerH3yH4}>
             <h3>¿Ya tenes una cuneta?</h3>
-            <Link className={styles.link} to={"/login"}>Inicia sesion</Link>
+            <Link className={styles.link} to={"/login"}>
+              Inicia sesion
+            </Link>
           </div>
         </div>
       </div>
