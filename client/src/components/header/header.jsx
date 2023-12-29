@@ -5,11 +5,12 @@ import theme from "../../jodifyStyles";
 import PersonIcon from "@mui/icons-material/Person";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Header() {
   const [stateMenu, setStateMenu] = useState(false);
   const [stateOpenCloseMenu, setStateOpenCloseMenu] = useState(false);
+  const history = useNavigate();
 
   const onClickMenu = () => {
     const menu = document.getElementById("menu");
@@ -32,15 +33,24 @@ function Header() {
     setStateOpenCloseMenu(false);
   };
 
+  const onClickRouteHome = () => {
+    history("/");
+    window.scroll(0, 0);
+  };
+
   return (
     <div className={styles.body}>
       <div className={styles.containerLeft}>
         <img
-          style={{ borderRadius: theme.jodify_borders._lg_border_radius }}
+          style={{
+            borderRadius: theme.jodify_borders._lg_border_radius,
+            cursor: "pointer",
+          }}
           width="40px"
           height="40px"
           src={logo}
           alt="error al cargar el logo"
+          onClick={onClickRouteHome}
         />
       </div>
 
