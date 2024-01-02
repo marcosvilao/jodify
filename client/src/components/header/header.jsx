@@ -6,8 +6,12 @@ import PersonIcon from "@mui/icons-material/Person";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import { Link, useNavigate } from "react-router-dom";
+import Cookies from "universal-cookie";
 
 function Header() {
+  const cookie = new Cookies();
+  const cookieName = cookie.get("username");
+
   const [stateMenu, setStateMenu] = useState(false);
   const [stateOpenCloseMenu, setStateOpenCloseMenu] = useState(false);
   const history = useNavigate();
@@ -36,6 +40,15 @@ function Header() {
   const onClickRouteHome = () => {
     history("/");
     window.scroll(0, 0);
+  };
+
+  const logOut = () => {
+    document.cookie.split(";").forEach(function (c) {
+      document.cookie = c
+        .replace(/^ +/, "")
+        .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+    });
+    window.location.href = "/";
   };
 
   return (
@@ -88,36 +101,57 @@ function Header() {
         />
       </div>
 
-      <div className={styles.menu} id="menu">
-        <div className={styles.userProductora}>
-          <Link
-            className={styles.linkMenu}
-            to={"/register-user"}
-            onClick={onClickLink}
-          >
-            Registrarse
-          </Link>
-          <Link className={styles.linkMenu} to={"/login"} onClick={onClickLink}>
-            Iniciar Sesion
-          </Link>
-        </div>
+      {!cookieName ? (
+        <div className={styles.menu} id="menu">
+          <div className={styles.userProductora}>
+            <Link
+              className={styles.linkMenu}
+              to={"/register-user"}
+              onClick={onClickLink}
+            >
+              Registrarse
+            </Link>
+            <Link
+              className={styles.linkMenu}
+              to={"/login"}
+              onClick={onClickLink}
+            >
+              Iniciar Sesion
+            </Link>
+          </div>
 
-        <div className={styles.userProductora}>
-          <Link
-            className={styles.linkMenu}
-            to={"/productora-welcome"}
-            onClick={onClickLink}
-          >
-            Productora
-          </Link>
-        </div>
+          <div className={styles.userProductora}>
+            <Link
+              className={styles.linkMenu}
+              to={"/productora-welcome"}
+              onClick={onClickLink}
+            >
+              Productora
+            </Link>
+          </div>
 
-        <div className={styles.userProductora}>
-          <Link className={styles.linkMenu} to={"/"} onClick={onClickLink}>
-            Inicio
-          </Link>
+          <div className={styles.userProductora}>
+            <Link className={styles.linkMenu} to={"/"} onClick={onClickLink}>
+              Inicio
+            </Link>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className={styles.menu} id="menu" style={{ height: "90px" }}>
+          <div className={styles.userProductora}>
+            <Link
+              className={styles.linkMenu}
+              to={"/profile"}
+              onClick={onClickLink}
+            >
+              Mi Perfil
+            </Link>
+            <button className={styles.buttonLogout} onClick={logOut}>
+              Cerrar Sesion
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

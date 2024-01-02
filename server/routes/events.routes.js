@@ -21,6 +21,7 @@ const {
   getPromoters,
   postPromoters,
 } = require("../controllers/promoters.controller");
+const { createUser, getUser } = require("../controllers/user.controller.js");
 
 const router = Router();
 
@@ -43,6 +44,9 @@ router.post("/get-event-data", scrapLink);
 router.get("/events-promoters", getEventsPromoters);
 
 //users
+
+router.post("/create-users", createUser);
+router.post("/login", getUser);
 
 // router.post('/register', createUser)
 

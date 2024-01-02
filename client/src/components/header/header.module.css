@@ -53,7 +53,23 @@
 }
 
 .linkMenu {
-    text-decoration: none;
+  text-decoration: none;
+  margin: 5px;
+  padding: 0px;
+  color: var(--On-Backround-1, #f8f8f8);
+  font-family: Roboto Condensed;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  cursor: pointer;
+}
+
+.buttonLogout {
+  text-decoration: none;
+  text-align: left;
+  border: none;
+  background-color: transparent;
   margin: 5px;
   padding: 0px;
   color: var(--On-Backround-1, #f8f8f8);
