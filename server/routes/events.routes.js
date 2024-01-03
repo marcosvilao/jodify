@@ -22,6 +22,10 @@ const {
   postPromoters,
 } = require("../controllers/promoters.controller");
 const { createUser, getUser } = require("../controllers/user.controller.js");
+const {
+  postResetPassword,
+  postResetPasswordEmail,
+} = require("../controllers/resetPassword.controllers.js");
 
 const router = Router();
 
@@ -79,3 +83,8 @@ router.get("/promoters", getPromoters);
 router.post("/create-promoters", postPromoters);
 
 module.exports = router;
+
+// reset password routes
+
+router.post("/reset-password", postResetPassword);
+router.post("/reset-password/:id/:token", postResetPasswordEmail);
