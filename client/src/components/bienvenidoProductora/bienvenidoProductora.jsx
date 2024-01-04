@@ -16,8 +16,8 @@ function ProductoraBienvenido() {
       <div className={styles.leftContainer}>
         <img
           style={{ borderRadius: theme.jodify_borders._lg_border_radius }}
-          width="130px"
-          height="130px"
+          width="75px"
+          height="75px"
           src={logo}
           alt="error al cargar el logo"
         />
