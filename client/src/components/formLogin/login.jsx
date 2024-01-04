@@ -148,7 +148,7 @@ function FormLogin() {
 
           <div className={styles.containerH3yH4}>
             <h3>¿Olvidaste tu contraseña?</h3>
-            <Link className={styles.link} to={"/login"}>
+            <Link className={styles.link} to={"/reset-password"}>
               Restablecer
             </Link>
           </div>

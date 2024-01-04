@@ -9,6 +9,8 @@ import BienvenidoProductora from "./pages/bienvenido-productora.js";
 import CreateProductora from "./pages/Create-Productora.js";
 import RegisterUser from "./pages/registerUsers.js";
 import Login from "./pages/login.js";
+import ResetPasswordPage from "./pages/resetPasswordPage.js";
+import CrearContraseñaPage from "./pages/crearContraseña.js"
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
         <Route path="/create-productora" element={<CreateProductora />} />
         <Route path="/register-user" element={<RegisterUser />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route path="/reset-password/:id/:token" element={<CrearContraseñaPage />} />
       </Routes>
     </div>
   );
