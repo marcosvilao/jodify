@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Cookies from "universal-cookie";
+import PanoramaFishEyeIcon from "@mui/icons-material/PanoramaFishEye";
 
 function FormLogin() {
   const cookie = new Cookies();
@@ -89,12 +90,12 @@ function FormLogin() {
           <img
             style={{
               borderRadius: theme.jodify_borders._lg_border_radius,
-              marginBottom: "25px",
+              marginBottom: "10px",
             }}
             src={logo}
             alt="Error en la carga del logo"
-            width="80px"
-            height="80px"
+            width="60px"
+            height="60px"
           />
 
           <h1>Iniciar sesion con</h1>
@@ -123,7 +124,14 @@ function FormLogin() {
             </div>
           </div>
 
+          <div className={styles.lineIconContainer}>
+            <div className={styles.lineIcon}></div>
+            <PanoramaFishEyeIcon style={{ fill: "#ffffff", width: "15px" }} />
+            <div className={styles.lineIcon}></div>
+          </div>
+
           <input
+            className={styles.inputLogin}
             placeholder="Email o Username"
             name="email"
             value={userLogin.email}
@@ -131,6 +139,7 @@ function FormLogin() {
           />
 
           <input
+            className={styles.inputLogin}
             placeholder="Contraseña"
             type="password"
             name="password"

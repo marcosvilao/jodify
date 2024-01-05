@@ -46,10 +46,12 @@
 
 .userProductora {
   width: 90%;
+  height: 300px;
   display: flex;
   flex-direction: column;
   padding: 10px;
   border-bottom: 1px solid #ffffff;
+  background: var(--gris-topo, #1b1c20);
 }
 
 .linkMenu {

@@ -149,7 +149,14 @@ function Header() {
             <button className={styles.buttonLogout} onClick={logOut}>
               Cerrar Sesion
             </button>
-          </div>
+            <Link
+              className={styles.linkMenu}
+              to={"/"}
+              onClick={onClickLink}
+            >
+              Inicio
+            </Link>
+          </div>  
         </div>
       )}
     </div>

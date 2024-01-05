@@ -7,6 +7,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
+import CheckIcon from "@mui/icons-material/Check";
 
 function CrarContraseña() {
   const history = useNavigate();
@@ -34,21 +35,21 @@ function CrarContraseña() {
         icon: "error",
         confirmButtonText: "Ok",
       });
-    }  else if (dataPost.password !== dataPost.confirmPassword) {
-        Swal.fire({
-          title: "Error!",
-          text: "El campo de contraseña y repetir contraseña deben ser iguales",
-          icon: "error",
-          confirmButtonText: "Ok",
-        });
-      } else if (!isValidPassword) {
-        Swal.fire({
-          title: "Error!",
-          text: "La contraseña debe tener al menos 8 caracter, 1 mayuscula, 1 minuscula y 1 numero",
-          icon: "error",
-          confirmButtonText: "Ok",
-        });
-      } else {
+    } else if (dataPost.password !== dataPost.confirmPassword) {
+      Swal.fire({
+        title: "Error!",
+        text: "El campo de contraseña y repetir contraseña deben ser iguales",
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+    } else if (!isValidPassword) {
+      Swal.fire({
+        title: "Error!",
+        text: "La contraseña debe tener al menos 8 caracter, 1 mayuscula, 1 minuscula y 1 numero",
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+    } else {
       setLoader(true);
       axios
         .post(`http://localhost:3001/reset-password/${id}/${token}`, dataPost)
@@ -78,6 +79,36 @@ function CrarContraseña() {
     }
   };
 
+  var errorLength = false;
+
+  if (dataPost.password.length > 7) {
+    errorLength = true;
+  } else {
+    errorLength = false;
+  }
+
+  var errorCapitalLeter = false;
+
+  for (let i = 0; i < dataPost.password.length; i++) {
+    if (/[A-Z]/.test(dataPost.password[i])) {
+      errorCapitalLeter = true;
+      break; // Si encuentras una letra mayúscula, puedes salir del bucle
+    } else {
+      errorCapitalLeter = false;
+    }
+  }
+
+  var errorNumber = false;
+
+  for (let i = 0; i < dataPost.password.length; i++) {
+    if (/\d/.test(dataPost.password[i])) {
+      errorNumber = true;
+      break; // Si encuentras un número, puedes salir del bucle
+    } else {
+      errorNumber = false;
+    }
+  }
+
   return (
     <div className={styles.body}>
       <div className={styles.leftContainer}>
@@ -85,12 +116,12 @@ function CrarContraseña() {
           <img
             style={{
               borderRadius: theme.jodify_borders._lg_border_radius,
-              marginBottom: "25px",
+              marginBottom: "10px",
             }}
             src={logo}
             alt="Error en la carga del logo"
-            width="80px"
-            height="80px"
+            width="60px"
+            height="60px"
           />
 
           <h1>Nueva contraseña</h1>
@@ -112,11 +143,59 @@ function CrarContraseña() {
           />
 
           <div className={styles.containerPform}>
-            <p>Al menos 8 caracteres</p>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                width: "100%",
+              }}
+            >
+              <p>Al menos 8 caracteres</p>
+              {errorLength === false ? null : (
+                <CheckIcon
+                  style={{
+                    width: "15px",
+                    color: "yellow",
+                  }}
+                />
+              )}
+            </div>
 
-            <p>Al menos 1 mayúscula</p>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                width: "100%",
+              }}
+            >
+              <p>Al menos 1 mayúscula</p>
+              {errorCapitalLeter === false ? null : (
+                <CheckIcon
+                  style={{
+                    width: "15px",
+                    color: "yellow",
+                  }}
+                />
+              )}
+            </div>
 
-            <p>Al menos 1 número</p>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                width: "100%",
+              }}
+            >
+              <p>Al menos 1 número</p>
+              {errorNumber === false ? null : (
+                <CheckIcon
+                  style={{
+                    width: "15px",
+                    color: "yellow",
+                  }}
+                />
+              )}
+            </div>
           </div>
 
           {loader === false ? (

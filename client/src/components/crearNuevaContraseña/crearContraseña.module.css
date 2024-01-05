@@ -1,6 +1,6 @@
 .body {
   width: 100%;
-  height: 100vh;
+  height: 87vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -29,7 +29,8 @@
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  margin-bottom: 50px;
+  margin-top: 10px;
+  margin-bottom: 20px;
   width: 400px;
 }
 
@@ -70,7 +71,7 @@
 }
 
 .form button {
-  width: 363px;
+  width: 378px;
   height: 50px;
   padding: 8px 22px;
   border-radius: 8px;

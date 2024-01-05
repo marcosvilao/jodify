@@ -67,12 +67,12 @@ function ResetPassword() {
           <img
             style={{
               borderRadius: theme.jodify_borders._lg_border_radius,
-              marginBottom: "25px",
+              marginBottom: "10px",
             }}
             src={logo}
             alt="Error en la carga del logo"
-            width="80px"
-            height="80px"
+            width="60PX"
+            height="60PX"
           />
 
           <h1>Olvidaste tu contraseña?</h1>

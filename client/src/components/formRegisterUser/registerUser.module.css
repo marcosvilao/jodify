@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 130vh;
+  height: 120vh;
 }
 
 .leftContainer {
@@ -28,7 +28,7 @@
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  margin-bottom: 40px;
+  margin: 10px;
 }
 
 .containerIcons {
@@ -36,7 +36,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
+}
+
+.lineIconContainer {
+  width: 300px;
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  gap: 10px;
+}
+
+.lineIcon {
+  width: 45%;
+  background-color: #ffffff;
+  height: 1px;
 }
 
 .boxIcon {
@@ -80,13 +95,13 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  width: 100%;
   margin: 0px;
   margin-bottom: 5px;
+  width: 150px;
 }
 
 .form button {
-  width: 363px;
+  width: 378px;
   height: 50px;
   padding: 8px 22px;
   border-radius: 8px;
@@ -95,7 +110,7 @@
     0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
   border: none;
   color: #ffffff;
-  margin-top: 20px;
+  margin-top: 10px;
   cursor: pointer;
   font-size: 16px;
   font-weight: bold;

@@ -10,6 +10,8 @@ import Swal from "sweetalert2";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import { useNavigate } from "react-router-dom";
+import CheckIcon from "@mui/icons-material/Check";
+import PanoramaFishEyeIcon from "@mui/icons-material/PanoramaFishEye";
 
 function FormRegisterUser() {
   const history = useNavigate();
@@ -103,6 +105,37 @@ function FormRegisterUser() {
         });
     }
   };
+
+  var errorLength = false;
+
+  if (postUser.password.length > 7) {
+    errorLength = true;
+  } else {
+    errorLength = false;
+  }
+
+  var errorCapitalLeter = false;
+
+  for (let i = 0; i < postUser.password.length; i++) {
+    if (/[A-Z]/.test(postUser.password[i])) {
+      errorCapitalLeter = true;
+      break; // Si encuentras una letra mayúscula, puedes salir del bucle
+    } else {
+      errorCapitalLeter = false;
+    }
+  }
+
+  var errorNumber = false;
+
+  for (let i = 0; i < postUser.password.length; i++) {
+    if (/\d/.test(postUser.password[i])) {
+      errorNumber = true;
+      break; // Si encuentras un número, puedes salir del bucle
+    } else {
+      errorNumber = false;
+    }
+  }
+
   return (
     <div className={styles.body}>
       <div className={styles.leftContainer}>
@@ -110,12 +143,12 @@ function FormRegisterUser() {
           <img
             style={{
               borderRadius: theme.jodify_borders._lg_border_radius,
-              marginBottom: "25px",
+              marginBottom: "10px",
             }}
             src={logo}
             alt="Error en la carga del logo"
-            width="80px"
-            height="80px"
+            width="60px"
+            height="60px"
           />
 
           <h1>Registrate con</h1>
@@ -142,6 +175,12 @@ function FormRegisterUser() {
                 }}
               />
             </div>
+          </div>
+
+          <div className={styles.lineIconContainer}>
+            <div className={styles.lineIcon}></div>
+            <PanoramaFishEyeIcon style={{ fill: "#ffffff", width: "15px" }} />
+            <div className={styles.lineIcon}></div>
           </div>
 
           <input
@@ -175,11 +214,59 @@ function FormRegisterUser() {
           />
 
           <div className={styles.containerPform}>
-            <p>Al menos 8 caracteres</p>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                width: "100%",
+              }}
+            >
+              <p>Al menos 8 caracteres</p>
+              {errorLength === false ? null : (
+                <CheckIcon
+                  style={{
+                    width: "15px",
+                    color: "yellow",
+                  }}
+                />
+              )}
+            </div>
 
-            <p>Al menos 1 mayúscula</p>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                width: "100%",
+              }}
+            >
+              <p>Al menos 1 mayúscula</p>
+              {errorCapitalLeter === false ? null : (
+                <CheckIcon
+                  style={{
+                    width: "15px",
+                    color: "yellow",
+                  }}
+                />
+              )}
+            </div>
 
-            <p>Al menos 1 número</p>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                width: "100%",
+              }}
+            >
+              <p>Al menos 1 número</p>
+              {errorNumber === false ? null : (
+                <CheckIcon
+                  style={{
+                    width: "15px",
+                    color: "yellow",
+                  }}
+                />
+              )}
+            </div>
           </div>
 
           {loader === false ? (
