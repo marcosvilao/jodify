@@ -12,9 +12,24 @@ import Box from "@mui/material/Box";
 import { useNavigate } from "react-router-dom";
 import CheckIcon from "@mui/icons-material/Check";
 import PanoramaFishEyeIcon from "@mui/icons-material/PanoramaFishEye";
+import Cookies from "universal-cookie";
 
 function FormRegisterUser() {
   const history = useNavigate();
+  const cookie = new Cookies();
+  const cookieName = cookie.get("username");
+
+  if (cookieName) {
+    Swal.fire({
+      title: "Error!",
+      text: "Ya estas logeado",
+      icon: "error",
+      confirmButtonText: "Ok",
+    }).then(() => {
+      history("/");
+      window.scroll(0, 0);
+    });
+  }
   const [loader, setLoader] = useState(false);
   const [postUser, setPostUser] = useState({
     username: "",

@@ -2,10 +2,26 @@ import React from "react";
 import styles from "./formCreateProductora.module.css";
 import theme from "../../jodifyStyles";
 import logo from "../../logo-jodify/JODIFY_Iso_Gradient.svg";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import Cookies from "universal-cookie";
 
 function FormCreateProductora() {
+  const history = useNavigate();
+  const cookie = new Cookies();
+  const cookieName = cookie.get("username");
+
+  if (cookieName) {
+    Swal.fire({
+      title: "Error!",
+      text: "Ya estas logeado",
+      icon: "error",
+      confirmButtonText: "Ok",
+    }).then(() => {
+      history("/");
+      window.scroll(0, 0);
+    });
+  }
   return (
     <div className={styles.body}>
       <div className={styles.leftContainer}>

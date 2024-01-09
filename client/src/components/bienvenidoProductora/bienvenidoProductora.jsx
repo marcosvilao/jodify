@@ -3,9 +3,25 @@ import styles from "./bienvenidoProductora.module.css";
 import theme from "../../jodifyStyles";
 import logo from "../../logo-jodify/JODIFY_Iso_Gradient.svg";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import Cookies from "universal-cookie";
 
 function ProductoraBienvenido() {
   const history = useNavigate();
+  const cookie = new Cookies();
+  const cookieName = cookie.get("username");
+
+  if (cookieName) {
+    Swal.fire({
+      title: "Error!",
+      text: "Ya estas logeado",
+      icon: "error",
+      confirmButtonText: "Ok",
+    }).then(() => {
+      history("/");
+      window.scroll(0, 0);
+    });
+  }
 
   const onClickRouteCreateProductora = () => {
     history("/create-productora");

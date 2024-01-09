@@ -8,10 +8,26 @@ import Swal from "sweetalert2";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import CheckIcon from "@mui/icons-material/Check";
+import Cookies from "universal-cookie";
 
 function CrarContraseña() {
   const history = useNavigate();
+  const cookie = new Cookies();
+  const cookieName = cookie.get("username");
+
+  if (cookieName) {
+    Swal.fire({
+      title: "Error!",
+      text: "Ya estas logeado",
+      icon: "error",
+      confirmButtonText: "Ok",
+    }).then(() => {
+      history("/");
+      window.scroll(0, 0);
+    });
+  }
   const { id, token } = useParams();
+  const [success, setSuccess] = useState(false);
   const [loader, setLoader] = useState(false);
   const [dataPost, setDataPost] = useState({
     password: "",
@@ -56,15 +72,7 @@ function CrarContraseña() {
         .then((res) => {
           console.log(res);
           setLoader(false);
-          Swal.fire({
-            title: "Success!",
-            text: "Contraseña restablecida correctamente",
-            icon: "success",
-            confirmButtonText: "Ok",
-          }).then(() => {
-            history("/login");
-            window.scroll(0, 0);
-          });
+          setSuccess(true);
         })
         .catch((err) => {
           console.log(err);
@@ -109,106 +117,133 @@ function CrarContraseña() {
     }
   }
 
+  const onClickRouteLogin = (e) => {
+    history("/login");
+  };
+
   return (
     <div className={styles.body}>
-      <div className={styles.leftContainer}>
-        <div className={styles.form}>
-          <img
-            style={{
-              borderRadius: theme.jodify_borders._lg_border_radius,
-              marginBottom: "10px",
-            }}
-            src={logo}
-            alt="Error en la carga del logo"
-            width="60px"
-            height="60px"
-          />
-
-          <h1>Nueva contraseña</h1>
-
-          <input
-            placeholder="Contraseña"
-            name="password"
-            type="password"
-            value={dataPost.email}
-            onChange={onChangeDataPost}
-          />
-
-          <input
-            placeholder="Repetir contraseña"
-            name="confirmPassword"
-            type="password"
-            value={dataPost.email}
-            onChange={onChangeDataPost}
-          />
-
-          <div className={styles.containerPform}>
-            <div
+      {success === false ? (
+        <div className={styles.leftContainer}>
+          <div className={styles.form}>
+            <img
               style={{
-                display: "flex",
-                alignItems: "center",
-                width: "100%",
+                borderRadius: theme.jodify_borders._lg_border_radius,
+                marginBottom: "10px",
               }}
-            >
-              <p>Al menos 8 caracteres</p>
-              {errorLength === false ? null : (
-                <CheckIcon
-                  style={{
-                    width: "15px",
-                    color: "yellow",
-                  }}
-                />
-              )}
+              src={logo}
+              alt="Error en la carga del logo"
+              width="60px"
+              height="60px"
+            />
+
+            <h1>Nueva contraseña</h1>
+
+            <input
+              placeholder="Contraseña"
+              name="password"
+              type="password"
+              value={dataPost.email}
+              onChange={onChangeDataPost}
+            />
+
+            <input
+              placeholder="Repetir contraseña"
+              name="confirmPassword"
+              type="password"
+              value={dataPost.email}
+              onChange={onChangeDataPost}
+            />
+
+            <div className={styles.containerPform}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  width: "100%",
+                }}
+              >
+                <p>Al menos 8 caracteres</p>
+                {errorLength === false ? null : (
+                  <CheckIcon
+                    style={{
+                      width: "15px",
+                      color: "yellow",
+                    }}
+                  />
+                )}
+              </div>
+
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  width: "100%",
+                }}
+              >
+                <p>Al menos 1 mayúscula</p>
+                {errorCapitalLeter === false ? null : (
+                  <CheckIcon
+                    style={{
+                      width: "15px",
+                      color: "yellow",
+                    }}
+                  />
+                )}
+              </div>
+
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  width: "100%",
+                }}
+              >
+                <p>Al menos 1 número</p>
+                {errorNumber === false ? null : (
+                  <CheckIcon
+                    style={{
+                      width: "15px",
+                      color: "yellow",
+                    }}
+                  />
+                )}
+              </div>
             </div>
 
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                width: "100%",
-              }}
-            >
-              <p>Al menos 1 mayúscula</p>
-              {errorCapitalLeter === false ? null : (
-                <CheckIcon
-                  style={{
-                    width: "15px",
-                    color: "yellow",
-                  }}
-                />
-              )}
-            </div>
-
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                width: "100%",
-              }}
-            >
-              <p>Al menos 1 número</p>
-              {errorNumber === false ? null : (
-                <CheckIcon
-                  style={{
-                    width: "15px",
-                    color: "yellow",
-                  }}
-                />
-              )}
-            </div>
+            {loader === false ? (
+              <button onClick={onClickRestablecerConstraseña}>
+                Crear nueva contraseña
+              </button>
+            ) : (
+              <Box sx={{ display: "flex", marginTop: "30px" }}>
+                <CircularProgress color="secondary" />
+              </Box>
+            )}
           </div>
-
-          {loader === false ? (
-            <button onClick={onClickRestablecerConstraseña}>
-              Crear nueva contraseña
-            </button>
-          ) : (
-            <Box sx={{ display: "flex", marginTop: "30px" }}>
-              <CircularProgress color="secondary" />
-            </Box>
-          )}
         </div>
-      </div>
+      ) : (
+        <div className={styles.leftContainer}>
+          <div className={styles.form}>
+            <img
+              style={{
+                borderRadius: theme.jodify_borders._lg_border_radius,
+                marginBottom: "10px",
+              }}
+              src={logo}
+              alt="Error en la carga del logo"
+              width="60px"
+              height="60px"
+            />
+
+            <h1 style={{ fontSize: "20px", marginTop: "50px" }}>
+              Tu contraseña se ha modificado con exito!
+            </h1>
+
+            <button onClick={onClickRouteLogin}>Iniciar sesion</button>
+          </div>
+        </div>
+      )}
 
       <div className={styles.rigthContianer}></div>
     </div>
