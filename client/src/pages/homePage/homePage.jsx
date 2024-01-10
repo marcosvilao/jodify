@@ -145,8 +145,9 @@ function HomePage() {
               <ButtonPickerSelected Value="Fecha" />
             )}
           </div>
-          {null ? (
-            <div className={styles.containerPicker}>
+
+          <div className={styles.containerPicker}>
+            {null ? (
               <div className={styles.positionDatePicker}>
                 <DatePicker
                   open={open}
@@ -156,7 +157,9 @@ function HomePage() {
                   setDefaultValues={filters.dates}
                 />
               </div>
+            ) : null}
 
+            {null ? (
               <div className={styles.positionCitiesList}>
                 <CheckBoxList
                   cityList={cities}
@@ -164,16 +167,18 @@ function HomePage() {
                   setCheckedItems={setCheckedCities}
                 />
               </div>
+            ) : null}
 
-              <div>
+            {null ? (
+              <div className={styles.positionTypesList}>
                 <CheckBoxList
                   typeList={types}
                   checkedItems={checkedTypes}
                   setCheckedItems={setCheckedTypes}
                 />
               </div>
-            </div>
-          ) : null}
+            ) : null}
+          </div>
 
           <div className={styles.containerEventCard}>{elementDivCard}</div>
         </div>
