@@ -4,8 +4,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Checkbox from '@mui/material/Checkbox';
-import { Box } from '@mui/material';
-import { OkBtn } from './FilterEventsStyles';
 import { ItemTextList } from './FilterEventsStyles';
 import theme from '../../jodifyStyles';
 
@@ -37,8 +35,6 @@ function FilterList({ typeList, cityList, checkedItems, setCheckedItems }) {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          // borderTopRightRadius: 'none',
-          // borderRadius: theme.jodify_borders._lg_border_radius
         }}
       >
         {list.map((item, index) => {

@@ -1,0 +1,58 @@
+.body {
+  width: 100%;
+  height: 120px;
+  background-color: #1b1c20;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  color: #e8dfe9;
+  box-sizing: border-box;
+  margin: 10px 0px;
+  cursor: pointer;
+}
+
+.containerImg {
+  width: 120px;
+  height: 100%;
+  border-radius: 8px;
+}
+
+.containerImg img {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+}
+
+.containerData {
+  width: 100%;
+  height: 100%;
+  display: block;
+  margin-left: 15px;
+  position: relative;
+}
+
+.containerData h3 {
+  position: absolute;
+  top: -10px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.containerP {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 40px;
+}
+
+.icon{
+    margin-right: 5px;
+    color: #7c16f5;
+}
+
+.containerP p {
+  margin: 0px;
+  font-size: 14px;
+  opacity: 0-8;
+}

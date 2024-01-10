@@ -1,0 +1,80 @@
+.bodyLoader {
+  width: 100%;
+  height: 87vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.body {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 10px 0px;
+}
+
+.containerInput {
+  width: 700px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.containerButtons {
+  width: 700px;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  margin: 10px 0px;
+  gap: 10px;
+}
+
+.containerPicker {
+  position: relative;
+  width: 700px;
+}
+
+.positionDatePicker{
+  position: absolute;
+  top: -400px;
+  left: 35px;
+}
+
+.positionCitiesList{
+  position: absolute;
+  left: 0px;
+}
+
+.positionTypesList{
+  position: absolute;
+  left: 100px;
+}
+
+.containerEventCard {
+  width: 100%;
+  margin: 10px 0px;
+}
+
+.containerEventCard h1 {
+  font-size: 25px;
+  color: rgb(232, 223, 233);
+  margin: 0px;
+  margin-bottom: 10px;
+}
+
+@media screen and (max-width: 750px) {
+  .containerInput {
+    width: 98%;
+  }
+
+  .containerButtons {
+    width: 98%;
+  }
+
+  .containerPicker {
+    width: 99%;
+  }
+}
