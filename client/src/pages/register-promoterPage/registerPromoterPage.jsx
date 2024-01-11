@@ -61,7 +61,7 @@ function RegisterPromoter() {
           <div className={styles.containerForm}>
             <InputBlack Name="name" Placeholder="Nombre de la productora" />
 
-            <InputBlack Name="phone" Placeholder="Telefono de contracto" />
+            <InputBlack Name="phone" Placeholder="Telefono de contacto" />
 
             <InputBlack Name="link" Placeholder="Instagram" />
 
