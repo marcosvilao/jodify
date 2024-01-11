@@ -1,0 +1,15 @@
+.inputBlack {
+  width: 100%;
+  height: 45px;
+  border-radius: var(--1, 8px) var(--1, 8px) var(--none, 0px) var(--none, 0px);
+  background: var(--gris-topo, #1b1c20);
+  color: var(--hover, #4a4458);
+  font-family: Roboto Condensed;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin: 10px 0px;
+  padding-left: 15px;
+  box-sizing: border-box;
+}

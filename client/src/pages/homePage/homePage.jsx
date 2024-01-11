@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./homePage.module.css";
 import CircularProgress from "@mui/material/CircularProgress";
 import axios from "axios";
+import Loader from "../../components2/loader/loader";
 import InputSearch from "../../components2/inputSearch/inputSearch";
 import DatePicker from "../../components2/datePicker/datePicker";
 import ButtonPicker from "../../components2/buttonPicker/buttonPicker";
@@ -64,9 +65,7 @@ function HomePage() {
   if (!dataEventCard || !types || !cities) {
     return (
       <div className={styles.bodyLoader}>
-        <CircularProgress
-          style={{ color: "#7c16f5", height: "100px", width: "100px" }}
-        />
+        <Loader Color="#7c16f5" Height="100px" Width="100px" />
       </div>
     );
   } else {

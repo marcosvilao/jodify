@@ -1,0 +1,9 @@
+.tittleH1 {
+  color: var(--On-Backround-1, #f8f8f8);
+  font-family: Roboto Condensed;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin: 10px;
+}

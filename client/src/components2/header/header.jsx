@@ -123,7 +123,7 @@ function Header() {
           <div className={styles.userProductora}>
             <Link
               className={styles.linkMenu}
-              to={"/productora-welcome"}
+              to={"/register-promoter"}
               onClick={onClickLink}
             >
               Productora
