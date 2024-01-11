@@ -222,7 +222,6 @@ function CreateEventPage() {
             Option="Selecciona una Ciudad"
             Array={cities}
             OnChange={onChangeEventCity}
-            name="event_city"
           />
 
           <SelectBlack
