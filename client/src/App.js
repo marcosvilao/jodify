@@ -10,7 +10,7 @@ import RegisterPage from "./pages/registerPage/registerPage.jsx";
 import ResetPasswordPage from "./pages/reset-passwordPage/resetPasswordPage.jsx";
 import LinkResetPasswordPage from "./pages/linkResetPasswordPage/linkResetPasswordPage.jsx";
 import RegisterPromoterPage from "./pages/register-promoterPage/registerPromoterPage.jsx";
-import CreateFormPage from "./pages/createFormPage/createFormPage.jsx";
+import CreateEventPage from "./pages/createEventPage/createEventPage.jsx";
 
 function App() {
   return (
@@ -29,7 +29,7 @@ function App() {
         />
         <Route path="/register-promoter" element={<RegisterPromoterPage />} />
         <Route path="/week-events" element={<WeekEventsPage />} />
-        <Route path="/create-form" element={<CreateFormPage />} />
+        <Route path="/create-event" element={<CreateEventPage />} />
       </Routes>
     </div>
   );

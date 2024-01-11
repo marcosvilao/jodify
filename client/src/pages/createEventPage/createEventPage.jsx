@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styles from "./createFormPage.module.css";
+import styles from "./createEventPage.module.css";
 import SelectBlack from "../../components2/selectBlack/selectBlack";
 import InputBlack from "../../components2/inputBlack/inputBlack";
 import ButtonBlue from "../../components2/buttonBlue/buttonBlue";
@@ -8,7 +8,7 @@ import Loader from "../../components2/loader/loader";
 import Parrafo from "../../components2/parrafo/parrafo";
 import Alert from "../../components2/alert/alert";
 
-function CreateFormPage() {
+function CreateEventPage() {
   const axiosUrl = process.env.REACT_APP_AXIOS_URL;
   const cloudinayUrl = process.env.REACT_APP_CLOUDINARY_URL;
   const [loader, setLoader] = useState(false);
@@ -202,11 +202,10 @@ function CreateFormPage() {
       }
     };
 
-    console.log(cloudinayUrl);
     return (
       <div className={styles.body}>
         <div className={styles.form}>
-          <h1 style={{ color: "white" }}>Create Form</h1>
+          <h1 style={{ color: "white" }}>Create Event</h1>
           <SelectBlack
             Option="Selecciona una Ciudad"
             Array={cities}
@@ -290,4 +289,4 @@ function CreateFormPage() {
   }
 }
 
-export default CreateFormPage;
+export default CreateEventPage;
