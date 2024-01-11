@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./header.module.css";
-import logo from "../../logo-jodify/JODIFY_Iso_Gradient.svg";
+import logo from "../../assets/logo-jodify/JODIFY_Iso_Gradient.svg";
 import theme from "../../jodifyStyles";
 import PersonIcon from "@mui/icons-material/Person";
 import MenuIcon from "@mui/icons-material/Menu";

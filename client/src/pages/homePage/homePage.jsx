@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import styles from "./homePage.module.css";
-import CircularProgress from "@mui/material/CircularProgress";
 import axios from "axios";
 import Loader from "../../components2/loader/loader";
 import InputSearch from "../../components2/inputSearch/inputSearch";

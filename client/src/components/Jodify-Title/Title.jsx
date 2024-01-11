@@ -1,7 +1,7 @@
 import React from "react";
 import theme from "../../jodifyStyles";
 import { BrandContainer, Brand } from "./Title";
-import logo from "../../logo-jodify/JODIFY_Iso_Gradient.svg";
+import logo from "../../assets/logo-jodify/JODIFY_Iso_Gradient.svg";
 
 function Title() {
   const time = new Date().getHours().toLocaleString();
