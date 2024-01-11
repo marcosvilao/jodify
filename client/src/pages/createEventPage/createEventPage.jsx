@@ -97,44 +97,56 @@ function CreateEventPage() {
     };
 
     const onChangeEventType = (e) => {
-      if (dataPost.event_type.length === 0) {
-        setDataPost({
-          ...dataPost,
-          event_type: e.target.value,
-        });
+      if (e.target.value === "Selecciona un Genero Musical") {
+        return null;
       } else {
-        setDataPost({
-          ...dataPost,
-          event_type: dataPost.event_type + " | " + e.target.value,
-        });
+        if (dataPost.event_type.length === 0) {
+          setDataPost({
+            ...dataPost,
+            event_type: e.target.value,
+          });
+        } else {
+          setDataPost({
+            ...dataPost,
+            event_type: dataPost.event_type + " | " + e.target.value,
+          });
+        }
       }
     };
 
     const onChangeEventPromoters = (e) => {
-      if (dataPost.event_promoter.length === 0) {
-        setDataPost({
-          ...dataPost,
-          event_promoter: e.target.value,
-        });
+      if (e.target.value === "Selecciona una Productora") {
+        return null;
       } else {
-        setDataPost({
-          ...dataPost,
-          event_promoter: dataPost.event_promoter + " | " + e.target.value,
-        });
+        if (dataPost.event_promoter.length === 0) {
+          setDataPost({
+            ...dataPost,
+            event_promoter: e.target.value,
+          });
+        } else {
+          setDataPost({
+            ...dataPost,
+            event_promoter: dataPost.event_promoter + " | " + e.target.value,
+          });
+        }
       }
     };
 
     const onChangeEventDjs = (e) => {
-      if (dataPost.event_djs.length === 0) {
-        setDataPost({
-          ...dataPost,
-          event_djs: e.target.value,
-        });
+      if (e.target.value === "Selecciona un Line Up") {
+        return null;
       } else {
-        setDataPost({
-          ...dataPost,
-          event_djs: dataPost.event_djs + " | " + e.target.value,
-        });
+        if (dataPost.event_djs.length === 0) {
+          setDataPost({
+            ...dataPost,
+            event_djs: e.target.value,
+          });
+        } else {
+          setDataPost({
+            ...dataPost,
+            event_djs: dataPost.event_djs + " | " + e.target.value,
+          });
+        }
       }
     };
 
@@ -271,9 +283,7 @@ function CreateEventPage() {
               <input Type="file" onChange={handleFileChange} />
             </div>
           ) : (
-            <div className={styles.inputFileContainer}>
-              <Loader Color="#7c16f5" Height="30px" Width="30px" />
-            </div>
+            <Loader Color="#7c16f5" Height="30px" Width="30px" />
           )}
 
           <ButtonBlue Value="Submit" OnClick={onSubmit} />
