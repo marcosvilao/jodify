@@ -23,5 +23,14 @@ export const BasicText = styled(TextField)({
       color: theme.jodify_colors._text_white,
       borderBottomColor: theme.jodify_colors._text_white,
     },
+    '& .css-1d1r5q-MuiFormHelperText-root': {
+      color: 'white'
+    },
+    '& .css-i4bv87-MuiSvgIcon-root': {
+      fill: 'white'
+    },
+    '& .css-ptiqhd-MuiSvgIcon-root': {
+      fill: 'white'
+    }
 
   })
