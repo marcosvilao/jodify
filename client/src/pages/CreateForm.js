@@ -419,12 +419,12 @@ function CreateForm() {
             renderInput={(params) => (
               <BasicText
                 error={event.event_city === ""}
-                helperText="tenes que elegir una ciudad"
+                helperText="Selecciona la ciudad donde figurará el evento"
                 required
                 {...params}
                 variant="standard"
                 label="Ciudad"
-                placeholder="Elige una ciudad"
+                placeholder="Selecciona una ciudad"
               />
             )}
           />
@@ -441,7 +441,7 @@ function CreateForm() {
               <BasicText
                 helperText="tenes que elegir una productora, podes dejar en blanco"
                 {...params}
-                variant="standard"
+                variant="standard"            
                 label="Productora"
                 placeholder="Elige una productora"
               />
@@ -453,7 +453,7 @@ function CreateForm() {
             error={event.ticket_link === ""}
             required
             label="Link de Venta"
-            placeholder="Ingresa el link del evento"
+            placeholder="En el que caso de que no haya, link de perfil de instagram"
             variant="standard"
             value={event.ticket_link}
             style={{ color: "success" }}
@@ -461,7 +461,7 @@ function CreateForm() {
           />
 
           <BasicText
-            helperText="Copia y pega la url de la imagen o carga la imagen con el botón de carga"
+            helperText="Copia y pega la url de la imagen o cargar la imagen desde archivo"
             error={event.event_image === ""}
             required
             label="Imagen"
@@ -500,10 +500,11 @@ function CreateForm() {
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DayPick
               label="Fecha del evento"
+              variant="standard"
               slots={{
                 textField: (params) => (
                   <BasicText
-                    helperText="Ingresa la fecha del evento"
+                    helperText="Sugerimos cargarlo desde el símbolo del calendario para asegurar que el día sea el correcto"
                     error={event.event_date === ""}
                     required
                     variant="standard"
@@ -518,11 +519,11 @@ function CreateForm() {
           </LocalizationProvider>
 
           <BasicText
-            helperText="En este campo debes inlcluir el boliche y el partido, Ej: Crobar (Palermo)"
+            helperText="Escribe la dirección o nombre del lugar con la localidad entre paréntesis"
             error={event.event_location === ""}
             required
             label="Ubicación"
-            placeholder="Ingresa el nombre del complejo o dirección"
+            placeholder="Ej. Crobar (Palermo)"
             variant="standard"
             onChange={(e) => handleLocationChange(e)}
             value={event.event_location}
@@ -539,13 +540,13 @@ function CreateForm() {
             value={event.event_djs || []}
             renderInput={(params) => (
               <BasicText
-                helperText="Seleccioná o escribí los Djs de esta fechita"
+                helperText="Incluye los DJs que tocarán"
                 error={event.event_djs.length === 0}
                 required
                 {...params}
                 variant="standard"
                 label="Line up"
-                placeholder="Agrega artistas al evento"
+                placeholder="Ej. Solomun"
                 value={event.event_title || ""}
               />
             )}
@@ -562,24 +563,24 @@ function CreateForm() {
             value={event.event_type}
             renderInput={(params) => (
               <BasicText
-                helperText="¿Que géneros de electronica se va a escuchar?( podes elegir mas de uno )"
+                helperText="Selecciona los géneros que habrá"
                 error={event.event_type.length === 0}
                 required
                 {...params}
                 variant="standard"
                 label="Géneros musicales"
-                placeholder="Agrega géneros al evento"
+                placeholder="Ej. Techno"
                 value={event.event_type.join(" | ")}
               />
             )}
           />
 
           <BasicText
-            helperText='Este campo se rellena automaticamente ingresando el "Line up"'
+            helperText='Se puede editar'
             error={event.event_title === ""}
             id="standard-textarea"
             label="Nombre del evento"
-            placeholder="Edita el nombre del evento"
+            placeholder="Ej. Hernan Cattaneo B2B Nick Warren"
             multiline
             variant="standard"
             value={event.event_title}
