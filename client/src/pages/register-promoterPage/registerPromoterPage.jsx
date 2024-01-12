@@ -59,11 +59,19 @@ function RegisterPromoter() {
           <TittleH1 Value="Crear cuenta" />
 
           <div className={styles.containerForm}>
-            <InputBlack Name="name" Placeholder="Nombre de la productora" />
+            <InputBlack
+              Name="name"
+              Placeholder="ej. SoundOn"
+              Label="Nombre de la productora"
+            />
 
-            <InputBlack Name="phone" Placeholder="Telefono de contacto" />
+            <InputBlack
+              Name="phone"
+              Placeholder="1155264839"
+              Label="Telefono de contacto"
+            />
 
-            <InputBlack Name="link" Placeholder="Instagram" />
+            <InputBlack Name="link" Placeholder="ej. sound_on" Label="Instagram"/>
 
             <ButtonBlue Value="Crear cuenta" />
           </div>

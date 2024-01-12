@@ -78,7 +78,8 @@ function ResetPassword() {
               OnChange={onChangeDataPost}
               Name="email"
               Value={dataPost.email}
-              Placeholder="Correo electronico"
+              Placeholder="Correo electronico con el que te registraste"
+              Label="Correo electronico"
             />
 
             {!loader ? (

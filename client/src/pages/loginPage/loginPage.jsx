@@ -87,13 +87,15 @@ function LoginPage() {
             OnChange={onChangeDataPost}
             Name="email"
             Value={userLogin.email}
-            Placeholder="Correo electronico"
+            Placeholder="info@soundon.com"
+            Label="Correo electronico"
           />
           <InputBlack
             OnChange={onChangeDataPost}
             Name="password"
             Value={userLogin.password}
-            Placeholder="Contraseña"
+            Label="Contraseña"
+            Placeholder="Ingresa tu contraseña"
             Type="password"
           />
 

@@ -120,15 +120,17 @@ function LinkResetPassword() {
               OnChange={onChangeDataPost}
               Name="password"
               Value={dataPost.password}
-              Placeholder="Contraseña"
+              Placeholder="Ingresar nueva Contraseña"
               Type="password"
+              Label="Nueva Contraseña"
             />
             <InputBlack
               OnChange={onChangeDataPost}
               Name="confirmPassword"
               Value={dataPost.confirmPassword}
-              Placeholder="Repetir Contraseña"
+              Placeholder="Confirmar nueva contraseña"
               Type="password"
+              Label="Confirmar nueva contraseña"
             />
 
             <div className={styles.containerPform}>

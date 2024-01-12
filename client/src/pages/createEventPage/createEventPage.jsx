@@ -18,15 +18,17 @@ function CreateEventPage() {
   const [promoters, setPromoters] = useState(false);
   const [dataPost, setDataPost] = useState({
     event_title: "",
-    event_type: "",
+    event_type: [],
     event_date: "",
     event_location: "",
     ticket_link: "",
     event_image: "",
-    event_djs: "",
+    event_djs: [],
     event_city: "",
-    event_promoter: "",
+    event_promoter: [],
   });
+
+  // PUSHEAR AL ARRAY LO QUE SE SELECCIONA EN EL SELECTR Y MANDAR A AL BACK
 
   useEffect(() => {
     axios
@@ -89,65 +91,40 @@ function CreateEventPage() {
   }, []);
 
   if (cities && types && djs && promoters) {
-    const onChangeEventCity = (e) => {
+    const onChangeEventCity = (event, value) => {
+      if (value) {
+        setDataPost({
+          ...dataPost,
+          event_city: value.value,
+        });
+      } else {
+        setDataPost({
+          ...dataPost,
+          event_city: "",
+        });
+      }
+    };
+
+    const onChangeEventType = (event, value) => {
       setDataPost({
         ...dataPost,
-        event_city: e.target.value,
+        event_type: value,
       });
     };
 
-    const onChangeEventType = (e) => {
-      if (e.target.value === "Selecciona un Genero Musical") {
-        return null;
-      } else {
-        if (dataPost.event_type.length === 0) {
-          setDataPost({
-            ...dataPost,
-            event_type: e.target.value,
-          });
-        } else {
-          setDataPost({
-            ...dataPost,
-            event_type: dataPost.event_type + " | " + e.target.value,
-          });
-        }
-      }
+    const onChangeEventPromoters = (event, value) => {
+      console.log(value);
+      setDataPost({
+        ...dataPost,
+        event_promoter: value,
+      });
     };
 
-    const onChangeEventPromoters = (e) => {
-      if (e.target.value === "Selecciona una Productora") {
-        return null;
-      } else {
-        if (dataPost.event_promoter.length === 0) {
-          setDataPost({
-            ...dataPost,
-            event_promoter: e.target.value,
-          });
-        } else {
-          setDataPost({
-            ...dataPost,
-            event_promoter: dataPost.event_promoter + " | " + e.target.value,
-          });
-        }
-      }
-    };
-
-    const onChangeEventDjs = (e) => {
-      if (e.target.value === "Selecciona un Line Up") {
-        return null;
-      } else {
-        if (dataPost.event_djs.length === 0) {
-          setDataPost({
-            ...dataPost,
-            event_djs: e.target.value,
-          });
-        } else {
-          setDataPost({
-            ...dataPost,
-            event_djs: dataPost.event_djs + " | " + e.target.value,
-          });
-        }
-      }
+    const onChangeEventDjs = (event, value) => {
+      setDataPost({
+        ...dataPost,
+        event_djs: value,
+      });
     };
 
     const onChangeDataInput = (e) => {
@@ -214,6 +191,8 @@ function CreateEventPage() {
       }
     };
 
+    console.log(dataPost);
+
     return (
       <div className={styles.body}>
         <div className={styles.form}>
@@ -222,6 +201,7 @@ function CreateEventPage() {
             Option="Selecciona una Ciudad"
             Array={cities}
             OnChange={onChangeEventCity}
+            Multiple={false}
           />
 
           <SelectBlack
@@ -229,57 +209,52 @@ function CreateEventPage() {
             Array={promoters}
             OnChange={onChangeEventPromoters}
           />
-          {dataPost.event_promoter.length !== 0 ? (
-            <Parrafo Value={dataPost.event_promoter} Margin="5px" />
-          ) : null}
 
           <SelectBlack
             Option="Selecciona un Line Up"
             Array={djs}
             OnChange={onChangeEventDjs}
           />
-          {dataPost.event_djs.length !== 0 ? (
-            <Parrafo Value={dataPost.event_djs} Margin="5px" />
-          ) : null}
 
           <SelectBlack
             Option="Selecciona un Genero Musical"
             Array={types}
             OnChange={onChangeEventType}
           />
-          {dataPost.event_type.length !== 0 ? (
-            <Parrafo Value={dataPost.event_type} Margin="5px" />
-          ) : null}
 
           <InputBlack
             OnChange={onChangeDataInput}
             Name="ticket_link"
             Value={dataPost.ticket_link}
             Placeholder="Link de venta"
+            Label="Link de venta"
           />
           <InputBlack
             OnChange={onChangeDataInput}
             Name="event_date"
             Value={dataPost.event_date}
             Placeholder="Fecha del evento"
+            Label="Fecha del evento"
           />
           <InputBlack
             OnChange={onChangeDataInput}
             Name="event_location"
             Value={dataPost.event_location}
             Placeholder="Nombre del complejo o direccion"
+            Label="Nombre del complejo o direccion"
           />
           <InputBlack
             OnChange={onChangeDataInput}
             Name="event_title"
             Value={dataPost.event_title}
             Placeholder="Nombre del evento"
+            Label="Nombre del evento"
           />
 
           {!loader ? (
             <div className={styles.inputFileContainer}>
               <label>Seleciona una imagen:</label>
-              <input Type="file" onChange={handleFileChange} />
+              <input Type="file" onChange={(e) => handleFileChange(e)} />
             </div>
           ) : (
             <Loader Color="#7c16f5" Height="30px" Width="30px" />

@@ -85,6 +85,7 @@ function CreatePromotersPage() {
           Name="name"
           Value={dataPost.name}
           Placeholder="escribi el nombre"
+          Label="escribi el nombre"
         />
 
         <InputBlack
@@ -92,6 +93,7 @@ function CreatePromotersPage() {
           Name="instagram"
           Value={dataPost.instagram}
           Placeholder="escribi el instagram"
+          Label="escribi el instagram"
         />
 
         <SelectBlack

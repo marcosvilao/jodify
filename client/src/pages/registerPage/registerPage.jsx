@@ -146,26 +146,30 @@ function RegisterPage() {
             OnChange={onChangeDataPost}
             Name="username"
             Value={postUser.username}
-            Placeholder="Username"
+            Placeholder="ej. JodifySoundOn"
+            Label="Username"
           />
           <InputBlack
             OnChange={onChangeDataPost}
             Name="email"
             Value={postUser.email}
-            Placeholder="Correo electronico"
+            Placeholder="info@soundon.com"
+            Label="Correo electronico"
           />
           <InputBlack
             OnChange={onChangeDataPost}
             Name="password"
             Value={postUser.password}
-            Placeholder="Contraseña"
+            Placeholder="Ingresa tu contraseña"
+            Label="Contraseña"
             Type="password"
           />
           <InputBlack
             OnChange={onChangeDataPost}
             Name="repeatPassword"
             Value={postUser.repeatPassword}
-            Placeholder="Repetir contraseña"
+            Placeholder="Repeti tu contraseña"
+            Label="Repetir contraseña"
             Type="password"
           />
 
