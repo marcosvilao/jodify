@@ -31,6 +31,18 @@ export const BasicText = styled(TextField)({
     },
     '& .css-ptiqhd-MuiSvgIcon-root': {
       fill: 'white'
+    },
+    '& .css-j7o63n.Mui-error': {
+      color: 'white'
+    },
+    '& .css-j7o63n': {
+      color: 'white'
+    },
+    '& .css-vubbuv': {
+      fill: 'white'
+    },
+    '& .css-edpqz1': {
+      color: 'white'
     }
 
   })
