@@ -56,7 +56,7 @@
 .containerRight {
   width: 50%;
   height: 100%;
-  background-image: url("https://s3-alpha-sig.figma.com/img/5886/7dd6/d2799ce49cb88cbf176531164a3d264c?Expires=1704672000&Signature=Mh6x2-HhlLyHtPpDi5CFTihMToiP-jGCLU7piRD4nwZTACl6dQ9FpsLMq-HzmUuzSKcJlm2KUhtVvE3c0pzId9cTb6lP9vfcX~GQDS6r52c9fLNlvTjba6Bz~Vjp~TorbJumk2wNuEOI~y0rn5uPHzmbLzAZfbSwSMlxdg5ZnJuyoYQLqF2T5DEKiyn364~lWR~ZIBX4VAU9RWnQDc1YHcjtBGaHTMgHd3e6uCPnKx6Fyp0--PKHEegLSrCeA7Kb1U1Qn8-OmAbp6NKZtu9rFDSvGJtnag~6Cc32BGNDE2uihVvFkjujq6cWw~MrHlEVcmCarKjpyu7hZHZsyuNuFw__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4");
+  background-image: url("../../assets/img-login-jodify.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -65,7 +65,7 @@
 @media (max-width: 800px) {
   .containerLeft {
     width: 100%;
-    background-image: url("https://s3-alpha-sig.figma.com/img/5886/7dd6/d2799ce49cb88cbf176531164a3d264c?Expires=1704672000&Signature=Mh6x2-HhlLyHtPpDi5CFTihMToiP-jGCLU7piRD4nwZTACl6dQ9FpsLMq-HzmUuzSKcJlm2KUhtVvE3c0pzId9cTb6lP9vfcX~GQDS6r52c9fLNlvTjba6Bz~Vjp~TorbJumk2wNuEOI~y0rn5uPHzmbLzAZfbSwSMlxdg5ZnJuyoYQLqF2T5DEKiyn364~lWR~ZIBX4VAU9RWnQDc1YHcjtBGaHTMgHd3e6uCPnKx6Fyp0--PKHEegLSrCeA7Kb1U1Qn8-OmAbp6NKZtu9rFDSvGJtnag~6Cc32BGNDE2uihVvFkjujq6cWw~MrHlEVcmCarKjpyu7hZHZsyuNuFw__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4");
+    background-image: url("../../assets/img-login-jodify.png");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
