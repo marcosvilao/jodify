@@ -333,9 +333,9 @@ function CreateForm() {
       if (file.type.startsWith("image/")) {
         const formData = new FormData();
         formData.append("file", file);
-        formData.append("upload_preset", "jodifyCloudinary");
+        formData.append("upload_preset", "jodify_key");
         formData.append("jodify", "");
-        fetch("https://api.cloudinary.com/v1_1/dtmjh1hbu/image/upload", {
+        fetch("https://api.cloudinary.com/v1_1/dqc865z8r/image/upload", {
           method: "post",
           body: formData,
         })
