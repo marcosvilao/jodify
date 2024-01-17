@@ -3,6 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   padding: 10px 0px;
   min-height: 83vh;
 }
@@ -16,24 +17,14 @@
   gap: 10px;
 }
 
-.inputFileContainer {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: left;
-  border-bottom: 2px solid var(--hover, #4a4458);
-  border-right: 2px solid var(--hover, #4a4458);
-  padding: 5px 10px;
-  box-sizing: border-box;
-  background: var(--gris-topo, #1b1c20);
-  border-radius: var(--1, 8px) var(--1, 8px) var(--none, 0px) var(--none, 0px);
-  color: var(--hover, #4a4458);
+.containerEventCard {
+  width: 700px;
 }
 
-.inputFileContainer label {
-  color: #ffffff;
-  font-size: 16px;
-  font-weight: bold;
+@media screen and (max-width: 750px) {
+  .containerEventCard {
+    width: 98%;
+  }
 }
 
 @media (max-width: 450px) {

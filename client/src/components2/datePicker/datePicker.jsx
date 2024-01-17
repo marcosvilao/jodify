@@ -1,65 +1,148 @@
 import React, { useState } from "react";
-import dayjs from "dayjs";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { Box } from "@mui/material";
-import theme from "../../jodifyStyles";
-import { DateRange } from "./datePickerStyles";
-import esLocale from "date-fns/locale/es";
+import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
+import { outlinedInputClasses } from "@mui/material/OutlinedInput";
+import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import styles from "./datePicker.module.css";
 
-function DatePicker({ setIsOpen, setDateFilter, setDefaultValues }) {
-  const [dates, setDates] = useState(setDefaultValues);
-  const defaultDates =
-    setDefaultValues.length > 0
-      ? setDefaultValues.map((date) => dayjs(date))
-      : undefined;
+const customTheme = (outerTheme) =>
+  createTheme({
+    palette: {
+      mode: outerTheme.palette.mode,
+    },
+    components: {
+      MuiTextField: {
+        styleOverrides: {
+          root: {
+            "--TextField-brandBorderColor": "#E0E3E7",
+            "--TextField-brandBorderHoverColor": "#B2BAC2",
+            "--TextField-brandBorderFocusedColor": "#6F7E8C",
+            "& label.Mui-focused": {
+              color: "var(--TextField-brandBorderFocusedColor)",
+            },
+            "& label": {
+              color: "#ffffff", // Color del texto del label
+            },
+          },
+        },
+      },
+      MuiOutlinedInput: {
+        styleOverrides: {
+          notchedOutline: {
+            borderColor: "var(--TextField-brandBorderColor)",
+          },
+          root: {
+            [`&:hover .${outlinedInputClasses.notchedOutline}`]: {
+              borderColor: "var(--TextField-brandBorderHoverColor)",
+            },
+            [`&.Mui-focused .${outlinedInputClasses.notchedOutline}`]: {
+              borderColor: "var(--TextField-brandBorderFocusedColor)",
+            },
+            "& input": {
+              color: "#ffffff", // Color del texto del input
+            },
+            "&.Mui-focused input": {
+              color: "#ffffff", // Color del texto del input cuando está enfocado
+            },
+          },
+        },
+      },
+      MuiFilledInput: {
+        styleOverrides: {
+          root: {
+            "&::before, &::after": {
+              borderBottom: "2px solid var(--TextField-brandBorderColor)",
+            },
+            "&:hover:not(.Mui-disabled, .Mui-error):before": {
+              borderBottom: "2px solid var(--TextField-brandBorderHoverColor)",
+            },
+            "&.Mui-focused:after": {
+              borderBottom:
+                "2px solid var(--TextField-brandBorderFocusedColor)",
+            },
+            "&.Mui-focused": {
+              backgroundColor: "#1b1c20", // Color de fondo cuando está enfocado
+            },
+          },
+        },
+      },
+      MuiInput: {
+        styleOverrides: {
+          root: {
+            "&::before": {
+              borderBottom: "2px solid var(--TextField-brandBorderColor)",
+            },
+            "&:hover:not(.Mui-disabled, .Mui-error):before": {
+              borderBottom: "2px solid var(--TextField-brandBorderHoverColor)",
+            },
+            "&.Mui-focused:after": {
+              borderBottom:
+                "2px solid var(--TextField-brandBorderFocusedColor)",
+            },
+            "& input": {
+              color: "#ffffff", // Color del texto del input
+            },
+            "&.Mui-focused input": {
+              color: "#ffffff", // Color del texto del input cuando está enfocado
+            },
+          },
+        },
+      },
+    },
+  });
 
-  const getDates = (value) => {
-    if (!value[0]) {
-      return;
+function CustomDatePicker(props) {
+  const outerTheme = useTheme();
+  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
+
+  const handleOpenDatePicker = () => {
+    if (!isDatePickerOpen) {
+      setIsDatePickerOpen(true);
     } else {
-      value[0].setHours(9, 0, 0, 0);
-      if (!value[0] && !value[1]) {
-        return;
-      }
-      if (!value[1]) {
-        value[1] = value[0];
-      }
-      setDateFilter(value);
-      setIsOpen(false);
+      return null;
     }
   };
+
+  const handleCloseDatePicker = () => {
+    if (isDatePickerOpen) {
+      setIsDatePickerOpen(false);
+    } else {
+      return null;
+    }
+  };
+
   return (
-    <Box
-      sx={{
-        zIndex: "3",
-        position: "absolute",
-        marginTop: "50vh",
-        marginLeft: "5%",
-      }}
-    >
-      <LocalizationProvider dateAdapter={AdapterDayjs} locale={esLocale}>
-        <DateRange
-          disablePast
-          localeText={{ start: "Inicio", end: "Fin" }}
-          locale={esLocale}
-          label="disabled"
-          toolbarTitle="Seleccionar rango de fechas"
-          disableHighlightToday={true}
-          onChange={(value) => setDates([value[0]?.$d, value[1]?.$d])}
-          onClose={() => setIsOpen(false)}
-          onAccept={() => getDates(dates)}
-          defaultValue={defaultDates}
-          sx={{
-            fontSize: "16px",
-            color: theme.jodify_colors._text_white,
-            bgcolor: theme.jodify_colors._background_gray,
-            borderRadius: theme.jodify_borders._lg_border_radius,
-          }}
-        />
+    <ThemeProvider theme={customTheme(outerTheme)} sx={{ width: "100%" }}>
+      <LocalizationProvider dateAdapter={AdapterDayjs} sx={{ width: "100%" }}>
+        <DemoContainer
+          components={["DatePicker"]}
+          sx={{ width: "100%", position: "relative" }}
+        >
+          <div
+            style={{ width: "100%" }}
+            onClick={handleOpenDatePicker}
+          >
+            <MobileDatePicker
+              sx={{ width: "100%" }}
+              label="Seleccion una fecha"
+              className={styles.datePicker}
+              onClose={handleCloseDatePicker}
+              open={isDatePickerOpen}
+              onChange={props.OnChange}
+            />
+
+            <CalendarMonthIcon
+              className={styles.icon}
+              label="Seleccion una fecha"
+            />
+          </div>
+        </DemoContainer>
       </LocalizationProvider>
-    </Box>
+    </ThemeProvider>
   );
 }
 
-export default DatePicker;
+export default CustomDatePicker;

@@ -3,7 +3,7 @@ import styles from "./homePage.module.css";
 import axios from "axios";
 import Loader from "../../components2/loader/loader";
 import InputSearch from "../../components2/inputSearch/inputSearch";
-import DatePicker from "../../components2/datePicker/datePicker";
+import DateRange from "../../components2/dateRange/dateRange";
 import ButtonPicker from "../../components2/buttonPicker/buttonPicker";
 import ButtonPickerSelected from "../../components2/buttonPickerSelected/buttonPickerSelected";
 import EventCard from "../../components2/eventCard/eventCard";
@@ -147,7 +147,7 @@ function HomePage() {
           <div className={styles.containerPicker}>
             {null ? (
               <div className={styles.positionDatePicker}>
-                <DatePicker
+                <DateRange
                   open={open}
                   setOpen={setOpen}
                   setIsOpen={setOpenDatesFilter}

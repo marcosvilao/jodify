@@ -7,7 +7,10 @@ function EventCard(props) {
   return (
     <div className={styles.body} onClick={props.OnClick}>
       <div className={styles.containerImg}>
-        <img src={props.Img} alt="Error al cargar la imagen" />
+        <img
+          src={props.Img}
+          alt={props.Alt ? props.Alt : "Error al cargar la imagen"}
+        />
       </div>
 
       <div className={styles.containerData}>

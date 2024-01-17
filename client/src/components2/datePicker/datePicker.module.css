@@ -1,0 +1,16 @@
+.datePicker {
+  width: 100%;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  background-color: #1b1c20;
+  cursor: pointer;
+}
+
+.icon {
+  position: absolute;
+  color: #ffffff;
+  right: 10px;
+  top: 55%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}

@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from "react";
+import dayjs from "dayjs";
 import styles from "./createEventPage.module.css";
 import SelectBlack from "../../components2/selectBlack/selectBlack";
 import InputBlack from "../../components2/inputBlack/inputBlack";
 import ButtonBlue from "../../components2/buttonBlue/buttonBlue";
 import axios from "axios";
 import Loader from "../../components2/loader/loader";
-import Parrafo from "../../components2/parrafo/parrafo";
 import Alert from "../../components2/alert/alert";
+import EventCard from "../../components2/eventCard/eventCard";
+import InputFile from "../../components2/inputFile/inputFile";
+import DatePicker from "../../components2/datePicker/datePicker";
 
 function CreateEventPage() {
   const axiosUrl = process.env.REACT_APP_AXIOS_URL;
-  const cloudinayUrl = process.env.REACT_APP_CLOUDINARY_URL;
   const [loader, setLoader] = useState(false);
   const [cities, setCities] = useState(false);
   const [types, setTypes] = useState(false);
   const [djs, setDjs] = useState(false);
   const [promoters, setPromoters] = useState(false);
+  const [dataCardType, setDataCardType] = useState("");
   const [dataPost, setDataPost] = useState({
     event_title: "",
     event_type: [],
@@ -27,8 +30,6 @@ function CreateEventPage() {
     event_city: "",
     event_promoter: [],
   });
-
-  // PUSHEAR AL ARRAY LO QUE SE SELECCIONA EN EL SELECTR Y MANDAR A AL BACK
 
   useEffect(() => {
     axios
@@ -106,6 +107,15 @@ function CreateEventPage() {
     };
 
     const onChangeEventType = (event, value) => {
+      let valoresConcatenados = "";
+      for (let i = 0; i < value.length; i++) {
+        if (value.length === 1) {
+          valoresConcatenados += value[i].value;
+        } else {
+          valoresConcatenados += `${value[i].value} | `;
+        }
+      }
+      setDataCardType(valoresConcatenados);
       setDataPost({
         ...dataPost,
         event_type: value,
@@ -113,7 +123,6 @@ function CreateEventPage() {
     };
 
     const onChangeEventPromoters = (event, value) => {
-      console.log(value);
       setDataPost({
         ...dataPost,
         event_promoter: value,
@@ -124,6 +133,14 @@ function CreateEventPage() {
       setDataPost({
         ...dataPost,
         event_djs: value,
+      });
+    };
+
+    const onChangeEventDate = (event) => {
+      const formattedDate = dayjs(event).format("YYYY-MM-DD");
+      setDataPost({
+        ...dataPost,
+        event_date: formattedDate,
       });
     };
 
@@ -149,9 +166,17 @@ function CreateEventPage() {
         Alert("Error!", "Completar todos los campos", "error");
       } else {
         axios
-          .post(axiosUrl + "/events", dataPost)
+          .post(axiosUrl + "/events", { event: dataPost })
           .then(() => {
-            Alert("Success!", "Evento creado correctamente", "success");
+            let callbackAlert = () => {
+              window.location.reload();
+            };
+            Alert(
+              "Success!",
+              "Evento creado correctamente",
+              "success",
+              callbackAlert
+            );
           })
           .catch(() => {
             Alert("Error!", "Error interno del servidor", "error");
@@ -163,31 +188,49 @@ function CreateEventPage() {
       setLoader(true);
       const file = e.target.files[0];
       if (file) {
-        if (file.type.startsWith("image/")) {
+        if (file.type) {
           const formData = new FormData();
           formData.append("file", file);
-          formData.append("upload_preset", "jodifyCloudinary");
+          formData.append("upload_preset", "jodify_key");
           formData.append("jodify", "");
-          fetch(cloudinayUrl + "/image/upload", {
+          console.log(formData);
+          fetch("https://api.cloudinary.com/v1_1/dqc865z8r/image/upload", {
             method: "post",
             body: formData,
           })
             .then((response) => response.json())
             .then((data) => {
-              const secureUrl = data.url.startsWith("http://")
+              const secureUrl = data.url
                 ? data.url.replace(/^http:/, "https:")
                 : data.url;
-
+              console.log(secureUrl);
               setDataPost((dataPost) => ({
                 ...dataPost,
                 event_image: secureUrl,
               }));
               setLoader(false);
+            })
+            .catch(() => {
+              Alert(
+                "Error!",
+                "Error en la carga de la imagen, internar luego mas tarde o ponerse en contaco con el servidor",
+                "error"
+              );
             });
         } else {
           Alert("Error!", "Selected file is not an image", "error");
           setLoader(false);
         }
+      }
+    };
+
+    const onClickEventCard = () => {
+      if (dataPost.ticket_link === "") {
+        Alert("Error!", "Completar el campo de Link de Venta", "error");
+      } else {
+        const baseUrl = "http://";
+        const fullUrl = baseUrl + dataPost.ticket_link;
+        window.open(fullUrl, "_blank");
       }
     };
 
@@ -197,6 +240,31 @@ function CreateEventPage() {
       <div className={styles.body}>
         <div className={styles.form}>
           <h1 style={{ color: "white" }}>Create Event</h1>
+
+          <InputBlack
+            OnChange={onChangeDataInput}
+            Name="event_title"
+            Value={dataPost.event_title}
+            Placeholder="ej. Jodify Winter Fest"
+            Label="Nombre del evento"
+          />
+
+          <InputBlack
+            OnChange={onChangeDataInput}
+            Name="event_location"
+            Value={dataPost.event_location}
+            Placeholder="ej. Av. Libertador 2647"
+            Label="Nombre del complejo o direccion"
+          />
+
+          <InputBlack
+            OnChange={onChangeDataInput}
+            Name="ticket_link"
+            Value={dataPost.ticket_link}
+            Placeholder="ej. www.jodify.com.ar"
+            Label="Link de venta"
+          />
+
           <SelectBlack
             Option="Selecciona una Ciudad"
             Array={cities}
@@ -222,45 +290,25 @@ function CreateEventPage() {
             OnChange={onChangeEventType}
           />
 
-          <InputBlack
-            OnChange={onChangeDataInput}
-            Name="ticket_link"
-            Value={dataPost.ticket_link}
-            Placeholder="Link de venta"
-            Label="Link de venta"
-          />
-          <InputBlack
-            OnChange={onChangeDataInput}
-            Name="event_date"
-            Value={dataPost.event_date}
-            Placeholder="Fecha del evento"
-            Label="Fecha del evento"
-          />
-          <InputBlack
-            OnChange={onChangeDataInput}
-            Name="event_location"
-            Value={dataPost.event_location}
-            Placeholder="Nombre del complejo o direccion"
-            Label="Nombre del complejo o direccion"
-          />
-          <InputBlack
-            OnChange={onChangeDataInput}
-            Name="event_title"
-            Value={dataPost.event_title}
-            Placeholder="Nombre del evento"
-            Label="Nombre del evento"
-          />
+          <DatePicker OnChange={onChangeEventDate} />
 
           {!loader ? (
-            <div className={styles.inputFileContainer}>
-              <label>Seleciona una imagen:</label>
-              <input Type="file" onChange={(e) => handleFileChange(e)} />
-            </div>
+            <InputFile OnClick={handleFileChange} File={dataPost.event_image} />
           ) : (
             <Loader Color="#7c16f5" Height="30px" Width="30px" />
           )}
 
           <ButtonBlue Value="Submit" OnClick={onSubmit} />
+        </div>
+        <div className={styles.containerEventCard}>
+          <EventCard
+            Alt="Seleccionar Imagen"
+            Img={dataPost.event_image}
+            Tittle={dataPost.event_title}
+            Location={dataPost.event_location}
+            Genre={dataCardType}
+            OnClick={onClickEventCard}
+          />
         </div>
       </div>
     );
