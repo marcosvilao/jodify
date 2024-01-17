@@ -5,10 +5,12 @@ import theme from "../../jodifyStyles";
 import PersonIcon from "@mui/icons-material/Person";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import Cookies from "universal-cookie";
 
 function Header() {
+  const location = useLocation();
+  const currentUrl = location.pathname;
   const cookie = new Cookies();
   const cookieName = cookie.get("username");
 
@@ -51,25 +53,63 @@ function Header() {
     window.location.href = "/";
   };
 
-  return (
-    <div className={styles.body}>
-      <div className={styles.containerLeft}>
+  if (currentUrl === "/create-event") {
+    return (
+      <div className={styles.body2}>
         <img
           style={{
             borderRadius: theme.jodify_borders._lg_border_radius,
             cursor: "pointer",
           }}
-          width="40px"
-          height="40px"
+          width="80px"
+          height="80px"
           src={logo}
           alt="error al cargar el logo"
           onClick={onClickRouteHome}
         />
       </div>
+    );
+  } else {
+    return (
+      <div className={styles.body}>
+        <div className={styles.containerLeft}>
+          <img
+            style={{
+              borderRadius: theme.jodify_borders._lg_border_radius,
+              cursor: "pointer",
+            }}
+            width="40px"
+            height="40px"
+            src={logo}
+            alt="error al cargar el logo"
+            onClick={onClickRouteHome}
+          />
+        </div>
 
-      <div className={styles.containerRigth}>
-        {stateOpenCloseMenu === false ? (
-          <MenuIcon
+        <div className={styles.containerRigth}>
+          {stateOpenCloseMenu === false ? (
+            <MenuIcon
+              sx={{
+                color: "white",
+                cursor: "pointer",
+                width: "30px",
+                height: "30px",
+              }}
+              onClick={onClickMenu}
+            />
+          ) : (
+            <CloseIcon
+              sx={{
+                color: "white",
+                cursor: "pointer",
+                width: "30px",
+                height: "30px",
+              }}
+              onClick={onClickMenu}
+            />
+          )}
+
+          <PersonIcon
             sx={{
               color: "white",
               cursor: "pointer",
@@ -78,89 +118,65 @@ function Header() {
             }}
             onClick={onClickMenu}
           />
+        </div>
+
+        {!cookieName ? (
+          <div className={styles.menu} id="menu">
+            <div className={styles.userProductora}>
+              <Link
+                className={styles.linkMenu}
+                to={"/register-user"}
+                onClick={onClickLink}
+              >
+                Registrarse
+              </Link>
+              <Link
+                className={styles.linkMenu}
+                to={"/login"}
+                onClick={onClickLink}
+              >
+                Iniciar Sesion
+              </Link>
+            </div>
+
+            <div className={styles.userProductora}>
+              <Link
+                className={styles.linkMenu}
+                to={"/register-promoter"}
+                onClick={onClickLink}
+              >
+                Productora
+              </Link>
+            </div>
+
+            <div className={styles.userProductora}>
+              <Link className={styles.linkMenu} to={"/"} onClick={onClickLink}>
+                Inicio
+              </Link>
+            </div>
+          </div>
         ) : (
-          <CloseIcon
-            sx={{
-              color: "white",
-              cursor: "pointer",
-              width: "30px",
-              height: "30px",
-            }}
-            onClick={onClickMenu}
-          />
+          <div className={styles.menu} id="menu" style={{ height: "90px" }}>
+            <div className={styles.userProductora}>
+              <Link
+                className={styles.linkMenu}
+                to={"/profile"}
+                onClick={onClickLink}
+              >
+                Mi Perfil
+              </Link>
+              <button className={styles.buttonLogout} onClick={logOut}>
+                Cerrar Sesion
+              </button>
+              <Link className={styles.linkMenu} to={"/"} onClick={onClickLink}>
+                Inicio
+              </Link>
+            </div>
+          </div>
         )}
-
-        <PersonIcon
-          sx={{
-            color: "white",
-            cursor: "pointer",
-            width: "30px",
-            height: "30px",
-          }}
-          onClick={onClickMenu}
-        />
       </div>
-
-      {!cookieName ? (
-        <div className={styles.menu} id="menu">
-          <div className={styles.userProductora}>
-            <Link
-              className={styles.linkMenu}
-              to={"/register-user"}
-              onClick={onClickLink}
-            >
-              Registrarse
-            </Link>
-            <Link
-              className={styles.linkMenu}
-              to={"/login"}
-              onClick={onClickLink}
-            >
-              Iniciar Sesion
-            </Link>
-          </div>
-
-          <div className={styles.userProductora}>
-            <Link
-              className={styles.linkMenu}
-              to={"/register-promoter"}
-              onClick={onClickLink}
-            >
-              Productora
-            </Link>
-          </div>
-
-          <div className={styles.userProductora}>
-            <Link className={styles.linkMenu} to={"/"} onClick={onClickLink}>
-              Inicio
-            </Link>
-          </div>
-        </div>
-      ) : (
-        <div className={styles.menu} id="menu" style={{ height: "90px" }}>
-          <div className={styles.userProductora}>
-            <Link
-              className={styles.linkMenu}
-              to={"/profile"}
-              onClick={onClickLink}
-            >
-              Mi Perfil
-            </Link>
-            <button className={styles.buttonLogout} onClick={logOut}>
-              Cerrar Sesion
-            </button>
-            <Link
-              className={styles.linkMenu}
-              to={"/"}
-              onClick={onClickLink}
-            >
-              Inicio
-            </Link>
-          </div>  
-        </div>
-      )}
-    </div>
-  );
+    );
+  }
 }
 
 export default Header;
