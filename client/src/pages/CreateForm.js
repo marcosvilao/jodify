@@ -439,7 +439,7 @@ function CreateForm() {
             value={event.event_promoter}
             renderInput={(params) => (
               <BasicText
-                helperText="tenes que elegir una productora, podes dejar en blanco"
+                helperText="Selecciona su productora"
                 {...params}
                 variant="standard"            
                 label="Productora"
