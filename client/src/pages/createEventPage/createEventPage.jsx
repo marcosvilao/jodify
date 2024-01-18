@@ -13,8 +13,7 @@ import DatePicker from "../../components2/datePicker/datePicker";
 
 function CreateEventPage() {
   const axiosUrl = process.env.REACT_APP_AXIOS_URL;
-  const cloudinayUrl = process.env.REACT_APP_CLOUDINARY_URL_EVENT_IMG_UPLOAD;
-  console.log(cloudinayUrl);
+  const cloudinayUrl = process.env.REACT_APP_CLOUDINARY_URL + "/image/upload";
   const [loader, setLoader] = useState(false);
   const [cities, setCities] = useState(false);
   const [types, setTypes] = useState(false);
