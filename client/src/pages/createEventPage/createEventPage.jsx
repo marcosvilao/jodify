@@ -242,12 +242,22 @@ function CreateEventPage() {
         <div className={styles.form}>
           <h1 style={{ color: "white" }}>Create Event</h1>
 
+          <EventCard
+            Alt="Seleccionar Imagen"
+            Img={dataPost.event_image}
+            Tittle={dataPost.event_title}
+            Location={dataPost.event_location}
+            Genre={dataCardType}
+            OnClick={onClickEventCard}
+          />
+
           <InputBlack
             OnChange={onChangeDataInput}
             Name="event_title"
             Value={dataPost.event_title}
             Placeholder="ej. Jodify Winter Fest"
             Label="Nombre del evento"
+            Error=""
           />
 
           <InputBlack
@@ -256,6 +266,7 @@ function CreateEventPage() {
             Value={dataPost.event_location}
             Placeholder="ej. Av. Libertador 2647"
             Label="Nombre del complejo o direccion"
+            Error=""
           />
 
           <InputBlack
@@ -264,6 +275,7 @@ function CreateEventPage() {
             Value={dataPost.ticket_link}
             Placeholder="ej. www.jodify.com.ar"
             Label="Link de venta"
+            Error=""
           />
 
           <SelectBlack
@@ -300,16 +312,6 @@ function CreateEventPage() {
           )}
 
           <ButtonBlue Value="Submit" OnClick={onSubmit} />
-        </div>
-        <div className={styles.containerEventCard}>
-          <EventCard
-            Alt="Seleccionar Imagen"
-            Img={dataPost.event_image}
-            Tittle={dataPost.event_title}
-            Location={dataPost.event_location}
-            Genre={dataCardType}
-            OnClick={onClickEventCard}
-          />
         </div>
       </div>
     );

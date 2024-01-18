@@ -1,16 +1,29 @@
 import React from "react";
 import styles from "./inputFile.module.css";
+import FileUploadIcon from "@mui/icons-material/FileUpload";
 
 function InputFile(props) {
   return (
-    <div className={styles.inputFileContainer}>
-      <label>Seleciona una imagen:</label>
-      <input Type="file" onChange={(e) => props.OnClick(e)} />
-      {props.File === "" ? (
-        <p>Ningun archivo selec...</p>
-      ) : (
-        <p>Archivo seleccionado</p>
-      )}
+    <div className={styles.bodyInputFile}>
+      <label>Imagen:</label>
+
+      <div className={styles.inputFileContainer}>
+        <label for="seleccionar-archivo">
+          <FileUploadIcon />
+          <span>Seleccionar Archivo</span>
+        </label>
+        <input
+          id="seleccionar-archivo"
+          Type="file"
+          onChange={(e) => props.OnClick(e)}
+        />
+
+        {props.File === "" ? (
+          <p>Ningun archivo seleccionado</p>
+        ) : (
+          <p>Has seleccionado el archivo correctamente</p>
+        )}
+      </div>
     </div>
   );
 }

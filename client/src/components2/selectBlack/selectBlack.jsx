@@ -47,47 +47,6 @@ const customTheme = (outerTheme) =>
           },
         },
       },
-      MuiFilledInput: {
-        styleOverrides: {
-          root: {
-            "&::before, &::after": {
-              borderBottom: "2px solid var(--TextField-brandBorderColor)",
-            },
-            "&:hover:not(.Mui-disabled, .Mui-error):before": {
-              borderBottom: "2px solid var(--TextField-brandBorderHoverColor)",
-            },
-            "&.Mui-focused:after": {
-              borderBottom:
-                "2px solid var(--TextField-brandBorderFocusedColor)",
-            },
-            "&.Mui-focused": {
-              backgroundColor: "#1b1c20", // Color de fondo cuando está enfocado
-            },
-          },
-        },
-      },
-      MuiInput: {
-        styleOverrides: {
-          root: {
-            "&::before": {
-              borderBottom: "2px solid var(--TextField-brandBorderColor)",
-            },
-            "&:hover:not(.Mui-disabled, .Mui-error):before": {
-              borderBottom: "2px solid var(--TextField-brandBorderHoverColor)",
-            },
-            "&.Mui-focused:after": {
-              borderBottom:
-                "2px solid var(--TextField-brandBorderFocusedColor)",
-            },
-            "& input": {
-              color: "#ffffff", // Color del texto del input
-            },
-            "&.Mui-focused input": {
-              color: "#ffffff", // Color del texto del input cuando está enfocado
-            },
-          },
-        },
-      },
       MuiAutocomplete: {
         styleOverrides: {
           popupIndicator: {
@@ -147,9 +106,9 @@ function SelectBlack(props) {
           className={styles.selectBlack}
           multiple
           id="tags-outlined"
+          options={props.Array}
           getOptionLabel={(option) => option.value}
           filterSelectedOptions
-          options={props.Array}
           onChange={props.OnChange}
           renderInput={(params) => (
             <TextField

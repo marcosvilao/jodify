@@ -4,7 +4,8 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding: 10px 0px;
+  padding-top: 10px;
+  padding-bottom: 50px;
   min-height: 83vh;
 }
 
@@ -15,16 +16,6 @@
   flex-direction: column;
   width: 400px;
   gap: 10px;
-}
-
-.containerEventCard {
-  width: 700px;
-}
-
-@media screen and (max-width: 750px) {
-  .containerEventCard {
-    width: 98%;
-  }
 }
 
 @media (max-width: 450px) {

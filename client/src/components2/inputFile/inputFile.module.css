@@ -1,31 +1,51 @@
-.inputFileContainer {
+.bodyInputFile {
   width: 100%;
   display: flex;
-  align-items: center;
-  justify-content: left;
-  border-bottom: 2px solid var(--hover, #4a4458);
-  border-right: 2px solid var(--hover, #4a4458);
-  padding: 5px 10px;
-  box-sizing: border-box;
-  background: var(--gris-topo, #1b1c20);
-  border-radius: var(--1, 8px) var(--1, 8px) var(--none, 0px) var(--none, 0px);
-  color: var(--gris-topo, #1b1c20);
+  flex-direction: column;
   margin: 10px 0px;
 }
 
+.bodyInputFile label {
+  color: #fff;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.inputFileContainer {
+  width: 100%;
+  height: 78px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0px;
+  border: 2px dashed #ffffff;
+  border-radius: 8px;
+  padding: 0px 5px;
+  box-sizing: border-box;
+}
+
 .inputFileContainer label {
-  color: #ffffff;
+  height: 100%;
+  width: 50%;
+  color: var(--Jodify-Secondary-1, #7c16f5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  gap: 5px;
   font-size: 16px;
-  font-weight: bold;
-  margin: 0px;
 }
 
 .inputFileContainer input {
-  margin: 0px 10px;
+  display: none;
 }
 
 .inputFileContainer p {
   color: #ffffff;
   font-size: 12px;
   margin: 0px;
+  width: 50%;
+  word-wrap: break-word;
 }

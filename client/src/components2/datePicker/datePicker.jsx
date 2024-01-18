@@ -11,7 +11,7 @@ import styles from "./datePicker.module.css";
 const customTheme = (outerTheme) =>
   createTheme({
     palette: {
-      mode: outerTheme.palette.mode,
+      mode: "dark",
     },
     components: {
       MuiTextField: {
@@ -40,47 +40,6 @@ const customTheme = (outerTheme) =>
             },
             [`&.Mui-focused .${outlinedInputClasses.notchedOutline}`]: {
               borderColor: "var(--TextField-brandBorderFocusedColor)",
-            },
-            "& input": {
-              color: "#ffffff", // Color del texto del input
-            },
-            "&.Mui-focused input": {
-              color: "#ffffff", // Color del texto del input cuando está enfocado
-            },
-          },
-        },
-      },
-      MuiFilledInput: {
-        styleOverrides: {
-          root: {
-            "&::before, &::after": {
-              borderBottom: "2px solid var(--TextField-brandBorderColor)",
-            },
-            "&:hover:not(.Mui-disabled, .Mui-error):before": {
-              borderBottom: "2px solid var(--TextField-brandBorderHoverColor)",
-            },
-            "&.Mui-focused:after": {
-              borderBottom:
-                "2px solid var(--TextField-brandBorderFocusedColor)",
-            },
-            "&.Mui-focused": {
-              backgroundColor: "#1b1c20", // Color de fondo cuando está enfocado
-            },
-          },
-        },
-      },
-      MuiInput: {
-        styleOverrides: {
-          root: {
-            "&::before": {
-              borderBottom: "2px solid var(--TextField-brandBorderColor)",
-            },
-            "&:hover:not(.Mui-disabled, .Mui-error):before": {
-              borderBottom: "2px solid var(--TextField-brandBorderHoverColor)",
-            },
-            "&.Mui-focused:after": {
-              borderBottom:
-                "2px solid var(--TextField-brandBorderFocusedColor)",
             },
             "& input": {
               color: "#ffffff", // Color del texto del input

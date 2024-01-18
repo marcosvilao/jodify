@@ -86,7 +86,7 @@ function Header() {
           />
         </div>
 
-        <div className={styles.containerRigth}>
+        <div className={styles.containerRigth} onClick={onClickMenu}>
           {stateOpenCloseMenu === false ? (
             <MenuIcon
               sx={{
@@ -95,7 +95,6 @@ function Header() {
                 width: "30px",
                 height: "30px",
               }}
-              onClick={onClickMenu}
             />
           ) : (
             <CloseIcon
@@ -105,7 +104,6 @@ function Header() {
                 width: "30px",
                 height: "30px",
               }}
-              onClick={onClickMenu}
             />
           )}
 

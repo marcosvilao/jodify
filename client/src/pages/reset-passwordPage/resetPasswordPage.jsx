@@ -25,22 +25,37 @@ function ResetPassword() {
     Alert("Error!", "Ya estas logeado", "error", callbackAlert);
   }
 
+  const [errorEmail, setErrorEmail] = useState("");
   const [sent, setSent] = useState(false);
   const [loader, setLoader] = useState(false);
   const [dataPost, setDataPost] = useState({
     email: "",
   });
 
+  const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(
+    dataPost.email
+  );
+
   const onChangeDataPost = (e) => {
     setDataPost({
       ...dataPost,
       [e.target.name]: e.target.value,
     });
+
+    if (e.target.value.length === 0) {
+      setErrorEmail("");
+    } else if (!emailPattern) {
+      setErrorEmail("Email invalido");
+    } else if (emailPattern) {
+      setErrorEmail("");
+    }
   };
 
   const onClickRestablecerConstraseña = () => {
     if (!dataPost.email) {
-      Alert("Error!", "Completar todos los campos", "error");
+      setErrorEmail("Email invalido");
+    } else if (errorEmail !== "") {
+      setErrorEmail("Email invalido");
     } else {
       setLoader(true);
       axios
@@ -80,6 +95,7 @@ function ResetPassword() {
               Value={dataPost.email}
               Placeholder="Correo electronico con el que te registraste"
               Label="Correo electronico"
+              Error={errorEmail}
             />
 
             {!loader ? (

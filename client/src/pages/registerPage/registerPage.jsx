@@ -27,6 +27,10 @@ function RegisterPage() {
     Alert("Error!", "Ya estas logeado", "error", callbackAlert);
   }
 
+  const [errorUsername, setErrorUsername] = useState("");
+  const [errorEmail, setErrorEmail] = useState("");
+  const [errorPassword, setErrorPassword] = useState("");
+  const [errorRepeatPassword, setErrorRepeatPassword] = useState("");
   const [loader, setLoader] = useState(false);
   const [postUser, setPostUser] = useState({
     username: "",
@@ -36,36 +40,129 @@ function RegisterPage() {
     role: "user",
   });
 
-  const onChangeDataPost = (e) => {
+  const onChangeDataPostUsername = (e) => {
     setPostUser({
       ...postUser,
       [e.target.name]: e.target.value,
     });
+
+    if (e.target.value.length === 0) {
+      setErrorUsername("");
+    } else if (e.target.value.length < 3 && e.target.value.length > 0) {
+      setErrorUsername("Minimo 3 caracrteres");
+    } else {
+      setErrorUsername("");
+    }
   };
 
-  const onClickDataPost = () => {
-    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
-    const isValidPassword = regex.test(postUser.password);
-    if (
-      !postUser.username ||
-      !postUser.email ||
-      !postUser.password ||
-      !postUser.repeatPassword ||
-      !postUser.role
+  const onChangeDataPostEmail = (e) => {
+    let emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(
+      e.target.value
+    );
+
+    setPostUser({
+      ...postUser,
+      [e.target.name]: e.target.value,
+    });
+
+    if (e.target.value.length === 0) {
+      setErrorEmail("");
+    } else if (!emailPattern) {
+      setErrorEmail("Email inválido");
+    } else {
+      setErrorEmail("");
+    }
+  };
+
+  const onChangeDataPostPassword = (e) => {
+    let password = e.target.value;
+    let tieneMayuscula = /[A-Z]/.test(password);
+    let tieneMinuscula = /[a-z]/.test(password);
+    let tieneNumero = /[0-9]/.test(password);
+    let longitudValida = password.length >= 8;
+
+    setPostUser({
+      ...postUser,
+      [e.target.name]: e.target.value,
+    });
+
+    if (e.target.value.length === 0) {
+      setErrorPassword("");
+    } else if (
+      !longitudValida ||
+      !tieneMayuscula ||
+      !tieneMinuscula ||
+      !tieneNumero
     ) {
-      Alert("Error!", "Completar todos los campos", "error");
-    } else if (postUser.password !== postUser.repeatPassword) {
-      Alert(
-        "Error!",
-        "El campo de contraseña y repetir contraseña deben ser iguales",
-        "error"
-      );
-    } else if (!isValidPassword) {
-      Alert(
-        "Error!",
-        "La contraseña debe tener al menos 8 caracter, 1 mayuscula, 1 minuscula y 1 numero",
-        "error"
-      );
+      setErrorPassword("Contraseña Inválida");
+    } else {
+      setErrorPassword("");
+    }
+  };
+
+  const onChangeDataPostRepeatPassword = (e) => {
+    setPostUser({
+      ...postUser,
+      [e.target.name]: e.target.value,
+    });
+
+    if (e.target.value.length === 0) {
+      setErrorRepeatPassword("");
+    } else if (postUser.password !== e.target.value) {
+      setErrorRepeatPassword("Repetir contraseña Inválida");
+    } else {
+      setErrorRepeatPassword("");
+    }
+  };
+
+  const tieneMayuscula = /[A-Z]/.test(postUser.password);
+  const tieneNumero = /[0-9]/.test(postUser.password);
+  const longitudValida = postUser.password.length >= 8;
+
+  var errorLength = false;
+  var errorCapitalLeter = false;
+  var errorNumber = false;
+
+  if (longitudValida) {
+    errorLength = true;
+  } else {
+    errorLength = false;
+  }
+
+  if (tieneMayuscula) {
+    errorCapitalLeter = true;
+  } else {
+    errorCapitalLeter = false;
+  }
+
+  if (tieneNumero) {
+    errorNumber = true;
+  } else {
+    errorNumber = false;
+  }
+
+  const onClickDataPost = () => {
+    if (
+      postUser.email.length === 0 &&
+      postUser.password.length === 0 &&
+      postUser.repeatPassword.length === 0 &&
+      postUser.username.length === 0
+    ) {
+      setErrorUsername("Minimo 3 caracrteres");
+      setErrorEmail("Email Inválido");
+      setErrorPassword("Contraseña Inválida");
+      setErrorRepeatPassword("Repetir contraseña Inválida");
+    } else if (errorUsername !== "" || postUser.username.length === 0) {
+      setErrorUsername("Minimo 3 caracrteres");
+    } else if (errorEmail !== "" || postUser.email.length === 0) {
+      setErrorEmail("Email Inválido");
+    } else if (errorPassword !== "" || postUser.password.length === 0) {
+      setErrorPassword("Contraseña Inválida");
+    } else if (
+      errorRepeatPassword !== "" ||
+      postUser.repeatPassword.length === 0
+    ) {
+      setErrorRepeatPassword("Repetir contraseña Inválida");
     } else {
       setLoader(true);
       axios
@@ -103,35 +200,6 @@ function RegisterPage() {
     }
   };
 
-  var errorLength = false;
-
-  if (postUser.password.length > 7) {
-    errorLength = true;
-  } else {
-    errorLength = false;
-  }
-
-  var errorCapitalLeter = false;
-
-  for (let i = 0; i < postUser.password.length; i++) {
-    if (/[A-Z]/.test(postUser.password[i])) {
-      errorCapitalLeter = true;
-      break; // Si encuentras una letra mayúscula, puedes salir del bucle
-    } else {
-      errorCapitalLeter = false;
-    }
-  }
-
-  var errorNumber = false;
-
-  for (let i = 0; i < postUser.password.length; i++) {
-    if (/\d/.test(postUser.password[i])) {
-      errorNumber = true;
-      break; // Si encuentras un número, puedes salir del bucle
-    } else {
-      errorNumber = false;
-    }
-  }
   return (
     <div className={styles.body}>
       <div className={styles.containerLeft}>
@@ -143,34 +211,38 @@ function RegisterPage() {
 
         <div className={styles.containerForm}>
           <InputBlack
-            OnChange={onChangeDataPost}
+            OnChange={onChangeDataPostUsername}
             Name="username"
             Value={postUser.username}
             Placeholder="ej. JodifySoundOn"
             Label="Username"
+            Error={errorUsername}
           />
           <InputBlack
-            OnChange={onChangeDataPost}
+            OnChange={onChangeDataPostEmail}
             Name="email"
             Value={postUser.email}
             Placeholder="info@soundon.com"
             Label="Correo electronico"
+            Error={errorEmail}
           />
           <InputBlack
-            OnChange={onChangeDataPost}
+            OnChange={onChangeDataPostPassword}
             Name="password"
             Value={postUser.password}
             Placeholder="Ingresa tu contraseña"
             Label="Contraseña"
             Type="password"
+            Error={errorPassword}
           />
           <InputBlack
-            OnChange={onChangeDataPost}
+            OnChange={onChangeDataPostRepeatPassword}
             Name="repeatPassword"
             Value={postUser.repeatPassword}
             Placeholder="Repeti tu contraseña"
             Label="Repetir contraseña"
             Type="password"
+            Error={errorRepeatPassword}
           />
 
           <div className={styles.containerPform}>

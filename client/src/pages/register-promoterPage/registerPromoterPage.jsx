@@ -63,15 +63,22 @@ function RegisterPromoter() {
               Name="name"
               Placeholder="ej. SoundOn"
               Label="Nombre de la productora"
+              Error=""
             />
 
             <InputBlack
               Name="phone"
               Placeholder="1155264839"
               Label="Telefono de contacto"
+              Error=""
             />
 
-            <InputBlack Name="link" Placeholder="ej. sound_on" Label="Instagram"/>
+            <InputBlack
+              Name="link"
+              Placeholder="ej. sound_on"
+              Label="Instagram"
+              Error=""
+            />
 
             <ButtonBlue Value="Crear cuenta" />
           </div>

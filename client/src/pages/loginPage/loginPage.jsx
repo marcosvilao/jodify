@@ -26,22 +26,65 @@ function LoginPage() {
     Alert("Error!", "Ya estas logeado", "error", callbackAlert);
   }
 
+  const [errorEmail, setErrorEmail] = useState("");
+  const [errorPassword, setErrorPassword] = useState("");
   const [loader, setLoader] = useState(false);
   const [userLogin, setUserLogin] = useState({
     email: "",
     password: "",
   });
 
-  const onChangeDataPost = (e) => {
-    setUserLogin({
-      ...userLogin,
+  const onChangeDataPostEmail = (e) => {
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(
+      e.target.value
+    );
+
+    setUserLogin((prevState) => ({
+      ...prevState,
       [e.target.name]: e.target.value,
-    });
+    }));
+    if (e.target.value.length === 0) {
+      setErrorEmail("");
+    } else if (!emailPattern) {
+      setErrorEmail("Email inválido");
+    } else {
+      setErrorEmail("");
+    }
+  };
+
+  const onChangeDataPostPassword = (e) => {
+    const password = e.target.value;
+    const tieneMayuscula = /[A-Z]/.test(password);
+    const tieneMinuscula = /[a-z]/.test(password);
+    const tieneNumero = /[0-9]/.test(password);
+    const longitudValida = password.length >= 8;
+
+    setUserLogin((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+    if (e.target.value.length === 0) {
+      setErrorPassword("");
+    } else if (
+      !longitudValida ||
+      !tieneMayuscula ||
+      !tieneMinuscula ||
+      !tieneNumero
+    ) {
+      setErrorPassword("Contraseña Inválida");
+    } else {
+      setErrorPassword("");
+    }
   };
 
   const onClickLogin = (e) => {
-    if (!userLogin.email || !userLogin.password) {
-      Alert("Error!", "Completar todos los campos", "error");
+    if (userLogin.email.length === 0 && userLogin.password.length === 0) {
+      setErrorEmail("Email invalido");
+      setErrorPassword("Contraseña Invalida");
+    } else if (errorEmail !== "") {
+      setErrorEmail("Email invalido");
+    } else if (errorPassword !== "") {
+      setErrorPassword("Contraseña Invalida");
     } else {
       setLoader(true);
       axios
@@ -84,19 +127,21 @@ function LoginPage() {
 
         <div className={styles.containerForm}>
           <InputBlack
-            OnChange={onChangeDataPost}
+            OnChange={onChangeDataPostEmail}
             Name="email"
             Value={userLogin.email}
             Placeholder="info@soundon.com"
             Label="Correo electronico"
+            Error={errorEmail}
           />
           <InputBlack
-            OnChange={onChangeDataPost}
+            OnChange={onChangeDataPostPassword}
             Name="password"
             Value={userLogin.password}
             Label="Contraseña"
             Placeholder="Ingresa tu contraseña"
             Type="password"
+            Error={errorPassword}
           />
 
           <div className={styles.containerRestablecerContraseña}>

@@ -27,6 +27,8 @@ function LinkResetPassword() {
   }
 
   const { id, token } = useParams();
+  const [errorPassword, setErrorPassword] = useState("");
+  const [errorRepeatPassword, setErrorRepeatPassword] = useState("");
   const [success, setSuccess] = useState(false);
   const [loader, setLoader] = useState(false);
   const [dataPost, setDataPost] = useState({
@@ -34,30 +36,60 @@ function LinkResetPassword() {
     confirmPassword: "",
   });
 
-  const onChangeDataPost = (e) => {
+  const onChangeDataPostPassword = (e) => {
+    let password = e.target.value;
+    let tieneMayuscula = /[A-Z]/.test(password);
+    let tieneMinuscula = /[a-z]/.test(password);
+    let tieneNumero = /[0-9]/.test(password);
+    let longitudValida = password.length >= 8;
+
     setDataPost({
       ...dataPost,
       [e.target.name]: e.target.value,
     });
+    if (e.target.value.length === 0) {
+      setErrorPassword("");
+    } else if (
+      !longitudValida ||
+      !tieneMayuscula ||
+      !tieneMinuscula ||
+      !tieneNumero
+    ) {
+      setErrorPassword("Contraseña Inválida");
+    } else {
+      setErrorPassword("");
+    }
+  };
+
+  const onChangeDataPostRepeatPassword = (e) => {
+    setDataPost({
+      ...dataPost,
+      [e.target.name]: e.target.value,
+    });
+
+    if (e.target.value.length === 0) {
+      setErrorRepeatPassword("");
+    } else if (dataPost.password !== e.target.value) {
+      setErrorRepeatPassword("Repetir contraseña Inválida");
+    } else {
+      setErrorRepeatPassword("");
+    }
   };
 
   const onClickRestablecerConstraseña = () => {
-    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
-    const isValidPassword = regex.test(dataPost.password);
-    if (!dataPost.password || !dataPost.confirmPassword) {
-      Alert("Error!", "Completar todos los campos", "error");
-    } else if (dataPost.password !== dataPost.confirmPassword) {
-      Alert(
-        "Error!",
-        "El campo de contraseña y repetir contraseña deben ser iguales",
-        "error"
-      );
-    } else if (!isValidPassword) {
-      Alert(
-        "Error!",
-        "La contraseña debe tener al menos 8 caracter, 1 mayuscula, 1 minuscula y 1 numero",
-        "error"
-      );
+    if (
+      dataPost.password.length === 0 &&
+      dataPost.confirmPassword.length === 0
+    ) {
+      setErrorPassword("Contraseña Inválida");
+      setErrorRepeatPassword("Repetir contraseña Inválida");
+    } else if (errorPassword !== "" || dataPost.password.length === 0) {
+      setErrorPassword("Contraseña Inválida");
+    } else if (
+      errorRepeatPassword !== "" ||
+      dataPost.confirmPassword.length === 0
+    ) {
+      setErrorRepeatPassword("Repetir contraseña Inválida");
     } else {
       setLoader(true);
       axios
@@ -117,20 +149,22 @@ function LinkResetPassword() {
 
           <div className={styles.containerForm}>
             <InputBlack
-              OnChange={onChangeDataPost}
+              OnChange={onChangeDataPostPassword}
               Name="password"
               Value={dataPost.password}
               Placeholder="Ingresar nueva Contraseña"
               Type="password"
               Label="Nueva Contraseña"
+              Error={errorPassword}
             />
             <InputBlack
-              OnChange={onChangeDataPost}
+              OnChange={onChangeDataPostRepeatPassword}
               Name="confirmPassword"
               Value={dataPost.confirmPassword}
               Placeholder="Confirmar nueva contraseña"
               Type="password"
               Label="Confirmar nueva contraseña"
+              Error={errorRepeatPassword}
             />
 
             <div className={styles.containerPform}>
