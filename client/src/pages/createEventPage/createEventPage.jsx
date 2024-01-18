@@ -13,6 +13,8 @@ import DatePicker from "../../components2/datePicker/datePicker";
 
 function CreateEventPage() {
   const axiosUrl = process.env.REACT_APP_AXIOS_URL;
+  const cloudinayUrl = process.env.REACT_APP_CLOUDINARY_URL_EVENT_IMG_UPLOAD;
+  console.log(cloudinayUrl);
   const [loader, setLoader] = useState(false);
   const [cities, setCities] = useState(false);
   const [types, setTypes] = useState(false);
@@ -194,7 +196,7 @@ function CreateEventPage() {
           formData.append("upload_preset", "jodify_key");
           formData.append("jodify", "");
           console.log(formData);
-          fetch("https://api.cloudinary.com/v1_1/dqc865z8r/image/upload", {
+          fetch(cloudinayUrl, {
             method: "post",
             body: formData,
           })
