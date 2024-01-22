@@ -55,45 +55,74 @@ const getEvents = async (req, res, next) => {
 
 const filterEvents = async (req, res) => {
   try {
+    const { dates, cities, types, search, page } = req.body;
 
-    const { dates, city, type, search } = req.body;
-    const {page} = req.params;
+    const setOff = page * 20;
+    const currentDate = new Date();
+    currentDate.setDate(currentDate.getDate() - 1);
+    const options = { timeZone: "America/Argentina/Buenos_Aires" };
+    const argentinaTime = currentDate.toLocaleString("en-US", options);
 
-    let query = "SELECT * FROM event WHERE TRUE";
+    let query = `
+    SELECT e.*, p.* 
+    FROM event e
+    LEFT JOIN promoters p ON p.id = ANY(CAST(e.promoter_id AS uuid[]))
+    WHERE TRUE 
+  `;
     const values = [];
 
-    let paramCount = 1; // Initialize parameter counter
+    let paramCount = 1;
 
-    if (date) {
-      query += ` AND event_date = $${paramCount}`;
-      values.push(date);
+    if (dates && dates.length === 2) {
+      const [date1, date2] = dates;
+      if(date1 !== date2){
+        query += ` AND e.event_date >= $${paramCount} AND e.event_date <= $${paramCount + 1}`;
+        values.push(date1, date2);
+        paramCount += 2;
+      } else{
+        query +=  `AND (e.event_date = $${paramCount})`;
+        values.push(date1);
+        paramCount += 1;
+      }
+    } else {
+      query += `AND (e.event_date >= $${paramCount})`
+      values.push(argentinaTime)
+      paramCount += 1
+    }
+
+    if (cities && cities.length > 0) {
+      console.log('city exists')
+      const cityPlaceholders = cities.map((_, index) => `$${paramCount + index}`).join(', ');
+      query += ` AND e.city_id IN (${cityPlaceholders})`;
+      values.push(...cities);
+      paramCount += cities.length;
+    } else {
+      query += " AND (e.city_id IS NULL OR e.city_id = e.city_id)";
+    }
+
+    if (types && types.length > 0) {
+      const typeConditions = types.map((_, index) => `e.event_type ILIKE $${paramCount + index}`).join(' OR ');
+      query += ` AND (${typeConditions})`;
+      values.push(...types.map(t => `%${t}%`));
+      paramCount += types.length;
+    } else {
+      query += " AND (e.event_type IS NULL OR e.event_type = e.event_type)";
+    }
+
+    if (search) {
+      query += ` AND (e.event_title ILIKE $${paramCount} OR e.event_location ILIKE $${paramCount} OR e.event_djs @> ARRAY[$${paramCount}]::character varying[])`;
+      values.push(`%${search}%`);
       paramCount++;
-    } else {
-      query += " AND (event_date IS NULL OR event_date = event_date)";
     }
 
-    if (city) {
-      query += ` AND city_id = $${paramCount}`;
-      values.push(city);
-      paramCount++;
-    } else {
-      query += " AND (city_id IS NULL OR city_id = city_id)";
-    }
-
-    if (type) {
-      query += ` AND event_type = $${paramCount}`;
-      values.push(type);
-    } else {
-      query += " AND (event_type IS NULL OR event_type = event_type)";
-    }
-
+    query += ` ORDER BY e.event_date ASC LIMIT 20 OFFSET $${paramCount}`;
+    values.push(setOff);
+    console.log(query, values)
     const result = await pool.query(query, values);
     const events = result.rows;
 
-    // Create an object to hold the grouped events
     const groupedEvents = {};
 
-    // Iterate through each event and group them by event_date
     events.forEach((event) => {
       const eventDate = event.event_date;
       if (!groupedEvents[eventDate]) {
@@ -102,11 +131,10 @@ const filterEvents = async (req, res) => {
       groupedEvents[eventDate].push(event);
     });
 
-    // Convert the groupedEvents object into an array of objects
     const groupedEventsArray = Object.keys(groupedEvents).map((date) => ({
       [date]: groupedEvents[date],
     }));
-
+    console.log(groupedEventsArray)
     res.status(200).json(groupedEventsArray);
   } catch (error) {
     console.error("Error fetching events:", error);
