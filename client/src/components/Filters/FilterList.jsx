@@ -12,15 +12,25 @@ function FilterList({ typeList, cityList, checkedItems, setCheckedItems }) {
 
 const handleToggle = (value) => () => {
   const currentIndex = checked.indexOf(value);
-  let newChecked;
+  let newChecked
+  
+  if(typeList){
 
-  if (currentIndex === -1) {
-    // If the item is not checked, set the newChecked array to contain only the current value
-    newChecked = [value];
+    newChecked = [...checked]
+
+    if (currentIndex === -1) {
+      newChecked.push(value);
+    } else {
+      newChecked.splice(currentIndex, 1);
+    }
   } else {
-    // If the item is already checked, uncheck it by setting an empty array
-    newChecked = [];
+    if (currentIndex === -1) {
+      newChecked = [value];
+    } else {
+      newChecked = [value];
+    }
   }
+
 
   setChecked(newChecked);
   setCheckedItems(newChecked);
