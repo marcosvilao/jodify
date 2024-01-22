@@ -30,7 +30,7 @@ router.get("/events", getEvents);
 
 router.get("/events/search", searchEvent);
 
-router.post("/events/filters/:page", filterEvents);
+router.post("/events/filters", filterEvents);
 
 router.post("/events", createEvent);
 
