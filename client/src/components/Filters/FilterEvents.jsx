@@ -237,15 +237,6 @@ function FilterEvents() {
             setOpenTypesFilter(false);
         }
 
-        const clearCitiesFilter = () => {
-            setCheckedCities([]);
-            setfilters({
-            ...filters,
-            cities: []
-
-            });
-            setOpenCitiesFilter(false);
-        }
 
         const clearDatesFilter = () => {
             setDates([]);
@@ -275,18 +266,8 @@ function FilterEvents() {
                 <FilterText
                 $hastypes={filters.cities.length > 0 ? "true" : undefined} 
                 onClick={FilterCities} 
-                ref={filterRef}>{filters.cities.length > 1 ? `${selectedCities[0]} + ${filters.cities.length - 1}` : (filters.cities.length === 1 ? `${selectedCities[0] ? selectedCities[0] : 'CABA | GBA'}` : 'Ubicación')}</FilterText>
-                {filters.cities.length > 0 && 
-                <Tooltip title="Limpiar">
-                    <ClearIcon 
-                    onClick={clearCitiesFilter} 
-                    style={{
-                            color: theme.jodify_colors._text_white,
-                            margin: '3px 10px 4px -3px',
-                            width: '22px',
-                            height: '22px'
-                            }}/>
-                </Tooltip>}
+                ref={filterRef}>{filters.cities.length > 1 ? `${selectedCities[0]} + ${filters.cities.length - 1}` : (filters.cities.length === 1 ? `${selectedCities[0] ? selectedCities[0] : 'CABA | GBA'}` : 'Ubicación')}
+                </FilterText>
             </FilterWrapper>
             <FilterWrapper
             onClick={filters.types.length > 0 ? null : FilterTypes} 
