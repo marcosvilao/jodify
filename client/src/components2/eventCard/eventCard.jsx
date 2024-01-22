@@ -6,12 +6,10 @@ import MusicNoteIcon from "@mui/icons-material/MusicNote";
 function EventCard(props) {
   return (
     <div className={styles.body} onClick={props.OnClick}>
-      <div className={styles.containerImg}>
-        <img
-          src={props.Img}
-          alt={props.Alt ? props.Alt : "Error al cargar la imagen"}
-        />
-      </div>
+      <div
+        className={styles.containerImg}
+        style={{ backgroundImage: `url("${props.Img}")` }}
+      ></div>
 
       <div className={styles.containerData}>
         <h3>{props.Tittle}</h3>
