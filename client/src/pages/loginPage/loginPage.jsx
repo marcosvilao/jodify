@@ -95,7 +95,7 @@ function LoginPage() {
             email: "",
             password: "",
           });
-
+          console.log(res.data);
           let callbackAlert = () => {
             cookie.set("username", res.data.username);
             cookie.set("email", res.data.email);
@@ -123,7 +123,7 @@ function LoginPage() {
 
         <TittleH1 Value="Iniciar sesion con" />
 
-        <IconsAuth0 />
+        <IconsAuth0 Login="true" />
 
         <div className={styles.containerForm}>
           <InputBlack

@@ -178,7 +178,7 @@ function RegisterPage() {
               repeatPassword: "",
               role: "user",
             });
-            history("/");
+            history("/login");
             window.scroll(0, 0);
           };
           Alert("Success!", res.data, "success", callbackAlert);
@@ -207,7 +207,7 @@ function RegisterPage() {
 
         <TittleH1 Value="Registrate con" />
 
-        <IconsAuth0 />
+        <IconsAuth0 Register="true" />
 
         <div className={styles.containerForm}>
           <InputBlack

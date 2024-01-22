@@ -7,12 +7,14 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Cookies from "universal-cookie";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function Header() {
   const location = useLocation();
   const currentUrl = location.pathname;
   const cookie = new Cookies();
   const cookieName = cookie.get("username");
+  const { logout } = useAuth0();
 
   const [stateMenu, setStateMenu] = useState(false);
   const [stateOpenCloseMenu, setStateOpenCloseMenu] = useState(false);
@@ -45,12 +47,9 @@ function Header() {
   };
 
   const logOut = () => {
-    document.cookie.split(";").forEach(function (c) {
-      document.cookie = c
-        .replace(/^ +/, "")
-        .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
-    });
-    window.location.href = "/";
+    cookie.set("username", null);
+    cookie.set("email", null);
+    logout();
   };
 
   if (currentUrl === "/create-event") {
