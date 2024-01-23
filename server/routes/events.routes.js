@@ -11,6 +11,7 @@ const {
   scrapLink,
   UploadImage,
   getEventsPromoters,
+  filterEventsNew,
 } = require("../controllers/event.controller");
 const { getCities } = require("../controllers/city.controller");
 // const {createUser, verifyUser} = require('../controllers/user.controller')
@@ -21,7 +22,12 @@ const {
   getPromoters,
   postPromoters,
 } = require("../controllers/promoters.controller");
-const { createUser, getUser } = require("../controllers/user.controller.js");
+const {
+  createUser,
+  getUser,
+  getAuth0User,
+  createAuth0User,
+} = require("../controllers/user.controller.js");
 const {
   postResetPassword,
   postResetPasswordEmail,
@@ -47,10 +53,14 @@ router.post("/get-event-data", scrapLink);
 
 router.get("/events-promoters", getEventsPromoters);
 
+router.post("/events/filtersNew", filterEventsNew);
+
 //users
 
 router.post("/create-users", createUser);
 router.post("/login", getUser);
+router.post("/auth0/login", getAuth0User);
+router.post("/auth0/register", createAuth0User);
 
 // router.post('/register', createUser)
 

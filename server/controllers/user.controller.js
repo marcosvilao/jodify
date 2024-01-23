@@ -45,7 +45,6 @@ const getUser = async (req, res) => {
     const { email, password } = req.body;
 
     if (!password || !email) {
-      console.log(req.body);
       res.status(404).send("Falta enviar datos obligatorios ");
     } else {
       const emailQuery = `SELECT * FROM users WHERE email = $1`;
@@ -67,9 +66,7 @@ const getUser = async (req, res) => {
               email: user.email,
               username: user.username,
             };
-            res
-              .status(201)
-              .send(loginUser);
+            res.status(201).send(loginUser);
           } else {
             res.status(404).send("Usuario o contraseña incorrectos");
           }
@@ -87,9 +84,68 @@ const getUser = async (req, res) => {
   }
 };
 
+const getAuth0User = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      res.status(404).send("Falta enviar datos obligatorios ");
+    } else {
+      const emailQuery = `SELECT * FROM users WHERE email = $1`;
+      const emailResult = await pool.query(emailQuery, [email]);
+
+      if (emailResult.rows.length > 0) {
+        const user = emailResult.rows[0];
+        const loginUser = {
+          email: user.email,
+          username: user.username,
+        };
+        res.status(201).send(loginUser);
+      } else {
+        res.status(404).send("El usuario no existe primero debe registrarse");
+      }
+    }
+  } catch (error) {
+    res
+      .status(404)
+      .send(
+        "Error interno del servidor intentar luego mas tarde, disculpe las molestias"
+      );
+  }
+};
+
+const createAuth0User = async (req, res) => {
+  try {
+    const { username, email, role } = req.body;
+    var id = uuidv4();
+
+    if (!username || !email || !role) {
+      res.status(404).send("Falta enviar datos obligatorios");
+    } else {
+      // Check if email or username already exist
+      const emailQuery = `SELECT * FROM users WHERE email = $1`;
+      const emailResult = await pool.query(emailQuery, [email]);
+
+      if (emailResult.rows.length > 0) {
+        res.status(400).send("El email ya está en uso");
+      } else {
+        const queryString = `INSERT INTO users (id, username, email, role) VALUES ($1, $2, $3, $4)`;
+        const values = [id, username, email, role];
+        const { rows } = await pool.query(queryString, values);
+      }
+
+      res.status(201).send(`Usuario creado correctamente`);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   createUser,
   getUser,
+  getAuth0User,
+  createAuth0User,
 };
 
 // const saltRounds = 10; // Number of salt rounds for bcrypt
