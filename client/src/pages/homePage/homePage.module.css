@@ -6,6 +6,18 @@
   justify-content: center;
 }
 
+.bodyLoaderLazyLoad {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bodyLoaderLazyLoad p {
+  color: #ffffff;
+  font-size: 16px;
+}
+
 .body {
   width: 100%;
   display: flex;
@@ -37,19 +49,19 @@
   width: 700px;
 }
 
-.positionDatePicker{
+.positionDatePicker {
   position: absolute;
   top: -5px;
   left: 35px;
   z-index: 999;
 }
 
-.positionCitiesList{
+.positionCitiesList {
   position: absolute;
   left: 0px;
 }
 
-.positionTypesList{
+.positionTypesList {
   position: absolute;
   left: 100px;
 }
@@ -66,7 +78,7 @@
   margin-bottom: 10px;
 }
 
-.noHayEventos{
+.noHayEventos {
   width: 100%;
   height: 50vh;
   color: #ffffff;

@@ -13,6 +13,7 @@ import Alert from "../../components2/alert/alert";
 function HomePage() {
   const axiosUrl = process.env.REACT_APP_AXIOS_URL;
   const [loader, setLoader] = useState(false);
+  const [loaderLazyLoad, setLoaderLazyLoad] = useState(false);
   const [dataEventCard, setDataEventCard] = useState(false);
   const [openUbicacion, setOpenUbicacion] = useState(false);
   const [openGenero, setOpenGenero] = useState(false);
@@ -24,6 +25,9 @@ function HomePage() {
   const [axiosType, setAxiosType] = useState(false);
   const [axiosFecha, setAxiosFecha] = useState(false);
   const [axiosSearch, setAxiosSearch] = useState(false);
+  const [lazyLoad, setLazyLoad] = useState(false);
+  const [finishLazyLoad, setFinishLazyLoad] = useState(false);
+  const [lazyLoadNoEvents, setLazyLoadNoEvents] = useState(false);
   const [valueButtonFecha, setValueButtonFecha] = useState(false);
   const [citieName, setCitieName] = useState("CABA | GBA");
   const [filter, setFilter] = useState({
@@ -33,35 +37,71 @@ function HomePage() {
     type: [],
     search: "",
   });
+  const [endReached, setEndReached] = useState(false);
 
   useEffect(() => {
-    axios
-      .post(`${axiosUrl}/events/filtersNew`, filter)
-      .then((res) => {
-        setDataEventCard(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (!dataEventCard) {
+      axios
+        .post(`${axiosUrl}/events/filtersNew`, filter)
+        .then((res) => {
+          setDataEventCard(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
 
-    axios
-      .get(`${axiosUrl}/cities`)
-      .then((res) => {
-        setCities(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (!cities) {
+      axios
+        .get(`${axiosUrl}/cities`)
+        .then((res) => {
+          setCities(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
 
-    axios
-      .get(`${axiosUrl}/types `)
-      .then((res) => {
-        setType(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+    if (!types) {
+      axios
+        .get(`${axiosUrl}/types `)
+        .then((res) => {
+          setType(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
+    if (finishLazyLoad) {
+      setLoaderLazyLoad(false);
+    } else {
+      if (dataEventCard && !finishLazyLoad) {
+        async function handleScroll() {
+          setLoaderLazyLoad(true);
+          const maxHeight = document.body.scrollHeight - window.innerHeight;
+          const currentScroll = window.scrollY || window.pageYOffset;
+
+          if (currentScroll >= maxHeight && !endReached) {
+            let page = filter.page + 1;
+            setFilter(() => ({
+              ...filter,
+              page: page,
+            }));
+            setLazyLoad(true);
+            setEndReached(true);
+          } else {
+            setEndReached(false);
+          }
+        }
+
+        window.addEventListener("scroll", handleScroll);
+        return () => {
+          window.removeEventListener("scroll", handleScroll);
+        };
+      }
+    }
+  }, [endReached, dataEventCard]);
 
   if (!dataEventCard || !types || !cities) {
     return (
@@ -134,6 +174,7 @@ function HomePage() {
         setFilter(() => ({
           ...filter,
           dates: [],
+          page: 0,
         }));
       } else if (value[1] === null) {
         let arrayDates = [value[0].$d, value[0].$d];
@@ -144,6 +185,7 @@ function HomePage() {
         setFilter(() => ({
           ...filter,
           dates: arraySetHoures,
+          page: 0,
         }));
       } else if (value[1] !== null) {
         let arrayDates = [value[0].$d, value[1].$d];
@@ -154,6 +196,7 @@ function HomePage() {
         setFilter(() => ({
           ...filter,
           dates: arraySetHoures,
+          page: 0,
         }));
       } else {
         return null;
@@ -181,11 +224,7 @@ function HomePage() {
       mes2 = mes2 < 10 ? "0" + mes2 : mes2;
       let fechaFormateada2 = dia2 + "/" + mes2;
 
-      console.log(fechaFormateada);
-      console.log(fechaFormateada2);
-
       if (fechaFormateada === fechaFormateada2) {
-        console.log("iguales");
         setValueButtonFecha(fechaFormateada);
       } else {
         setValueButtonFecha(`${fechaFormateada} | ${fechaFormateada2}`);
@@ -198,6 +237,8 @@ function HomePage() {
         .then((res) => {
           setDataEventCard(res.data);
           setLoader(false);
+          setFinishLazyLoad(false);
+          setLazyLoadNoEvents(false);
         })
         .catch(() => {
           Alert(
@@ -217,6 +258,7 @@ function HomePage() {
         setFilter(() => ({
           ...filter,
           dates: [],
+          page: 0,
         }));
         if (openFecha) {
           setOpenFecha(false);
@@ -246,6 +288,7 @@ function HomePage() {
       setFilter(() => ({
         ...filter,
         cities: [item.id],
+        page: 0,
       }));
       onClickOpenUbicaion();
     };
@@ -263,6 +306,7 @@ function HomePage() {
         setFilter(() => ({
           ...filter,
           type: [],
+          page: 0,
         }));
         setLoader(true);
         setAxiosType(true);
@@ -281,6 +325,7 @@ function HomePage() {
       setFilter(() => ({
         ...filter,
         type: arrayTypes,
+        page: 0,
       }));
       setLoader(true);
       setAxiosType(true);
@@ -291,6 +336,7 @@ function HomePage() {
       setFilter(() => ({
         ...filter,
         search: e.target.value,
+        page: 0,
       }));
       setAxiosSearch(true);
       setLoader(true);
@@ -306,6 +352,8 @@ function HomePage() {
           setAxiosCitie(false);
           setAxiosFecha(false);
           setAxiosSearch(false);
+          setFinishLazyLoad(false);
+          setLazyLoadNoEvents(false);
         })
         .catch(() => {
           Alert(
@@ -316,7 +364,27 @@ function HomePage() {
         });
     }
 
-    console.log(filter);
+    if (lazyLoad) {
+      axios
+        .post(`${axiosUrl}/events/filtersNew`, filter)
+        .then((res) => {
+          setLoaderLazyLoad(false);
+          setLazyLoad(false);
+          if (res.data.length === 0) {
+            setFinishLazyLoad(true);
+            setLazyLoadNoEvents(true);
+          } else {
+            setDataEventCard([...dataEventCard, ...res.data]);
+          }
+        })
+        .catch(() => {
+          Alert(
+            "Error!",
+            "Error al cargar los eventos por favor intentar luego mas tarde o ponerse en contacto con el servidor",
+            "error"
+          );
+        });
+    }
 
     return (
       <div className={styles.body}>
@@ -399,6 +467,18 @@ function HomePage() {
           {loader ? (
             <div className={styles.bodyLoader}>
               <Loader Color="#7c16f5" Height="100px" Width="100px" />
+            </div>
+          ) : null}
+
+          {loaderLazyLoad ? (
+            <div className={styles.bodyLoaderLazyLoad}>
+              <Loader Color="#7c16f5" Height="50px" Width="50px" />
+            </div>
+          ) : null}
+
+          {lazyLoadNoEvents ? (
+            <div className={styles.bodyLoaderLazyLoad}>
+              <p>No hay mas eventos</p>
             </div>
           ) : null}
         </div>
