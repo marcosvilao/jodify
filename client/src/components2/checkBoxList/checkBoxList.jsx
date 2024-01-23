@@ -7,23 +7,7 @@ import Checkbox from "@mui/material/Checkbox";
 import { ItemTextList } from "./checkBoxListStyles.js";
 import theme from "../../jodifyStyles";
 
-function CheckBoxList({ typeList, cityList, checkedItems, setCheckedItems }) {
-  const [checked, setChecked] = useState(checkedItems);
-
-  const handleToggle = (value) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    setChecked(newChecked);
-    setCheckedItems(newChecked);
-  };
-
+function CheckBoxList(props) {
   const renderListItems = (list, isCityList) => {
     return (
       <List
@@ -54,17 +38,15 @@ function CheckBoxList({ typeList, cityList, checkedItems, setCheckedItems }) {
                   alignItems: "center",
                 }}
                 role={undefined}
-                onClick={handleToggle(index)}
                 dense
               >
                 <ListItemIcon sx={{ minWidth: "20px" }}>
                   <Checkbox
                     edge="start"
-                    checked={checked.indexOf(index) !== -1}
-                    tabIndex={-1}
                     disableRipple
                     inputProps={{ "aria-labelledby": labelId }}
                     style={{ color: theme.jodify_colors._text_white }}
+                    onClick={() => props.OnClick(item)}
                   />
                 </ListItemIcon>
                 <ItemTextList
@@ -89,9 +71,9 @@ function CheckBoxList({ typeList, cityList, checkedItems, setCheckedItems }) {
         borderRadius: theme.jodify_borders._lg_border_radius,
       }}
     >
-      {cityList
-        ? renderListItems(cityList, true)
-        : renderListItems(typeList || [], false)}
+      {props.cityList
+        ? renderListItems(props.cityList, true)
+        : renderListItems(props.typeList || [], false)}
     </div>
   );
 }

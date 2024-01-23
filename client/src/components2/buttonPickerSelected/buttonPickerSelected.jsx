@@ -8,7 +8,9 @@ function ButtonPickerSelected(props) {
       <button className={styles.buttonPickerSelected} onClick={props.OnClick}>
         {props.Value}
       </button>
-      <CloseIcon className={styles.icon} onClick={props.OnClickIcon} />
+      {props.Close ? (
+        <CloseIcon className={styles.icon} onClick={props.OnClose} />
+      ) : null}
     </div>
   );
 }

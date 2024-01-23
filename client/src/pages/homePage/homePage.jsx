@@ -8,33 +8,35 @@ import ButtonPicker from "../../components2/buttonPicker/buttonPicker";
 import ButtonPickerSelected from "../../components2/buttonPickerSelected/buttonPickerSelected";
 import EventCard from "../../components2/eventCard/eventCard";
 import CheckBoxList from "../../components2/checkBoxList/checkBoxList";
+import Alert from "../../components2/alert/alert";
 
 function HomePage() {
   const axiosUrl = process.env.REACT_APP_AXIOS_URL;
+  const [loader, setLoader] = useState(false);
   const [dataEventCard, setDataEventCard] = useState(false);
   const [openUbicacion, setOpenUbicacion] = useState(false);
   const [openGenero, setOpenGenero] = useState(false);
   const [openFecha, setOpenFecha] = useState(false);
-  const [open, setOpen] = useState(false);
-  const [dates, setDates] = useState([]);
-  const [checkedTypes, setCheckedTypes] = useState([]);
-  const [checkedCities, setCheckedCities] = useState([]);
   const [types, setType] = useState(false);
   const [cities, setCities] = useState(false);
-  const [openDatesFilter, setOpenDatesFilter] = useState(false);
-  const [filters, setfilters] = useState({
-    types: [],
-    cities: [],
+  const [closePropsUbicacion, setClosePropsUbicacion] = useState(false);
+  const [axiosCitie, setAxiosCitie] = useState(false);
+  const [axiosType, setAxiosType] = useState(false);
+  const [axiosFecha, setAxiosFecha] = useState(false);
+  const [axiosSearch, setAxiosSearch] = useState(false);
+  const [valueButtonFecha, setValueButtonFecha] = useState(false);
+  const [citieName, setCitieName] = useState("CABA | GBA");
+  const [filter, setFilter] = useState({
+    page: 0,
+    cities: ["258fd495-92d3-4119-aa37-0d1c684a0237"],
     dates: [],
+    type: [],
+    search: "",
   });
-
-  const onChangeInputSearch = (e) => {
-    console.log("Hola");
-  };
 
   useEffect(() => {
     axios
-      .get(`${axiosUrl}/events`)
+      .post(`${axiosUrl}/events/filtersNew`, filter)
       .then((res) => {
         setDataEventCard(res.data);
       })
@@ -119,6 +121,203 @@ function HomePage() {
         );
       });
 
+    const onClickOpenFecha = () => {
+      if (!openFecha) {
+        setOpenFecha(true);
+      } else {
+        setOpenFecha(false);
+      }
+    };
+
+    const onChangeDateRange = (value) => {
+      if (value[0] === null && value[1] === null) {
+        setFilter(() => ({
+          ...filter,
+          dates: [],
+        }));
+      } else if (value[1] === null) {
+        let arrayDates = [value[0].$d, value[0].$d];
+        let arraySetHoures = [];
+        arrayDates.map((fecha) => {
+          arraySetHoures.push(new Date(fecha.setHours(9, 0, 0)));
+        });
+        setFilter(() => ({
+          ...filter,
+          dates: arraySetHoures,
+        }));
+      } else if (value[1] !== null) {
+        let arrayDates = [value[0].$d, value[1].$d];
+        let arraySetHoures = [];
+        arrayDates.map((fecha) => {
+          arraySetHoures.push(new Date(fecha.setHours(9, 0, 0)));
+        });
+        setFilter(() => ({
+          ...filter,
+          dates: arraySetHoures,
+        }));
+      } else {
+        return null;
+      }
+    };
+
+    const onClickDateRange = () => {
+      if (filter.dates.length === 0) {
+        return null;
+      }
+
+      let fechaOriginal = filter.dates[0];
+      let fecha = new Date(fechaOriginal);
+      let dia = fecha.getDate();
+      let mes = fecha.getMonth() + 1;
+      dia = dia < 10 ? "0" + dia : dia;
+      mes = mes < 10 ? "0" + mes : mes;
+      let fechaFormateada = dia + "/" + mes;
+
+      let fechaOriginal2 = filter.dates[1];
+      let fecha2 = new Date(fechaOriginal2);
+      let dia2 = fecha2.getDate();
+      let mes2 = fecha2.getMonth() + 1;
+      dia2 = dia2 < 10 ? "0" + dia2 : dia2;
+      mes2 = mes2 < 10 ? "0" + mes2 : mes2;
+      let fechaFormateada2 = dia2 + "/" + mes2;
+
+      console.log(fechaFormateada);
+      console.log(fechaFormateada2);
+
+      if (fechaFormateada === fechaFormateada2) {
+        console.log("iguales");
+        setValueButtonFecha(fechaFormateada);
+      } else {
+        setValueButtonFecha(`${fechaFormateada} | ${fechaFormateada2}`);
+      }
+
+      setLoader(true);
+      setOpenFecha(false);
+      axios
+        .post(`${axiosUrl}/events/filtersNew`, filter)
+        .then((res) => {
+          setDataEventCard(res.data);
+          setLoader(false);
+        })
+        .catch(() => {
+          Alert(
+            "Error!",
+            "Error al cargar los eventos por favor intentar luego mas tarde o ponerse en contacto con el servidor",
+            "error"
+          );
+        });
+    };
+
+    const onCloseDateRange = () => {
+      setOpenFecha(false);
+    };
+
+    const onCloseFecha = () => {
+      if (filter.dates.length) {
+        setFilter(() => ({
+          ...filter,
+          dates: [],
+        }));
+        if (openFecha) {
+          setOpenFecha(false);
+        }
+        setValueButtonFecha(false);
+        setLoader(true);
+        setAxiosFecha(true);
+      } else {
+        setOpenFecha(false);
+      }
+    };
+
+    const onClickOpenUbicaion = () => {
+      if (!openUbicacion) {
+        setOpenUbicacion(true);
+        setClosePropsUbicacion(true);
+      } else {
+        setOpenUbicacion(false);
+        setClosePropsUbicacion(false);
+      }
+    };
+
+    const onClickCheckBoxListUbicacion = (item) => {
+      setLoader(true);
+      setAxiosCitie(true);
+      setCitieName(item.city_name);
+      setFilter(() => ({
+        ...filter,
+        cities: [item.id],
+      }));
+      onClickOpenUbicaion();
+    };
+
+    const onClickOpenGenero = () => {
+      if (!openGenero) {
+        setOpenGenero(true);
+      } else {
+        setOpenGenero(false);
+      }
+    };
+
+    const onCloseTypes = () => {
+      if (filter.type.length) {
+        setFilter(() => ({
+          ...filter,
+          type: [],
+        }));
+        setLoader(true);
+        setAxiosType(true);
+        if (openGenero) {
+          setOpenGenero(false);
+        }
+      } else {
+        setOpenGenero(false);
+      }
+    };
+
+    const onClickCheckBoxListGenero = (item) => {
+      let arrayTypes = [];
+      arrayTypes.push(item.type_name);
+
+      setFilter(() => ({
+        ...filter,
+        type: arrayTypes,
+      }));
+      setLoader(true);
+      setAxiosType(true);
+      onClickOpenGenero();
+    };
+
+    const onChangeInputSearch = (e) => {
+      setFilter(() => ({
+        ...filter,
+        search: e.target.value,
+      }));
+      setAxiosSearch(true);
+      setLoader(true);
+    };
+
+    if (axiosType || axiosCitie || axiosFecha || axiosSearch) {
+      axios
+        .post(`${axiosUrl}/events/filtersNew`, filter)
+        .then((res) => {
+          setDataEventCard(res.data);
+          setLoader(false);
+          setAxiosType(false);
+          setAxiosCitie(false);
+          setAxiosFecha(false);
+          setAxiosSearch(false);
+        })
+        .catch(() => {
+          Alert(
+            "Error!",
+            "Error al cargar los eventos por favor intentar luego mas tarde o ponerse en contacto con el servidor",
+            "error"
+          );
+        });
+    }
+
+    console.log(filter);
+
     return (
       <div className={styles.body}>
         <div className={styles.containerInput}>
@@ -126,59 +325,82 @@ function HomePage() {
             PlaceHolder="Buscá un evento, artista o club"
             OnChange={onChangeInputSearch}
           />
+
           <div className={styles.containerButtons}>
-            {!openUbicacion ? (
-              <ButtonPicker Value="Ubicación" />
+            <ButtonPickerSelected
+              Value={citieName}
+              OnClick={onClickOpenUbicaion}
+              Close={closePropsUbicacion}
+            />
+
+            {openGenero || filter.type.length ? (
+              <ButtonPickerSelected
+                Value={filter.type.length ? filter.type[0] : "Género"}
+                OnClick={onClickOpenGenero}
+                Close="true"
+                OnClose={onCloseTypes}
+              />
             ) : (
-              <ButtonPickerSelected Value="Ubicación" />
+              <ButtonPicker Value="Género" OnClick={onClickOpenGenero} />
             )}
-            {!openGenero ? (
-              <ButtonPicker Value="Género" />
+
+            {openFecha || filter.dates.length ? (
+              <ButtonPickerSelected
+                Value={valueButtonFecha ? valueButtonFecha : "Fecha"}
+                Close="true"
+                OnClick={onClickOpenFecha}
+                OnClose={onCloseFecha}
+              />
             ) : (
-              <ButtonPickerSelected Value="Género" />
-            )}
-            {!openFecha ? (
-              <ButtonPicker Value="Fecha" />
-            ) : (
-              <ButtonPickerSelected Value="Fecha" />
+              <ButtonPicker Value="Fecha" OnClick={onClickOpenFecha} />
             )}
           </div>
 
           <div className={styles.containerPicker}>
-            {null ? (
-              <div className={styles.positionDatePicker}>
-                <DateRange
-                  open={open}
-                  setOpen={setOpen}
-                  setIsOpen={setOpenDatesFilter}
-                  setDateFilter={setDates}
-                  setDefaultValues={filters.dates}
-                />
-              </div>
-            ) : null}
-
-            {null ? (
+            {openUbicacion ? (
               <div className={styles.positionCitiesList}>
                 <CheckBoxList
                   cityList={cities}
-                  checkedItems={checkedCities}
-                  setCheckedItems={setCheckedCities}
+                  OnClick={onClickCheckBoxListUbicacion}
                 />
               </div>
             ) : null}
 
-            {null ? (
+            {openGenero ? (
               <div className={styles.positionTypesList}>
                 <CheckBoxList
                   typeList={types}
-                  checkedItems={checkedTypes}
-                  setCheckedItems={setCheckedTypes}
+                  OnClick={onClickCheckBoxListGenero}
+                />
+              </div>
+            ) : null}
+
+            {openFecha ? (
+              <div className={styles.positionDatePicker}>
+                <DateRange
+                  OnChange={onChangeDateRange}
+                  OnClick={onClickDateRange}
+                  OnClose={onCloseDateRange}
                 />
               </div>
             ) : null}
           </div>
 
-          <div className={styles.containerEventCard}>{elementDivCard}</div>
+          {dataEventCard.length === 0 && !loader ? (
+            <div className={styles.noHayEventos}>
+              <h1>No hay eventos en la fecha seleccionada</h1>
+            </div>
+          ) : null}
+
+          {dataEventCard.length !== 0 && !loader ? (
+            <div className={styles.containerEventCard}>{elementDivCard}</div>
+          ) : null}
+
+          {loader ? (
+            <div className={styles.bodyLoader}>
+              <Loader Color="#7c16f5" Height="100px" Width="100px" />
+            </div>
+          ) : null}
         </div>
       </div>
     );
