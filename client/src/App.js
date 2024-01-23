@@ -1,9 +1,8 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import HomePage from "./pages/HomePage";
 import WeekEventsPage from "./pages/weekEventsPage/weekEventsPage.jsx";
 import Header from "./components2/header/header.jsx";
-import HomePageNew from "./pages/homePage/homePage.jsx";
+import HomePage from "./pages/homePage/homePage.jsx";
 import LoginPage from "./pages/loginPage/loginPage.jsx";
 import RegisterPage from "./pages/registerPage/registerPage.jsx";
 import ResetPasswordPage from "./pages/reset-passwordPage/resetPasswordPage.jsx";
@@ -18,7 +17,6 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/homeNew" element={<HomePageNew />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register-user" element={<RegisterPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
