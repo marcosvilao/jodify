@@ -3,6 +3,7 @@ const { linkScrap } = require("../Brain/getEventData");
 const { v4: uuidv4 } = require("uuid");
 const { types } = require("pg");
 const { DateTime } = require("luxon");
+const { formatDate } = require("../Brain/Utils.js");
 
 const getEvents = async (req, res, next) => {
   try {
@@ -55,9 +56,8 @@ const getEvents = async (req, res, next) => {
 
 const filterEvents = async (req, res) => {
   try {
-
     const { dates, city, type, search } = req.body;
-    const {page} = req.params;
+    const { page } = req.params;
 
     let query = "SELECT * FROM event WHERE TRUE";
     const values = [];
@@ -150,33 +150,46 @@ const getEventsPromoters = async (req, res) => {
 
 const createEvent = async (req, res) => {
   try {
-      const {event_title, event_type, event_date, event_location, ticket_link, event_image, event_djs, event_city, event_promoter } = req.body.event;
+    const {
+      event_title,
+      event_type,
+      event_date,
+      event_location,
+      ticket_link,
+      event_image,
+      event_djs,
+      event_city,
+      event_promoter,
+    } = req.body.event;
 
-      const formattedEventDate = new Date(event_date);
-      formattedEventDate.setHours(9, 0, 0);
-      let promoter;
+    const formattedEventDate = new Date(event_date);
+    formattedEventDate.setHours(9, 0, 0);
+    let promoter;
 
-      if(event_promoter.length > 0){
-          promoter = event_promoter.map(promoter => promoter.id)
-      } else {
-          promoter = null
-      }
+    if (event_promoter.length > 0) {
+      promoter = event_promoter.map((promoter) => promoter.id);
+    } else {
+      promoter = null;
+    }
 
-      const formattedType = event_type.join(' | ');
+    const formattedType = event_type.join(" | ");
 
-      const querydate = ('SELECT ticket_link FROM event WHERE ticket_link = $1');
-      const valuesLink = [ticket_link];
+    const querydate = "SELECT ticket_link FROM event WHERE ticket_link = $1";
+    const valuesLink = [ticket_link];
 
-      let duplicateEvent = await pool.query(querydate, valuesLink);
-      duplicateEvent = duplicateEvent.rows
+    let duplicateEvent = await pool.query(querydate, valuesLink);
+    duplicateEvent = duplicateEvent.rows;
 
-      if(duplicateEvent.length > 0 && !duplicateEvent[0]?.ticket_link.toLowerCase().includes('instagram') && !duplicateEvent[0]?.ticket_link.toLowerCase().includes('espacioro')){
-          res.status(404).send({ message: 'Ya existe este evento'});
-          return
-      }
+    if (
+      duplicateEvent.length > 0 &&
+      !duplicateEvent[0]?.ticket_link.toLowerCase().includes("instagram") &&
+      !duplicateEvent[0]?.ticket_link.toLowerCase().includes("espacioro")
+    ) {
+      res.status(404).send({ message: "Ya existe este evento" });
+      return;
+    }
 
-
-      const query = `
+    const query = `
           INSERT INTO event(id, event_title, event_type, event_date, event_location, ticket_link, event_image, event_djs, city_id, promoter_id)
           VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
           RETURNING id;
@@ -325,24 +338,30 @@ const filterEventsNew = async (req, res) => {
 
     if (dates && dates.length === 2) {
       const [date1, date2] = dates;
-      if(date1 !== date2){
-        query += ` AND e.event_date >= $${paramCount} AND e.event_date <= $${paramCount + 1}`;
+      const firstDate = formatDate(date1);
+      const secondDate = formatDate(date2);
+      if (firstDate !== secondDate) {
+        query += ` AND e.event_date >= $${paramCount} AND e.event_date <= $${
+          paramCount + 1
+        }`;
         values.push(date1, date2);
         paramCount += 2;
-      } else{
-        query +=  `AND (e.event_date = $${paramCount})`;
-        values.push(date1);
+      } else {
+        query += `AND (e.event_date = $${paramCount})`;
+        values.push(firstDate);
         paramCount += 1;
       }
     } else {
-      query += `AND (e.event_date >= $${paramCount})`
-      values.push(argentinaTime)
-      paramCount += 1
+      query += `AND (e.event_date >= $${paramCount})`;
+      values.push(argentinaTime);
+      paramCount += 1;
     }
 
     if (cities && cities.length > 0) {
-      console.log('city exists')
-      const cityPlaceholders = cities.map((_, index) => `$${paramCount + index}`).join(', ');
+      console.log("city exists");
+      const cityPlaceholders = cities
+        .map((_, index) => `$${paramCount + index}`)
+        .join(", ");
       query += ` AND e.city_id IN (${cityPlaceholders})`;
       values.push(...cities);
       paramCount += cities.length;
@@ -351,9 +370,11 @@ const filterEventsNew = async (req, res) => {
     }
 
     if (types && types.length > 0) {
-      const typeConditions = types.map((_, index) => `e.event_type ILIKE $${paramCount + index}`).join(' OR ');
+      const typeConditions = types
+        .map((_, index) => `e.event_type ILIKE $${paramCount + index}`)
+        .join(" OR ");
       query += ` AND (${typeConditions})`;
-      values.push(...types.map(t => `%${t}%`));
+      values.push(...types.map((t) => `%${t}%`));
       paramCount += types.length;
     } else {
       query += " AND (e.event_type IS NULL OR e.event_type = e.event_type)";
@@ -367,7 +388,7 @@ const filterEventsNew = async (req, res) => {
 
     query += ` ORDER BY e.event_date ASC LIMIT 20 OFFSET $${paramCount}`;
     values.push(setOff);
-    console.log(query, values)
+    console.log(query, values);
     const result = await pool.query(query, values);
     const events = result.rows;
 
@@ -384,7 +405,7 @@ const filterEventsNew = async (req, res) => {
     const groupedEventsArray = Object.keys(groupedEvents).map((date) => ({
       [date]: groupedEvents[date],
     }));
-    console.log(groupedEventsArray)
+    console.log(groupedEventsArray);
     res.status(200).json(groupedEventsArray);
   } catch (error) {
     console.error("Error fetching events:", error);

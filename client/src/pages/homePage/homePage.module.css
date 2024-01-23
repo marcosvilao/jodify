@@ -52,7 +52,7 @@
 
 .positionDatePicker {
   position: absolute;
-  top: -5px;
+  top: -250px;
   left: 35px;
   z-index: 999;
 }

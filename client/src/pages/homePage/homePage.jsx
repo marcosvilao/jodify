@@ -34,7 +34,7 @@ function HomePage() {
     page: 0,
     cities: ["258fd495-92d3-4119-aa37-0d1c684a0237"],
     dates: [],
-    type: [],
+    types: [],
     search: "",
   });
   const [endReached, setEndReached] = useState(false);
@@ -73,33 +73,29 @@ function HomePage() {
         });
     }
 
-    if (finishLazyLoad) {
-      setLoaderLazyLoad(false);
-    } else {
-      if (dataEventCard && !finishLazyLoad) {
-        async function handleScroll() {
+    if (dataEventCard && !finishLazyLoad && !loader) {
+      async function handleScroll() {
+        const maxHeight = document.body.scrollHeight - window.innerHeight;
+        const currentScroll = window.scrollY || window.pageYOffset;
+
+        if (currentScroll >= maxHeight && !endReached) {
+          let page = filter.page + 1;
+          setFilter(() => ({
+            ...filter,
+            page: page,
+          }));
+          setLazyLoad(true);
+          setEndReached(true);
           setLoaderLazyLoad(true);
-          const maxHeight = document.body.scrollHeight - window.innerHeight;
-          const currentScroll = window.scrollY || window.pageYOffset;
-
-          if (currentScroll >= maxHeight && !endReached) {
-            let page = filter.page + 1;
-            setFilter(() => ({
-              ...filter,
-              page: page,
-            }));
-            setLazyLoad(true);
-            setEndReached(true);
-          } else {
-            setEndReached(false);
-          }
+        } else {
+          setEndReached(false);
         }
-
-        window.addEventListener("scroll", handleScroll);
-        return () => {
-          window.removeEventListener("scroll", handleScroll);
-        };
       }
+
+      window.addEventListener("scroll", handleScroll);
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+      };
     }
   }, [endReached, dataEventCard]);
 
@@ -302,10 +298,10 @@ function HomePage() {
     };
 
     const onCloseTypes = () => {
-      if (filter.type.length) {
+      if (filter.types.length) {
         setFilter(() => ({
           ...filter,
-          type: [],
+          types: [],
           page: 0,
         }));
         setLoader(true);
@@ -324,7 +320,7 @@ function HomePage() {
 
       setFilter(() => ({
         ...filter,
-        type: arrayTypes,
+        types: arrayTypes,
         page: 0,
       }));
       setLoader(true);
@@ -386,6 +382,8 @@ function HomePage() {
         });
     }
 
+    console.log(filter);
+
     return (
       <div className={styles.body}>
         <div className={styles.containerInput}>
@@ -393,95 +391,94 @@ function HomePage() {
             PlaceHolder="Buscá un evento, artista o club"
             OnChange={onChangeInputSearch}
           />
+        </div>
+        <div className={styles.containerButtons}>
+          <ButtonPickerSelected
+            Value={citieName}
+            OnClick={onClickOpenUbicaion}
+            Close={closePropsUbicacion}
+          />
 
-          <div className={styles.containerButtons}>
+          {openGenero || filter.types.length ? (
             <ButtonPickerSelected
-              Value={citieName}
-              OnClick={onClickOpenUbicaion}
-              Close={closePropsUbicacion}
+              Value={filter.types.length ? filter.types[0] : "Género"}
+              OnClick={onClickOpenGenero}
+              Close="true"
+              OnClose={onCloseTypes}
             />
+          ) : (
+            <ButtonPicker Value="Género" OnClick={onClickOpenGenero} />
+          )}
 
-            {openGenero || filter.type.length ? (
-              <ButtonPickerSelected
-                Value={filter.type.length ? filter.type[0] : "Género"}
-                OnClick={onClickOpenGenero}
-                Close="true"
-                OnClose={onCloseTypes}
+          {openFecha || filter.dates.length ? (
+            <ButtonPickerSelected
+              Value={valueButtonFecha ? valueButtonFecha : "Fecha"}
+              Close="true"
+              OnClick={onClickOpenFecha}
+              OnClose={onCloseFecha}
+            />
+          ) : (
+            <ButtonPicker Value="Fecha" OnClick={onClickOpenFecha} />
+          )}
+        </div>
+
+        <div className={styles.containerPicker}>
+          {openUbicacion ? (
+            <div className={styles.positionCitiesList}>
+              <CheckBoxList
+                cityList={cities}
+                OnClick={onClickCheckBoxListUbicacion}
               />
-            ) : (
-              <ButtonPicker Value="Género" OnClick={onClickOpenGenero} />
-            )}
+            </div>
+          ) : null}
 
-            {openFecha || filter.dates.length ? (
-              <ButtonPickerSelected
-                Value={valueButtonFecha ? valueButtonFecha : "Fecha"}
-                Close="true"
-                OnClick={onClickOpenFecha}
-                OnClose={onCloseFecha}
+          {openGenero ? (
+            <div className={styles.positionTypesList}>
+              <CheckBoxList
+                typeList={types}
+                OnClick={onClickCheckBoxListGenero}
               />
-            ) : (
-              <ButtonPicker Value="Fecha" OnClick={onClickOpenFecha} />
-            )}
-          </div>
-
-          <div className={styles.containerPicker}>
-            {openUbicacion ? (
-              <div className={styles.positionCitiesList}>
-                <CheckBoxList
-                  cityList={cities}
-                  OnClick={onClickCheckBoxListUbicacion}
-                />
-              </div>
-            ) : null}
-
-            {openGenero ? (
-              <div className={styles.positionTypesList}>
-                <CheckBoxList
-                  typeList={types}
-                  OnClick={onClickCheckBoxListGenero}
-                />
-              </div>
-            ) : null}
-
-            {openFecha ? (
-              <div className={styles.positionDatePicker}>
-                <DateRange
-                  OnChange={onChangeDateRange}
-                  OnClick={onClickDateRange}
-                  OnClose={onCloseDateRange}
-                />
-              </div>
-            ) : null}
-          </div>
-
-          {dataEventCard.length === 0 && !loader ? (
-            <div className={styles.noHayEventos}>
-              <h1>No hay eventos en la fecha seleccionada</h1>
             </div>
           ) : null}
 
-          {dataEventCard.length !== 0 && !loader ? (
-            <div className={styles.containerEventCard}>{elementDivCard}</div>
-          ) : null}
-
-          {loader ? (
-            <div className={styles.bodyLoader}>
-              <Loader Color="#7c16f5" Height="100px" Width="100px" />
-            </div>
-          ) : null}
-
-          {loaderLazyLoad ? (
-            <div className={styles.bodyLoaderLazyLoad}>
-              <Loader Color="#7c16f5" Height="50px" Width="50px" />
-            </div>
-          ) : null}
-
-          {lazyLoadNoEvents ? (
-            <div className={styles.bodyLoaderLazyLoad}>
-              <p>No hay mas eventos</p>
+          {openFecha ? (
+            <div className={styles.positionDatePicker}>
+              <DateRange
+                OnChange={onChangeDateRange}
+                OnClick={onClickDateRange}
+                OnClose={onCloseDateRange}
+              />
             </div>
           ) : null}
         </div>
+
+        {dataEventCard.length === 0 && !loader ? (
+          <div className={styles.noHayEventos}>
+            <h1>No hay eventos en la fecha seleccionada</h1>
+          </div>
+        ) : null}
+
+        {dataEventCard.length !== 0 && !loader ? (
+          <div className={styles.containerEventCard}>{elementDivCard}</div>
+        ) : null}
+
+        {loader ? (
+          <div className={styles.bodyLoader}>
+            <Loader Color="#7c16f5" Height="100px" Width="100px" />
+          </div>
+        ) : null}
+
+        {loaderLazyLoad ? (
+          <div className={styles.bodyLoaderLazyLoad}>
+            <Loader Color="#7c16f5" Height="50px" Width="50px" />
+          </div>
+        ) : null}
+
+        {lazyLoadNoEvents ? (
+          <div className={styles.bodyLoaderLazyLoad}>
+            <p>No hay mas eventos</p>
+          </div>
+        ) : null}
       </div>
     );
   }
