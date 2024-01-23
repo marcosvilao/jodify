@@ -12,24 +12,14 @@ function FilterList({ typeList, cityList, checkedItems, setCheckedItems }) {
 
 const handleToggle = (value) => () => {
   const currentIndex = checked.indexOf(value);
-  let newChecked
+  let newChecked = [...checked]
   
-  if(typeList){
-
-    newChecked = [...checked]
-
     if (currentIndex === -1) {
       newChecked.push(value);
     } else {
       newChecked.splice(currentIndex, 1);
     }
-  } else {
-    if (currentIndex === -1) {
-      newChecked = [value];
-    } else {
-      newChecked = [value];
-    }
-  }
+
 
 
   setChecked(newChecked);

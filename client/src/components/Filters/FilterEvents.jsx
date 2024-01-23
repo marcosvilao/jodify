@@ -227,6 +227,16 @@ function FilterEvents() {
             localStorage.setItem('checkedCities', JSON.stringify(checkedCities));
         }, [checkedCities]);
 
+        const clearCitiesFilter = () => {
+            setCheckedCities([]);
+            setfilters({
+            ...filters,
+            cities: []
+
+            });
+            setOpenCitiesFilter(false);
+        }
+
         const clearTypesFilter = () => {
             setCheckedTypes([]);
             setfilters({
@@ -268,6 +278,17 @@ function FilterEvents() {
                 onClick={FilterCities} 
                 ref={filterRef}>{filters.cities.length > 1 ? `${selectedCities[0]} + ${filters.cities.length - 1}` : (filters.cities.length === 1 ? `${selectedCities[0] ? selectedCities[0] : 'CABA | GBA'}` : 'Ubicación')}
                 </FilterText>
+                {filters.cities.length > 0 && 
+                <Tooltip title="Limpiar">
+                    <ClearIcon 
+                    onClick={clearCitiesFilter} 
+                    style={{
+                            color: theme.jodify_colors._text_white,
+                            margin: '3px 10px 4px -3px',
+                            width: '22px',
+                            height: '22px'
+                            }}/>
+                </Tooltip>}
             </FilterWrapper>
             <FilterWrapper
             onClick={filters.types.length > 0 ? null : FilterTypes} 
