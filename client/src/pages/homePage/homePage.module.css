@@ -33,6 +33,7 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  margin-top: 40px;
 }
 
 .containerButtons {
@@ -40,7 +41,7 @@
   display: flex;
   align-items: center;
   justify-content: left;
-  margin: 10px 0px;
+  margin: 30px 0px;
   gap: 10px;
 }
 
