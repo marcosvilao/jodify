@@ -11,7 +11,7 @@ const getEvents = async (req, res, next) => {
     currentDate.setDate(currentDate.getDate() - 1);
     const options = { timeZone: "America/Argentina/Buenos_Aires" };
     const argentinaTime = currentDate.toLocaleString("en-US", options);
-    const query = "SELECT e.*, p.* FROM event e INNER JOIN promoters p ON p.id = ANY(CAST(e.promoter_id AS uuid[])) WHERE e.event_date >= $1";
+    const query = "SELECT * FROM event WHERE event_date >= $1";
     const values = [argentinaTime];
     const allEvents = await pool.query(query, values);
     if (!allEvents.rows) {
