@@ -21,7 +21,6 @@ function HomePage() {
   const [types, setType] = useState(false);
   const [checkedItems, setCheckedItems] = useState({});
   const [cities, setCities] = useState(false);
-  const [closePropsUbicacion, setClosePropsUbicacion] = useState(false);
   const [axiosCitie, setAxiosCitie] = useState(false);
   const [axiosType, setAxiosType] = useState(false);
   const [axiosFecha, setAxiosFecha] = useState(false);
@@ -294,10 +293,8 @@ function HomePage() {
     const onClickOpenUbicaion = () => {
       if (!openUbicacion) {
         setOpenUbicacion(true);
-        setClosePropsUbicacion(true);
       } else {
         setOpenUbicacion(false);
-        setClosePropsUbicacion(false);
       }
       setOpenFecha(false);
       setOpenGenero(false);
