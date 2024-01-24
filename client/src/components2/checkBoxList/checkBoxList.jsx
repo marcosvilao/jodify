@@ -7,7 +7,14 @@ import Checkbox from "@mui/material/Checkbox";
 import { ItemTextList } from "./checkBoxListStyles.js";
 import theme from "../../jodifyStyles";
 
-function CheckBoxList({ cityList, typeList, checkedItems, OnClick, OnClose }) {
+function CheckBoxList({
+  cityList,
+  typeList,
+  checkedItems,
+  OnClick,
+  OnClose,
+  listType,
+}) {
   const listRef = useRef(null);
 
   const handleClickOutside = (event) => {
@@ -42,42 +49,73 @@ function CheckBoxList({ cityList, typeList, checkedItems, OnClick, OnClose }) {
           }}
         >
           {list.map((item, index) => {
-            const labelId = `checkbox-list-label-${index}`;
-            const isChecked = checkedItems[item.id] || false; // Estado actual de la Checkbox
-
-            return (
-              <ListItem
-                key={index}
-                disablePadding
-                sx={{ marginBottom: "10px", height: "30px" }}
-              >
-                <ListItemButton
-                  sx={{
-                    height: "19px",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                  role={undefined}
-                  dense
-                  onClick={() => handleItemClick(item)}
+            if (listType === "city") {
+              const labelId = `checkbox-list-label-${index}`;
+              const isChecked = checkedItems[item.id] || false;
+              return (
+                <ListItem
+                  key={index}
+                  disablePadding
+                  sx={{ marginBottom: "10px", height: "30px" }}
                 >
-                  <ListItemIcon sx={{ minWidth: "20px" }}>
-                    <Checkbox
-                      edge="start"
-                      checked={isChecked}
-                      disableRipple
-                      inputProps={{ "aria-labelledby": labelId }}
-                      style={{ color: theme.jodify_colors._text_white }}
+                  <ListItemButton
+                    sx={{
+                      height: "19px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                    role={undefined}
+                    dense
+                    onClick={() => handleItemClick(item)}
+                  >
+                    <ListItemIcon sx={{ minWidth: "20px" }}>
+                      <Checkbox
+                        edge="start"
+                        checked={isChecked}
+                        disableRipple
+                        inputProps={{ "aria-labelledby": labelId }}
+                        style={{ color: theme.jodify_colors._text_white }}
+                      />
+                    </ListItemIcon>
+                    <ItemTextList
+                      id={labelId}
+                      primary={isCityList ? item.city_name : item.type_name}
                     />
-                  </ListItemIcon>
-                  <ItemTextList
-                    id={labelId}
-                    primary={isCityList ? item.city_name : item.type_name}
-                  />
-                </ListItemButton>
-              </ListItem>
-            );
+                  </ListItemButton>
+                </ListItem>
+              );
+            } else {
+              return (
+                <ListItem
+                  key={index}
+                  disablePadding
+                  sx={{ marginBottom: "10px", height: "30px" }}
+                >
+                  <ListItemButton
+                    sx={{
+                      height: "19px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                    role={undefined}
+                    dense
+                    onClick={() => handleItemClick(item)}
+                  >
+                    <ListItemIcon sx={{ minWidth: "20px" }}>
+                      <Checkbox
+                        disableRipple
+                        style={{ color: theme.jodify_colors._text_white }}
+                      />
+                    </ListItemIcon>
+                    <ItemTextList
+                      primary={isCityList ? item.city_name : item.type_name}
+                    />
+                  </ListItemButton>
+                </ListItem>
+              );
+            }
           })}
         </List>
       </div>

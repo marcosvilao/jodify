@@ -1,9 +1,10 @@
 .bodyLoader {
   width: 100%;
-  height: 87vh;
+  height: 50vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 220px;
 }
 
 .bodyLoaderLazyLoad {
@@ -32,7 +33,7 @@
   top: 81px;
   width: 700px;
   background-color: #0c0c0c;
-  z-index: 1000;
+  z-index: 99;
 }
 
 .containerInput {
@@ -41,7 +42,7 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin-top: 40px;
+  margin-top: 10px;
 }
 
 .containerButtons {
@@ -49,19 +50,25 @@
   display: flex;
   align-items: center;
   justify-content: left;
-  margin: 30px 0px 10px 0px;
+  margin: 20px 0px 10px 0px;
   gap: 10px;
 }
 
 .containerPicker {
   width: 700px;
   position: fixed;
-  top: 270px;
+  top: 240px;
+  z-index: 999;
 }
 
-.datePicker{
-  width: 300px;
-  height: 200px;
+.datePicker {
+  width: 100%;
+  position: relative;
+}
+
+.datePickerContainer {
+  position: absolute;
+  top: -170px;
 }
 
 .containerEventCard {
@@ -71,7 +78,7 @@
 }
 
 .firstElement {
-  margin-top: 300px;
+  margin-top: 260px;
 }
 
 .containerEventCard h1 {

@@ -75,12 +75,17 @@ function HomePage() {
         });
     }
 
-    if (dataEventCard && !finishLazyLoad && !loader) {
+    if (dataEventCard && !finishLazyLoad && !isFiltering && !loader) {
       async function handleScroll() {
         const maxHeight = document.body.scrollHeight - window.innerHeight;
         const currentScroll = window.scrollY || window.pageYOffset;
 
-        if (currentScroll >= maxHeight && !endReached && !isFiltering) {
+        if (
+          currentScroll >= maxHeight &&
+          !endReached &&
+          !isFiltering &&
+          !loader
+        ) {
           let page = filter.page + 1;
           setFilter(() => ({
             ...filter,
@@ -170,10 +175,13 @@ function HomePage() {
       } else {
         setOpenFecha(false);
       }
+      setOpenGenero(false);
+      setOpenUbicacion(false);
     };
 
     const onChangeDateRange = (value) => {
       setIsFiltering(true);
+      setLoaderLazyLoad(false);
       if (value[0] === null && value[1] === null) {
         setFilter(() => ({
           ...filter,
@@ -208,6 +216,7 @@ function HomePage() {
     };
 
     const onClickDateRange = () => {
+      setLoaderLazyLoad(false);
       if (filter.dates.length === 0) {
         return null;
       }
@@ -244,6 +253,7 @@ function HomePage() {
           setFinishLazyLoad(false);
           setLazyLoadNoEvents(false);
           setIsFiltering(false);
+          setLoaderLazyLoad(false);
         })
         .catch(() => {
           Alert(
@@ -272,6 +282,7 @@ function HomePage() {
         setLoader(true);
         setAxiosFecha(true);
         setIsFiltering(true);
+        setLoaderLazyLoad(false);
       } else {
         setOpenFecha(false);
       }
@@ -285,11 +296,14 @@ function HomePage() {
         setOpenUbicacion(false);
         setClosePropsUbicacion(false);
       }
+      setOpenFecha(false);
+      setOpenGenero(false);
     };
 
     const onClickCheckBoxListUbicacion = (item) => {
       setLoader(true);
       setAxiosCitie(true);
+      setLoaderLazyLoad(false);
       setIsFiltering(true);
       setCitieName(item.city_name);
       setFilter(() => ({
@@ -306,6 +320,8 @@ function HomePage() {
       } else {
         setOpenGenero(false);
       }
+      setOpenFecha(false);
+      setOpenUbicacion(false);
     };
 
     const onCloseTypes = () => {
@@ -329,6 +345,7 @@ function HomePage() {
         setLoader(true);
         setAxiosType(true);
         setIsFiltering(true);
+        setLoaderLazyLoad(false);
         if (openGenero) {
           setOpenGenero(false);
         }
@@ -360,6 +377,7 @@ function HomePage() {
       setLoader(true);
       setAxiosType(true);
       setIsFiltering(true);
+      setLoaderLazyLoad(false);
     };
 
     const onCloseTypesList = () => {
@@ -375,6 +393,7 @@ function HomePage() {
       setAxiosSearch(true);
       setLoader(true);
       setIsFiltering(true);
+      setLoaderLazyLoad(false);
     };
 
     if (axiosType || axiosCitie || axiosFecha || axiosSearch) {
@@ -390,6 +409,7 @@ function HomePage() {
           setFinishLazyLoad(false);
           setLazyLoadNoEvents(false);
           setIsFiltering(false);
+          setLoaderLazyLoad(false);
         })
         .catch(() => {
           Alert(
@@ -435,7 +455,6 @@ function HomePage() {
             <ButtonPickerSelected
               Value={citieName}
               OnClick={onClickOpenUbicaion}
-              Close={closePropsUbicacion}
             />
 
             {openGenero || filter.types.length ? (
@@ -474,6 +493,7 @@ function HomePage() {
               <CheckBoxList
                 cityList={cities}
                 OnClick={onClickCheckBoxListUbicacion}
+                OnClose={onClickOpenUbicaion}
               />
             </div>
           ) : null}
@@ -485,17 +505,20 @@ function HomePage() {
                 checkedItems={checkedItems}
                 OnClick={onClickCheckBoxListGenero}
                 OnClose={onCloseTypesList}
+                listType="city"
               />
             </div>
           ) : null}
 
           {openFecha ? (
             <div className={styles.datePicker}>
-              <DateRange
-                OnChange={onChangeDateRange}
-                OnClick={onClickDateRange}
-                OnClose={onCloseDateRange}
-              />
+              <div className={styles.datePickerContainer}>
+                <DateRange
+                  OnChange={onChangeDateRange}
+                  OnClick={onClickDateRange}
+                  OnClose={onCloseDateRange}
+                />
+              </div>
             </div>
           ) : null}
         </div>
