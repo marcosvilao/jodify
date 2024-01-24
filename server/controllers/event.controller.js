@@ -3,6 +3,7 @@ const { linkScrap } = require("../Brain/getEventData");
 const { v4: uuidv4 } = require("uuid");
 const { types } = require("pg");
 const { DateTime } = require("luxon");
+const {formatDate} = require("../Brain/Utils")
 
 const getEvents = async (req, res, next) => {
   try {
@@ -10,7 +11,7 @@ const getEvents = async (req, res, next) => {
     currentDate.setDate(currentDate.getDate() - 1);
     const options = { timeZone: "America/Argentina/Buenos_Aires" };
     const argentinaTime = currentDate.toLocaleString("en-US", options);
-    const query = "SELECT * FROM event WHERE event_date >= $1";
+    const query = "SELECT e.*, p.* FROM event e INNER JOIN promoters p ON p.id = ANY(CAST(e.promoter_id AS uuid[])) WHERE e.event_date >= $1";
     const values = [argentinaTime];
     const allEvents = await pool.query(query, values);
     if (!allEvents.rows) {
@@ -75,13 +76,15 @@ const filterEvents = async (req, res) => {
 
     if (dates && dates.length === 2) {
       const [date1, date2] = dates;
-      if(date1 !== date2){
+      const firstDate = formatDate(date1);
+      const secondDate = formatDate(date2)
+      if(firstDate !== secondDate){
         query += ` AND e.event_date >= $${paramCount} AND e.event_date <= $${paramCount + 1}`;
         values.push(date1, date2);
         paramCount += 2;
       } else{
         query +=  `AND (e.event_date = $${paramCount})`;
-        values.push(date1);
+        values.push(firstDate);
         paramCount += 1;
       }
     } else {
