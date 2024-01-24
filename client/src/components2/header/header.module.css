@@ -21,6 +21,7 @@
   align-items: center;
   border-bottom: 1px solid #413d46;
   background: var(--Backround-1, #0c0c0c);
+  z-index: 999;
 }
 
 .containerLeft {

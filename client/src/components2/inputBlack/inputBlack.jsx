@@ -108,7 +108,7 @@ function InputBlack(props) {
   if (hasError) {
     return (
       <ThemeProvider theme={customTheme(outerTheme, hasError)}>
-        <div style={{ width: "100%", margin: "10px 0px" }}>
+        <div style={{ width: "100%", margin: "10px 0px", zIndex: "0" }}>
           <TextField
             label={props.Label}
             variant="filled"
