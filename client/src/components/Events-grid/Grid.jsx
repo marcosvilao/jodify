@@ -54,12 +54,6 @@ function Grid() {
       const date = new Date(dateString);
       date.setHours(date.getHours() + 3);
       const eventArray = dateObj[Object.keys(dateObj)];
-      const sortedArray = [...eventArray].sort((a, b) => {
-        const priorityA = a.priority
-        const priorityB = b.priority
-      
-        return priorityA - priorityB;
-      });
       const options = {
         weekday: 'long',  // "Jueves"
         day: 'numeric',   // "24"
@@ -80,7 +74,7 @@ function Grid() {
           </StickyHeader2>
           
           <GridWrapper>
-            {sortedArray.map(event => (
+            {eventArray.map(event => (
               <Event event={event} key={event.id} />
             ))}
           </GridWrapper>
