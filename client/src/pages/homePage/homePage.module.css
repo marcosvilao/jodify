@@ -95,6 +95,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 220px;
 }
 
 @media screen and (max-width: 750px) {
