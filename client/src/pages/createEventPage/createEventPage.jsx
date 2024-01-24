@@ -17,6 +17,7 @@ function CreateEventPage() {
   const cloudinayUrl = process.env.REACT_APP_CLOUDINARY_URL + "/image/upload";
   const [pages, setPages] = useState(1);
   const [loader, setLoader] = useState(false);
+  const [submitLoader, setSubmitLoader] = useState(false);
   const [cities, setCities] = useState(false);
   const [types, setTypes] = useState(false);
   const [djs, setDjs] = useState(false);
@@ -155,6 +156,7 @@ function CreateEventPage() {
     };
 
     const onSubmit = () => {
+      setSubmitLoader(true);
       if (
         dataPost.event_title.length === 0 ||
         dataPost.event_type.length === 0 ||
@@ -167,10 +169,12 @@ function CreateEventPage() {
         dataPost.event_promoter.length === 0
       ) {
         Alert("Error!", "Completar todos los campos", "error");
+        setSubmitLoader(false);
       } else {
         axios
           .post(axiosUrl + "/events", { event: dataPost })
           .then(() => {
+            setSubmitLoader(false);
             let callbackAlert = () => {
               window.location.reload();
             };
@@ -182,7 +186,12 @@ function CreateEventPage() {
             );
           })
           .catch(() => {
-            Alert("Error!", "Error interno del servidor", "error");
+            Alert(
+              "Error!",
+              "Error interno del servidor, ponerse en contacto con el servidor o intentar luego mas tarde",
+              "error"
+            );
+            setSubmitLoader(false);
           });
       }
     };
@@ -272,25 +281,28 @@ function CreateEventPage() {
               />
             </div>
 
-            <InputOutlined
-              OnChange={onChangeDataInput}
-              Name="event_location"
-              Value={dataPost.event_location}
-              Placeholder="ej. Av. Libertador 2647"
-              Label="Nombre del complejo o direccion"
-              Error=""
-              Margin="50px 0px 0px 0px"
-            />
-            <p>Ingresa donde donde sera el evento.</p>
-
             <SelectBlack
               Option="Lugar del evento"
               Array={cities}
               OnChange={onChangeEventCity}
-              Multiple={false}
               Margin="50px 0px 0px 0px"
+              Multiple={false}
             />
             <p>Ingresá la provincia o localidad donde sera el evento</p>
+
+            <SelectBlack
+              Option="Ingresá el line up del evento"
+              Array={djs}
+              OnChange={onChangeEventDjs}
+              Margin="50px 0px 0px 0px"
+            />
+
+            <SelectBlack
+              Option="Ingresá los géneros musicales del evento"
+              Array={types}
+              OnChange={onChangeEventType}
+              Margin="50px 0px 0px 0px"
+            />
 
             <DatePicker
               OnChange={onChangeEventDate}
@@ -305,7 +317,15 @@ function CreateEventPage() {
                 Margin="40px 0px 0px 0px"
               />
             ) : (
-              <Loader Color="#7c16f5" Height="30px" Width="30px" />
+              <div
+                style={{
+                  width: "100%",
+                  textAlign: "center",
+                  marginTop: "15px",
+                }}
+              >
+                <Loader Color="#7c16f5" Height="30px" Width="30px" />
+              </div>
             )}
 
             <div className={styles.containerButton}>
@@ -346,21 +366,16 @@ function CreateEventPage() {
               entrada.
             </p>
 
-            <SelectBlack
-              Option="Ingresá el line up del evento"
-              Array={djs}
-              OnChange={onChangeEventDjs}
+            <InputOutlined
+              OnChange={onChangeDataInput}
+              Name="event_location"
+              Value={dataPost.event_location}
+              Placeholder="ej. Av. Libertador 2647"
+              Label="Nombre del complejo o direccion"
+              Error=""
               Margin="50px 0px 0px 0px"
-              Multiple={false}
             />
-
-            <SelectBlack
-              Option="Ingresá los géneros musicales del evento"
-              Array={types}
-              OnChange={onChangeEventType}
-              Margin="50px 0px 0px 0px"
-              Multiple={false}
-            />
+            <p>Ingresa donde donde sera el evento.</p>
 
             <InputOutlined
               OnChange={onChangeDataInput}
@@ -382,7 +397,18 @@ function CreateEventPage() {
 
             <div className={styles.containerButton}>
               <ButtonBlack Value="Voler" OnClick={changePages} />
-              <ButtonBlue Value="Publicar" OnClick={onSubmit} />
+              {!submitLoader ? (
+                <ButtonBlue Value="Publicar" OnClick={onSubmit} />
+              ) : (
+                <div
+                  style={{
+                    width: "100%",
+                    textAlign: "center",
+                  }}
+                >
+                  <Loader Color="#7c16f5" Height="30px" Width="30px" />
+                </div>
+              )}
             </div>
           </div>
         )}
