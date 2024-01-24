@@ -3,18 +3,61 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 75px 0px;
 }
 
 .form {
   width: 500px;
   display: flex;
-  align-items: center;
   justify-content: center;
   flex-direction: column;
   padding: 20px;
   background-color: #1b1c20;
+  border-radius: 8px;
+  color: #ffffff;
 }
 
 .form h1 {
-  color: #ffffff;
+  font-family: "Roboto Condensed";
+  font-size: 39px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin: 10px 0px 50px 0px;
+}
+
+.form h3 {
+  font-family: "Roboto Condensed";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  padding: 0px;
+  margin: 0px 0px 5px 0px;
+}
+
+.containerCard {
+  width: 100%;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+}
+
+.form p {
+  font-family: "Sukhumvit Set";
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin: 5px 0px 0px 0px;
+}
+
+.containerButton {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 40px;
+  padding: 0px 20px;
+  gap: 20px;
+  box-sizing: border-box;
 }

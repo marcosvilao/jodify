@@ -76,16 +76,18 @@ const customTheme = (outerTheme) =>
 function SelectBlack(props) {
   const outerTheme = useTheme();
 
+  const optionsArray = props.Array || [];
+
   if (props.Multiple === false) {
     return (
       <ThemeProvider theme={customTheme(outerTheme)}>
         <Autocomplete
-          style={{ margin: "10px 0px" }}
+          style={{ margin: props.Margin ? props.Margin : "10px 0px" }}
           className={styles.selectBlack}
           multiple={false}
           id="tags-outlined"
-          options={props.Array}
-          getOptionLabel={(option) => option.value}
+          options={optionsArray}
+          getOptionLabel={(option) => option ? option.value : ""}
           filterSelectedOptions
           onChange={props.OnChange}
           renderInput={(params) => (
@@ -102,12 +104,12 @@ function SelectBlack(props) {
     return (
       <ThemeProvider theme={customTheme(outerTheme)}>
         <Autocomplete
-          style={{ margin: "10px 0px" }}
+          style={{ margin: props.Margin ? props.Margin : "10px 0px" }}
           className={styles.selectBlack}
           multiple
           id="tags-outlined"
-          options={props.Array}
-          getOptionLabel={(option) => option.value}
+          options={optionsArray}
+          getOptionLabel={(option) => option ? option.value : ""}
           filterSelectedOptions
           onChange={props.OnChange}
           renderInput={(params) => (

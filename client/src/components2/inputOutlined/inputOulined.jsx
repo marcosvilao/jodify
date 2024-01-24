@@ -151,7 +151,12 @@ function InputOutlined(props) {
   } else {
     return (
       <ThemeProvider theme={customTheme(outerTheme, hasError)}>
-        <div style={{ width: "100%", margin: "10px 0px" }}>
+        <div
+          style={{
+            width: "100%",
+            margin: props.Margin ? props.Margin : "10px 0px",
+          }}
+        >
           <TextField
             label={props.Label}
             variant="outlined"
@@ -175,4 +180,3 @@ function InputOutlined(props) {
 }
 
 export default InputOutlined;
-

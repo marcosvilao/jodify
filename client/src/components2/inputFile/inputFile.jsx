@@ -4,7 +4,10 @@ import FileUploadIcon from "@mui/icons-material/FileUpload";
 
 function InputFile(props) {
   return (
-    <div className={styles.bodyInputFile}>
+    <div
+      className={styles.bodyInputFile}
+      style={{ margin: props.Margin ? props.Margin : "10px 0px" }}
+    >
       <label>Imagen:</label>
 
       <div className={styles.inputFileContainer}>

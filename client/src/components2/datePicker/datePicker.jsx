@@ -5,7 +5,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import { outlinedInputClasses } from "@mui/material/OutlinedInput";
 import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import styles from "./datePicker.module.css";
 
 const customTheme = (outerTheme) =>
@@ -74,19 +74,20 @@ function CustomDatePicker(props) {
   };
 
   return (
-    <ThemeProvider theme={customTheme(outerTheme)} sx={{ width: "100%" }}>
-      <LocalizationProvider dateAdapter={AdapterDayjs} sx={{ width: "100%" }}>
+    <ThemeProvider theme={customTheme(outerTheme)}>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DemoContainer
           components={["DatePicker"]}
-          sx={{ width: "100%", position: "relative" }}
+          sx={{
+            width: "100%",
+            position: "relative",
+            margin: props.Margin ? props.Margin : "10px 0px",
+          }}
         >
-          <div
-            style={{ width: "100%" }}
-            onClick={handleOpenDatePicker}
-          >
+          <div style={{ width: "100%" }} onClick={handleOpenDatePicker}>
             <MobileDatePicker
               sx={{ width: "100%" }}
-              label="Seleccion una fecha"
+              label={props.Label}
               className={styles.datePicker}
               onClose={handleCloseDatePicker}
               open={isDatePickerOpen}
