@@ -235,7 +235,15 @@ function CreateEventPage() {
       }
     };
 
-    console.log(dataPost);
+    if (true) {
+      return (
+        <div className={styles.body}>
+          <div className={styles.form}>
+            <h1>Publica tu evento</h1>
+          </div>
+        </div>
+      );
+    }
 
     return (
       <div className={styles.body}>

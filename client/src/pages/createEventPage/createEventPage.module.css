@@ -3,23 +3,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
-  padding-top: 10px;
-  padding-bottom: 50px;
-  min-height: 83vh;
 }
 
 .form {
+  width: 500px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 400px;
-  gap: 10px;
+  padding: 20px;
+  background-color: #1b1c20;
 }
 
-@media (max-width: 450px) {
-  .form {
-    width: 95%;
-  }
+.form h1 {
+  color: #ffffff;
 }
