@@ -3,7 +3,7 @@ import styles from "./createPromotersPage.module.css";
 import axios from "axios";
 import Alert from "../../components2/alert/alert";
 import LogoJodify from "../../components2/logoJodify/logoJodify";
-import InputBlack from "../../components2/inputBlack/inputBlack";
+import InputFilled from "../../components2/inputFilled/inputFilled";
 import SelectBlack from "../../components2/selectBlack/selectBlack";
 import ButtonBlue from "../../components2/buttonBlue/buttonBlue";
 import TittleH1 from "../../components2/tittleH1/tittleH1";
@@ -80,7 +80,7 @@ function CreatePromotersPage() {
 
         <TittleH1 Value="Crear productora" />
 
-        <InputBlack
+        <InputFilled
           OnChange={onChangeInput}
           Name="name"
           Value={dataPost.name}
@@ -88,7 +88,7 @@ function CreatePromotersPage() {
           Label="escribi el nombre"
         />
 
-        <InputBlack
+        <InputFilled
           OnChange={onChangeInput}
           Name="instagram"
           Value={dataPost.instagram}

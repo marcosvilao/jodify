@@ -6,7 +6,7 @@ import Cookies from "universal-cookie";
 import CheckIcon from "@mui/icons-material/Check";
 import LogoJodify from "../../components2/logoJodify/logoJodify";
 import TittleH1 from "../../components2/tittleH1/tittleH1";
-import InputBlack from "../../components2/inputBlack/inputBlack";
+import InputFilled from "../../components2/inputFilled/inputFilled";
 import ButtonBlue from "../../components2/buttonBlue/buttonBlue";
 import Parrafo from "../../components2/parrafo/parrafo";
 import Alert from "../../components2/alert/alert";
@@ -148,7 +148,7 @@ function LinkResetPassword() {
           <TittleH1 Value="Nueva Contraseña" />
 
           <div className={styles.containerForm}>
-            <InputBlack
+            <InputFilled
               OnChange={onChangeDataPostPassword}
               Name="password"
               Value={dataPost.password}
@@ -157,7 +157,7 @@ function LinkResetPassword() {
               Label="Nueva Contraseña"
               Error={errorPassword}
             />
-            <InputBlack
+            <InputFilled
               OnChange={onChangeDataPostRepeatPassword}
               Name="confirmPassword"
               Value={dataPost.confirmPassword}

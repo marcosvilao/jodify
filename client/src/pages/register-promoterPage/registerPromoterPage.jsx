@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 import LogoJodify from "../../components2/logoJodify/logoJodify";
 import TittleH1 from "../../components2/tittleH1/tittleH1";
-import InputBlack from "../../components2/inputBlack/inputBlack";
+import InputFilled from "../../components2/inputFilled/inputFilled";
 import ButtonBlue from "../../components2/buttonBlue/buttonBlue";
 import Parrafo from "../../components2/parrafo/parrafo";
 import Alert from "../../components2/alert/alert";
@@ -59,21 +59,21 @@ function RegisterPromoter() {
           <TittleH1 Value="Crear cuenta" />
 
           <div className={styles.containerForm}>
-            <InputBlack
+            <InputFilled
               Name="name"
               Placeholder="ej. SoundOn"
               Label="Nombre de la productora"
               Error=""
             />
 
-            <InputBlack
+            <InputFilled
               Name="phone"
               Placeholder="1155264839"
               Label="Telefono de contacto"
               Error=""
             />
 
-            <InputBlack
+            <InputFilled
               Name="link"
               Placeholder="ej. sound_on"
               Label="Instagram"

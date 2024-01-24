@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import styles from "./createEventPage.module.css";
 import SelectBlack from "../../components2/selectBlack/selectBlack";
-import InputBlack from "../../components2/inputBlack/inputBlack";
 import ButtonBlue from "../../components2/buttonBlue/buttonBlue";
 import axios from "axios";
 import Loader from "../../components2/loader/loader";
@@ -10,6 +9,7 @@ import Alert from "../../components2/alert/alert";
 import EventCard from "../../components2/eventCard/eventCard";
 import InputFile from "../../components2/inputFile/inputFile";
 import DatePicker from "../../components2/datePicker/datePicker";
+import InputOutlined from "../../components2/inputOutlined/inputOulined";
 
 function CreateEventPage() {
   const axiosUrl = process.env.REACT_APP_AXIOS_URL;
@@ -251,7 +251,7 @@ function CreateEventPage() {
             OnClick={onClickEventCard}
           />
 
-          <InputBlack
+          <InputOutlined
             OnChange={onChangeDataInput}
             Name="event_title"
             Value={dataPost.event_title}
@@ -260,7 +260,7 @@ function CreateEventPage() {
             Error=""
           />
 
-          <InputBlack
+          <InputOutlined
             OnChange={onChangeDataInput}
             Name="event_location"
             Value={dataPost.event_location}
@@ -269,7 +269,7 @@ function CreateEventPage() {
             Error=""
           />
 
-          <InputBlack
+          <InputOutlined
             OnChange={onChangeDataInput}
             Name="ticket_link"
             Value={dataPost.ticket_link}

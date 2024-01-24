@@ -7,7 +7,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import LogoJodify from "../../components2/logoJodify/logoJodify";
 import TittleH1 from "../../components2/tittleH1/tittleH1";
 import IconsAuth0 from "../../components2/iconsAuth0/iconsAuth0";
-import InputBlack from "../../components2/inputBlack/inputBlack";
+import InputFilled from "../../components2/inputFilled/inputFilled";
 import ButtonBlue from "../../components2/buttonBlue/buttonBlue";
 import Parrafo from "../../components2/parrafo/parrafo";
 import Alert from "../../components2/alert/alert";
@@ -210,7 +210,7 @@ function RegisterPage() {
         <IconsAuth0 Register="true" />
 
         <div className={styles.containerForm}>
-          <InputBlack
+          <InputFilled
             OnChange={onChangeDataPostUsername}
             Name="username"
             Value={postUser.username}
@@ -218,7 +218,7 @@ function RegisterPage() {
             Label="Username"
             Error={errorUsername}
           />
-          <InputBlack
+          <InputFilled
             OnChange={onChangeDataPostEmail}
             Name="email"
             Value={postUser.email}
@@ -226,7 +226,7 @@ function RegisterPage() {
             Label="Correo electronico"
             Error={errorEmail}
           />
-          <InputBlack
+          <InputFilled
             OnChange={onChangeDataPostPassword}
             Name="password"
             Value={postUser.password}
@@ -235,7 +235,7 @@ function RegisterPage() {
             Type="password"
             Error={errorPassword}
           />
-          <InputBlack
+          <InputFilled
             OnChange={onChangeDataPostRepeatPassword}
             Name="repeatPassword"
             Value={postUser.repeatPassword}

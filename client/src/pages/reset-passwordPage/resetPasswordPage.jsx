@@ -5,7 +5,7 @@ import axios from "axios";
 import Cookies from "universal-cookie";
 import LogoJodify from "../../components2/logoJodify/logoJodify";
 import TittleH1 from "../../components2/tittleH1/tittleH1";
-import InputBlack from "../../components2/inputBlack/inputBlack";
+import InputFilled from "../../components2/inputFilled/inputFilled";
 import ButtonBlue from "../../components2/buttonBlue/buttonBlue";
 import Parrafo from "../../components2/parrafo/parrafo";
 import Alert from "../../components2/alert/alert";
@@ -89,7 +89,7 @@ function ResetPassword() {
                       enviaremos un enlace para restablecer tu contraseña."
             />
 
-            <InputBlack
+            <InputFilled
               OnChange={onChangeDataPost}
               Name="email"
               Value={dataPost.email}
