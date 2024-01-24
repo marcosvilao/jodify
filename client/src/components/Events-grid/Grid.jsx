@@ -17,7 +17,7 @@ function Grid() {
   const isFiltering = useSelector(state => state.search.isFiltering)
 
   useEffect(() => {
-      fetch('https://jodify.vercel.app/events')
+    fetch('https://jodify.vercel.app/events')
         .then(response => response.json())
         .then(data => {
           dispatch(setEvents(data));
@@ -54,7 +54,12 @@ function Grid() {
       const date = new Date(dateString);
       date.setHours(date.getHours() + 3);
       const eventArray = dateObj[Object.keys(dateObj)];
-
+      const sortedArray = [...eventArray].sort((a, b) => {
+        const priorityA = a.priority
+        const priorityB = b.priority
+      
+        return priorityA - priorityB;
+      });
       const options = {
         weekday: 'long',  // "Jueves"
         day: 'numeric',   // "24"
@@ -68,7 +73,6 @@ function Grid() {
       
       const finalFormattedDate = `${capitalizedDay}, ${formattedDate.slice(formattedDate.indexOf(' ') + 1, formattedDate.lastIndexOf(' '))} ${capitalizedMonth}`;
 
-
       return (
         <div key={date.getTime()} style={{marginBottom : '20px'}}>
           <StickyHeader2>
@@ -76,7 +80,7 @@ function Grid() {
           </StickyHeader2>
           
           <GridWrapper>
-            {eventArray.map(event => (
+            {sortedArray.map(event => (
               <Event event={event} key={event.id} />
             ))}
           </GridWrapper>
