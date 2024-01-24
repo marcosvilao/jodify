@@ -181,6 +181,7 @@ function HomePage() {
 
     const onChangeDateRange = (value) => {
       setIsFiltering(true);
+      setLazyLoadNoEvents(false);
       setLoaderLazyLoad(false);
       if (value[0] === null && value[1] === null) {
         setFilter(() => ({
@@ -216,6 +217,7 @@ function HomePage() {
     };
 
     const onClickDateRange = () => {
+      setLazyLoadNoEvents(false);
       setLoaderLazyLoad(false);
       if (filter.dates.length === 0) {
         return null;
@@ -283,6 +285,7 @@ function HomePage() {
         setAxiosFecha(true);
         setIsFiltering(true);
         setLoaderLazyLoad(false);
+        setLazyLoadNoEvents(false);
       } else {
         setOpenFecha(false);
       }
@@ -303,6 +306,7 @@ function HomePage() {
     const onClickCheckBoxListUbicacion = (item) => {
       setLoader(true);
       setAxiosCitie(true);
+      setLazyLoadNoEvents(false);
       setLoaderLazyLoad(false);
       setIsFiltering(true);
       setCitieName(item.city_name);
@@ -344,6 +348,7 @@ function HomePage() {
 
         setLoader(true);
         setAxiosType(true);
+        setLazyLoadNoEvents(false);
         setIsFiltering(true);
         setLoaderLazyLoad(false);
         if (openGenero) {
@@ -376,6 +381,7 @@ function HomePage() {
       }));
       setLoader(true);
       setAxiosType(true);
+      setLazyLoadNoEvents(false);
       setIsFiltering(true);
       setLoaderLazyLoad(false);
     };
@@ -391,6 +397,7 @@ function HomePage() {
         page: 0,
       }));
       setAxiosSearch(true);
+      setLazyLoadNoEvents(false);
       setLoader(true);
       setIsFiltering(true);
       setLoaderLazyLoad(false);
