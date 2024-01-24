@@ -19,6 +19,7 @@ function HomePage() {
   const [openGenero, setOpenGenero] = useState(false);
   const [openFecha, setOpenFecha] = useState(false);
   const [types, setType] = useState(false);
+  const [checkedItems, setCheckedItems] = useState({});
   const [cities, setCities] = useState(false);
   const [closePropsUbicacion, setClosePropsUbicacion] = useState(false);
   const [axiosCitie, setAxiosCitie] = useState(false);
@@ -30,6 +31,7 @@ function HomePage() {
   const [lazyLoadNoEvents, setLazyLoadNoEvents] = useState(false);
   const [valueButtonFecha, setValueButtonFecha] = useState(false);
   const [citieName, setCitieName] = useState("CABA | GBA");
+  const [isFiltering, setIsFiltering] = useState(false);
   const [filter, setFilter] = useState({
     page: 0,
     cities: ["258fd495-92d3-4119-aa37-0d1c684a0237"],
@@ -78,7 +80,7 @@ function HomePage() {
         const maxHeight = document.body.scrollHeight - window.innerHeight;
         const currentScroll = window.scrollY || window.pageYOffset;
 
-        if (currentScroll >= maxHeight && !endReached) {
+        if (currentScroll >= maxHeight && !endReached && !isFiltering) {
           let page = filter.page + 1;
           setFilter(() => ({
             ...filter,
@@ -140,8 +142,13 @@ function HomePage() {
           }
         };
 
+        const additionalClass = i === 0 ? styles.firstElement : "";
+
         return (
-          <div key={i} className={styles.containerEventCard}>
+          <div
+            key={i}
+            className={`${styles.containerEventCard} ${additionalClass}`}
+          >
             <h1>{finalFormattedDate}</h1>
             {event[objectName].map((event, index) => (
               <EventCard
@@ -166,6 +173,7 @@ function HomePage() {
     };
 
     const onChangeDateRange = (value) => {
+      setIsFiltering(true);
       if (value[0] === null && value[1] === null) {
         setFilter(() => ({
           ...filter,
@@ -235,6 +243,7 @@ function HomePage() {
           setLoader(false);
           setFinishLazyLoad(false);
           setLazyLoadNoEvents(false);
+          setIsFiltering(false);
         })
         .catch(() => {
           Alert(
@@ -262,6 +271,7 @@ function HomePage() {
         setValueButtonFecha(false);
         setLoader(true);
         setAxiosFecha(true);
+        setIsFiltering(true);
       } else {
         setOpenFecha(false);
       }
@@ -280,6 +290,7 @@ function HomePage() {
     const onClickCheckBoxListUbicacion = (item) => {
       setLoader(true);
       setAxiosCitie(true);
+      setIsFiltering(true);
       setCitieName(item.city_name);
       setFilter(() => ({
         ...filter,
@@ -304,8 +315,20 @@ function HomePage() {
           types: [],
           page: 0,
         }));
+
+        const resetCheckedItems = Object.keys(checkedItems).reduce(
+          (acc, key) => {
+            acc[key] = false;
+            return acc;
+          },
+          {}
+        );
+
+        setCheckedItems(resetCheckedItems);
+
         setLoader(true);
         setAxiosType(true);
+        setIsFiltering(true);
         if (openGenero) {
           setOpenGenero(false);
         }
@@ -315,8 +338,19 @@ function HomePage() {
     };
 
     const onClickCheckBoxListGenero = (item) => {
-      let arrayTypes = [];
-      arrayTypes.push(item.type_name);
+      setCheckedItems((prevState) => ({
+        ...prevState,
+        [item.id]: !prevState[item.id],
+      }));
+      let arrayTypes = filter.types;
+
+      if (arrayTypes.includes(item.type_name)) {
+        arrayTypes = arrayTypes.filter((type) => type !== item.type_name);
+        console.log(arrayTypes);
+      } else {
+        arrayTypes.push(item.type_name);
+        console.log(arrayTypes);
+      }
 
       setFilter(() => ({
         ...filter,
@@ -325,6 +359,10 @@ function HomePage() {
       }));
       setLoader(true);
       setAxiosType(true);
+      setIsFiltering(true);
+    };
+
+    const onCloseTypesList = () => {
       onClickOpenGenero();
     };
 
@@ -336,6 +374,7 @@ function HomePage() {
       }));
       setAxiosSearch(true);
       setLoader(true);
+      setIsFiltering(true);
     };
 
     if (axiosType || axiosCitie || axiosFecha || axiosSearch) {
@@ -350,6 +389,7 @@ function HomePage() {
           setAxiosSearch(false);
           setFinishLazyLoad(false);
           setLazyLoadNoEvents(false);
+          setIsFiltering(false);
         })
         .catch(() => {
           Alert(
@@ -382,49 +422,55 @@ function HomePage() {
         });
     }
 
-    console.log(filter);
-
     return (
       <div className={styles.body}>
-        <div className={styles.containerInput}>
-          <InputSearch
-            PlaceHolder="Buscá un evento, artista o club"
-            OnChange={onChangeInputSearch}
-          />
-        </div>
-        <div className={styles.containerButtons}>
-          <ButtonPickerSelected
-            Value={citieName}
-            OnClick={onClickOpenUbicaion}
-            Close={closePropsUbicacion}
-          />
-
-          {openGenero || filter.types.length ? (
-            <ButtonPickerSelected
-              Value={filter.types.length ? filter.types[0] : "Género"}
-              OnClick={onClickOpenGenero}
-              Close="true"
-              OnClose={onCloseTypes}
+        <div className={styles.containerFixed}>
+          <div className={styles.containerInput}>
+            <InputSearch
+              PlaceHolder="Buscá un evento, artista o club"
+              OnChange={onChangeInputSearch}
             />
-          ) : (
-            <ButtonPicker Value="Género" OnClick={onClickOpenGenero} />
-          )}
-
-          {openFecha || filter.dates.length ? (
+          </div>
+          <div className={styles.containerButtons}>
             <ButtonPickerSelected
-              Value={valueButtonFecha ? valueButtonFecha : "Fecha"}
-              Close="true"
-              OnClick={onClickOpenFecha}
-              OnClose={onCloseFecha}
+              Value={citieName}
+              OnClick={onClickOpenUbicaion}
+              Close={closePropsUbicacion}
             />
-          ) : (
-            <ButtonPicker Value="Fecha" OnClick={onClickOpenFecha} />
-          )}
+
+            {openGenero || filter.types.length ? (
+              <ButtonPickerSelected
+                Value={
+                  filter.types.length > 1
+                    ? filter.types[0] + " + " + (filter.types.length - 1)
+                    : filter.types.length === 1
+                    ? filter.types[0]
+                    : "Género"
+                }
+                OnClick={onClickOpenGenero}
+                Close="true"
+                OnClose={onCloseTypes}
+              />
+            ) : (
+              <ButtonPicker Value="Género" OnClick={onClickOpenGenero} />
+            )}
+
+            {openFecha || filter.dates.length ? (
+              <ButtonPickerSelected
+                Value={valueButtonFecha ? valueButtonFecha : "Fecha"}
+                Close="true"
+                OnClick={onClickOpenFecha}
+                OnClose={onCloseFecha}
+              />
+            ) : (
+              <ButtonPicker Value="Fecha" OnClick={onClickOpenFecha} />
+            )}
+          </div>
         </div>
 
         <div className={styles.containerPicker}>
           {openUbicacion ? (
-            <div className={styles.positionCitiesList}>
+            <div>
               <CheckBoxList
                 cityList={cities}
                 OnClick={onClickCheckBoxListUbicacion}
@@ -433,16 +479,18 @@ function HomePage() {
           ) : null}
 
           {openGenero ? (
-            <div className={styles.positionTypesList}>
+            <div>
               <CheckBoxList
                 typeList={types}
+                checkedItems={checkedItems}
                 OnClick={onClickCheckBoxListGenero}
+                OnClose={onCloseTypesList}
               />
             </div>
           ) : null}
 
           {openFecha ? (
-            <div className={styles.positionDatePicker}>
+            <div className={styles.datePicker}>
               <DateRange
                 OnChange={onChangeDateRange}
                 OnClick={onClickDateRange}
@@ -452,14 +500,14 @@ function HomePage() {
           ) : null}
         </div>
 
+        {dataEventCard.length !== 0 && !loader ? (
+          <div className={styles.containerEventCard}>{elementDivCard}</div>
+        ) : null}
+
         {dataEventCard.length === 0 && !loader ? (
           <div className={styles.noHayEventos}>
             <h1>No hay eventos en la fecha seleccionada</h1>
           </div>
-        ) : null}
-
-        {dataEventCard.length !== 0 && !loader ? (
-          <div className={styles.containerEventCard}>{elementDivCard}</div>
         ) : null}
 
         {loader ? (

@@ -27,6 +27,14 @@
   padding: 10px 0px;
 }
 
+.containerFixed {
+  position: fixed;
+  top: 81px;
+  width: 700px;
+  background-color: #0c0c0c;
+  z-index: 1000;
+}
+
 .containerInput {
   width: 700px;
   display: flex;
@@ -41,35 +49,29 @@
   display: flex;
   align-items: center;
   justify-content: left;
-  margin: 30px 0px;
+  margin: 30px 0px 10px 0px;
   gap: 10px;
 }
 
 .containerPicker {
-  position: relative;
   width: 700px;
+  position: fixed;
+  top: 270px;
 }
 
-.positionDatePicker {
-  position: absolute;
-  top: -250px;
-  left: 35px;
-  z-index: 999;
-}
-
-.positionCitiesList {
-  position: absolute;
-  left: 0px;
-}
-
-.positionTypesList {
-  position: absolute;
-  left: 100px;
+.datePicker{
+  width: 300px;
+  height: 200px;
 }
 
 .containerEventCard {
   width: 700px;
-  margin: 10px 0px;
+  margin: 0px;
+  margin-bottom: 10px;
+}
+
+.firstElement {
+  margin-top: 300px;
 }
 
 .containerEventCard h1 {
@@ -89,6 +91,10 @@
 }
 
 @media screen and (max-width: 750px) {
+  .containerFixed {
+    width: 100%;
+  }
+
   .containerInput {
     width: 98%;
   }

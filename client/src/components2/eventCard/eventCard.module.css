@@ -5,7 +5,7 @@
   border-radius: 8px;
   display: flex;
   align-items: center;
-  padding: 8px;
+  padding: 10px;
   color: #e8dfe9;
   box-sizing: border-box;
   margin: 10px 0px;
@@ -14,7 +14,7 @@
 
 .containerImg {
   height: 100px;
-  width: 130px; 
+  width: 130px;
   border-radius: 8px;
   background-repeat: no-repeat;
   background-size: cover;
@@ -30,32 +30,37 @@
 .containerData {
   width: 100%;
   height: 100%;
-  display: block;
+  display: flex;
+  flex-direction: column;
   margin-left: 15px;
-  position: relative;
 }
 
 .containerData h3 {
-  position: absolute;
-  top: -10px;
   font-weight: bold;
   font-size: 17px;
+  margin: 0px;
 }
-
 .containerP {
-  position: absolute;
+  display: flex;
   width: 100%;
-  height: 100%;
-  top: 40px;
-  font-size: 14px;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 15px;
 }
 
-.icon{
-    margin-right: 5px;
-    color: #7c16f5;
+.containerP div {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  margin-bottom: 5px;
 }
 
-.containerP p {
+.icon {
+  margin-right: 5px;
+  color: #7c16f5;
+}
+
+.containerP div p {
   margin: 0px;
   font-size: 14px;
   opacity: 0-8;
@@ -66,17 +71,25 @@
     font-size: 16px;
   }
 
-  .containerP p {
+  .containerP div p {
     font-size: 13px;
   }
 }
 
 @media screen and (max-width: 500px) {
+  .body {
+    height: 140px;
+  }
+
+  .containerImg {
+    height: 120px;
+  }
+
   .containerData h3 {
     font-size: 14px;
   }
 
-  .containerP p {
+  .containerP div p {
     font-size: 12px;
   }
 }

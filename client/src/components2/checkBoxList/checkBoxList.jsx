@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -7,57 +7,80 @@ import Checkbox from "@mui/material/Checkbox";
 import { ItemTextList } from "./checkBoxListStyles.js";
 import theme from "../../jodifyStyles";
 
-function CheckBoxList(props) {
+function CheckBoxList({ cityList, typeList, checkedItems, OnClick, OnClose }) {
+  const listRef = useRef(null);
+
+  const handleClickOutside = (event) => {
+    if (listRef.current && !listRef.current.contains(event.target)) {
+      OnClose?.();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const handleItemClick = (item) => {
+    OnClick?.(item);
+  };
+
   const renderListItems = (list, isCityList) => {
     return (
-      <List
-        sx={{
-          color: theme.jodify_colors._text_white,
-          width: "200px",
-          bgcolor: theme.jodify_colors._background_gray,
-          margin: "0 auto",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-        }}
-      >
-        {list.map((item, index) => {
-          const labelId = `checkbox-list-label-${index}`;
+      <div ref={listRef}>
+        <List
+          sx={{
+            color: theme.jodify_colors._text_white,
+            width: "200px",
+            bgcolor: theme.jodify_colors._background_gray,
+            margin: "0 auto",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
+          {list.map((item, index) => {
+            const labelId = `checkbox-list-label-${index}`;
+            const isChecked = checkedItems[item.id] || false; // Estado actual de la Checkbox
 
-          return (
-            <ListItem
-              key={index}
-              disablePadding
-              sx={{ marginBottom: "10px", height: "30px" }}
-            >
-              <ListItemButton
-                sx={{
-                  height: "19px",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-                role={undefined}
-                dense
+            return (
+              <ListItem
+                key={index}
+                disablePadding
+                sx={{ marginBottom: "10px", height: "30px" }}
               >
-                <ListItemIcon sx={{ minWidth: "20px" }}>
-                  <Checkbox
-                    edge="start"
-                    disableRipple
-                    inputProps={{ "aria-labelledby": labelId }}
-                    style={{ color: theme.jodify_colors._text_white }}
-                    onClick={() => props.OnClick(item)}
+                <ListItemButton
+                  sx={{
+                    height: "19px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                  role={undefined}
+                  dense
+                  onClick={() => handleItemClick(item)}
+                >
+                  <ListItemIcon sx={{ minWidth: "20px" }}>
+                    <Checkbox
+                      edge="start"
+                      checked={isChecked}
+                      disableRipple
+                      inputProps={{ "aria-labelledby": labelId }}
+                      style={{ color: theme.jodify_colors._text_white }}
+                    />
+                  </ListItemIcon>
+                  <ItemTextList
+                    id={labelId}
+                    primary={isCityList ? item.city_name : item.type_name}
                   />
-                </ListItemIcon>
-                <ItemTextList
-                  id={labelId}
-                  primary={isCityList ? item.city_name : item.type_name}
-                />
-              </ListItemButton>
-            </ListItem>
-          );
-        })}
-      </List>
+                </ListItemButton>
+              </ListItem>
+            );
+          })}
+        </List>
+      </div>
     );
   };
 
@@ -71,9 +94,9 @@ function CheckBoxList(props) {
         borderRadius: theme.jodify_borders._lg_border_radius,
       }}
     >
-      {props.cityList
-        ? renderListItems(props.cityList, true)
-        : renderListItems(props.typeList || [], false)}
+      {cityList
+        ? renderListItems(cityList, true)
+        : renderListItems(typeList || [], false)}
     </div>
   );
 }

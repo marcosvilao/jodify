@@ -15,14 +15,7 @@ function EventCard(props) {
         <h3>{props.Tittle}</h3>
 
         <div className={styles.containerP}>
-          <div
-            style={{
-              display: "flex",
-              width: "100%",
-              alignItems: "center",
-              height: "35px",
-            }}
-          >
+          <div>
             <LocationOnIcon
               className={styles.icon}
               style={{ height: "20px", width: "20px" }}
