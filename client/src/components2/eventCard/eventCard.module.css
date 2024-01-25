@@ -12,6 +12,16 @@
   cursor: pointer;
 }
 
+.dontImgContainer {
+  height: 100px;
+  width: 130px;
+  border: 2px dashed #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+}
+
 .containerImg {
   height: 100px;
   width: 130px;
@@ -79,6 +89,10 @@
 @media screen and (max-width: 500px) {
   .body {
     height: 140px;
+  }
+
+  .dontImgContainer {
+    height: 120px;
   }
 
   .containerImg {
