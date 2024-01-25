@@ -432,15 +432,54 @@ function HomePage() {
         .then((res) => {
           setLoaderLazyLoad(false);
           setLazyLoad(false);
+
           if (res.data.length === 0) {
             setFinishLazyLoad(true);
             setLazyLoadNoEvents(true);
           } else {
-            setDataEventCard([...dataEventCard, ...res.data]);
+            const newArray = [...dataEventCard];
+            const dataCards = res.data;
+
+            dataCards.forEach((newData) => {
+              const newDate = Object.keys(newData)[0];
+              const isDateInArray = newArray.some((existingData) => {
+                const existingDate = Object.keys(existingData)[0];
+                return existingDate === newDate;
+              });
+
+              if (isDateInArray) {
+                newArray.forEach((existingData) => {
+                  const existingDate = Object.keys(existingData)[0];
+                  if (existingDate === newDate) {
+                    existingData[newDate] = existingData[newDate].concat(
+                      newData[newDate]
+                    );
+                  }
+                });
+              } else {
+                newArray.push(newData);
+              }
+            });
+
+            const uniqueArray = newArray.map((dateObj) => {
+              const dateKey = Object.keys(dateObj)[0];
+              const eventsArray = dateObj[dateKey];
+              const uniqueEvents = [];
+            
+              eventsArray.forEach((event) => {
+                if (!uniqueEvents.some((uniqueEvent) => uniqueEvent.id === event.id)) {
+                  uniqueEvents.push(event);
+                }
+              });
+            
+              return { [dateKey]: uniqueEvents };
+            });
+
+            setDataEventCard(uniqueArray);
             setFinishLazyLoad(false);
           }
         })
-        .catch(() => {
+        .catch((err) => {
           Alert(
             "Error!",
             "Error al cargar los eventos por favor intentar luego mas tarde o ponerse en contacto con el servidor",
