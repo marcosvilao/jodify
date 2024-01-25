@@ -465,13 +465,18 @@ function HomePage() {
               const dateKey = Object.keys(dateObj)[0];
               const eventsArray = dateObj[dateKey];
               const uniqueEvents = [];
-            
+
               eventsArray.forEach((event) => {
-                if (!uniqueEvents.some((uniqueEvent) => uniqueEvent.id === event.id)) {
+                if (
+                  !uniqueEvents.some(
+                    (uniqueEvent) =>
+                      uniqueEvent.event_title === event.event_title
+                  )
+                ) {
                   uniqueEvents.push(event);
                 }
               });
-            
+
               return { [dateKey]: uniqueEvents };
             });
 
