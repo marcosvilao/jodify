@@ -536,7 +536,7 @@ function HomePage() {
 
         {dataEventCard.length === 0 && !loader ? (
           <div className={styles.noHayEventos}>
-            <h1>No hay eventos en la fecha seleccionada</h1>
+            <h1>No hay eventos con el filtro seleccionado</h1>
           </div>
         ) : null}
 
