@@ -14,7 +14,7 @@ function Title() {
 
   return (
     <BrandContainer>
-      <a href="https://jodify-client.vercel.app/">
+      <a href="https://jodify.com.ar/">
         <img
           style={{ borderRadius: theme.jodify_borders._lg_border_radius }}
           src={logo}
