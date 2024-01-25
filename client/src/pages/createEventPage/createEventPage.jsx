@@ -249,10 +249,10 @@ function CreateEventPage() {
     const changePages = () => {
       if (pages === 1) {
         setPages(2);
-        window.scroll(0, 0);
+        window.scroll(0, 200);
       } else {
         setPages(1);
-        window.scroll(0, 0);
+        window.scroll(0, 200);
       }
     };
 
@@ -266,6 +266,29 @@ function CreateEventPage() {
           <div className={styles.form}>
             <div style={{ width: "100%", textAlign: "center" }}>
               <h1>Publica tu evento</h1>
+            </div>
+
+            <div className={styles.containerPage}>
+              <div className={styles.linePageContainer}>
+                <div
+                  className={styles.cirule}
+                  style={{ backgroundColor: "#AE71F9" }}
+                ></div>
+
+                <div className={styles.linePage}></div>
+
+                <div
+                  className={styles.cirule}
+                  style={{ backgroundColor: "#ffffff" }}
+                ></div>
+              </div>
+
+              <div className={styles.containerNumbers}>
+                <p className={styles.numberLeft} style={{ color: "#AE71F9" }}>
+                  1
+                </p>
+                <p className={styles.numberRight}>2</p>
+              </div>
             </div>
 
             <h3>Previsualización</h3>
@@ -339,6 +362,34 @@ function CreateEventPage() {
               <h1>Publica tu evento:</h1>
             </div>
 
+            <div className={styles.containerPage}>
+              <div className={styles.linePageContainer}>
+                <div
+                  className={styles.cirule}
+                  style={{ backgroundColor: "#AE71F9" }}
+                ></div>
+
+                <div
+                  className={styles.linePage}
+                  style={{ backgroundColor: "#AE71F9" }}
+                ></div>
+
+                <div
+                  className={styles.cirule}
+                  style={{ backgroundColor: "#AE71F9" }}
+                ></div>
+              </div>
+
+              <div className={styles.containerNumbers}>
+                <p className={styles.numberLeft} style={{ color: "#AE71F9" }}>
+                  1
+                </p>
+                <p className={styles.numberRight} style={{ color: "#AE71F9" }}>
+                  2
+                </p>
+              </div>
+            </div>
+
             <h3>Previsualización</h3>
 
             <div className={styles.containerCard}>
@@ -375,7 +426,7 @@ function CreateEventPage() {
               Error=""
               Margin="50px 0px 0px 0px"
             />
-            <p>Ingresa donde donde sera el evento.</p>
+            <p>Ingresa donde sera el evento.</p>
 
             <InputOutlined
               OnChange={onChangeDataInput}

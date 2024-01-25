@@ -24,7 +24,61 @@
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  margin: 10px 0px 50px 0px;
+  margin: 10px 0px 30px 0px;
+}
+
+.containerPage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  margin: 0px 0px 50px 0px;
+}
+
+.linePageContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.linePage {
+  width: 50%;
+  height: 2px;
+  background-color: #ffffff;
+}
+
+.cirule {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+}
+
+.containerNumbers {
+  height: 15px;
+  width: 55%;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.containerNumbers p {
+  text-align: center;
+  font-family: "Roboto Condensed";
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: absolute;
+}
+
+.numberLeft{
+  left: 2px;
+}
+
+.numberRight{
+  right: 1px;
 }
 
 .form h3 {
