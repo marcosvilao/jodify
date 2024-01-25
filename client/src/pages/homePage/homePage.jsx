@@ -81,7 +81,8 @@ function HomePage() {
 
         if (
           currentScroll >= maxHeight &&
-          !endReached &&
+          dataEventCard &&
+          !finishLazyLoad &&
           !isFiltering &&
           !loader
         ) {
@@ -93,6 +94,7 @@ function HomePage() {
           setLazyLoad(true);
           setEndReached(true);
           setLoaderLazyLoad(true);
+          setFinishLazyLoad(true);
         } else {
           setEndReached(false);
         }
@@ -435,6 +437,7 @@ function HomePage() {
             setLazyLoadNoEvents(true);
           } else {
             setDataEventCard([...dataEventCard, ...res.data]);
+            setFinishLazyLoad(false);
           }
         })
         .catch(() => {
