@@ -62,9 +62,9 @@ const customTheme = (outerTheme) =>
             backgroundColor: "#1b1c20", // Color de fondo de las opciones seleccionadas
             color: "#ffffff", // Color del texto de las opciones seleccionadas
             "& .MuiSvgIcon-root": {
-              color: "#ffffff", // Color del icono de eliminar ('X') en opciones seleccionadas
+              color: "#6F7E8C", // Color del icono de eliminar ('X') en opciones seleccionadas
               "&:hover": {
-                color: "#888888", // Color gris cuando haces hover sobre el icono de eliminar
+                color: "#6F7E8C", // Color gris cuando haces hover sobre el icono de eliminar
               },
             },
           },

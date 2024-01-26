@@ -5,7 +5,7 @@
   border-radius: 8px;
   display: flex;
   align-items: center;
-  padding: 10px;
+  padding: 12px;
   color: #e8dfe9;
   box-sizing: border-box;
   margin: 10px 0px;
@@ -13,17 +13,18 @@
 }
 
 .dontImgContainer {
-  height: 100px;
+  height: 100%;
   width: 130px;
   border: 2px dashed #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 10px;
+  opacity: 0.4;
 }
 
 .containerImg {
-  height: 100px;
+  height: 100%;
   width: 130px;
   border-radius: 8px;
   background-repeat: no-repeat;
@@ -42,12 +43,13 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  margin-left: 15px;
+  padding-left: 8px;
+  box-sizing: border-box;
 }
 
 .containerData h3 {
   font-weight: bold;
-  font-size: 17px;
+  font-size: 16px;
   margin: 0px;
 }
 .containerP {
@@ -72,35 +74,13 @@
 
 .containerP div p {
   margin: 0px;
-  font-size: 14px;
+  font-size: 13px;
   opacity: 0-8;
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 450px) {
   .containerData h3 {
-    font-size: 16px;
-  }
-
-  .containerP div p {
-    font-size: 13px;
-  }
-}
-
-@media screen and (max-width: 500px) {
-  .body {
-    height: 140px;
-  }
-
-  .dontImgContainer {
-    height: 120px;
-  }
-
-  .containerImg {
-    height: 120px;
-  }
-
-  .containerData h3 {
-    font-size: 14px;
+    font-size: 15px;
   }
 
   .containerP div p {

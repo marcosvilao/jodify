@@ -295,9 +295,9 @@ function CreateEventPage() {
 
             <div className={styles.containerCard}>
               <EventCard
-                Alt="Seleccionar Imagen"
                 Img={dataPost.event_image}
-                Tittle={dataPost.event_title}
+                SecondTittle={dataPost.event_title}
+                Tittle={dataPost.event_djs}
                 Location={dataPost.event_location}
                 Genre={dataCardType}
                 OnClick={onClickEventCard}
@@ -311,7 +311,9 @@ function CreateEventPage() {
               Margin="50px 0px 0px 0px"
               Multiple={false}
             />
-            <p>Ingresá la provincia o localidad donde sera el evento</p>
+            <p>
+              Elegi la ciudad o porvincia donde queres que figure el evento.
+            </p>
 
             <SelectBlack
               Option="Ingresá el line up del evento"
@@ -394,9 +396,9 @@ function CreateEventPage() {
 
             <div className={styles.containerCard}>
               <EventCard
-                Alt="Seleccionar Imagen"
                 Img={dataPost.event_image}
-                Tittle={dataPost.event_title}
+                SecondTittle={dataPost.event_title}
+                Tittle={dataPost.event_djs}
                 Location={dataPost.event_location}
                 Genre={dataCardType}
                 OnClick={onClickEventCard}

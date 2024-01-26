@@ -50,6 +50,13 @@ const customTheme = (outerTheme) =>
           },
         },
       },
+      MuiPickersToolbar: {
+        styleOverrides: {
+          root: {
+            display: "none",
+          },
+        },
+      },
     },
   });
 
@@ -86,7 +93,7 @@ function CustomDatePicker(props) {
         >
           <div style={{ width: "100%" }} onClick={handleOpenDatePicker}>
             <MobileDatePicker
-              sx={{ width: "100%" }}
+              sx={{ color: "#ffffff" }}
               label={props.Label}
               className={styles.datePicker}
               onClose={handleCloseDatePicker}
