@@ -10,10 +10,64 @@ import styles from "./datePicker.module.css";
 
 const customTheme = (outerTheme) =>
   createTheme({
-    palette: {
-      mode: "dark",
-    },
     components: {
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            color: "#90CAF9",
+            "&:hover": {
+              backgroundColor: "rgba(255, 255, 255, 0.15)", // Color de fondo en hover
+            },
+          },
+        },
+      },
+      MuiIconButton: {
+        styleOverrides: {
+          root: {
+            color: "#ffffff",
+          },
+        },
+      },
+      MuiPickersDay: {
+        styleOverrides: {
+          root: {
+            color: "#ffffff",
+            "&.Mui-selected": {
+              backgroundColor: "#90CAF9",
+              borderStyle: "none",
+              borderRadius: "50%",
+              color: "#000000",
+            },
+            "&:hover": {
+              backgroundColor: "rgba(255, 255, 255, 0.15)",
+              borderRadius: "50%",
+              borderColor: "#ffffff",
+              borderWidth: "1px",
+              borderStyle: "solid",
+            },
+            "&.MuiPickersDay-today": {
+              borderColor: "#ffffff",
+              borderWidth: "2px",
+              borderStyle: "solid",
+              borderRadius: "50%",
+            },
+            "&.Mui-selected:focus": {
+              backgroundColor: "#90CAF9", // Fondo para la fecha seleccionada en foco
+              color: "#000000", // Color del texto para la fecha seleccionada en foco
+              borderStyle: "none",
+              borderRadius: "50%",
+            },
+          },
+        },
+      },
+      MuiPaper: {
+        styleOverrides: {
+          root: {
+            backgroundColor: "#000000",
+            color: "#ffffff",
+          },
+        },
+      },
       MuiTextField: {
         styleOverrides: {
           root: {
