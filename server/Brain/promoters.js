@@ -7,7 +7,55 @@ const csvToJson =require('csvtojson');
 const pool = require('../db');
 
 
+const relateEventPromoters = async () => {
+    const dbName = 'verceldb'
+    let cwd = path.join(__dirname);
+    const filePathSQLWrite = cwd + '/imports/eventCreate_Scripts.txt';
+    let writeSQL = fs.createWriteStream(filePathSQLWrite);
 
+    const config = configDB();
+
+    try {
+            jodifyDB = new Client({
+        ...config,
+        database: dbName,
+      });
+
+      await jodifyDB.connect();
+      console.log('Connection with the database established.');
+
+      let events = await jodifyDB.query('SELECT id, promoter_id FROM event ;')
+      events = events.rows
+
+      for (let event of events) {
+
+        let promoters = event.promoter_id
+
+        if(promoters){
+
+            for (let promoter of promoters) {
+                
+                writeSQL.write(`INSERT INTO public.event_promoters(event_id, promoter_id)
+                    VALUES ('${event.id}', '${promoter}');` + '\n')
+
+            }
+
+        }
+
+        
+      }
+
+
+
+        
+
+        await jodifyDB.end();
+        console.log('Finish')
+    } catch (error) {
+        console.log(error)
+        await jodifyDB.end();
+    }
+}
 
 const importPromoters = async () => {
     const dbName = 'verceldb'
@@ -70,4 +118,4 @@ const getDjs = async () => {
 
 }
 
-getDjs()
+relateEventPromoters()
