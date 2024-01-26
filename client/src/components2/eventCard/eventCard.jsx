@@ -4,10 +4,23 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MusicNoteIcon from "@mui/icons-material/MusicNote";
 
 function shortenStringForMobile(string) {
-  const maxWidth = 450;
-  const maxLength = 42;
+  const screenWidth = window.innerWidth;
 
-  if (window.innerWidth <= maxWidth && string.length > maxLength) {
+  var maxWidth = 700;
+  var maxLength = 80;
+
+  if (screenWidth > 550 && screenWidth <= 700) {
+    maxWidth = 700;
+    maxLength = 80;
+  } else if (screenWidth > 450 && screenWidth <= 549) {
+    maxWidth = 549;
+    maxLength = 60;
+  } else if (screenWidth <= 450) {
+    maxWidth = 450;
+    maxLength = 42;
+  }
+
+  if (string.length > maxLength) {
     return string.substring(0, maxLength) + "...";
   }
 
@@ -44,7 +57,7 @@ function EventCard(props) {
             {stringDjs ? (
               <h3 className={styles.Tittle}>{stringDjs}</h3>
             ) : (
-              <h3 className={styles.Tittle} style={{ opacity: "0.4" }}>
+              <h3 className={styles.TittleTwo} style={{ opacity: "0.4" }}>
                 Nombre del evento
               </h3>
             )}
