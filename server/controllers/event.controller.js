@@ -45,9 +45,6 @@ const getEvents = async (req, res, next) => {
     const groupedEventsArray = [];
     const groupedEvents = {};
     allEvents.rows.forEach((event) => {
-      if(!event.promoter_id){
-        console.log(event)
-      }
       let eventDate = event.event_date;
       if (groupedEvents[eventDate]) {
         groupedEvents[eventDate].push(event);
@@ -160,7 +157,6 @@ const filterEvents = async (req, res) => {
 
     query += `GROUP BY e.id ORDER BY e.event_date ASC LIMIT 20 OFFSET $${paramCount}`;
     values.push(setOff);
-    console.log(query, values)
     const result = await pool.query(query, values);
     const events = result.rows;
 
