@@ -14,9 +14,11 @@ const customTheme = (outerTheme) =>
       MuiButton: {
         styleOverrides: {
           root: {
-            color: "#90CAF9",
+            color: "#ffffff",
+            fontSize: "14px",
+            fontFamily: "Roboto Condensed",
             "&:hover": {
-              backgroundColor: "rgba(255, 255, 255, 0.15)", // Color de fondo en hover
+              backgroundColor: "rgba(255, 255, 255, 0.02)", // Color de fondo en hover
             },
           },
         },
@@ -25,6 +27,7 @@ const customTheme = (outerTheme) =>
         styleOverrides: {
           root: {
             color: "#ffffff",
+            fontWeight: "bold",
           },
         },
       },
@@ -32,6 +35,9 @@ const customTheme = (outerTheme) =>
         styleOverrides: {
           root: {
             color: "#ffffff",
+            fontSize: "14px",
+            fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+            fontWeight: "500",
             "&.Mui-selected": {
               backgroundColor: "#90CAF9",
               borderStyle: "none",
@@ -50,10 +56,11 @@ const customTheme = (outerTheme) =>
               borderWidth: "2px",
               borderStyle: "solid",
               borderRadius: "50%",
+              backgroundColor: "#1b1c20",
             },
             "&.Mui-selected:focus": {
-              backgroundColor: "#90CAF9", // Fondo para la fecha seleccionada en foco
-              color: "#000000", // Color del texto para la fecha seleccionada en foco
+              backgroundColor: "#90CAF9",
+              color: "#000000",
               borderStyle: "none",
               borderRadius: "50%",
             },
@@ -63,7 +70,7 @@ const customTheme = (outerTheme) =>
       MuiPaper: {
         styleOverrides: {
           root: {
-            backgroundColor: "#000000",
+            backgroundColor: "#1b1c20",
             color: "#ffffff",
           },
         },
@@ -111,6 +118,25 @@ const customTheme = (outerTheme) =>
           },
         },
       },
+      MuiPickersCalendarHeader: {
+        styleOverrides: {
+          label: {
+            color: "#ffffff",
+            fontSize: "16px",
+            fontFamily: "Roboto Condensed",
+          },
+          switchViewIcon:{
+            display: "none"
+          }
+        },
+      },
+      MuiDayCalendar: {
+        styleOverrides: {
+          weekDayLabel: {
+            color: "#ffffff",
+          },
+        },
+      },
     },
   });
 
@@ -147,7 +173,6 @@ function CustomDatePicker(props) {
         >
           <div style={{ width: "100%" }} onClick={handleOpenDatePicker}>
             <MobileDatePicker
-              sx={{ color: "#ffffff" }}
               label={props.Label}
               className={styles.datePicker}
               onClose={handleCloseDatePicker}

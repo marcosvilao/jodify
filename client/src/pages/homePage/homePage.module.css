@@ -58,7 +58,7 @@
 .containerPicker {
   width: 700px;
   position: fixed;
-  top: 240px;
+  top: 230px;
   z-index: 999;
 }
 
