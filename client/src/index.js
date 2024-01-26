@@ -15,12 +15,10 @@ Modal.setAppElement('#root')
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
-    <React.StrictMode>
         <BrowserRouter>
           <App />
           <Analytics/>
         </BrowserRouter>
-    </React.StrictMode>
   </Provider>
 );
 
