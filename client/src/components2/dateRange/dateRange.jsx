@@ -11,7 +11,9 @@ const customTheme = (outerTheme) =>
       MuiPickersToolbar: {
         styleOverrides: {
           root: {
-            display: "none",
+            '& .MuiTypography-root': { // Selector más general
+              color: "#ffffff !important", // Uso de !important
+            },
           },
         },
       },

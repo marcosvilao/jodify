@@ -11,6 +11,15 @@ import styles from "./datePicker.module.css";
 const customTheme = (outerTheme) =>
   createTheme({
     components: {
+      MuiPickersToolbar: {
+        styleOverrides: {
+          root: {
+            '& .MuiTypography-root': { // Selector más general
+              color: "#ffffff !important", // Uso de !important
+            },
+          },
+        },
+      },
       MuiButton: {
         styleOverrides: {
           root: {
@@ -111,13 +120,6 @@ const customTheme = (outerTheme) =>
           },
         },
       },
-      MuiPickersToolbar: {
-        styleOverrides: {
-          root: {
-            display: "none",
-          },
-        },
-      },
       MuiPickersCalendarHeader: {
         styleOverrides: {
           label: {
@@ -125,9 +127,9 @@ const customTheme = (outerTheme) =>
             fontSize: "16px",
             fontFamily: "Roboto Condensed",
           },
-          switchViewIcon:{
-            display: "none"
-          }
+          switchViewIcon: {
+            display: "none",
+          },
         },
       },
       MuiDayCalendar: {
