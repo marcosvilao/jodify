@@ -281,7 +281,7 @@ const createEvent = async (req, res) => {
 
     if(insertedId && event_promoter.length > 0){
       await pool.query(`INSERT INTO public.event_promoters(event_id, promoter_id)
-      VALUES ('${insertedId.id}', '${promoter}');`)
+      VALUES ('${insertedId}', '${promoter}');`)
     }
 
     res
