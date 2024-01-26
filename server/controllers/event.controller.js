@@ -327,10 +327,23 @@ const filterEventsNew = async (req, res) => {
     const argentinaTime = currentDate.toLocaleString("en-US", options);
 
     let query = `
-    SELECT e.*, p.* 
-    FROM event e
-    LEFT JOIN promoters p ON p.id = ANY(CAST(e.promoter_id AS uuid[]))
-    WHERE TRUE 
+    SELECT 
+    e.*, 
+    COALESCE(
+      jsonb_agg(
+        jsonb_build_object(
+          'id', p.id,
+          'name', p.name, 
+          'priority', p.priority, 
+          'instagram', p.instagram
+        )
+      ),
+      '[]'
+    ) AS promoters
+  FROM event e 
+  LEFT JOIN event_promoters ep ON e.id = ep.event_id 
+  LEFT JOIN promoters p ON p.id = ep.promoter_id 
+  WHERE TRUE 
   `;
     const values = [];
 
@@ -386,9 +399,8 @@ const filterEventsNew = async (req, res) => {
       paramCount++;
     }
 
-    query += ` ORDER BY e.event_date ASC LIMIT 20 OFFSET $${paramCount}`;
+    query += `GROUP BY e.id ORDER BY e.event_date ASC LIMIT 20 OFFSET $${paramCount}`;
     values.push(setOff);
-    console.log(query, values);
     const result = await pool.query(query, values);
     const events = result.rows;
 
@@ -396,16 +408,14 @@ const filterEventsNew = async (req, res) => {
 
     events.forEach((event) => {
       const eventDate = event.event_date;
-      if (!groupedEvents[eventDate]) {
-        groupedEvents[eventDate] = [];
-      }
-      groupedEvents[eventDate].push(event);
+      if (groupedEvents[eventDate]) {
+        groupedEvents[eventDate].push(event);
+      } else groupedEvents[eventDate] = [event];
     });
 
     const groupedEventsArray = Object.keys(groupedEvents).map((date) => ({
       [date]: groupedEvents[date],
     }));
-    console.log(groupedEventsArray);
     res.status(200).json(groupedEventsArray);
   } catch (error) {
     console.error("Error fetching events:", error);
