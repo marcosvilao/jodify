@@ -14,8 +14,8 @@ const customTheme = (outerTheme) =>
       MuiPickersToolbar: {
         styleOverrides: {
           root: {
-            '& .MuiTypography-root': { // Selector más general
-              color: "#ffffff !important", // Uso de !important
+            '& .MuiTypography-root': {
+              color: "#ffffff !important",
             },
           },
         },
@@ -48,7 +48,7 @@ const customTheme = (outerTheme) =>
             fontFamily: "Roboto, Helvetica, Arial, sans-serif",
             fontWeight: "500",
             "&.Mui-selected": {
-              backgroundColor: "#90CAF9",
+              backgroundColor: "#AE71F9",
               borderStyle: "none",
               borderRadius: "50%",
               color: "#000000",
@@ -61,14 +61,30 @@ const customTheme = (outerTheme) =>
               borderStyle: "solid",
             },
             "&.MuiPickersDay-today": {
-              borderColor: "#ffffff",
-              borderWidth: "2px",
-              borderStyle: "solid",
-              borderRadius: "50%",
+              borderStyle: "none",
               backgroundColor: "#1b1c20",
             },
+            "&.MuiPickersDay-today-selected": {
+              backgroundColor: "#AE71F9",
+              borderStyle: "none",
+              borderRadius: "50%",
+              color: "#000000",
+            },
+            "&.MuiPickersDay-today-selected:focus": {
+              backgroundColor: "#AE71F9",
+              color: "#000000",
+              borderStyle: "none",
+              borderRadius: "50%",
+            },
+            "&.MuiPickersDay-today:hover": {
+              backgroundColor: "rgba(255, 255, 255, 0.15)",
+              borderRadius: "50%",
+              borderColor: "#ffffff",
+              borderWidth: "1px",
+              borderStyle: "solid",
+            },
             "&.Mui-selected:focus": {
-              backgroundColor: "#90CAF9",
+              backgroundColor: "#AE71F9",
               color: "#000000",
               borderStyle: "none",
               borderRadius: "50%",

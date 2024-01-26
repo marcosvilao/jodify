@@ -59,12 +59,12 @@ const customTheme = (outerTheme) =>
             color: "#ffffff", // Color blanco para el texto seleccionado
           },
           tag: {
-            backgroundColor: "#1b1c20", // Color de fondo de las opciones seleccionadas
+            backgroundColor: "#413C47", // Color de fondo de las opciones seleccionadas
             color: "#ffffff", // Color del texto de las opciones seleccionadas
             "& .MuiSvgIcon-root": {
-              color: "#6F7E8C", // Color del icono de eliminar ('X') en opciones seleccionadas
+              color: "gray", // Color del icono de eliminar ('X') en opciones seleccionadas
               "&:hover": {
-                color: "#6F7E8C", // Color gris cuando haces hover sobre el icono de eliminar
+                color: "lightgray", // Color gris cuando haces hover sobre el icono de eliminar
               },
             },
           },

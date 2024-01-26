@@ -73,15 +73,15 @@
   position: absolute;
 }
 
-.numberLeft{
+.numberLeft {
   left: 2px;
 }
 
-.numberRight{
+.numberRight {
   right: 1px;
 }
 
-.form h3 {
+.formH3 {
   font-family: "Roboto Condensed";
   font-size: 20px;
   font-style: normal;
@@ -92,9 +92,12 @@
 }
 
 .containerCard {
-  width: 100%;
   border: 1px solid #ffffff;
   border-radius: 10px;
+  height: 127px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .form p {
@@ -114,4 +117,10 @@
   padding: 0px 20px;
   gap: 20px;
   box-sizing: border-box;
+}
+
+@media screen and (max-width: 510px) {
+  .form {
+    width: 95%;
+  }
 }

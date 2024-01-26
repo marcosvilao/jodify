@@ -5,7 +5,7 @@ import MusicNoteIcon from "@mui/icons-material/MusicNote";
 
 function shortenStringForMobile(string) {
   const maxWidth = 450;
-  const maxLength = 30;
+  const maxLength = 42;
 
   if (window.innerWidth <= maxWidth && string.length > maxLength) {
     return string.substring(0, maxLength) + "...";
@@ -20,7 +20,6 @@ function EventCard(props) {
     stringDjs = props.Tittle.map((objeto) => objeto.value).join(" | ");
   }
 
-  // Utilizando la función para acortar los strings si es necesario
   stringDjs = shortenStringForMobile(stringDjs);
   const secondTitle = shortenStringForMobile(props.SecondTittle || "");
 
@@ -39,13 +38,15 @@ function EventCard(props) {
 
       <div className={styles.containerData}>
         {props.SecondTittle ? (
-          <h3>{secondTitle}</h3>
+          <h3 className={styles.Tittle}>{secondTitle}</h3>
         ) : (
           <div>
             {stringDjs ? (
-              <h3>{stringDjs}</h3>
+              <h3 className={styles.Tittle}>{stringDjs}</h3>
             ) : (
-              <h3 style={{ opacity: "0.4" }}>Nombre del evento</h3>
+              <h3 className={styles.Tittle} style={{ opacity: "0.4" }}>
+                Nombre del evento
+              </h3>
             )}
           </div>
         )}
@@ -54,7 +55,11 @@ function EventCard(props) {
           <div>
             <LocationOnIcon
               className={styles.icon}
-              style={{ height: "20px", width: "20px" }}
+              style={{
+                height: "20px",
+                width: "20px",
+                color: props.Color ? props.Color : "#7c16f5",
+              }}
             />
             {props.Location ? (
               <p>{props.Location}</p>
@@ -65,7 +70,11 @@ function EventCard(props) {
           <div style={{ display: "flex" }}>
             <MusicNoteIcon
               className={styles.icon}
-              style={{ height: "20px", width: "20px" }}
+              style={{
+                height: "20px",
+                width: "20px",
+                color: props.Color ? props.Color : "#7c16f5",
+              }}
             />
             {props.Genre ? (
               <p>{props.Genre}</p>

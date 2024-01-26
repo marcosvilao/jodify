@@ -11,8 +11,8 @@ const customTheme = (outerTheme) =>
       MuiPickersToolbar: {
         styleOverrides: {
           root: {
-            '& .MuiTypography-root': { // Selector más general
-              color: "#ffffff !important", // Uso de !important
+            "& .MuiTypography-root": {
+              color: "#ffffff !important",
             },
           },
         },
@@ -22,7 +22,7 @@ const customTheme = (outerTheme) =>
           root: {
             color: "#ffffff",
             "&.Mui-selected": {
-              backgroundColor: "#90CAF9",
+              backgroundColor: "linear-gradient(90deg, rgb(234, 51, 247) 0%, rgb(124, 22, 245) 100%)",
               borderStyle: "none",
               borderRadius: "50%",
               color: "#000000",
@@ -34,16 +34,9 @@ const customTheme = (outerTheme) =>
               borderWidth: "1px",
               borderStyle: "solid",
             },
-            "&.MuiPickersDay-today": {
-              borderColor: "#ffffff",
-              borderWidth: "2px",
-              borderStyle: "solid",
-              borderRadius: "50%",
-              backgroundColor: "#1b1c20",
-            },
             "&.Mui-selected:focus": {
-              backgroundColor: "#90CAF9", // Fondo para la fecha seleccionada en foco
-              color: "#000000", // Color del texto para la fecha seleccionada en foco
+              backgroundColor: "linear-gradient(90deg, rgb(234, 51, 247) 0%, rgb(124, 22, 245) 100%)",
+              color: "#000000",
               borderStyle: "none",
               borderRadius: "50%",
             },
@@ -69,6 +62,7 @@ function DateRanges(props) {
           onChange={props.OnChange}
           onAccept={props.OnClick}
           onClose={props.OnClose}
+          disableHighlightToday={true}
         />
       </LocalizationProvider>
     </ThemeProvider>

@@ -15,7 +15,6 @@ import InputOutlined from "../../components2/inputOutlined/inputOulined";
 function CreateEventPage() {
   const axiosUrl = process.env.REACT_APP_AXIOS_URL;
   const cloudinayUrl = process.env.REACT_APP_CLOUDINARY_URL + "/image/upload";
-  const [pages, setPages] = useState(1);
   const [loader, setLoader] = useState(false);
   const [submitLoader, setSubmitLoader] = useState(false);
   const [cities, setCities] = useState(false);
@@ -158,15 +157,13 @@ function CreateEventPage() {
     const onSubmit = () => {
       setSubmitLoader(true);
       if (
-        dataPost.event_title.length === 0 ||
         dataPost.event_type.length === 0 ||
         dataPost.event_date.length === 0 ||
         dataPost.event_location.length === 0 ||
         dataPost.ticket_link.length === 0 ||
         dataPost.event_image.length === 0 ||
         dataPost.event_djs.length === 0 ||
-        dataPost.event_city.length === 0 ||
-        dataPost.event_promoter.length === 0
+        dataPost.event_city.length === 0
       ) {
         Alert("Error!", "Completar todos los campos", "error");
         setSubmitLoader(false);
@@ -247,13 +244,19 @@ function CreateEventPage() {
     };
 
     const changePages = () => {
-      if (pages === 1) {
-        setPages(2);
-        window.scroll(0, 200);
-      } else {
-        setPages(1);
-        window.scroll(0, 200);
-      }
+      const formOne = document.getElementById("from-1");
+      const formTwo = document.getElementById("from-2");
+
+      formOne.style.display = "none";
+      formTwo.style.display = "flex";
+    };
+
+    const changePages2 = () => {
+      const formOne = document.getElementById("from-1");
+      const formTwo = document.getElementById("from-2");
+
+      formOne.style.display = "flex";
+      formTwo.style.display = "none";
     };
 
     const cleanEvent = () => {
@@ -262,209 +265,200 @@ function CreateEventPage() {
 
     return (
       <div className={styles.body}>
-        {pages === 1 ? (
-          <div className={styles.form}>
-            <div style={{ width: "100%", textAlign: "center" }}>
-              <h1>Publica tu evento</h1>
+        <div className={styles.form} id="from-1">
+          <div style={{ width: "100%", textAlign: "center" }}>
+            <h1>Publica tu evento</h1>
+          </div>
+
+          <div className={styles.containerPage}>
+            <div className={styles.linePageContainer}>
+              <div
+                className={styles.cirule}
+                style={{ backgroundColor: "#AE71F9" }}
+              ></div>
+
+              <div className={styles.linePage}></div>
+
+              <div
+                className={styles.cirule}
+                style={{ backgroundColor: "#ffffff" }}
+              ></div>
             </div>
 
-            <div className={styles.containerPage}>
-              <div className={styles.linePageContainer}>
-                <div
-                  className={styles.cirule}
-                  style={{ backgroundColor: "#AE71F9" }}
-                ></div>
+            <div className={styles.containerNumbers}>
+              <p className={styles.numberLeft} style={{ color: "#AE71F9" }}>
+                1
+              </p>
+              <p className={styles.numberRight}>2</p>
+            </div>
+          </div>
 
-                <div className={styles.linePage}></div>
+          <h3 className={styles.formH3}>Previsualización</h3>
 
-                <div
-                  className={styles.cirule}
-                  style={{ backgroundColor: "#ffffff" }}
-                ></div>
-              </div>
+          <div className={styles.containerCard}>
+            <EventCard
+              Img={dataPost.event_image}
+              SecondTittle={dataPost.event_title}
+              Tittle={dataPost.event_djs}
+              Location={dataPost.event_location}
+              Genre={dataCardType}
+              OnClick={onClickEventCard}
+              Color="#AE71F9"
+            />
+          </div>
 
-              <div className={styles.containerNumbers}>
-                <p className={styles.numberLeft} style={{ color: "#AE71F9" }}>
-                  1
-                </p>
-                <p className={styles.numberRight}>2</p>
-              </div>
+          <SelectBlack
+            Option="Lugar del evento"
+            Array={cities}
+            OnChange={onChangeEventCity}
+            Margin="32px 0px 0px 0px"
+            Multiple={false}
+          />
+          <p>Elegi la ciudad o porvincia donde queres que figure el evento.</p>
+
+          <InputOutlined
+            OnChange={onChangeDataInput}
+            Name="event_location"
+            Value={dataPost.event_location}
+            Placeholder="ej. Av. Libertador 2647"
+            Label="Nombre del complejo o dirección"
+            Error=""
+            Margin="32px 0px 0px 0px"
+          />
+          <p>Ingresá el lugar o la dirección del evento</p>
+
+          <DatePicker
+            OnChange={onChangeEventDate}
+            Label="Fecha el evento"
+            Margin="32px 0px 0px 0px"
+          />
+
+          {!loader ? (
+            <InputFile
+              OnClick={handleFileChange}
+              File={dataPost.event_image}
+              Margin="32px 0px 0px 0px"
+            />
+          ) : (
+            <div
+              style={{
+                width: "100%",
+                textAlign: "center",
+                marginTop: "15px",
+              }}
+            >
+              <Loader Color="#7c16f5" Height="30px" Width="30px" />
+            </div>
+          )}
+
+          <div className={styles.containerButton}>
+            <ButtonBlack Value="Limpiar" OnClick={cleanEvent} />
+            <ButtonBlue Value="Siguiente" OnClick={changePages} />
+          </div>
+        </div>
+
+        <div className={styles.form} id="from-2" style={{ display: "none" }}>
+          <div style={{ width: "100%", textAlign: "center" }}>
+            <h1>Publica tu evento:</h1>
+          </div>
+
+          <div className={styles.containerPage}>
+            <div className={styles.linePageContainer}>
+              <div
+                className={styles.cirule}
+                style={{ backgroundColor: "#AE71F9" }}
+              ></div>
+
+              <div
+                className={styles.linePage}
+                style={{ backgroundColor: "#AE71F9" }}
+              ></div>
+
+              <div
+                className={styles.cirule}
+                style={{ backgroundColor: "#AE71F9" }}
+              ></div>
             </div>
 
-            <h3>Previsualización</h3>
-
-            <div className={styles.containerCard}>
-              <EventCard
-                Img={dataPost.event_image}
-                SecondTittle={dataPost.event_title}
-                Tittle={dataPost.event_djs}
-                Location={dataPost.event_location}
-                Genre={dataCardType}
-                OnClick={onClickEventCard}
-              />
+            <div className={styles.containerNumbers}>
+              <p className={styles.numberLeft} style={{ color: "#AE71F9" }}>
+                1
+              </p>
+              <p className={styles.numberRight} style={{ color: "#AE71F9" }}>
+                2
+              </p>
             </div>
+          </div>
 
-            <SelectBlack
-              Option="Lugar del evento"
-              Array={cities}
-              OnChange={onChangeEventCity}
-              Margin="50px 0px 0px 0px"
-              Multiple={false}
+          <h3 className={styles.formH3}>Previsualización</h3>
+
+          <div className={styles.containerCard}>
+            <EventCard
+              Img={dataPost.event_image}
+              SecondTittle={dataPost.event_title}
+              Tittle={dataPost.event_djs}
+              Location={dataPost.event_location}
+              Genre={dataCardType}
+              OnClick={onClickEventCard}
+              Color="#AE71F9"
             />
-            <p>
-              Elegi la ciudad o porvincia donde queres que figure el evento.
-            </p>
+          </div>
 
-            <SelectBlack
-              Option="Ingresá el line up del evento"
-              Array={djs}
-              OnChange={onChangeEventDjs}
-              Margin="50px 0px 0px 0px"
-            />
+          <InputOutlined
+            OnChange={onChangeDataInput}
+            Name="ticket_link"
+            Value={dataPost.ticket_link}
+            Placeholder="ej. www.jodify.com.ar"
+            Label="Enlace de venta del evento"
+            Error=""
+            Margin="32px 0px 0px 0px"
+          />
+          <p>
+            Copiá y pegá el enlace donde los usuarios irán a comprar la entrada.
+          </p>
 
-            <SelectBlack
-              Option="Ingresá los géneros musicales del evento"
-              Array={types}
-              OnChange={onChangeEventType}
-              Margin="50px 0px 0px 0px"
-            />
+          <SelectBlack
+            Option="Ingresá el line up del evento"
+            Array={djs}
+            OnChange={onChangeEventDjs}
+            Margin="32px 0px 0px 0px"
+          />
 
-            <DatePicker
-              OnChange={onChangeEventDate}
-              Label="Fecha el evento"
-              Margin="40px 0px 0px 0px"
-            />
+          <SelectBlack
+            Option="Ingresá los géneros musicales del evento"
+            Array={types}
+            OnChange={onChangeEventType}
+            Margin="32px 0px 0px 0px"
+          />
 
-            {!loader ? (
-              <InputFile
-                OnClick={handleFileChange}
-                File={dataPost.event_image}
-                Margin="40px 0px 0px 0px"
-              />
+          <InputOutlined
+            OnChange={onChangeDataInput}
+            Name="event_title"
+            Value={dataPost.event_title}
+            Placeholder="ej. Jodify Winter Fest"
+            Label="Nombre del evento"
+            Error=""
+            Margin="32px 0px 0px 0px"
+            Requiere="false"
+          />
+          <p>Si lo deseas, puedes personalizar aqui el nombre del evento.</p>
+
+          <div className={styles.containerButton}>
+            <ButtonBlack Value="Voler" OnClick={changePages2} />
+            {!submitLoader ? (
+              <ButtonBlue Value="Publicar" OnClick={onSubmit} />
             ) : (
               <div
                 style={{
                   width: "100%",
                   textAlign: "center",
-                  marginTop: "15px",
                 }}
               >
                 <Loader Color="#7c16f5" Height="30px" Width="30px" />
               </div>
             )}
-
-            <div className={styles.containerButton}>
-              <ButtonBlack Value="Limpiar" OnClick={cleanEvent} />
-              <ButtonBlue Value="Siguiente" OnClick={changePages} />
-            </div>
           </div>
-        ) : (
-          <div className={styles.form}>
-            <div style={{ width: "100%", textAlign: "center" }}>
-              <h1>Publica tu evento:</h1>
-            </div>
-
-            <div className={styles.containerPage}>
-              <div className={styles.linePageContainer}>
-                <div
-                  className={styles.cirule}
-                  style={{ backgroundColor: "#AE71F9" }}
-                ></div>
-
-                <div
-                  className={styles.linePage}
-                  style={{ backgroundColor: "#AE71F9" }}
-                ></div>
-
-                <div
-                  className={styles.cirule}
-                  style={{ backgroundColor: "#AE71F9" }}
-                ></div>
-              </div>
-
-              <div className={styles.containerNumbers}>
-                <p className={styles.numberLeft} style={{ color: "#AE71F9" }}>
-                  1
-                </p>
-                <p className={styles.numberRight} style={{ color: "#AE71F9" }}>
-                  2
-                </p>
-              </div>
-            </div>
-
-            <h3>Previsualización</h3>
-
-            <div className={styles.containerCard}>
-              <EventCard
-                Img={dataPost.event_image}
-                SecondTittle={dataPost.event_title}
-                Tittle={dataPost.event_djs}
-                Location={dataPost.event_location}
-                Genre={dataCardType}
-                OnClick={onClickEventCard}
-              />
-            </div>
-
-            <InputOutlined
-              OnChange={onChangeDataInput}
-              Name="ticket_link"
-              Value={dataPost.ticket_link}
-              Placeholder="ej. www.jodify.com.ar"
-              Label="Enlace de venta del evento"
-              Error=""
-              Margin="50px 0px 0px 0px"
-            />
-            <p>
-              Copiá y pegá el enlace donde los asistentes irán a comprar la
-              entrada.
-            </p>
-
-            <InputOutlined
-              OnChange={onChangeDataInput}
-              Name="event_location"
-              Value={dataPost.event_location}
-              Placeholder="ej. Av. Libertador 2647"
-              Label="Nombre del complejo o direccion"
-              Error=""
-              Margin="50px 0px 0px 0px"
-            />
-            <p>Ingresa donde sera el evento.</p>
-
-            <InputOutlined
-              OnChange={onChangeDataInput}
-              Margin="50px 0px 0px 0px"
-              Name="event_title"
-              Value={dataPost.event_title}
-              Placeholder="ej. Jodify Winter Fest"
-              Label="Nombre del evento"
-              Error=""
-            />
-            <p>Si lo deseas, puedes personalizar aqui el nombre del evento.</p>
-
-            <SelectBlack
-              Option="Selecciona una Productora"
-              Array={promoters}
-              OnChange={onChangeEventPromoters}
-              Margin="50px 0px 0px 0px"
-            />
-
-            <div className={styles.containerButton}>
-              <ButtonBlack Value="Voler" OnClick={changePages} />
-              {!submitLoader ? (
-                <ButtonBlue Value="Publicar" OnClick={onSubmit} />
-              ) : (
-                <div
-                  style={{
-                    width: "100%",
-                    textAlign: "center",
-                  }}
-                >
-                  <Loader Color="#7c16f5" Height="30px" Width="30px" />
-                </div>
-              )}
-            </div>
-          </div>
-        )}
+        </div>
       </div>
     );
   } else {
@@ -477,3 +471,14 @@ function CreateEventPage() {
 }
 
 export default CreateEventPage;
+
+/*
+
+            <SelectBlack
+              Option="Nombre de tu productora"
+              Array={promoters}
+              OnChange={onChangeEventPromoters}
+              Margin="32px 0px 0px 0px"
+            />
+
+            */

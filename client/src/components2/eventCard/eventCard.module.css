@@ -32,12 +32,6 @@
   background-position: center;
 }
 
-.containerImg img {
-  width: 100%;
-  height: 100%;
-  border-radius: 8px;
-}
-
 .containerData {
   width: 100%;
   height: 100%;
@@ -47,11 +41,12 @@
   box-sizing: border-box;
 }
 
-.containerData h3 {
+.Tittle {
   font-weight: bold;
   font-size: 16px;
   margin: 0px;
 }
+
 .containerP {
   display: flex;
   width: 100%;
@@ -64,7 +59,7 @@
   display: flex;
   width: 100%;
   align-items: center;
-  margin-bottom: 5px;
+  margin-bottom: 2px;
 }
 
 .icon {
@@ -80,7 +75,7 @@
 
 @media screen and (max-width: 450px) {
   .containerP {
-    margin-top: 10px;
+    margin-top: 5px;
   }
 
   .containerData h3 {

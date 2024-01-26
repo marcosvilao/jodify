@@ -166,7 +166,7 @@ function InputOutlined(props) {
             value={props.Value}
             onChange={props.OnChange}
             type={props.Type}
-            required
+            required={props.Requiere ? false : true}
             InputProps={{
               style: {
                 color: "#ffffff",
