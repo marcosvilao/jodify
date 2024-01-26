@@ -91,13 +91,6 @@ function FilterEvents() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
         }, []);
 
-        useEffect(() => {
-            if(cities.length > 0 && events.length > 0){
-                let elementToFind = '258fd495-92d3-4119-aa37-0d1c684a0237';
-                let index = cities.findIndex(item => item.id === elementToFind);
-                setCheckedCities([index])
-            }
-        }, [cities, events])
 
         const setSearchFilter = (string) => {
             setSearchString(string);

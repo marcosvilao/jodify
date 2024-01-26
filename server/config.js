@@ -8,10 +8,8 @@ const configDB = () => {
       port:  process.env.PORT,
       ssl: true
     }
-    console.log(config)
     return config;
   } 
-  configDB()
 
   module.exports = {
     configDB

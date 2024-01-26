@@ -11,8 +11,29 @@ const getEvents = async (req, res, next) => {
     currentDate.setDate(currentDate.getDate() - 1);
     const options = { timeZone: "America/Argentina/Buenos_Aires" };
     const argentinaTime = currentDate.toLocaleString("en-US", options);
-    const query = "SELECT * FROM event WHERE event_date >= $1";
+    const query = `
+ 
+    SELECT 
+    e.*, 
+    COALESCE(
+      jsonb_agg(
+        jsonb_build_object(
+          'id', p.id,
+          'name', p.name, 
+          'priority', p.priority, 
+          'instagram', p.instagram
+        )
+      ),
+      '[]'
+    ) AS promoters
+  FROM event e 
+  LEFT JOIN event_promoters ep ON e.id = ep.event_id 
+  LEFT JOIN promoters p ON p.id = ep.promoter_id 
+  WHERE e.event_date >= $1
+  GROUP BY e.id;
+                  `;
     const values = [argentinaTime];
+    console.log(argentinaTime)
     const allEvents = await pool.query(query, values);
     if (!allEvents.rows) {
       res.status(404).send({
@@ -20,14 +41,20 @@ const getEvents = async (req, res, next) => {
       });
       return;
     }
+    console.log(allEvents.rows.length)
     const groupedEventsArray = [];
     const groupedEvents = {};
     allEvents.rows.forEach((event) => {
-      let eventDate = event.event_date;
-      if (!groupedEvents[eventDate]) {
-        groupedEvents[eventDate] = [];
+      if(!event.promoter_id){
+        console.log(event)
       }
-      groupedEvents[eventDate].push(event);
+      let eventDate = event.event_date;
+      if (groupedEvents[eventDate]) {
+        groupedEvents[eventDate].push(event);
+      } else {
+        groupedEvents[eventDate] = [event];
+      }
+      
     });
 
     for (const date in groupedEvents) {
@@ -65,10 +92,23 @@ const filterEvents = async (req, res) => {
     const argentinaTime = currentDate.toLocaleString("en-US", options);
 
     let query = `
-    SELECT e.*, p.* 
-    FROM event e
-    LEFT JOIN promoters p ON p.id = ANY(CAST(e.promoter_id AS uuid[]))
-    WHERE TRUE 
+    SELECT 
+    e.*, 
+    COALESCE(
+      jsonb_agg(
+        jsonb_build_object(
+          'id', p.id,
+          'name', p.name, 
+          'priority', p.priority, 
+          'instagram', p.instagram
+        )
+      ),
+      '[]'
+    ) AS promoters
+  FROM event e 
+  LEFT JOIN event_promoters ep ON e.id = ep.event_id 
+  LEFT JOIN promoters p ON p.id = ep.promoter_id 
+  WHERE TRUE 
   `;
     const values = [];
 
@@ -118,7 +158,7 @@ const filterEvents = async (req, res) => {
       paramCount++;
     }
 
-    query += ` ORDER BY e.event_date ASC LIMIT 20 OFFSET $${paramCount}`;
+    query += `GROUP BY e.id ORDER BY e.event_date ASC LIMIT 20 OFFSET $${paramCount}`;
     values.push(setOff);
     console.log(query, values)
     const result = await pool.query(query, values);
@@ -128,16 +168,15 @@ const filterEvents = async (req, res) => {
 
     events.forEach((event) => {
       const eventDate = event.event_date;
-      if (!groupedEvents[eventDate]) {
-        groupedEvents[eventDate] = [];
-      }
-      groupedEvents[eventDate].push(event);
+      if (groupedEvents[eventDate]) {
+        groupedEvents[eventDate].push(event);
+      } else
+      groupedEvents[eventDate] = [event];
     });
 
     const groupedEventsArray = Object.keys(groupedEvents).map((date) => ({
       [date]: groupedEvents[date],
     }));
-    console.log(groupedEventsArray)
     res.status(200).json(groupedEventsArray);
   } catch (error) {
     console.error("Error fetching events:", error);
@@ -156,17 +195,34 @@ const getEventsPromoters = async (req, res) => {
       .plus({ days: 7 }) // Obtener la fecha una semana desde hoy
       .toISODate();
 
-    const result = await pool.query(`
-        SELECT e.*, p.* 
-        FROM event e
-        LEFT JOIN promoters p ON p.id = ANY(CAST(e.promoter_id AS uuid[]))
-        WHERE DATE(e.event_date) BETWEEN '${todayInArgentina}' AND '${oneWeekFromNow}'
-        ORDER BY DATE(e.event_date), 
-                 CASE
-                   WHEN p.priority IS NOT NULL THEN p.priority
-                   ELSE 9999
-                 END
-      `);
+      const result = await pool.query(`
+      SELECT 
+          e.*, 
+          COALESCE(
+              jsonb_agg(
+                  jsonb_build_object(
+                      'id', p.id,
+                      'name', p.name, 
+                      'priority', p.priority, 
+                      'instagram', p.instagram
+                  )
+              ),
+              '[]'
+          ) AS promoters
+      FROM event e
+      LEFT JOIN (
+          SELECT ep.event_id, p.id, p.name, p.priority, p.instagram
+          FROM event_promoters ep
+          LEFT JOIN promoters p ON p.id = ep.promoter_id
+      ) p ON e.id = p.event_id
+      WHERE DATE(e.event_date) BETWEEN '${todayInArgentina}' AND '${oneWeekFromNow}'
+      GROUP BY e.id, e.event_date, p.priority  -- Include p.priority in GROUP BY
+      ORDER BY DATE(e.event_date), 
+          CASE
+              WHEN p.priority IS NOT NULL THEN p.priority
+              ELSE 9999
+          END
+  `);
 
     if (result && result.rows && Array.isArray(result.rows)) {
       const rows = result.rows;
@@ -229,6 +285,11 @@ const createEvent = async (req, res) => {
     const result = await pool.query(query, values);
 
     const insertedId = result.rows[0].id;
+
+    if(insertedId && event_promoter.length > 0){
+      await pool.query(`INSERT INTO public.event_promoters(event_id, promoter_id)
+      VALUES ('${insertedId.id}', '${promoter}');`)
+    }
 
     res
       .status(201)
