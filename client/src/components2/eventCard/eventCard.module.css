@@ -79,6 +79,10 @@
 }
 
 @media screen and (max-width: 450px) {
+  .containerP {
+    margin-top: 10px;
+  }
+
   .containerData h3 {
     font-size: 15px;
   }
