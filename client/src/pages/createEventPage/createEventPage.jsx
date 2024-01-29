@@ -20,7 +20,6 @@ function CreateEventPage() {
   const [cities, setCities] = useState(false);
   const [types, setTypes] = useState(false);
   const [djs, setDjs] = useState(false);
-  const [promoters, setPromoters] = useState(false);
   const [dataCardType, setDataCardType] = useState("");
   const [dataPost, setDataPost] = useState({
     event_title: "",
@@ -79,22 +78,9 @@ function CreateEventPage() {
       .catch(() => {
         Alert("Error!", "Error interno del servidor", "error");
       });
-
-    axios
-      .get(axiosUrl + "/promoters")
-      .then((res) => {
-        const arrayPromoters = [];
-        res.data.map((promoter) => {
-          arrayPromoters.push({ value: promoter.name });
-        });
-        setPromoters(arrayPromoters);
-      })
-      .catch(() => {
-        Alert("Error!", "Error interno del servidor", "error");
-      });
   }, []);
 
-  if (cities && types && djs && promoters) {
+  if (cities && types && djs) {
     const onChangeEventCity = (event, value) => {
       if (value) {
         setDataPost({
@@ -473,6 +459,20 @@ function CreateEventPage() {
 export default CreateEventPage;
 
 /*
+  const [promoters, setPromoters] = useState(false);
+
+    axios
+      .get(axiosUrl + "/promoters")
+      .then((res) => {
+        const arrayPromoters = [];
+        res.data.map((promoter) => {
+          arrayPromoters.push({ value: promoter.name });
+        });
+        setPromoters(arrayPromoters);
+      })
+      .catch(() => {
+        Alert("Error!", "Error interno del servidor", "error");
+      });
 
             <SelectBlack
               Option="Nombre de tu productora"

@@ -8,7 +8,7 @@ import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import styles from "./datePicker.module.css";
 
-const customTheme = (outerTheme) =>
+const customTheme = () =>
   createTheme({
     components: {
       MuiPickersToolbar: {
