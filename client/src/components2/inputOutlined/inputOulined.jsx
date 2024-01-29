@@ -111,7 +111,7 @@ function InputOutlined(props) {
         <div style={{ width: "100%", margin: "10px 0px", zIndex: "0" }}>
           <TextField
             label={props.Label}
-            variant="filled"
+            variant="outlined"
             className={styles.inputBlack}
             placeholder={props.Placeholder}
             name={props.Name}
