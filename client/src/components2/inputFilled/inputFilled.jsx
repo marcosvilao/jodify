@@ -10,7 +10,7 @@ const customTheme = (outerTheme, hasError) =>
       mode: outerTheme.palette.mode,
       ...(hasError && {
         error: {
-          main: "#ff0000", // Color de error
+          main: "#FF5353", // Color de error
         },
       }),
     },
@@ -18,18 +18,18 @@ const customTheme = (outerTheme, hasError) =>
       MuiTextField: {
         styleOverrides: {
           root: {
-            "--TextField-brandBorderColor": hasError ? "#ff0000" : "#FFFFFF",
+            "--TextField-brandBorderColor": hasError ? "#FF5353" : "#FFFFFF",
             "--TextField-brandBorderHoverColor": hasError
-              ? "#ff0000"
-              : "#B2BAC2",
+              ? "#FF5353"
+              : "#AE71F9",
             "--TextField-brandBorderFocusedColor": hasError
-              ? "#ff0000"
+              ? "#FF5353"
               : "#AE71F9",
             "& label.Mui-focused": {
-              color: "var(--TextField-brandBorderFocusedColor)",
+              color: hasError ? "#FF5353" : "#AE71F9",
             },
             "& label": {
-              color: hasError ? "#ff0000" : "#ffffff", // Color del label
+              color: hasError ? "#FF5353" : "#ffffff", // Color del label
             },
           },
         },
@@ -41,10 +41,10 @@ const customTheme = (outerTheme, hasError) =>
           },
           root: {
             [`&:hover .${outlinedInputClasses.notchedOutline}`]: {
-              borderColor: "var(--TextField-brandBorderHoverColor)",
+              borderColor: hasError ? "#FF0000" : "#AE71F9",
             },
             [`&.Mui-focused .${outlinedInputClasses.notchedOutline}`]: {
-              borderColor: "var(--TextField-brandBorderFocusedColor)",
+              borderColor: hasError ? "#FF0000" : "#AE71F9",
             },
           },
         },
@@ -58,7 +58,7 @@ const customTheme = (outerTheme, hasError) =>
               color: "#AE71F9",
             },
             "&.Mui-error": {
-              color: "#ff0000",
+              color: "#FF5353",
             },
           },
         },
@@ -112,7 +112,6 @@ function InputBlack(props) {
           style={{
             width: "100%",
             margin: props.Margin ? props.Margin : "10px 0px",
-            zIndex: "0",
           }}
         >
           <TextField
@@ -127,12 +126,12 @@ function InputBlack(props) {
             required={props.Requiere ? false : true}
             InputProps={{
               style: {
-                color: "#ff0000",
+                color: "#FF5353",
               },
             }}
             InputLabelProps={{
               style: {
-                color: "#ff0000",
+                color: "#FF5353",
               },
             }}
             error={hasError}
@@ -142,7 +141,7 @@ function InputBlack(props) {
             <div style={{ width: "100%", marginTop: "5px" }}>
               <p
                 style={{
-                  color: "red",
+                  color: "#FF5353",
                   margin: "0px",
                   fontSize: "13px",
                 }}

@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 75px 0px;
+  padding: 30px 0px;
   min-height: 50vh;
 }
 
@@ -93,7 +93,7 @@
 
 .containerCard {
   border: 1px solid #ffffff;
-  border-radius: 10px;
+  border-radius: 13px;
   height: 125px;
   display: flex;
   align-items: center;
@@ -119,8 +119,27 @@
   box-sizing: border-box;
 }
 
+.alert {
+  display: none;
+  text-align: center;
+  color: #ffffff;
+  width: 500px;
+}
+
+.alert h1 {
+  font-size: 60px;
+}
+
 @media screen and (max-width: 510px) {
   .form {
     width: 95%;
+  }
+
+  .alert {
+    width: 95%;
+  }
+
+  .containerButton {
+    flex-direction: column;
   }
 }

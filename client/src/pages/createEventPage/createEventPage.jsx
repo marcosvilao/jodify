@@ -11,8 +11,10 @@ import EventCard from "../../components2/eventCard/eventCard";
 import InputFile from "../../components2/inputFile/inputFile";
 import DatePicker from "../../components2/datePicker/datePicker";
 import InputOutlined from "../../components2/inputOutlined/inputOulined";
+import { useNavigate } from "react-router-dom";
 
 function CreateEventPage() {
+  const history = useNavigate();
   const axiosUrl = process.env.REACT_APP_AXIOS_URL;
   const cloudinayUrl = process.env.REACT_APP_CLOUDINARY_URL + "/image/upload";
   const [loader, setLoader] = useState(false);
@@ -21,6 +23,13 @@ function CreateEventPage() {
   const [types, setTypes] = useState(false);
   const [djs, setDjs] = useState(false);
   const [dataCardType, setDataCardType] = useState("");
+  const [errorEnlace, setErrorEnlace] = useState("");
+  const [errorDireccion, setErrorDireccion] = useState("");
+  const [errorLineUp, setErrorLineUp] = useState("");
+  const [errorPlace, setErrorPlace] = useState("");
+  const [errorFecha, setErrorFecha] = useState("");
+  const [errorGeneros, setErrorGeneros] = useState("");
+  const [errorFile, setErrorFile] = useState("");
   const [dataPost, setDataPost] = useState({
     event_title: "",
     event_type: [],
@@ -82,6 +91,7 @@ function CreateEventPage() {
 
   if (cities && types && djs) {
     const onChangeEventCity = (event, value) => {
+      setErrorPlace("");
       if (value) {
         setDataPost({
           ...dataPost,
@@ -105,20 +115,15 @@ function CreateEventPage() {
         }
       }
       setDataCardType(valoresConcatenados);
+      setErrorGeneros("");
       setDataPost({
         ...dataPost,
         event_type: value,
       });
     };
 
-    const onChangeEventPromoters = (event, value) => {
-      setDataPost({
-        ...dataPost,
-        event_promoter: value,
-      });
-    };
-
     const onChangeEventDjs = (event, value) => {
+      setErrorLineUp("");
       setDataPost({
         ...dataPost,
         event_djs: value,
@@ -126,6 +131,7 @@ function CreateEventPage() {
     };
 
     const onChangeEventDate = (event) => {
+      setErrorFecha("");
       const formattedDate = dayjs(event).format("YYYY-MM-DD");
       setDataPost({
         ...dataPost,
@@ -134,6 +140,15 @@ function CreateEventPage() {
     };
 
     const onChangeDataInput = (e) => {
+      console.log(e.target.name);
+      if (e.target.name === "ticket_link" && errorEnlace) {
+        setErrorEnlace("");
+      }
+
+      if (e.target.name === "event_location" && errorDireccion) {
+        setErrorDireccion("");
+      }
+
       setDataPost({
         ...dataPost,
         [e.target.name]: e.target.value,
@@ -153,20 +168,45 @@ function CreateEventPage() {
       ) {
         Alert("Error!", "Completar todos los campos", "error");
         setSubmitLoader(false);
+        if (dataPost.event_location.length === 0) {
+          setErrorDireccion("Completar campo");
+        }
+
+        if (dataPost.ticket_link.length === 0) {
+          setErrorEnlace("Completar campo");
+        }
+
+        if (dataPost.event_city.length === 0) {
+          setErrorPlace("Completar campo");
+        }
+
+        if (dataPost.event_djs.length === 0) {
+          setErrorLineUp("Completar campo");
+        }
+
+        if (dataPost.event_type.length === 0) {
+          setErrorGeneros("Completar campo");
+        }
+
+        if (dataPost.event_date.length === 0) {
+          setErrorFecha("Completar campo");
+        }
+
+        if (dataPost.event_image.length === 0) {
+          setErrorFile("Completar campo");
+        }
       } else {
         axios
           .post(axiosUrl + "/events", { event: dataPost })
           .then(() => {
             setSubmitLoader(false);
-            let callbackAlert = () => {
-              window.location.reload();
-            };
-            Alert(
-              "Success!",
-              "Evento creado correctamente",
-              "success",
-              callbackAlert
-            );
+            const formOne = document.getElementById("from-1");
+            const formTwo = document.getElementById("from-2");
+            const alert = document.getElementById("alert");
+
+            formOne.style.display = "none";
+            formTwo.style.display = "none";
+            alert.style.display = "block";
           })
           .catch(() => {
             Alert(
@@ -204,6 +244,7 @@ function CreateEventPage() {
                 event_image: secureUrl,
               }));
               setLoader(false);
+              setErrorFile("");
             })
             .catch(() => {
               Alert(
@@ -247,6 +288,11 @@ function CreateEventPage() {
 
     const cleanEvent = () => {
       window.location.reload();
+    };
+
+    let onClickRouteHome = () => {
+      history("/");
+      window.scroll(0, 0);
     };
 
     return (
@@ -299,6 +345,7 @@ function CreateEventPage() {
             OnChange={onChangeEventCity}
             Margin="32px 0px 0px 0px"
             Multiple={false}
+            Error={errorPlace}
           />
           <p>Elegi la ciudad o porvincia donde queres que figure el evento.</p>
 
@@ -308,7 +355,7 @@ function CreateEventPage() {
             Value={dataPost.event_location}
             Placeholder="ej. Av. Libertador 2647"
             Label="Nombre del complejo o dirección"
-            Error=""
+            Error={errorDireccion}
             Margin="32px 0px 0px 0px"
           />
           <p>Ingresá el lugar o la dirección del evento</p>
@@ -317,6 +364,7 @@ function CreateEventPage() {
             OnChange={onChangeEventDate}
             Label="Fecha el evento"
             Margin="32px 0px 0px 0px"
+            Error={errorFecha}
           />
 
           {!loader ? (
@@ -324,6 +372,7 @@ function CreateEventPage() {
               OnClick={handleFileChange}
               File={dataPost.event_image}
               Margin="32px 0px 0px 0px"
+              Error={errorFile}
             />
           ) : (
             <div
@@ -396,7 +445,7 @@ function CreateEventPage() {
             Value={dataPost.ticket_link}
             Placeholder="ej. www.jodify.com.ar"
             Label="Enlace de venta del evento"
-            Error=""
+            Error={errorEnlace}
             Margin="32px 0px 0px 0px"
           />
           <p>
@@ -408,6 +457,7 @@ function CreateEventPage() {
             Array={djs}
             OnChange={onChangeEventDjs}
             Margin="32px 0px 0px 0px"
+            Error={errorLineUp}
           />
 
           <SelectBlack
@@ -415,6 +465,7 @@ function CreateEventPage() {
             Array={types}
             OnChange={onChangeEventType}
             Margin="32px 0px 0px 0px"
+            Error={errorGeneros}
           />
 
           <InputOutlined
@@ -443,6 +494,22 @@ function CreateEventPage() {
                 <Loader Color="#7c16f5" Height="30px" Width="30px" />
               </div>
             )}
+          </div>
+        </div>
+
+        <div className={styles.alert} id="alert">
+          <h1>Jodify</h1>
+
+          <h2>Tu solicitud ah sido creada correctamente</h2>
+
+          <p>
+            en 24hs te estaremos enviando un correo de confirmación con el alta
+            de la publicación.
+          </p>
+
+          <div className={styles.containerButton}>
+            <ButtonBlack Value="Ir a Jodify" OnClick={onClickRouteHome} />
+            <ButtonBlue Value="Publicar otro evento" OnClick={cleanEvent} />
           </div>
         </div>
       </div>

@@ -9,14 +9,21 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import styles from "./datePicker.module.css";
 import dayjs from "dayjs";
 
-
-const customTheme = () =>
+const customTheme = (outerTheme, hasError) =>
   createTheme({
+    palette: {
+      mode: outerTheme.palette.mode,
+      ...(hasError && {
+        error: {
+          main: "#FF5353",
+        },
+      }),
+    },
     components: {
       MuiPickersToolbar: {
         styleOverrides: {
           root: {
-            '& .MuiTypography-root': {
+            "& .MuiTypography-root": {
               color: "#ffffff !important",
             },
           },
@@ -105,14 +112,18 @@ const customTheme = () =>
       MuiTextField: {
         styleOverrides: {
           root: {
-            "--TextField-brandBorderColor": "#E0E3E7",
-            "--TextField-brandBorderHoverColor": "#B2BAC2",
-            "--TextField-brandBorderFocusedColor": "#6F7E8C",
+            "--TextField-brandBorderColor": hasError ? "#FF5353" : "#E0E3E7",
+            "--TextField-brandBorderHoverColor": hasError
+              ? "#FF5353"
+              : "#AE71F9",
+            "--TextField-brandBorderFocusedColor": hasError
+              ? "#FF5353"
+              : "#AE71F9",
             "& label.Mui-focused": {
-              color: "var(--TextField-brandBorderFocusedColor)",
+              color: hasError ? "#FF5353" : "#AE71F9",
             },
             "& label": {
-              color: "#ffffff", // Color del texto del label
+              color: hasError ? "#FF5353" : "#ffffff",
             },
           },
         },
@@ -124,16 +135,16 @@ const customTheme = () =>
           },
           root: {
             [`&:hover .${outlinedInputClasses.notchedOutline}`]: {
-              borderColor: "var(--TextField-brandBorderHoverColor)",
+              borderColor: hasError ? "#FF0000" : "#AE71F9",
             },
             [`&.Mui-focused .${outlinedInputClasses.notchedOutline}`]: {
-              borderColor: "var(--TextField-brandBorderFocusedColor)",
+              borderColor: hasError ? "#FF0000" : "#AE71F9",
             },
             "& input": {
-              color: "#ffffff", // Color del texto del input
+              color: "#ffffff",
             },
             "&.Mui-focused input": {
-              color: "#ffffff", // Color del texto del input cuando está enfocado
+              color: hasError ? "#FF5353" : "#AE71F9",
             },
           },
         },
@@ -163,6 +174,7 @@ const customTheme = () =>
 function CustomDatePicker(props) {
   const outerTheme = useTheme();
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
+  const hasError = props.Error !== "" && props.Error; // Asumiendo que 'Error' es una cadena
 
   const handleOpenDatePicker = () => {
     if (!isDatePickerOpen) {
@@ -180,31 +192,57 @@ function CustomDatePicker(props) {
     }
   };
 
+  // Actualiza la función 'customTheme' para incluir estilos de error
+  const themeWithError = customTheme(outerTheme, hasError);
+
   return (
-    <ThemeProvider theme={customTheme(outerTheme)}>
+    <ThemeProvider theme={themeWithError}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DemoContainer
           components={["DatePicker"]}
           sx={{
             width: "100%",
-            position: "relative",
             margin: props.Margin ? props.Margin : "10px 0px",
           }}
         >
-          <div style={{ width: "100%" }} onClick={handleOpenDatePicker}>
-            <MobileDatePicker
-              label={props.Label}
-              className={styles.datePicker}
-              onClose={handleCloseDatePicker}
-              open={isDatePickerOpen}
-              onChange={props.OnChange}
-              minDate={dayjs()}
-            />
+          <div style={{ width: "100%" }}>
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                position: "relative",
+              }}
+              onClick={handleOpenDatePicker}
+            >
+              <MobileDatePicker
+                label={props.Label}
+                className={styles.datePicker}
+                onClose={handleCloseDatePicker}
+                open={isDatePickerOpen}
+                onChange={props.OnChange}
+                minDate={dayjs()}
+                error={!!hasError}
+              />
 
-            <CalendarMonthIcon
-              className={styles.icon}
-              label="Seleccion una fecha"
-            />
+              <CalendarMonthIcon
+                className={styles.icon}
+                label="Seleccion una fecha"
+              />
+            </div>
+            {hasError && (
+              <div style={{ width: "100%", marginTop: "5px" }}>
+                <p
+                  style={{
+                    color: "#FF5353",
+                    margin: "0px",
+                    fontSize: "13px",
+                  }}
+                >
+                  {props.Error}
+                </p>
+              </div>
+            )}
           </div>
         </DemoContainer>
       </LocalizationProvider>
