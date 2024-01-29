@@ -471,26 +471,7 @@ function HomePage() {
               }
             });
 
-            const uniqueArray = newArray.map((dateObj) => {
-              const dateKey = Object.keys(dateObj)[0];
-              const eventsArray = dateObj[dateKey];
-              const uniqueEvents = [];
-
-              eventsArray.forEach((event) => {
-                if (
-                  !uniqueEvents.some(
-                    (uniqueEvent) =>
-                      uniqueEvent.event_title === event.event_title
-                  )
-                ) {
-                  uniqueEvents.push(event);
-                }
-              });
-
-              return { [dateKey]: uniqueEvents };
-            });
-
-            setDataEventCard(uniqueArray);
+            setDataEventCard(newArray);
             setFinishLazyLoad(false);
           }
         })
