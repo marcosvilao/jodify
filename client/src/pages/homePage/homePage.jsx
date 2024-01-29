@@ -184,6 +184,7 @@ function HomePage() {
       setIsFiltering(true);
       setLazyLoadNoEvents(false);
       setLoaderLazyLoad(false);
+      setFinishLazyLoad(true);
       if (value[0] === null && value[1] === null) {
         setFilter(() => ({
           ...filter,
@@ -253,10 +254,10 @@ function HomePage() {
         .then((res) => {
           setDataEventCard(res.data);
           setLoader(false);
-          setFinishLazyLoad(false);
           setLazyLoadNoEvents(false);
           setIsFiltering(false);
           setLoaderLazyLoad(false);
+          setFinishLazyLoad(false);
         })
         .catch(() => {
           Alert(
@@ -281,6 +282,7 @@ function HomePage() {
         if (openFecha) {
           setOpenFecha(false);
         }
+        setFinishLazyLoad(true);
         setValueButtonFecha(false);
         setLoader(true);
         setAxiosFecha(true);
@@ -303,6 +305,7 @@ function HomePage() {
     };
 
     const onClickCheckBoxListUbicacion = (item) => {
+      setFinishLazyLoad(true);
       setLoader(true);
       setAxiosCitie(true);
       setLazyLoadNoEvents(false);
@@ -345,6 +348,7 @@ function HomePage() {
 
         setCheckedItems(resetCheckedItems);
 
+        setFinishLazyLoad(true);
         setLoader(true);
         setAxiosType(true);
         setLazyLoadNoEvents(false);
@@ -383,6 +387,7 @@ function HomePage() {
       setLazyLoadNoEvents(false);
       setIsFiltering(true);
       setLoaderLazyLoad(false);
+      setFinishLazyLoad(true);
     };
 
     const onCloseTypesList = () => {
@@ -400,6 +405,7 @@ function HomePage() {
       setLoader(true);
       setIsFiltering(true);
       setLoaderLazyLoad(false);
+      setFinishLazyLoad(true);
     };
 
     if (axiosType || axiosCitie || axiosFecha || axiosSearch) {
@@ -590,7 +596,7 @@ function HomePage() {
           </div>
         ) : null}
 
-        {loaderLazyLoad ? (
+        {loaderLazyLoad && finishLazyLoad ? (
           <div className={styles.bodyLoaderLazyLoad}>
             <Loader Color="#7c16f5" Height="50px" Width="50px" />
           </div>

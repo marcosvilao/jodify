@@ -4,6 +4,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateRange } from "./dateRangeStyles";
 import theme from "../../jodifyStyles";
 import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
+import dayjs from "dayjs";
 
 const customTheme = () =>
   createTheme({
@@ -38,6 +39,8 @@ function DateRanges(props) {
           onAccept={props.OnClick}
           onClose={props.OnClose}
           disableHighlightToday={true}
+          minDate={dayjs()}
+          localeText={{ start: "Inicio", end: "Fin" }}
         />
       </LocalizationProvider>
     </ThemeProvider>

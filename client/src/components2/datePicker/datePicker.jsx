@@ -7,6 +7,8 @@ import { outlinedInputClasses } from "@mui/material/OutlinedInput";
 import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import styles from "./datePicker.module.css";
+import dayjs from "dayjs";
+
 
 const customTheme = () =>
   createTheme({
@@ -196,6 +198,7 @@ function CustomDatePicker(props) {
               onClose={handleCloseDatePicker}
               open={isDatePickerOpen}
               onChange={props.OnChange}
+              minDate={dayjs()}
             />
 
             <CalendarMonthIcon
