@@ -98,6 +98,9 @@ const customTheme = (outerTheme, hasError) =>
               borderStyle: "none",
               borderRadius: "50%",
             },
+            "&.Mui-disabled": {
+              color: "gray !important",
+            },
           },
         },
       },
