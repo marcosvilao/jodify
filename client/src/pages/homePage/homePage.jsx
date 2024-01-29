@@ -219,6 +219,7 @@ function HomePage() {
     };
 
     const onClickDateRange = () => {
+      window.scroll(0, 0);
       setLazyLoadNoEvents(false);
       setLoaderLazyLoad(false);
       if (filter.dates.length === 0) {
@@ -274,6 +275,7 @@ function HomePage() {
 
     const onCloseFecha = () => {
       if (filter.dates.length) {
+        window.scroll(0, 0);
         setFilter(() => ({
           ...filter,
           dates: [],
@@ -305,6 +307,7 @@ function HomePage() {
     };
 
     const onClickCheckBoxListUbicacion = (item) => {
+      window.scroll(0, 0);
       setFinishLazyLoad(true);
       setLoader(true);
       setAxiosCitie(true);
@@ -332,6 +335,7 @@ function HomePage() {
 
     const onCloseTypes = () => {
       if (filter.types.length) {
+        window.scroll(0, 0);
         setFilter(() => ({
           ...filter,
           types: [],
@@ -363,6 +367,7 @@ function HomePage() {
     };
 
     const onClickCheckBoxListGenero = (item) => {
+      window.scroll(0, 0);
       setCheckedItems((prevState) => ({
         ...prevState,
         [item.id]: !prevState[item.id],
@@ -371,10 +376,8 @@ function HomePage() {
 
       if (arrayTypes.includes(item.type_name)) {
         arrayTypes = arrayTypes.filter((type) => type !== item.type_name);
-        console.log(arrayTypes);
       } else {
         arrayTypes.push(item.type_name);
-        console.log(arrayTypes);
       }
 
       setFilter(() => ({
@@ -395,6 +398,7 @@ function HomePage() {
     };
 
     const onChangeInputSearch = (e) => {
+      window.scroll(0, 0);
       setFilter(() => ({
         ...filter,
         search: e.target.value,
@@ -596,7 +600,7 @@ function HomePage() {
           </div>
         ) : null}
 
-        {loaderLazyLoad && finishLazyLoad ? (
+        {loaderLazyLoad ? (
           <div className={styles.bodyLoaderLazyLoad}>
             <Loader Color="#7c16f5" Height="50px" Width="50px" />
           </div>
