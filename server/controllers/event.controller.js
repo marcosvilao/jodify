@@ -168,8 +168,6 @@ const createEvent = async (req, res) => {
 
     if (event_promoter.length > 0) {
       promoter = event_promoter.map((promoter) => promoter.id);
-    } else {
-      promoter = null;
     }
 
     const formattedType = event_type.join(" | ");
@@ -190,8 +188,8 @@ const createEvent = async (req, res) => {
     }
 
     const query = `
-          INSERT INTO event(id, event_title, event_type, event_date, event_location, ticket_link, event_image, event_djs, city_id, promoter_id)
-          VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+          INSERT INTO event(id, event_title, event_type, event_date, event_location, ticket_link, event_image, event_djs, city_id)
+          VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)
           RETURNING id;
       `;
 
@@ -205,12 +203,16 @@ const createEvent = async (req, res) => {
       event_image,
       event_djs,
       event_city.id,
-      promoter,
     ];
 
     const result = await pool.query(query, values);
 
     const insertedId = result.rows[0].id;
+
+    if (insertedId && event_promoter.length > 0) {
+      await pool.query(`INSERT INTO public.event_promoters(event_id, promoter_id)
+      VALUES ('${insertedId}', '${promoter}');`);
+    }
 
     res
       .status(201)
