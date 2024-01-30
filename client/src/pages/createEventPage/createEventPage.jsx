@@ -274,8 +274,13 @@ function CreateEventPage() {
       if (dataPost.ticket_link === "") {
         Alert("Error!", "Completar el campo de Link de Venta", "error");
       } else {
-        const baseUrl = "http://";
-        const fullUrl = baseUrl + dataPost.ticket_link;
+        let fullUrl;
+        if (dataPost.ticket_link.startsWith("https://")) {
+          fullUrl = dataPost.ticket_link;
+        } else {
+          const baseUrl = "http://";
+          fullUrl = baseUrl + dataPost.ticket_link;
+        }
         window.open(fullUrl, "_blank");
       }
     };
