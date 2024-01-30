@@ -1,4 +1,6 @@
 .body2 {
+  position: fixed;
+  top: 0;
   display: flex;
   width: 100%;
   padding: 30px 0px;
@@ -7,7 +9,7 @@
   flex-shrink: 0;
   border-bottom: 1px solid #413d46;
   background: var(--Backround-1, #0c0c0c);
-  position: relative;
+  z-index: 999;
 }
 
 .body {

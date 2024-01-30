@@ -52,7 +52,7 @@ function Header() {
     logout();
   };
 
-  if (currentUrl === "/create-event" || currentUrl === "/week-events") {
+  if (true) {
     return (
       <div className={styles.body2}>
         <img

@@ -11,7 +11,7 @@ function WeekEventsPage() {
   useEffect(() => {
     if (dataEvents === false) {
       axios
-        .get(axiosUrl + "/events-promoters")
+        .get(axiosUrl + "/events")
         .then((res) => {
           setDataEvents(res.data);
         })
@@ -21,7 +21,7 @@ function WeekEventsPage() {
     }
   }, []);
 
-  if (dataEvents !== false) {
+  if (dataEvents) {
     const columns = [
       {
         field: "evento",
@@ -38,7 +38,7 @@ function WeekEventsPage() {
       {
         field: "fecha",
         headerName: "Fecha",
-        width: 110,
+        width: 115,
         editable: false,
       },
       {
@@ -75,22 +75,26 @@ function WeekEventsPage() {
 
     const rows = [];
 
-    let id = 0;
-    dataEvents.eventos.map((i) => {
-      let resultadoDjs = i.event_djs.join(" ");
-      rows.push({
-        id: id,
-        evento: i.event_title,
-        lugar: i.event_location,
-        fecha: i.event_date,
-        djs: resultadoDjs,
-        genero: i.event_type,
-        ticketlink: i.ticket_link,
-        productora: i.name,
-        intagram: i.instagram,
-      });
-      id = id + 1;
+    dataEvents.map((event) => {
+      for (let propiedad in event) {
+        event[propiedad].map((i) => {
+          let resultadoDjs = i.event_djs.join(" | ");
+          rows.push({
+            id: i.id,
+            evento: i.event_title,
+            lugar: i.event_location,
+            fecha: i.event_date,
+            djs: resultadoDjs,
+            genero: i.event_type,
+            ticketlink: i.ticket_link,
+            productora: i.name,
+            intagram: i.instagram,
+          });
+        });
+      }
     });
+
+    console.log(dataEvents);
 
     return (
       <div
@@ -98,6 +102,7 @@ function WeekEventsPage() {
           width: "100%",
           background: "#ffffff",
           padding: "10px 0px",
+          marginTop: "142px",
         }}
       >
         <h1 style={{ marginLeft: "5px" }}>Tabla de eventos:</h1>
