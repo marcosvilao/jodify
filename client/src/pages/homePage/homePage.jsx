@@ -471,7 +471,30 @@ function HomePage() {
               }
             });
 
-            setDataEventCard(newArray);
+            // Nueva función para eliminar eventos duplicados
+            function removeDuplicateEvents(array) {
+              array.forEach((data) => {
+                const date = Object.keys(data)[0];
+                const events = data[date];
+                const uniqueEvents = [];
+
+                events.forEach((event) => {
+                  if (
+                    !uniqueEvents.some(
+                      (e) => e.event_title === event.event_title
+                    )
+                  ) {
+                    uniqueEvents.push(event);
+                  }
+                });
+
+                data[date] = uniqueEvents;
+              });
+              return array;
+            }
+
+            const uniqueArray = removeDuplicateEvents(newArray);
+            setDataEventCard(uniqueArray);
             setFinishLazyLoad(false);
           }
         })
