@@ -26,12 +26,12 @@
   justify-content: center;
   flex-direction: column;
   padding: 10px 0px;
-  margin-top: 50px;
+  margin-top: 0px;
 }
 
 .containerFixed {
   position: fixed;
-  top: 140px;
+  top: 80px;
   width: 700px;
   background-color: #0c0c0c;
   z-index: 99;

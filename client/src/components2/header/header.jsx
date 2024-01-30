@@ -60,8 +60,8 @@ function Header() {
             borderRadius: theme.jodify_borders._lg_border_radius,
             cursor: "pointer",
           }}
-          width="80px"
-          height="80px"
+          width="50px"
+          height="50px"
           src={logo}
           alt="error al cargar el logo"
           onClick={onClickRouteHome}
