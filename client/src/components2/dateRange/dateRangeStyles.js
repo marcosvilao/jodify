@@ -4,9 +4,8 @@ import theme from "../../jodifyStyles";
 
 export const DateRange = styled(StaticDateRangePicker)`
   .css-grqin-MuiButtonBase-root-MuiPickersDay-root-MuiDateRangePickerDay-day.Mui-disabled {
-    color: gray;
+    color: gray !important;
   }
-
   .css-1a4q4r2-MuiButtonBase-root-MuiPickersDay-root-MuiDateRangePickerDay-day.Mui-selected {
     color: ${theme.jodify_colors._text_white};
     background: ${theme.jodify_colors._gradient};
