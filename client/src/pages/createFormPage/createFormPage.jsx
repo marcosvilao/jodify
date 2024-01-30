@@ -28,6 +28,7 @@ function CreateFormPage() {
   const [types, setTypes] = useState(false);
   const [djs, setDjs] = useState(false);
   const [promoters, setPromoters] = useState(false);
+  const [dataPromoters, setDataPromoters] = useState(false);
   const [dataCardType, setDataCardType] = useState("");
   const [dataPost, setDataPost] = useState({
     event_title: "",
@@ -97,12 +98,12 @@ function CreateFormPage() {
       axios
         .get(axiosUrl + "/promoters")
         .then((res) => {
-          console.log(res.data);
           const arrayPromoters = [];
           res.data.map((promoter) => {
             arrayPromoters.push({ value: promoter.name });
           });
           setPromoters(arrayPromoters);
+          setDataPromoters(res.data);
         })
         .catch(() => {
           Alert("Error!", "Error interno del servidor", "error");
@@ -128,7 +129,9 @@ function CreateFormPage() {
 
     const onChangeEventType = (event, value) => {
       let valoresConcatenados = "";
+      let arrayTypes = [];
       for (let i = 0; i < value.length; i++) {
+        arrayTypes.push(value[i].value);
         if (value.length === 1) {
           valoresConcatenados += value[i].value;
         } else {
@@ -139,15 +142,19 @@ function CreateFormPage() {
       setErrorGeneros("");
       setDataPost({
         ...dataPost,
-        event_type: value,
+        event_type: arrayTypes,
       });
     };
 
     const onChangeEventDjs = (event, value) => {
+      let arrayDjs = [];
+      for (let i = 0; i < value.length; i++) {
+        arrayDjs.push(value[i].value);
+      }
       setErrorLineUp("");
       setDataPost({
         ...dataPost,
-        event_djs: value,
+        event_djs: arrayDjs,
       });
     };
 
@@ -161,7 +168,6 @@ function CreateFormPage() {
     };
 
     const onChangeDataInput = (e) => {
-      console.log(e.target.name);
       if (e.target.name === "ticket_link" && errorEnlace) {
         setErrorEnlace("");
       }
@@ -226,13 +232,15 @@ function CreateFormPage() {
           .post(axiosUrl + "/events", { event: dataPost })
           .then(() => {
             setSubmitLoader(false);
-            const formOne = document.getElementById("from-1");
-            const formTwo = document.getElementById("from-2");
-            const alert = document.getElementById("alert");
-
-            formOne.style.display = "none";
-            formTwo.style.display = "none";
-            alert.style.display = "block";
+            let callbackAlert = () => {
+              window.location.reload();
+            };
+            Alert(
+              "Success!",
+              "Evento creado correctamente!",
+              "success",
+              callbackAlert
+            );
           })
           .catch(() => {
             Alert(
@@ -287,16 +295,24 @@ function CreateFormPage() {
     };
 
     const onChangeEventPromoters = (event, value) => {
-      console.log(value);
-      let array = [];
-      for (let i = 0; i < value.length; i++) {
-        array.push(value[i].value);
+      let idPromoters = [];
+
+      if (value.length) {
+        for (let i = 0; i < value.length; i++) {
+          for (let j = 0; j < dataPromoters.length; j++) {
+            if (dataPromoters[j].name === value[i].value) {
+              idPromoters.push({
+                id: dataPromoters[j].id,
+              });
+            }
+          }
+        }
       }
 
       setErrorProductora("");
       setDataPost({
         ...dataPost,
-        event_promoter: value,
+        event_promoter: idPromoters,
       });
     };
 

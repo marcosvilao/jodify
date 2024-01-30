@@ -112,7 +112,9 @@ function CreateEventPage() {
 
     const onChangeEventType = (event, value) => {
       let valoresConcatenados = "";
+      let arrayTypes = [];
       for (let i = 0; i < value.length; i++) {
+        arrayTypes.push(value[i].value);
         if (value.length === 1) {
           valoresConcatenados += value[i].value;
         } else {
@@ -123,15 +125,19 @@ function CreateEventPage() {
       setErrorGeneros("");
       setDataPost({
         ...dataPost,
-        event_type: value,
+        event_type: arrayTypes,
       });
     };
 
     const onChangeEventDjs = (event, value) => {
+      let arrayDjs = [];
+      for (let i = 0; i < value.length; i++) {
+        arrayDjs.push(value[i].value);
+      }
       setErrorLineUp("");
       setDataPost({
         ...dataPost,
-        event_djs: value,
+        event_djs: arrayDjs,
       });
     };
 
@@ -145,7 +151,6 @@ function CreateEventPage() {
     };
 
     const onChangeDataInput = (e) => {
-      console.log(e.target.name);
       if (e.target.name === "ticket_link" && errorEnlace) {
         setErrorEnlace("");
       }
@@ -299,6 +304,8 @@ function CreateEventPage() {
       history("/");
       window.scroll(0, 0);
     };
+
+    console.log(dataPost);
 
     return (
       <div className={styles.body}>

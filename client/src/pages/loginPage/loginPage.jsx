@@ -95,7 +95,6 @@ function LoginPage() {
             email: "",
             password: "",
           });
-          console.log(res.data);
           let callbackAlert = () => {
             cookie.set("username", res.data.username);
             cookie.set("email", res.data.email);
