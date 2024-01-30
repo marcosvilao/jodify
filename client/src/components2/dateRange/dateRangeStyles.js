@@ -6,9 +6,18 @@ export const DateRange = styled(StaticDateRangePicker)`
   .css-grqin-MuiButtonBase-root-MuiPickersDay-root-MuiDateRangePickerDay-day.Mui-disabled {
     color: gray !important;
   }
+
   .css-1a4q4r2-MuiButtonBase-root-MuiPickersDay-root-MuiDateRangePickerDay-day.Mui-selected {
     color: ${theme.jodify_colors._text_white};
     background: ${theme.jodify_colors._gradient};
+  }
+
+  .css-grqin-MuiButtonBase-root-MuiPickersDay-root-MuiDateRangePickerDay-day:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    border-color: #ffffff;
+    border-width: 1px;
+    border-style: solid;
   }
 
   .css-wlz8ci.Mui-selected {
