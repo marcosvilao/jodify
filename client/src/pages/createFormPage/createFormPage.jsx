@@ -1,34 +1,34 @@
-import React, { useEffect, useState } from "react";
-import dayjs from "dayjs";
-import styles from "./createEventPage.module.css";
-import SelectBlack from "../../components2/selectBlack/selectBlack";
-import Button from "../../components2/button/button";
+import React, { useState, useEffect } from "react";
+import styles from "./createFormPage.module.css";
 import axios from "axios";
-import Loader from "../../components2/loader/loader";
+import dayjs from "dayjs";
 import Alert from "../../components2/alert/alert";
 import EventCard from "../../components2/eventCard/eventCard";
+import Loader from "../../components2/loader/loader";
+import SelectBlack from "../../components2/selectBlack/selectBlack";
+import Button from "../../components2/button/button";
 import InputFile from "../../components2/inputFile/inputFile";
 import DatePicker from "../../components2/datePicker/datePicker";
 import InputOutlined from "../../components2/inputBlack/inputBlack";
-import { useNavigate } from "react-router-dom";
 
-function CreateEventPage() {
-  const history = useNavigate();
+function CreateFormPage() {
   const axiosUrl = process.env.REACT_APP_AXIOS_URL;
   const cloudinayUrl = process.env.REACT_APP_CLOUDINARY_URL + "/image/upload";
   const [loader, setLoader] = useState(false);
   const [submitLoader, setSubmitLoader] = useState(false);
-  const [cities, setCities] = useState(false);
-  const [types, setTypes] = useState(false);
-  const [djs, setDjs] = useState(false);
-  const [dataCardType, setDataCardType] = useState("");
   const [errorEnlace, setErrorEnlace] = useState("");
   const [errorDireccion, setErrorDireccion] = useState("");
   const [errorLineUp, setErrorLineUp] = useState("");
   const [errorPlace, setErrorPlace] = useState("");
   const [errorFecha, setErrorFecha] = useState("");
   const [errorGeneros, setErrorGeneros] = useState("");
+  const [errorProductora, setErrorProductora] = useState("");
   const [errorFile, setErrorFile] = useState("");
+  const [cities, setCities] = useState(false);
+  const [types, setTypes] = useState(false);
+  const [djs, setDjs] = useState(false);
+  const [promoters, setPromoters] = useState(false);
+  const [dataCardType, setDataCardType] = useState("");
   const [dataPost, setDataPost] = useState({
     event_title: "",
     event_type: [],
@@ -92,9 +92,25 @@ function CreateEventPage() {
           Alert("Error!", "Error interno del servidor", "error");
         });
     }
+
+    if (!promoters) {
+      axios
+        .get(axiosUrl + "/promoters")
+        .then((res) => {
+          console.log(res.data);
+          const arrayPromoters = [];
+          res.data.map((promoter) => {
+            arrayPromoters.push({ value: promoter.name });
+          });
+          setPromoters(arrayPromoters);
+        })
+        .catch(() => {
+          Alert("Error!", "Error interno del servidor", "error");
+        });
+    }
   }, []);
 
-  if (cities && types && djs) {
+  if (cities && types && djs && promoters) {
     const onChangeEventCity = (event, value) => {
       setErrorPlace("");
       if (value) {
@@ -169,7 +185,8 @@ function CreateEventPage() {
         dataPost.ticket_link.length === 0 ||
         dataPost.event_image.length === 0 ||
         dataPost.event_djs.length === 0 ||
-        dataPost.event_city.length === 0
+        dataPost.event_city.length === 0 ||
+        dataPost.event_promoter.length === 0
       ) {
         Alert("Error!", "Completar todos los campos", "error");
         setSubmitLoader(false);
@@ -199,6 +216,10 @@ function CreateEventPage() {
 
         if (dataPost.event_image.length === 0) {
           setErrorFile("Completar campo");
+        }
+
+        if (dataPost.event_promoter.length === 0) {
+          setErrorProductora("Completar campo");
         }
       } else {
         axios
@@ -265,6 +286,20 @@ function CreateEventPage() {
       }
     };
 
+    const onChangeEventPromoters = (event, value) => {
+      console.log(value);
+      let array = [];
+      for (let i = 0; i < value.length; i++) {
+        array.push(value[i].value);
+      }
+
+      setErrorProductora("");
+      setDataPost({
+        ...dataPost,
+        event_promoter: value,
+      });
+    };
+
     const onClickEventCard = () => {
       if (dataPost.ticket_link === "") {
         Alert("Error!", "Completar el campo de Link de Venta", "error");
@@ -275,62 +310,18 @@ function CreateEventPage() {
       }
     };
 
-    const changePages = () => {
-      const formOne = document.getElementById("from-1");
-      const formTwo = document.getElementById("from-2");
-
-      formOne.style.display = "none";
-      formTwo.style.display = "flex";
-    };
-
-    const changePages2 = () => {
-      const formOne = document.getElementById("from-1");
-      const formTwo = document.getElementById("from-2");
-
-      formOne.style.display = "flex";
-      formTwo.style.display = "none";
-    };
-
     const cleanEvent = () => {
       window.location.reload();
     };
 
-    let onClickRouteHome = () => {
-      history("/");
-      window.scroll(0, 0);
-    };
+    console.log(dataPost);
 
     return (
       <div className={styles.body}>
-        <div className={styles.form} id="from-1">
+        <div className={styles.form}>
           <div style={{ width: "100%", textAlign: "center" }}>
-            <h1>Publica tu evento</h1>
+            <h1>Crea tu evento</h1>
           </div>
-
-          <div className={styles.containerPage}>
-            <div className={styles.linePageContainer}>
-              <div
-                className={styles.cirule}
-                style={{ backgroundColor: "#AE71F9" }}
-              ></div>
-
-              <div className={styles.linePage}></div>
-
-              <div
-                className={styles.cirule}
-                style={{ backgroundColor: "#ffffff" }}
-              ></div>
-            </div>
-
-            <div className={styles.containerNumbers}>
-              <p className={styles.numberLeft} style={{ color: "#AE71F9" }}>
-                1
-              </p>
-              <p className={styles.numberRight}>2</p>
-            </div>
-          </div>
-
-          <h3 className={styles.formH3}>Previsualización</h3>
 
           <div className={styles.containerCard}>
             <EventCard
@@ -345,41 +336,50 @@ function CreateEventPage() {
           </div>
 
           <SelectBlack
-            Option="Lugar del evento"
+            Option="Ciudad"
             Array={cities}
             OnChange={onChangeEventCity}
             Margin="32px 0px 0px 0px"
             Multiple={false}
             Error={errorPlace}
           />
-          <p>Elegi la ciudad o porvincia donde queres que figure el evento.</p>
+          <p>Selecciona la ciudad donde figurara el evento</p>
+
+          <SelectBlack
+            Option="Productora"
+            Array={promoters}
+            OnChange={onChangeEventPromoters}
+            Error={errorProductora}
+            Margin="32px 0px 0px 0px"
+          />
+          <p>Selecciona su productora</p>
 
           <InputOutlined
             OnChange={onChangeDataInput}
-            Name="event_location"
-            Value={dataPost.event_location}
-            Placeholder="ej. Av. Libertador 2647"
-            Label="Nombre del complejo o dirección"
-            Error={errorDireccion}
+            Name="ticket_link"
+            Value={dataPost.ticket_link}
+            Placeholder="ej. www.jodify.com.ar"
+            Label="Link de venta"
+            Error={errorEnlace}
             Margin="32px 0px 0px 0px"
             Variant="outlined"
           />
-          <p>Ingresá el lugar o la dirección del evento</p>
-
-          <DatePicker
-            OnChange={onChangeEventDate}
-            Label="Fecha el evento"
-            Margin="32px 0px 0px 0px"
-            Error={errorFecha}
-          />
+          <p>Copiá y pegá aca el link de venta de entradas</p>
 
           {!loader ? (
-            <InputFile
-              OnClick={handleFileChange}
-              File={dataPost.event_image}
-              Margin="32px 0px 0px 0px"
-              Error={errorFile}
-            />
+            <div
+              style={{
+                width: "100%",
+              }}
+            >
+              <InputFile
+                OnClick={handleFileChange}
+                File={dataPost.event_image}
+                Margin="32px 0px 0px 0px"
+                Error={errorFile}
+              />
+              <p>Carga la imagen desde el archivo</p>
+            </div>
           ) : (
             <div
               style={{
@@ -392,93 +392,46 @@ function CreateEventPage() {
             </div>
           )}
 
-          <div className={styles.containerButton}>
-            <Button
-              Value="Limpiar"
-              OnClick={cleanEvent}
-              Color="#000000"
-              Hover="#1B1C20"
-            />
-            <Button Value="Siguiente" OnClick={changePages} />
-          </div>
-        </div>
-
-        <div className={styles.form} id="from-2" style={{ display: "none" }}>
-          <div style={{ width: "100%", textAlign: "center" }}>
-            <h1>Publica tu evento:</h1>
-          </div>
-
-          <div className={styles.containerPage}>
-            <div className={styles.linePageContainer}>
-              <div
-                className={styles.cirule}
-                style={{ backgroundColor: "#AE71F9" }}
-              ></div>
-
-              <div
-                className={styles.linePage}
-                style={{ backgroundColor: "#AE71F9" }}
-              ></div>
-
-              <div
-                className={styles.cirule}
-                style={{ backgroundColor: "#AE71F9" }}
-              ></div>
-            </div>
-
-            <div className={styles.containerNumbers}>
-              <p className={styles.numberLeft} style={{ color: "#AE71F9" }}>
-                1
-              </p>
-              <p className={styles.numberRight} style={{ color: "#AE71F9" }}>
-                2
-              </p>
-            </div>
-          </div>
-
-          <h3 className={styles.formH3}>Previsualización</h3>
-
-          <div className={styles.containerCard}>
-            <EventCard
-              Img={dataPost.event_image}
-              SecondTittle={dataPost.event_title}
-              Tittle={dataPost.event_djs}
-              Location={dataPost.event_location}
-              Genre={dataCardType}
-              OnClick={onClickEventCard}
-              Color="#AE71F9"
-            />
-          </div>
+          <DatePicker
+            OnChange={onChangeEventDate}
+            Label="Fecha el evento"
+            Margin="32px 0px 0px 0px"
+            Error={errorFecha}
+          />
+          <p>Selecciona la fecha del evento</p>
 
           <InputOutlined
             OnChange={onChangeDataInput}
-            Name="ticket_link"
-            Value={dataPost.ticket_link}
-            Placeholder="ej. www.jodify.com.ar"
-            Label="Enlace de venta del evento"
-            Error={errorEnlace}
+            Name="event_location"
+            Value={dataPost.event_location}
+            Placeholder="ej. Av. Libertador 2647 (Beccar)"
+            Label="Ubicacion"
+            Error={errorDireccion}
             Margin="32px 0px 0px 0px"
             Variant="outlined"
           />
           <p>
-            Copiá y pegá el enlace donde los usuarios irán a comprar la entrada.
+            Escribi la direccion o nombre del lugar con la localidad entre
+            parentesis
           </p>
 
           <SelectBlack
-            Option="Ingresá el line up del evento"
+            Option="Line up"
             Array={djs}
             OnChange={onChangeEventDjs}
             Margin="32px 0px 0px 0px"
             Error={errorLineUp}
           />
+          <p>Incluye los djs que tocaran</p>
 
           <SelectBlack
-            Option="Ingresá los géneros musicales del evento"
+            Option="Géneros musicales"
             Array={types}
             OnChange={onChangeEventType}
             Margin="32px 0px 0px 0px"
             Error={errorGeneros}
           />
+          <p>Selecciona los generon que habra</p>
 
           <InputOutlined
             OnChange={onChangeDataInput}
@@ -491,12 +444,12 @@ function CreateEventPage() {
             Requiere="false"
             Variant="outlined"
           />
-          <p>Si lo deseas, puedes personalizar aqui el nombre del evento.</p>
+          <p>Si lo deseas, puedes personalizar aqui el nombre del evento</p>
 
           <div className={styles.containerButton}>
             <Button
-              Value="Voler"
-              OnClick={changePages2}
+              Value="Limpiar"
+              OnClick={cleanEvent}
               Color="#000000"
               Hover="#1B1C20"
             />
@@ -514,27 +467,6 @@ function CreateEventPage() {
             )}
           </div>
         </div>
-
-        <div className={styles.alert} id="alert">
-          <h1>Jodify</h1>
-
-          <h2>Tu solicitud ah sido creada correctamente</h2>
-
-          <p>
-            en 24hs te estaremos enviando un correo de confirmación con el alta
-            de la publicación.
-          </p>
-
-          <div className={styles.containerButton}>
-            <Button
-              Value="Ir a Jodify"
-              OnClick={onClickRouteHome}
-              Color="#000000"
-              Hover="#1B1C20"
-            />
-            <Button Value="Publicar otro evento" OnClick={cleanEvent} />
-          </div>
-        </div>
       </div>
     );
   } else {
@@ -546,4 +478,4 @@ function CreateEventPage() {
   }
 }
 
-export default CreateEventPage;
+export default CreateFormPage;

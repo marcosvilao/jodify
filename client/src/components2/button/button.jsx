@@ -19,7 +19,13 @@ function ButtonBlue(props) {
     fontWeight: "bold",
     textTransform: "none",
     fontSize: "16px",
-    backgroundColor: isHovered ? "#AE71F9" : "#7c16f5",
+    backgroundColor: isHovered
+      ? props.Color
+        ? props.Color
+        : "#AE71F9"
+      : props.Hover
+      ? props.Hover
+      : "#7c16f5",
   };
 
   return (

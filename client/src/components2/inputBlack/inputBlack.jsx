@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./inputOutlined.module.css";
+import styles from "./inputFilled.module.css";
 import TextField from "@mui/material/TextField";
 import { outlinedInputClasses } from "@mui/material/OutlinedInput";
 import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
@@ -101,7 +101,7 @@ const customTheme = (outerTheme, hasError) =>
     },
   });
 
-function InputOutlined(props) {
+function InputBlack(props) {
   const outerTheme = useTheme();
   const hasError = props.Error !== "" && props.Error;
 
@@ -116,14 +116,14 @@ function InputOutlined(props) {
         >
           <TextField
             label={props.Label}
-            variant="outlined"
+            variant={props.Variant ? props.Variant : "filled"}
             className={styles.inputBlack}
             placeholder={props.Placeholder}
             name={props.Name}
             value={props.Value}
             onChange={props.OnChange}
             type={props.Type}
-            required
+            required={props.Requiere ? false : true}
             InputProps={{
               style: {
                 color: "#FF5353",
@@ -164,7 +164,7 @@ function InputOutlined(props) {
         >
           <TextField
             label={props.Label}
-            variant="outlined"
+            variant={props.Variant ? props.Variant : "filled"}
             className={styles.inputBlack}
             placeholder={props.Placeholder}
             name={props.Name}
@@ -184,4 +184,6 @@ function InputOutlined(props) {
   }
 }
 
-export default InputOutlined;
+export default InputBlack;
+
+//   variant="outlined" variant="filled"
