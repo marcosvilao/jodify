@@ -286,11 +286,36 @@ function CreateEventPage() {
     };
 
     const changePages = () => {
-      const formOne = document.getElementById("from-1");
-      const formTwo = document.getElementById("from-2");
+      if (
+        dataPost.event_date.length === 0 ||
+        dataPost.event_location.length === 0 ||
+        dataPost.event_image.length === 0 ||
+        dataPost.event_city.length === 0
+      ) {
+        Alert("Error!", "Completar todos los campos", "error");
+        setSubmitLoader(false);
+        if (dataPost.event_location.length === 0) {
+          setErrorDireccion("Completar campo");
+        }
 
-      formOne.style.display = "none";
-      formTwo.style.display = "flex";
+        if (dataPost.event_city.length === 0) {
+          setErrorPlace("Completar campo");
+        }
+
+        if (dataPost.event_date.length === 0) {
+          setErrorFecha("Completar campo");
+        }
+
+        if (dataPost.event_image.length === 0) {
+          setErrorFile("Completar campo");
+        }
+      } else {
+        const formOne = document.getElementById("from-1");
+        const formTwo = document.getElementById("from-2");
+
+        formOne.style.display = "none";
+        formTwo.style.display = "flex";
+      }
     };
 
     const changePages2 = () => {
