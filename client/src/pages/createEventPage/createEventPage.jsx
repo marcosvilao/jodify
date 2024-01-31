@@ -97,16 +97,30 @@ function CreateEventPage() {
   if (cities && types && djs) {
     const onChangeEventCity = (event, value) => {
       setErrorPlace("");
-      if (value) {
-        setDataPost({
-          ...dataPost,
-          event_city: value.value,
-        });
+      if (typeof value === "string") {
+        if (value) {
+          setDataPost({
+            ...dataPost,
+            event_city: value,
+          });
+        } else {
+          setDataPost({
+            ...dataPost,
+            event_city: "",
+          });
+        }
       } else {
-        setDataPost({
-          ...dataPost,
-          event_city: "",
-        });
+        if (value) {
+          setDataPost({
+            ...dataPost,
+            event_city: value.value,
+          });
+        } else {
+          setDataPost({
+            ...dataPost,
+            event_city: "",
+          });
+        }
       }
     };
 
@@ -114,11 +128,20 @@ function CreateEventPage() {
       let valoresConcatenados = "";
       let arrayTypes = [];
       for (let i = 0; i < value.length; i++) {
-        arrayTypes.push(value[i].value);
-        if (value.length === 1) {
-          valoresConcatenados += value[i].value;
+        if (value[i].value) {
+          arrayTypes.push(value[i].value);
+          if (value.length === 1) {
+            valoresConcatenados += value[i].value;
+          } else {
+            valoresConcatenados += `${value[i].value} | `;
+          }
         } else {
-          valoresConcatenados += `${value[i].value} | `;
+          arrayTypes.push(value[i]);
+          if (value.length === 1) {
+            valoresConcatenados += value[i];
+          } else {
+            valoresConcatenados += `${value[i]} | `;
+          }
         }
       }
       setDataCardType(valoresConcatenados);
@@ -132,7 +155,11 @@ function CreateEventPage() {
     const onChangeEventDjs = (event, value) => {
       let arrayDjs = [];
       for (let i = 0; i < value.length; i++) {
-        arrayDjs.push(value[i].value);
+        if (value[i].value) {
+          arrayDjs.push(value[i].value);
+        } else {
+          arrayDjs.push(value[i]);
+        }
       }
       setErrorLineUp("");
       setDataPost({
@@ -335,6 +362,8 @@ function CreateEventPage() {
       window.scroll(0, 0);
     };
 
+    console.log(dataPost);
+
     return (
       <div className={styles.body}>
         <div className={styles.form} id="from-1">
@@ -386,6 +415,7 @@ function CreateEventPage() {
             Margin="32px 0px 0px 0px"
             Multiple={false}
             Error={errorPlace}
+            Value={dataPost.event_city}
           />
           <p>Elegi la ciudad o porvincia donde queres que figure el evento.</p>
 
