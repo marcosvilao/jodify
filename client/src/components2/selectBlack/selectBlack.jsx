@@ -86,19 +86,43 @@ function SelectBlack(props) {
   const outerTheme = useTheme();
   const hasError = props.Error !== "" && props.Error;
   const optionsArray = props.Array || [];
+  const [inputValue, setInputValue] = React.useState("");
+
+  const handleInputChange = (event, newInputValue) => {
+    setInputValue(newInputValue);
+  };
+
+  const handleChange = (event, newValue) => {
+    if (Array.isArray(newValue)) {
+      props.OnChange(event, newValue);
+    } else if (newValue && typeof newValue === "object") {
+      var valueToSet = newValue?.value;
+      setInputValue(valueToSet);
+      props.OnChange(event, newValue);
+    } else if (newValue && typeof newValue === "string") {
+      var valueToSet = newValue;
+      setInputValue(valueToSet);
+      props.OnChange(event, newValue);
+    }
+  };
 
   if (props.Multiple === false) {
     return (
       <ThemeProvider theme={customTheme(outerTheme, hasError)}>
         <div style={{ margin: props.Margin ? props.Margin : "10px 0px" }}>
           <Autocomplete
+            freeSolo
+            inputValue={inputValue}
+            onInputChange={handleInputChange}
+            onChange={handleChange}
             className={styles.selectBlack}
             multiple={false}
             id="tags-outlined"
             options={optionsArray}
-            getOptionLabel={(option) => (option ? option.value : "")}
+            getOptionLabel={(option) =>
+              typeof option === "object" && option ? option.value : option
+            }
             filterSelectedOptions
-            onChange={props.OnChange}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -129,13 +153,18 @@ function SelectBlack(props) {
       <ThemeProvider theme={customTheme(outerTheme, hasError)}>
         <div style={{ margin: props.Margin ? props.Margin : "10px 0px" }}>
           <Autocomplete
+            freeSolo
+            inputValue={inputValue}
+            onInputChange={handleInputChange}
+            onChange={handleChange}
             className={styles.selectBlack}
             multiple
             id="tags-outlined"
             options={optionsArray}
-            getOptionLabel={(option) => (option ? option.value : "")}
+            getOptionLabel={(option) =>
+              typeof option === "object" && option ? option.value : option
+            }
             filterSelectedOptions
-            onChange={props.OnChange}
             renderInput={(params) => (
               <TextField
                 {...params}
