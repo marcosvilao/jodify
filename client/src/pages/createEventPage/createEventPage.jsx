@@ -368,13 +368,13 @@ function CreateEventPage() {
             OnChange={onChangeDataInput}
             Name="event_location"
             Value={dataPost.event_location}
-            Placeholder="ej. Av. Libertador 2647"
+            Placeholder="ej. Av. Libertador 2647 (Palermo)"
             Label="Nombre del complejo o dirección"
             Error={errorDireccion}
             Margin="32px 0px 0px 0px"
             Variant="outlined"
           />
-          <p>Ingresá el lugar o la dirección del evento</p>
+          <p>Ingresa el barrio o localidad entre parentesis ej. Crobar (Palermo)</p>
 
           <DatePicker
             OnChange={onChangeEventDate}
