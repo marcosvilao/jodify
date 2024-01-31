@@ -52,7 +52,7 @@ function shortenStringForMobile2(string) {
 function EventCard(props) {
   let stringDjs = "";
   if (props.Tittle && props.Tittle.length) {
-    stringDjs = props.Tittle.map((objeto) => objeto.value).join(" | ");
+    stringDjs = props.Tittle.map((objeto) => objeto).join(" | ");
   }
 
   stringDjs = shortenStringForMobile(stringDjs);

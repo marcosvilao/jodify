@@ -374,7 +374,9 @@ function CreateEventPage() {
             Margin="32px 0px 0px 0px"
             Variant="outlined"
           />
-          <p>Ingresa el barrio o localidad entre parentesis ej. Crobar (Palermo)</p>
+          <p>
+            Ingresa el barrio o localidad entre parentesis ej. Crobar (Palermo)
+          </p>
 
           <DatePicker
             OnChange={onChangeEventDate}
