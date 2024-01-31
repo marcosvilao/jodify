@@ -181,6 +181,7 @@ function HomePage() {
             {event[objectName].map((event, index) => (
               <EventCard
                 key={index}
+                Tittle={event.event_djs}
                 SecondTittle={event.event_title}
                 Img={event.event_image}
                 Location={event.event_location}
