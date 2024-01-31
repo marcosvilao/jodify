@@ -22,6 +22,7 @@ function HomePage() {
   const [openFecha, setOpenFecha] = useState(false);
   const [types, setType] = useState(false);
   const [checkedItems, setCheckedItems] = useState({});
+  const [checkedItemsCities, setCheckedItemsCities] = useState({});
   const [cities, setCities] = useState(false);
   const [axiosCitie, setAxiosCitie] = useState(false);
   const [axiosType, setAxiosType] = useState(false);
@@ -31,11 +32,11 @@ function HomePage() {
   const [finishLazyLoad, setFinishLazyLoad] = useState(false);
   const [lazyLoadNoEvents, setLazyLoadNoEvents] = useState(false);
   const [valueButtonFecha, setValueButtonFecha] = useState(false);
-  const [citieName, setCitieName] = useState("CABA | GBA");
+  const [citieName, setCitieName] = useState(["Ubicación"]);
   const [isFiltering, setIsFiltering] = useState(false);
   const [filter, setFilter] = useState({
     page: 0,
-    cities: ["258fd495-92d3-4119-aa37-0d1c684a0237"],
+    cities: [],
     dates: [],
     types: [],
     search: "",
@@ -117,31 +118,11 @@ function HomePage() {
             <InputSearch PlaceHolder="Buscá un evento, artista o club" />
           </div>
           <div className={styles.containerButtons}>
-            <ButtonPickerSelected Value={citieName} />
+            <ButtonPicker Value="Ubicación" />
 
-            {openGenero || filter.types.length ? (
-              <ButtonPickerSelected
-                Value={
-                  filter.types.length > 1
-                    ? filter.types[0] + " + " + (filter.types.length - 1)
-                    : filter.types.length === 1
-                    ? filter.types[0]
-                    : "Género"
-                }
-                Close="true"
-              />
-            ) : (
-              <ButtonPicker Value="Género" />
-            )}
+            <ButtonPicker Value="Género" />
 
-            {openFecha || filter.dates.length ? (
-              <ButtonPickerSelected
-                Value={valueButtonFecha ? valueButtonFecha : "Fecha"}
-                Close="true"
-              />
-            ) : (
-              <ButtonPicker Value="Fecha" />
-            )}
+            <ButtonPicker Value="Fecha" />
           </div>
         </div>
         <div className={styles.containerSkeleton}>
@@ -347,7 +328,36 @@ function HomePage() {
       setOpenGenero(false);
     };
 
+    const onCloseUbicaion = () => {
+      window.scroll(0, 0);
+      let resetCheckedItems = Object.keys(checkedItemsCities).reduce(
+        (acc, key) => {
+          acc[key] = false;
+          return acc;
+        },
+        {}
+      );
+
+      setCheckedItemsCities(resetCheckedItems);
+      setFinishLazyLoad(true);
+      setLoader(true);
+      setAxiosCitie(true);
+      setLazyLoadNoEvents(false);
+      setLoaderLazyLoad(false);
+      setIsFiltering(true);
+      setCitieName([]);
+      setFilter(() => ({
+        ...filter,
+        cities: [],
+        page: 0,
+      }));
+    };
+
     const onClickCheckBoxListUbicacion = (item) => {
+      setCheckedItemsCities((prevState) => ({
+        ...prevState,
+        [item.id]: !prevState[item.id],
+      }));
       window.scroll(0, 0);
       setFinishLazyLoad(true);
       setLoader(true);
@@ -355,13 +365,35 @@ function HomePage() {
       setLazyLoadNoEvents(false);
       setLoaderLazyLoad(false);
       setIsFiltering(true);
-      setCitieName(item.city_name);
+
+      let arrayCitiesId = filter.cities;
+
+      if (arrayCitiesId.includes(item.id)) {
+        arrayCitiesId = arrayCitiesId.filter((id) => id !== item.id);
+      } else {
+        arrayCitiesId.push(item.id);
+      }
+
+      if (citieName[0] === "Ubicación") {
+        var arrayCitiesName = [];
+        arrayCitiesName.push(item.city_name);
+      } else {
+        var arrayCitiesName = citieName;
+        if (arrayCitiesName.includes(item.city_name)) {
+          arrayCitiesName = arrayCitiesName.filter(
+            (name) => name !== item.city_name
+          );
+        } else {
+          arrayCitiesName.push(item.city_name);
+        }
+      }
+
+      setCitieName(arrayCitiesName);
       setFilter(() => ({
         ...filter,
-        cities: [item.id],
+        cities: arrayCitiesId,
         page: 0,
       }));
-      onClickOpenUbicaion();
     };
 
     const onClickOpenGenero = () => {
@@ -383,13 +415,10 @@ function HomePage() {
           page: 0,
         }));
 
-        const resetCheckedItems = Object.keys(checkedItems).reduce(
-          (acc, key) => {
-            acc[key] = false;
-            return acc;
-          },
-          {}
-        );
+        let resetCheckedItems = Object.keys(checkedItems).reduce((acc, key) => {
+          acc[key] = false;
+          return acc;
+        }, {});
 
         setCheckedItems(resetCheckedItems);
 
@@ -558,10 +587,23 @@ function HomePage() {
             />
           </div>
           <div className={styles.containerButtons}>
-            <ButtonPickerSelected
-              Value={citieName}
-              OnClick={onClickOpenUbicaion}
-            />
+            {openUbicacion ||
+            (citieName.length && citieName[0] !== "Ubicación") ? (
+              <ButtonPickerSelected
+                Value={
+                  citieName.length > 1
+                    ? citieName[0] + " + " + (citieName.length - 1)
+                    : citieName.length === 1 && citieName[0] !== "Ubicación"
+                    ? citieName[0]
+                    : "Ubicación"
+                }
+                OnClick={onClickOpenUbicaion}
+                OnClose={onCloseUbicaion}
+                Close="true"
+              />
+            ) : (
+              <ButtonPicker Value="Ubicación" OnClick={onClickOpenUbicaion} />
+            )}
 
             {openGenero || filter.types.length ? (
               <ButtonPickerSelected
@@ -600,6 +642,7 @@ function HomePage() {
                 cityList={cities}
                 OnClick={onClickCheckBoxListUbicacion}
                 OnClose={onClickOpenUbicaion}
+                checkedItems={checkedItemsCities}
               />
             </div>
           ) : null}
@@ -611,7 +654,6 @@ function HomePage() {
                 checkedItems={checkedItems}
                 OnClick={onClickCheckBoxListGenero}
                 OnClose={onCloseTypesList}
-                listType="city"
               />
             </div>
           ) : null}
