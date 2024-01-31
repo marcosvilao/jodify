@@ -25,6 +25,7 @@ function CreateFormPage() {
   const [errorProductora, setErrorProductora] = useState("");
   const [errorFile, setErrorFile] = useState("");
   const [cities, setCities] = useState(false);
+  const [filterCities, setFilterCities] = useState(false);
   const [types, setTypes] = useState(false);
   const [djs, setDjs] = useState(false);
   const [promoters, setPromoters] = useState(false);
@@ -52,6 +53,7 @@ function CreateFormPage() {
             arrayCities.push({ value: citie.city_name });
           });
           setCities(arrayCities);
+          setFilterCities(res.data);
         })
         .catch(() => {
           Alert("Error!", "Error interno del servidor", "error");
@@ -114,16 +116,48 @@ function CreateFormPage() {
   if (cities && types && djs && promoters) {
     const onChangeEventCity = (event, value) => {
       setErrorPlace("");
-      if (value) {
-        setDataPost({
-          ...dataPost,
-          event_city: value.value,
-        });
+      if (typeof value === "string") {
+        if (value) {
+          let newCitie = filterCities.filter((citie) => {
+            if (citie.city_name === value) {
+              return {
+                id: citie.id,
+                name: citie.city_name,
+              };
+            }
+          });
+
+          setDataPost({
+            ...dataPost,
+            event_city: newCitie[0],
+          });
+        } else {
+          setDataPost({
+            ...dataPost,
+            event_city: "",
+          });
+        }
       } else {
-        setDataPost({
-          ...dataPost,
-          event_city: "",
-        });
+        if (value) {
+          let newCitie = filterCities.filter((citie) => {
+            if (citie.city_name === value.value) {
+              return {
+                id: citie.id,
+                name: citie.city_name,
+              };
+            }
+          });
+
+          setDataPost({
+            ...dataPost,
+            event_city: newCitie[0],
+          });
+        } else {
+          setDataPost({
+            ...dataPost,
+            event_city: "",
+          });
+        }
       }
     };
 
@@ -131,11 +165,20 @@ function CreateFormPage() {
       let valoresConcatenados = "";
       let arrayTypes = [];
       for (let i = 0; i < value.length; i++) {
-        arrayTypes.push(value[i].value);
-        if (value.length === 1) {
-          valoresConcatenados += value[i].value;
+        if (value[i].value) {
+          arrayTypes.push(value[i].value);
+          if (value.length === 1) {
+            valoresConcatenados += value[i].value;
+          } else {
+            valoresConcatenados += `${value[i].value} | `;
+          }
         } else {
-          valoresConcatenados += `${value[i].value} | `;
+          arrayTypes.push(value[i]);
+          if (value.length === 1) {
+            valoresConcatenados += value[i];
+          } else {
+            valoresConcatenados += `${value[i]} | `;
+          }
         }
       }
       setDataCardType(valoresConcatenados);
@@ -149,7 +192,11 @@ function CreateFormPage() {
     const onChangeEventDjs = (event, value) => {
       let arrayDjs = [];
       for (let i = 0; i < value.length; i++) {
-        arrayDjs.push(value[i].value);
+        if (value[i].value) {
+          arrayDjs.push(value[i].value);
+        } else {
+          arrayDjs.push(value[i]);
+        }
       }
       setErrorLineUp("");
       setDataPost({
@@ -242,7 +289,8 @@ function CreateFormPage() {
               callbackAlert
             );
           })
-          .catch(() => {
+          .catch((err) => {
+            console.log(err);
             Alert(
               "Error!",
               "Error interno del servidor, ponerse en contacto con el servidor o intentar luego mas tarde",
@@ -283,9 +331,10 @@ function CreateFormPage() {
             .catch(() => {
               Alert(
                 "Error!",
-                "Error en la carga de la imagen, internar luego mas tarde o ponerse en contaco con el servidor",
+                "Error en la carga de la imagen, internar nuevamente o ponerse en contaco con el servidor",
                 "error"
               );
+              setLoader(false);
             });
         } else {
           Alert("Error!", "Selected file is not an image", "error");
@@ -300,7 +349,10 @@ function CreateFormPage() {
       if (value.length) {
         for (let i = 0; i < value.length; i++) {
           for (let j = 0; j < dataPromoters.length; j++) {
-            if (dataPromoters[j].name === value[i].value) {
+            if (
+              dataPromoters[j].name === value[i].value ||
+              dataPromoters[j].name === value[i]
+            ) {
               idPromoters.push({
                 id: dataPromoters[j].id,
               });
@@ -399,7 +451,17 @@ function CreateFormPage() {
                 Margin="32px 0px 0px 0px"
                 Error={errorFile}
               />
-              <p>Carga la imagen desde el archivo</p>
+              <InputOutlined
+                OnChange={onChangeDataInput}
+                Name="event_image"
+                Value={dataPost.event_image}
+                Placeholder="https://res.cloudinary.com/dqc865z8r/image/upload/v1706719017/lxfzhxfzenjfp"
+                Label="Url imagen"
+                Error={errorDireccion}
+                Margin="3px 0px 0px 0px"
+                Variant="outlined"
+              />
+              <p>Carga la imagen desde el archivo o pon la url en el input</p>
             </div>
           ) : (
             <div
