@@ -26,29 +26,6 @@ function shortenStringForMobile(string) {
   return string;
 }
 
-function shortenStringForMobile2(string) {
-  let screenWidth = window.innerWidth;
-  var maxLength2 = 70;
-
-  if (screenWidth > 550 && screenWidth <= 700) {
-    maxLength2 = 60;
-  } else if (screenWidth > 450 && screenWidth <= 550) {
-    maxLength2 = 45;
-  } else if (screenWidth <= 450 && screenWidth > 400) {
-    maxLength2 = 33;
-  } else if (screenWidth <= 400 && screenWidth > 350) {
-    maxLength2 = 26;
-  } else if (screenWidth <= 350) {
-    maxLength2 = 23;
-  }
-
-  if (string.length >= maxLength2) {
-    return string.substring(0, maxLength2) + "...";
-  }
-
-  return string;
-}
-
 function EventCard(props) {
   let stringDjs = "";
   if (props.Tittle && props.Tittle.length) {
@@ -57,9 +34,6 @@ function EventCard(props) {
 
   stringDjs = shortenStringForMobile(stringDjs);
   const secondTitle = shortenStringForMobile(props.SecondTittle || "");
-
-  let stringTypes = props.Genre;
-  stringTypes = shortenStringForMobile2(stringTypes);
 
   return (
     <div className={styles.body} onClick={props.OnClick}>
@@ -115,7 +89,7 @@ function EventCard(props) {
               }}
             />
             {props.Genre ? (
-              <p>{stringTypes}</p>
+              <p>{props.Genre}</p>
             ) : (
               <p style={{ opacity: "0.4" }}>Género musical</p>
             )}
