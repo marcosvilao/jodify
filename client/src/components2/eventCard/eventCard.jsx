@@ -5,16 +5,18 @@ import MusicNoteIcon from "@mui/icons-material/MusicNote";
 
 function shortenStringForMobile(string) {
   let screenWidth = window.innerWidth;
-  var maxLength = 90;
+  var maxLength = 70;
 
-  if (screenWidth > 550 && screenWidth <= 700) {
-    maxLength = 80;
+  if (screenWidth > 600 && screenWidth <= 700) {
+    var maxLength = 60;
+  } else if (screenWidth > 550 && screenWidth <= 600) {
+    maxLength = 46;
   } else if (screenWidth > 450 && screenWidth <= 550) {
-    maxLength = 60;
+    maxLength = 70;
   } else if (screenWidth <= 450 && screenWidth > 400) {
-    maxLength = 42;
+    maxLength = 50;
   } else if (screenWidth <= 400 && screenWidth > 350) {
-    maxLength = 38;
+    maxLength = 40;
   } else if (screenWidth <= 350) {
     maxLength = 32;
   }
