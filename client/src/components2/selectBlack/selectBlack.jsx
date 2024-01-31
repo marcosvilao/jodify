@@ -5,7 +5,6 @@ import TextField from "@mui/material/TextField";
 import { outlinedInputClasses } from "@mui/material/OutlinedInput";
 import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import AcUnitIcon from "@mui/icons-material/AcUnit";
 
 const customTheme = (outerTheme, hasError) =>
   createTheme({
