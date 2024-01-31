@@ -1,0 +1,27 @@
+.body {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  background-color: #1b1c20;
+  border: 1px solid #7c16f5;
+  border-radius: 8px;
+  padding: 0px 5px;
+}
+
+.buttonPickerSelected {
+  background-color: #1b1c20;
+  border: none;
+  height: 100%;
+  color: #ffffff;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  margin-left: 5px;
+  cursor: pointer;
+  color: #ffffff;
+}

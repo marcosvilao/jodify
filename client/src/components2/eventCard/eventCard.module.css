@@ -1,0 +1,94 @@
+.body {
+  width: 100%;
+  height: 120px;
+  background-color: #1b1c20;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  color: #e8dfe9;
+  box-sizing: border-box;
+  margin: 10px 0px;
+  cursor: pointer;
+}
+
+.dontImgContainer {
+  height: 100%;
+  width: 130px;
+  border: 2px dashed #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6.5px;
+  opacity: 0.4;
+}
+
+.containerImg {
+  height: 100%;
+  width: 130px;
+  border-radius: 6.5px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.containerData {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-left: 8px;
+  box-sizing: border-box;
+}
+
+.Tittle {
+  font-weight: bold;
+  font-size: 16px;
+  margin: 0px;
+}
+
+.TittleTwo {
+  font-weight: bold;
+  font-size: 22px;
+  margin: 0px;
+}
+
+.containerP {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 15px;
+}
+
+.containerP div {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  margin-bottom: 2px;
+}
+
+.icon {
+  margin-right: 5px;
+  color: #7c16f5;
+}
+
+.containerP div p {
+  margin: 0px;
+  font-size: 13px;
+  opacity: 0-8;
+}
+
+@media screen and (max-width: 450px) {
+  .containerP {
+    margin-top: 5px;
+  }
+
+  .Tittle {
+    font-size: 15px;
+  }
+
+  .TittleTwo {
+    font-size: 16px;
+  }
+}

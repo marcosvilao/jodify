@@ -1,0 +1,67 @@
+.body {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 50px 0px;
+  margin-top: 70px;
+  min-height: 75vh;
+}
+
+.form {
+  width: 500px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 20px;
+  background-color: #1b1c20;
+  border-radius: 8px;
+  color: #ffffff;
+}
+
+.form h1 {
+    font-family: "Roboto Condensed";
+    font-size: 39px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    margin: 10px 0px 30px 0px;
+  }
+
+.containerCard {
+  border: 1px solid #ffffff;
+  border-radius: 13px;
+  height: 125px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form p {
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin: 5px 0px 0px 0px;
+}
+
+.containerButton {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 40px;
+  padding: 0px 20px;
+  gap: 20px;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 510px) {
+  .form {
+    width: 95%;
+  }
+
+  .containerButton {
+    flex-direction: column;
+  }
+}

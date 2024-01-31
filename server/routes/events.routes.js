@@ -11,6 +11,7 @@ const {
   scrapLink,
   UploadImage,
   getEventsPromoters,
+  filterEventsNew,
 } = require("../controllers/event.controller");
 const { getCities } = require("../controllers/city.controller");
 // const {createUser, verifyUser} = require('../controllers/user.controller')
@@ -21,6 +22,16 @@ const {
   getPromoters,
   postPromoters,
 } = require("../controllers/promoters.controller");
+const {
+  createUser,
+  getUser,
+  getAuth0User,
+  createAuth0User,
+} = require("../controllers/user.controller.js");
+const {
+  postResetPassword,
+  postResetPasswordEmail,
+} = require("../controllers/resetPassword.controllers.js");
 
 const router = Router();
 
@@ -30,7 +41,7 @@ router.get("/events", getEvents);
 
 router.get("/events/search", searchEvent);
 
-router.post("/events/filters", filterEvents);
+router.post("/events/filters/:page", filterEvents);
 
 router.post("/events", createEvent);
 
@@ -42,7 +53,14 @@ router.post("/get-event-data", scrapLink);
 
 router.get("/events-promoters", getEventsPromoters);
 
+router.post("/events/filtersNew", filterEventsNew);
+
 //users
+
+router.post("/create-users", createUser);
+router.post("/login", getUser);
+router.post("/auth0/login", getAuth0User);
+router.post("/auth0/register", createAuth0User);
 
 // router.post('/register', createUser)
 
@@ -75,3 +93,8 @@ router.get("/promoters", getPromoters);
 router.post("/create-promoters", postPromoters);
 
 module.exports = router;
+
+// reset password routes
+
+router.post("/reset-password", postResetPassword);
+router.post("/reset-password/:id/:token", postResetPasswordEmail);
