@@ -1,7 +1,7 @@
 .stickyHeader {
   position: -webkit-sticky;
   position: sticky;
-  top: 230px;
+  top: 210px;
   z-index: 9;
   background-color: #0c0c0c;
   padding: 10px 0;
@@ -69,14 +69,14 @@
   display: flex;
   align-items: center;
   justify-content: left;
-  margin: 20px 0px 10px 0px;
+  margin: 10px 0px;
   gap: 10px;
 }
 
 .containerPicker {
   width: 700px;
   position: fixed;
-  top: 230px;
+  top: 220px;
   z-index: 999;
 }
 
@@ -87,7 +87,7 @@
 
 .datePickerContainer {
   position: absolute;
-  top: -170px;
+  top: -150px;
 }
 
 .containerEventCard {
@@ -97,7 +97,7 @@
 }
 
 .firstElement {
-  margin-top: 260px;
+  margin-top: 210px;
 }
 
 .containerEventCard h1 {
@@ -115,6 +115,7 @@
   align-items: center;
   justify-content: center;
   margin-top: 220px;
+  text-align: center;
 }
 
 @media screen and (max-width: 750px) {
@@ -150,6 +151,11 @@
 
   .containerSkeleton {
     width: 100%;
+    padding: 0px 10px;
+    box-sizing: border-box;
+  }
+
+  .noHayEventos {
     padding: 0px 10px;
     box-sizing: border-box;
   }
