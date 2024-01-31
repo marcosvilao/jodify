@@ -9,6 +9,7 @@ import ButtonPickerSelected from "../../components2/buttonPickerSelected/buttonP
 import EventCard from "../../components2/eventCard/eventCard";
 import CheckBoxList from "../../components2/checkBoxList/checkBoxList";
 import Alert from "../../components2/alert/alert";
+import SkeletonLoader from "../../components2/loaderSkeleton/loaderSkeleton";
 
 function HomePage() {
   const axiosUrl = process.env.REACT_APP_AXIOS_URL;
@@ -110,8 +111,42 @@ function HomePage() {
 
   if (!dataEventCard || !types || !cities) {
     return (
-      <div className={styles.bodyLoader}>
-        <Loader Color="#7c16f5" Height="100px" Width="100px" />
+      <div className={styles.body}>
+        <div className={styles.containerFixed}>
+          <div className={styles.containerInput}>
+            <InputSearch PlaceHolder="Buscá un evento, artista o club" />
+          </div>
+          <div className={styles.containerButtons}>
+            <ButtonPickerSelected Value={citieName} />
+
+            {openGenero || filter.types.length ? (
+              <ButtonPickerSelected
+                Value={
+                  filter.types.length > 1
+                    ? filter.types[0] + " + " + (filter.types.length - 1)
+                    : filter.types.length === 1
+                    ? filter.types[0]
+                    : "Género"
+                }
+                Close="true"
+              />
+            ) : (
+              <ButtonPicker Value="Género" />
+            )}
+
+            {openFecha || filter.dates.length ? (
+              <ButtonPickerSelected
+                Value={valueButtonFecha ? valueButtonFecha : "Fecha"}
+                Close="true"
+              />
+            ) : (
+              <ButtonPicker Value="Fecha" />
+            )}
+          </div>
+        </div>
+        <div className={styles.containerSkeleton}>
+          <SkeletonLoader />
+        </div>
       </div>
     );
   } else {
