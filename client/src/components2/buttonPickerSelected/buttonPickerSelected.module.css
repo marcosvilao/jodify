@@ -25,3 +25,14 @@
   cursor: pointer;
   color: #ffffff;
 }
+
+@media screen and (max-width: 500px) {
+
+  .body {
+    height: 50px;
+  }
+
+  .buttonPickerSelected {
+    font-size: 14px;
+  }
+}

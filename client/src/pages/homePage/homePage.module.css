@@ -118,6 +118,10 @@
   text-align: center;
 }
 
+.noHayEventos h1 {
+  font-size: 22px;
+}
+
 @media screen and (max-width: 750px) {
   .containerFixed {
     width: 100%;
@@ -158,5 +162,15 @@
   .noHayEventos {
     padding: 0px 10px;
     box-sizing: border-box;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .noHayEventos {
+    padding: 0px 30px;
+  }
+
+  .noHayEventos h1 {
+    font-size: 20px;
   }
 }
