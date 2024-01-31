@@ -310,8 +310,6 @@ function CreateEventPage() {
       window.scroll(0, 0);
     };
 
-    console.log(dataPost);
-
     return (
       <div className={styles.body}>
         <div className={styles.form} id="from-1">
