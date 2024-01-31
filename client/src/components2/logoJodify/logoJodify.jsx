@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../../assets/logo-jodify/JODIFY_Iso_Gradient.svg";
+import logo from "../../assets/JODIFY_Iso_Gradient.maskable.svg";
 import theme from "../../jodifyStyles";
 
 function LogoJodify(props) {

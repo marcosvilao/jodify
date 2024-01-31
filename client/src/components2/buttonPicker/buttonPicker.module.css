@@ -1,10 +1,16 @@
-.buttonPicker{
-    background-color: #1b1c20;
-    border: none;
-    border-radius: 8px;
-    height: 40px;
-    color: #ffffff;
-    padding: 0px 10px;
-    font-size: 16px;
-    cursor: pointer;
+.buttonPicker {
+  background-color: #1b1c20;
+  border: none;
+  border-radius: 8px;
+  height: 40px;
+  color: #ffffff;
+  padding: 0px 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 500px) {
+  .buttonPicker {
+    height: 50px;
+  }
 }

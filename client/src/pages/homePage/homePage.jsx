@@ -268,7 +268,7 @@ function HomePage() {
       if (fechaFormateada === fechaFormateada2) {
         setValueButtonFecha(fechaFormateada);
       } else {
-        setValueButtonFecha(`${fechaFormateada} | ${fechaFormateada2}`);
+        setValueButtonFecha(`${fechaFormateada} ${fechaFormateada2}`);
       }
 
       setLoader(true);
