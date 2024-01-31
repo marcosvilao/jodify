@@ -4,6 +4,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import { outlinedInputClasses } from "@mui/material/OutlinedInput";
 import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 const customTheme = (outerTheme, hasError) =>
   createTheme({
@@ -152,28 +153,31 @@ function SelectBlack(props) {
     return (
       <ThemeProvider theme={customTheme(outerTheme, hasError)}>
         <div style={{ margin: props.Margin ? props.Margin : "10px 0px" }}>
-          <Autocomplete
-            freeSolo
-            inputValue={inputValue}
-            onInputChange={handleInputChange}
-            onChange={handleChange}
-            className={styles.selectBlack}
-            multiple
-            id="tags-outlined"
-            options={optionsArray}
-            getOptionLabel={(option) =>
-              typeof option === "object" && option ? option.value : option
-            }
-            filterSelectedOptions
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label={props.Option}
-                placeholder={props.PlaceHolder}
-                error={!!hasError}
-              />
-            )}
-          />
+          <div className={styles.positionAbsolute}>
+            <Autocomplete
+              freeSolo
+              inputValue={inputValue}
+              onInputChange={handleInputChange}
+              onChange={handleChange}
+              className={styles.selectBlack}
+              multiple
+              id="tags-outlined"
+              options={optionsArray}
+              getOptionLabel={(option) =>
+                typeof option === "object" && option ? option.value : option
+              }
+              filterSelectedOptions
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={props.Option}
+                  placeholder={props.PlaceHolder}
+                  error={!!hasError}
+                />
+              )}
+            />
+            <ArrowDropDownIcon className={styles.icon} />
+          </div>
           {hasError && (
             <div style={{ width: "100%", marginTop: "5px" }}>
               <p
