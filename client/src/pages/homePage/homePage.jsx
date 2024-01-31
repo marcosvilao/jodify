@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./homePage.module.css";
 import axios from "axios";
 import Loader from "../../components2/loader/loader";
@@ -12,6 +12,7 @@ import Alert from "../../components2/alert/alert";
 
 function HomePage() {
   const axiosUrl = process.env.REACT_APP_AXIOS_URL;
+  const headersRef = useRef([]);
   const [loader, setLoader] = useState(false);
   const [loaderLazyLoad, setLoaderLazyLoad] = useState(false);
   const [dataEventCard, setDataEventCard] = useState(false);
@@ -155,7 +156,12 @@ function HomePage() {
             key={i}
             className={`${styles.containerEventCard} ${additionalClass}`}
           >
-            <h1>{finalFormattedDate}</h1>
+            <h1
+              ref={(el) => (headersRef.current[i] = el)}
+              className={styles.stickyHeader}
+            >
+              {finalFormattedDate}
+            </h1>
             {event[objectName].map((event, index) => (
               <EventCard
                 key={index}
