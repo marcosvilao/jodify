@@ -18,6 +18,7 @@ function CreateEventPage() {
   const cloudinayUrl = process.env.REACT_APP_CLOUDINARY_URL + "/image/upload";
   const [loader, setLoader] = useState(false);
   const [submitLoader, setSubmitLoader] = useState(false);
+  const [filterCities, setFilterCities] = useState(false);
   const [cities, setCities] = useState(false);
   const [types, setTypes] = useState(false);
   const [djs, setDjs] = useState(false);
@@ -51,6 +52,7 @@ function CreateEventPage() {
             arrayCities.push({ value: citie.city_name });
           });
           setCities(arrayCities);
+          setFilterCities(res.data);
         })
         .catch(() => {
           Alert("Error!", "Error interno del servidor", "error");
@@ -99,9 +101,18 @@ function CreateEventPage() {
       setErrorPlace("");
       if (typeof value === "string") {
         if (value) {
+          let newCitie = filterCities.filter((citie) => {
+            if (citie.city_name === value) {
+              return {
+                id: citie.id,
+                name: citie.city_name,
+              };
+            }
+          });
+
           setDataPost({
             ...dataPost,
-            event_city: value,
+            event_city: newCitie[0],
           });
         } else {
           setDataPost({
@@ -111,9 +122,18 @@ function CreateEventPage() {
         }
       } else {
         if (value) {
+          let newCitie = filterCities.filter((citie) => {
+            if (citie.city_name === value.value) {
+              return {
+                id: citie.id,
+                name: citie.city_name,
+              };
+            }
+          });
+
           setDataPost({
             ...dataPost,
-            event_city: value.value,
+            event_city: newCitie[0],
           });
         } else {
           setDataPost({
@@ -361,8 +381,6 @@ function CreateEventPage() {
       history("/");
       window.scroll(0, 0);
     };
-
-    console.log(dataPost);
 
     return (
       <div className={styles.body}>
