@@ -1,0 +1,36 @@
+.body {
+  width: 100%;
+  position: relative;
+  margin: 10px 0px;
+}
+
+.icon {
+  color: #7c16f5;
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 10px;
+}
+
+.inputSearch {
+  width: 100%;
+  height: 35px;
+  padding: 8px 0px;
+  background-color: #1b1c20;
+  border: none;
+  border-radius: 8px;
+  text-indent: 50px;
+  color: #ffffff;
+  font-size: 16px;
+}
+
+.inputSearch::placeholder {
+  font-size: 16px;
+  opacity: 0.7;
+}
+
+.inputSearch:focus {
+  outline: 1px solid #7c16f5; /* Puedes cambiar "blue" por el color que prefieras */
+}
