@@ -17,7 +17,7 @@ function Grid() {
   const isFiltering = useSelector(state => state.search.isFiltering)
 
   useEffect(() => {
-      fetch('https://jodify.vercel.app/events')
+    fetch('https://jodify.vercel.app/events')
         .then(response => response.json())
         .then(data => {
           dispatch(setEvents(data));
@@ -50,15 +50,14 @@ function Grid() {
   return (
     <div style={{marginTop: '0rem'}}>
     {displayEvents.length ? displayEvents.map(dateObj => {
-      const dateString = Object.keys(dateObj)[0]; // Assuming there is only one key in dateObj
+      const dateString = Object.keys(dateObj)[0]; 
       const date = new Date(dateString);
       date.setHours(date.getHours() + 3);
       const eventArray = dateObj[Object.keys(dateObj)];
-
       const options = {
-        weekday: 'long',  // "Jueves"
-        day: 'numeric',   // "24"
-        month: 'long'     // "Agosto"
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long'
       };
       
       const formattedDate = date.toLocaleDateString('es-AR', options);
@@ -67,7 +66,6 @@ function Grid() {
       const capitalizedMonth = formattedDate.charAt(formattedDate.lastIndexOf(' ') + 1).toUpperCase() + formattedDate.slice(formattedDate.lastIndexOf(' ') + 2);
       
       const finalFormattedDate = `${capitalizedDay}, ${formattedDate.slice(formattedDate.indexOf(' ') + 1, formattedDate.lastIndexOf(' '))} ${capitalizedMonth}`;
-
 
       return (
         <div key={date.getTime()} style={{marginBottom : '20px'}}>

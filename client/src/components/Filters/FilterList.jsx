@@ -4,27 +4,28 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Checkbox from '@mui/material/Checkbox';
-import { Box } from '@mui/material';
-import { OkBtn } from './FilterEventsStyles';
 import { ItemTextList } from './FilterEventsStyles';
 import theme from '../../jodifyStyles';
 
 function FilterList({ typeList, cityList, checkedItems, setCheckedItems }) {
   const [checked, setChecked] = useState(checkedItems);
 
-  const handleToggle = (value) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
+const handleToggle = (value) => () => {
+  const currentIndex = checked.indexOf(value);
+  let newChecked = [...checked]
+  
     if (currentIndex === -1) {
       newChecked.push(value);
     } else {
       newChecked.splice(currentIndex, 1);
     }
 
-    setChecked(newChecked);
-    setCheckedItems(newChecked);
-  };
+
+
+  setChecked(newChecked);
+  setCheckedItems(newChecked);
+};
+  
 
   const renderListItems = (list, isCityList) => {
     return (
