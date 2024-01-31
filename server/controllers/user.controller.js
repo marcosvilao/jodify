@@ -1,5 +1,5 @@
 const pool = require("../db");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const { v4: uuidv4 } = require("uuid");
 
 const createUser = async (req, res) => {

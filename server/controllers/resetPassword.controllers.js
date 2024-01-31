@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
 const { PASSNODEMAILER, JWT_SECRET_RESET_PASSWORD } = require("../config");
 const pool = require("../db");
