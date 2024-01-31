@@ -552,7 +552,7 @@ function HomePage() {
                 events.forEach((event) => {
                   if (
                     !uniqueEvents.some(
-                      (e) => e.event_title === event.event_title
+                      (e) => e.id === event.id
                     )
                   ) {
                     uniqueEvents.push(event);
