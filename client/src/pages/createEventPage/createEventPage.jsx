@@ -555,12 +555,9 @@ function CreateEventPage() {
         <div className={styles.alert} id="alert">
           <h1>Jodify</h1>
 
-          <h2>Tu solicitud ah sido creada correctamente</h2>
+          <h2>¡Tu evento se publicó correctamente!</h2>
 
-          <p>
-            en 24hs te estaremos enviando un correo de confirmación con el alta
-            de la publicación.
-          </p>
+          <p>Gracias por elegir Jodify</p>
 
           <div className={styles.containerButton}>
             <Button
