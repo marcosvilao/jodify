@@ -80,7 +80,7 @@
   opacity: 0-8;
 }
 
-@media screen and (max-width: 550px) {
+@media screen and (max-width: 650px) {
   .containerP {
     margin-top: 5px;
   }
