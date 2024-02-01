@@ -16,7 +16,12 @@ function CreatePromotersPage() {
     instagram: "",
     priority: "",
   });
-  const arrayNumbers = [{ value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }];
+  const arrayNumbers = [
+    { value: "1" },
+    { value: "2" },
+    { value: "3" },
+    { value: "4" },
+  ];
 
   const onChangeInput = (e) => {
     setDataPost({
@@ -25,14 +30,23 @@ function CreatePromotersPage() {
     });
   };
 
-  const onChangeSelect = (e) => {
-    if (e.target.value === "Selecciona la prioridad") {
-      setDataPost({
-        ...dataPost,
-        priority: "",
-      });
+  const onChangeSelect = (event, value) => {
+    event.preventDefault();
+    if (typeof value === "string") {
+      if (value) {
+        let numero = parseInt(value);
+        setDataPost({
+          ...dataPost,
+          priority: numero,
+        });
+      } else {
+        setDataPost({
+          ...dataPost,
+          priority: "",
+        });
+      }
     } else {
-      let numero = parseInt(e.target.value);
+      let numero = parseInt(value.value);
       setDataPost({
         ...dataPost,
         priority: numero,
