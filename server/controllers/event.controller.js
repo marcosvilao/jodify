@@ -322,7 +322,6 @@ const filterEvents = async (req, res) => {
 const filterEventsNew = async (req, res) => {
   try {
     const { dates, cities, types, search, page } = req.body;
-console.log('BodyDates',dates)
     const setOff = page * 20;
     const currentDate = new Date();
     currentDate.setDate(currentDate.getDate() - 1);
@@ -356,13 +355,11 @@ console.log('BodyDates',dates)
       const [date1, date2] = dates;
       const firstDate = formatDate(date1);
       const secondDate = formatDate(date2);
-      console.log('FirstDate',firstDate)
-      console.log('secondDate',secondDate)
       if (firstDate !== secondDate) {
         query += ` AND e.event_date >= $${paramCount} AND e.event_date <= $${
           paramCount + 1
         }`;
-        values.push(date1, date2);
+        values.push(firstDate, secondDate);
         paramCount += 2;
       } else {
         query += `AND (e.event_date = $${paramCount})`;
