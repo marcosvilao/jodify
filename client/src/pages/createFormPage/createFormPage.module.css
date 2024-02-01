@@ -20,18 +20,18 @@
 }
 
 .form h1 {
-    font-family: "Roboto Condensed";
-    font-size: 39px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    margin: 10px 0px 30px 0px;
-  }
+  font-family: "Roboto Condensed";
+  font-size: 39px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin: 10px 0px 30px 0px;
+}
 
 .containerCard {
   border: 1px solid #ffffff;
   border-radius: 13px;
-  height: 125px;
+  height: 106px;
   display: flex;
   align-items: center;
   justify-content: center;
