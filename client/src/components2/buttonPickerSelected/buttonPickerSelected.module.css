@@ -42,12 +42,6 @@
   color: #ffffff;
 }
 
-@media screen and (max-width: 500px) {
-  .buttonPickerSelected {
-    font-size: 14px;
-  }
-}
-
 /*
 linear-gradient(90deg, #EA33F7 0%, #7C16F5 100%)
 */
