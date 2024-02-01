@@ -435,7 +435,6 @@ function CreateEventPage() {
             Margin="32px 0px 0px 0px"
             Multiple={false}
             Error={errorPlace}
-            Value={dataPost.event_city}
           />
           <p>Elegi la ciudad o porvincia donde queres que figure el evento.</p>
 
