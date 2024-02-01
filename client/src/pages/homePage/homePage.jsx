@@ -574,6 +574,8 @@ function HomePage() {
         });
     }
 
+    console.log(filter);
+
     return (
       <div className={styles.body}>
         <div className={styles.containerFixed}>
