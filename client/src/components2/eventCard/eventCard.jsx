@@ -28,6 +28,56 @@ function shortenStringForMobile(string) {
   return string;
 }
 
+function shortenStringForMobile2(string) {
+  let screenWidth = window.innerWidth;
+  var maxLength2 = 60;
+
+  if (screenWidth > 600 && screenWidth <= 700) {
+    var maxLength2 = 50;
+  } else if (screenWidth > 550 && screenWidth <= 600) {
+    maxLength2 = 45;
+  } else if (screenWidth > 450 && screenWidth <= 550) {
+    maxLength2 = 38;
+  } else if (screenWidth <= 450 && screenWidth > 400) {
+    maxLength2 = 30;
+  } else if (screenWidth <= 400 && screenWidth > 350) {
+    maxLength2 = 22;
+  } else if (screenWidth <= 350) {
+    maxLength2 = 18;
+  }
+
+  if (string.length >= maxLength2) {
+    return string.substring(0, maxLength2) + "...";
+  }
+
+  return string;
+}
+
+function shortenStringForMobile3(string) {
+  let screenWidth = window.innerWidth;
+  var maxLength2 = 60;
+
+  if (screenWidth > 600 && screenWidth <= 700) {
+    var maxLength2 = 50;
+  } else if (screenWidth > 550 && screenWidth <= 600) {
+    maxLength2 = 45;
+  } else if (screenWidth > 450 && screenWidth <= 550) {
+    maxLength2 = 38;
+  } else if (screenWidth <= 450 && screenWidth > 400) {
+    maxLength2 = 30;
+  } else if (screenWidth <= 400 && screenWidth > 350) {
+    maxLength2 = 22;
+  } else if (screenWidth <= 350) {
+    maxLength2 = 18;
+  }
+
+  if (string.length >= maxLength2) {
+    return string.substring(0, maxLength2) + "...";
+  }
+
+  return string;
+}
+
 function EventCard(props) {
   let stringDjs = "";
   if (props.Tittle && props.Tittle.length) {
@@ -36,6 +86,12 @@ function EventCard(props) {
 
   stringDjs = shortenStringForMobile(stringDjs);
   const secondTitle = shortenStringForMobile(props.SecondTittle || "");
+
+  let stringTypes = props.Genre;
+  stringTypes = shortenStringForMobile2(stringTypes);
+
+  let stringLocation = props.Location;
+  stringLocation = shortenStringForMobile3(stringLocation);
 
   return (
     <div className={styles.body} onClick={props.OnClick}>
@@ -76,7 +132,7 @@ function EventCard(props) {
               }}
             />
             {props.Location ? (
-              <p>{props.Location}</p>
+              <p>{stringLocation}</p>
             ) : (
               <p style={{ opacity: "0.4" }}>Ubicación</p>
             )}
@@ -91,7 +147,7 @@ function EventCard(props) {
               }}
             />
             {props.Genre ? (
-              <p>{props.Genre}</p>
+              <p>{stringTypes}</p>
             ) : (
               <p style={{ opacity: "0.4" }}>Género musical</p>
             )}
