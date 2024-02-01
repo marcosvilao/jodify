@@ -9,7 +9,11 @@ function ButtonPickerSelected(props) {
         {props.Value}
       </button>
       {props.Close ? (
-        <CloseIcon className={styles.icon} onClick={props.OnClose} />
+        <CloseIcon
+          className={styles.icon}
+          onClick={props.OnClose}
+          style={{ width: "20px" }}
+        />
       ) : null}
     </div>
   );
