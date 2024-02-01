@@ -175,6 +175,9 @@ function HomePage() {
             <h1
               ref={(el) => (headersRef.current[i] = el)}
               className={styles.stickyHeader}
+              style={{
+                fontSize: "24px",
+              }}
             >
               {finalFormattedDate}
             </h1>
@@ -573,8 +576,6 @@ function HomePage() {
           );
         });
     }
-
-    console.log(filter);
 
     return (
       <div className={styles.body}>
