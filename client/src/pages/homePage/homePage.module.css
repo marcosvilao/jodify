@@ -9,15 +9,15 @@
 }
 
 .bodyLoader {
-  width: 100%;
+  width: 600px;
   height: 150vh;
   display: flex;
   justify-content: center;
-  margin-top: 290px;
+  margin-top: 205px;
 }
 
 .containerSkeleton {
-  width: 700px;
+  width: 600px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -50,13 +50,13 @@
 .containerFixed {
   position: fixed;
   top: 80px;
-  width: 700px;
+  width: 600px;
   background-color: #0c0c0c;
   z-index: 99;
 }
 
 .containerInput {
-  width: 700px;
+  width: 600px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -65,7 +65,7 @@
 }
 
 .containerButtons {
-  width: 700px;
+  width: 600px;
   display: flex;
   align-items: center;
   justify-content: left;
@@ -74,7 +74,7 @@
 }
 
 .containerPicker {
-  width: 700px;
+  width: 600px;
   position: fixed;
   top: 220px;
   z-index: 999;
@@ -91,7 +91,7 @@
 }
 
 .containerEventCard {
-  width: 700px;
+  width: 600px;
   margin: 0px;
   margin-bottom: 10px;
 }
@@ -122,7 +122,13 @@
   font-size: 22px;
 }
 
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 650px) {
+  .bodyLoader {
+    width: 100%;
+    padding: 0px 10px;
+    box-sizing: border-box;
+  }
+
   .containerFixed {
     width: 100%;
     padding: 0px 10px;
@@ -166,6 +172,10 @@
 }
 
 @media screen and (max-width: 500px) {
+  .containerPicker {
+    top: 230px;
+  }
+
   .noHayEventos {
     padding: 0px 30px;
   }

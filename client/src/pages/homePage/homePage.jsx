@@ -550,11 +550,7 @@ function HomePage() {
                 const uniqueEvents = [];
 
                 events.forEach((event) => {
-                  if (
-                    !uniqueEvents.some(
-                      (e) => e.id === event.id
-                    )
-                  ) {
+                  if (!uniqueEvents.some((e) => e.id === event.id)) {
                     uniqueEvents.push(event);
                   }
                 });
@@ -684,7 +680,7 @@ function HomePage() {
 
         {loader ? (
           <div className={styles.bodyLoader}>
-            <Loader Color="#7c16f5" Height="100px" Width="100px" />
+            <SkeletonLoader />
           </div>
         ) : null}
 

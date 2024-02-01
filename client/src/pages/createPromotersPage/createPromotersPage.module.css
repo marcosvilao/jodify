@@ -16,8 +16,16 @@
   gap: 15px;
 }
 
+.containerSelect {
+  width: 350px;
+}
+
 @media (max-width: 400px) {
-    .form {
-      width: 95%;
-    }
+  .form {
+    width: 95%;
   }
+
+  .containerSelect {
+    width: 95%;
+  }
+}
