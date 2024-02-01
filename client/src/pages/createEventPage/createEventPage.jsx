@@ -186,9 +186,6 @@ function CreateEventPage() {
       setDataPost({
         ...dataPost,
         event_djs: arrayDjs,
-      });
-      setDataPost({
-        ...dataPost,
         event_title: string,
       });
     };
