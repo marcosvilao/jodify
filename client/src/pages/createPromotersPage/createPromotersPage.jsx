@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styles from "./createPromotersPage.module.css";
 import axios from "axios";
 import Alert from "../../components2/alert/alert";
-import LogoJodify from "../../components2/logoJodify/logoJodify";
 import InputFilled from "../../components2/inputBlack/inputBlack";
 import SelectBlack from "../../components2/selectBlack/selectBlack";
 import ButtonBlue from "../../components2/button/button";
@@ -76,8 +75,6 @@ function CreatePromotersPage() {
   return (
     <div className={styles.body}>
       <form className={styles.form}>
-        <LogoJodify />
-
         <TittleH1 Value="Crear productora" />
 
         <InputFilled
@@ -96,11 +93,14 @@ function CreatePromotersPage() {
           Label="escribi el instagram"
         />
 
-        <SelectBlack
-          Option="Selecciona la prioridad"
-          Array={arrayNumbers}
-          OnChange={onChangeSelect}
-        />
+        <form className={styles.containerSelect}>
+          <SelectBlack
+            Option="Selecciona la prioridad"
+            Array={arrayNumbers}
+            OnChange={onChangeSelect}
+            Multiple={false}
+          />
+        </form>
 
         {!loader ? (
           <ButtonBlue Value="Submit" OnClick={onSubmit} />

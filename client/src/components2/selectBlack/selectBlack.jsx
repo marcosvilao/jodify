@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./selectBlack.module.css";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
@@ -87,10 +87,13 @@ function SelectBlack(props) {
   const outerTheme = useTheme();
   const hasError = props.Error !== "" && props.Error;
   const optionsArray = props.Array || [];
-  const [inputValue, setInputValue] = React.useState("");
+  const [inputValue, setInputValue] = useState("");
+  const [nanMultiselect, setNanMultiselect] = useState(false);
 
   const handleInputChange = (event, newInputValue) => {
-    setInputValue(newInputValue);
+    if (!nanMultiselect) {
+      setInputValue(newInputValue);
+    }
   };
 
   const handleChange = (event, newValue) => {
@@ -99,11 +102,22 @@ function SelectBlack(props) {
     } else if (newValue && typeof newValue === "object") {
       var valueToSet = newValue?.value;
       setInputValue(valueToSet);
+      setNanMultiselect(true);
       props.OnChange(event, newValue);
     } else if (newValue && typeof newValue === "string") {
       var valueToSet = newValue;
       setInputValue(valueToSet);
       props.OnChange(event, newValue);
+      setNanMultiselect(true);
+    } else if (newValue === null) {
+      setInputValue("");
+      setNanMultiselect(false);
+    }
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Delete" || event.key === "Backspace") {
+      handleChange(event, null);
     }
   };
 
@@ -111,28 +125,32 @@ function SelectBlack(props) {
     return (
       <ThemeProvider theme={customTheme(outerTheme, hasError)}>
         <div style={{ margin: props.Margin ? props.Margin : "10px 0px" }}>
-          <Autocomplete
-            freeSolo
-            inputValue={inputValue}
-            onInputChange={handleInputChange}
-            onChange={handleChange}
-            className={styles.selectBlack}
-            multiple={false}
-            id="tags-outlined"
-            options={optionsArray}
-            getOptionLabel={(option) =>
-              typeof option === "object" && option ? option.value : option
-            }
-            filterSelectedOptions
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label={props.Option}
-                placeholder={props.PlaceHolder}
-                error={!!hasError}
-              />
-            )}
-          />
+          <div className={styles.positionAbsolute}>
+            <Autocomplete
+              freeSolo
+              onKeyDown={handleKeyDown}
+              inputValue={inputValue}
+              onInputChange={handleInputChange}
+              onChange={handleChange}
+              className={styles.selectBlack}
+              multiple={false}
+              id="tags-outlined"
+              options={optionsArray}
+              getOptionLabel={(option) =>
+                typeof option === "object" && option ? option.value : option
+              }
+              filterSelectedOptions
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={props.Option}
+                  placeholder={props.PlaceHolder}
+                  error={!!hasError}
+                />
+              )}
+            />
+            <ArrowDropDownIcon className={styles.icon} />
+          </div>
           {hasError && (
             <div style={{ width: "100%", marginTop: "5px" }}>
               <p
