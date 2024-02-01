@@ -12,6 +12,7 @@ const customTheme = () =>
       MuiPickersToolbar: {
         styleOverrides: {
           root: {
+            gap: "10px",
             "& .MuiTypography-root": {
               color: "#ffffff !important",
             },
