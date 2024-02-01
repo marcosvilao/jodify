@@ -181,10 +181,15 @@ function CreateEventPage() {
           arrayDjs.push(value[i]);
         }
       }
+      let string = arrayDjs.join(" | ");
       setErrorLineUp("");
       setDataPost({
         ...dataPost,
         event_djs: arrayDjs,
+      });
+      setDataPost({
+        ...dataPost,
+        event_title: string,
       });
     };
 
