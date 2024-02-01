@@ -22,7 +22,6 @@ function CreateFormPage() {
   const [errorPlace, setErrorPlace] = useState("");
   const [errorFecha, setErrorFecha] = useState("");
   const [errorGeneros, setErrorGeneros] = useState("");
-  const [errorProductora, setErrorProductora] = useState("");
   const [errorFile, setErrorFile] = useState("");
   const [cities, setCities] = useState(false);
   const [filterCities, setFilterCities] = useState(false);
@@ -243,8 +242,7 @@ function CreateFormPage() {
         dataPost.ticket_link.length === 0 ||
         dataPost.event_image.length === 0 ||
         dataPost.event_djs.length === 0 ||
-        dataPost.event_city.length === 0 ||
-        dataPost.event_promoter.length === 0
+        dataPost.event_city.length === 0
       ) {
         Alert("Error!", "Completar todos los campos", "error");
         setSubmitLoader(false);
@@ -274,10 +272,6 @@ function CreateFormPage() {
 
         if (dataPost.event_image.length === 0) {
           setErrorFile("Completar campo");
-        }
-
-        if (dataPost.event_promoter.length === 0) {
-          setErrorProductora("Completar campo");
         }
       } else {
         axios
@@ -365,8 +359,7 @@ function CreateFormPage() {
           }
         }
       }
-
-      setErrorProductora("");
+      
       setDataPost({
         ...dataPost,
         event_promoter: idPromoters,
@@ -425,7 +418,6 @@ function CreateFormPage() {
             Option="Productora"
             Array={promoters}
             OnChange={onChangeEventPromoters}
-            Error={errorProductora}
             Margin="32px 0px 0px 0px"
           />
           <p>Selecciona su productora</p>
