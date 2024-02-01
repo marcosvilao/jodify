@@ -71,6 +71,7 @@
   justify-content: left;
   margin: 10px 0px;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .containerPicker {
