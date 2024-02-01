@@ -259,6 +259,66 @@ const scrapLink = async (req, res) => {
   }
 };
 
+const filterEvents = async (req, res) => {
+  try {
+    const { dates, city, type, search } = req.body;
+    const { page } = req.params;
+
+    let query = "SELECT * FROM event WHERE TRUE";
+    const values = [];
+
+    let paramCount = 1; // Initialize parameter counter
+
+    if (date) {
+      query += ` AND event_date = $${paramCount}`;
+      values.push(date);
+      paramCount++;
+    } else {
+      query += " AND (event_date IS NULL OR event_date = event_date)";
+    }
+
+    if (city) {
+      query += ` AND city_id = $${paramCount}`;
+      values.push(city);
+      paramCount++;
+    } else {
+      query += " AND (city_id IS NULL OR city_id = city_id)";
+    }
+
+    if (type) {
+      query += ` AND event_type = $${paramCount}`;
+      values.push(type);
+    } else {
+      query += " AND (event_type IS NULL OR event_type = event_type)";
+    }
+
+    const result = await pool.query(query, values);
+    const events = result.rows;
+
+    // Create an object to hold the grouped events
+    const groupedEvents = {};
+
+    // Iterate through each event and group them by event_date
+    events.forEach((event) => {
+      const eventDate = event.event_date;
+      if (!groupedEvents[eventDate]) {
+        groupedEvents[eventDate] = [];
+      }
+      groupedEvents[eventDate].push(event);
+    });
+
+    // Convert the groupedEvents object into an array of objects
+    const groupedEventsArray = Object.keys(groupedEvents).map((date) => ({
+      [date]: groupedEvents[date],
+    }));
+
+    res.status(200).json(groupedEventsArray);
+  } catch (error) {
+    console.error("Error fetching events:", error);
+    res.status(500).json({ error: "An error occurred while fetching events" });
+  }
+};
+
 const filterEventsNew = async (req, res) => {
   try {
     const { dates, cities, types, search, page } = req.body;
