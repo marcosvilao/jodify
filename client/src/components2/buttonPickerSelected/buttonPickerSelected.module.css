@@ -21,18 +21,23 @@
 .icon {
   width: 20px;
   height: 20px;
+  margin: 0px;
   margin-left: 5px;
   cursor: pointer;
   color: #ffffff;
 }
 
 @media screen and (max-width: 500px) {
-
   .body {
     height: 50px;
+    padding: 0px 2px;
   }
 
   .buttonPickerSelected {
     font-size: 12px;
+  }
+
+  .icon {
+    margin-left: 0px;
   }
 }
