@@ -1,11 +1,11 @@
 .body {
   width: 100%;
-  height: 115px;
+  height: 100px;
   background-color: #1b1c20;
   border-radius: 8px;
   display: flex;
   align-items: center;
-  padding: 12px;
+  padding: 8px;
   color: #e8dfe9;
   box-sizing: border-box;
   margin: 10px 0px;
