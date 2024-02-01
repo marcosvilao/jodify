@@ -199,13 +199,13 @@ function CreateFormPage() {
         }
       }
       let string = arrayDjs.join(" | ");
+
+      console.log(arrayDjs);
+
       setErrorLineUp("");
       setDataPost({
         ...dataPost,
         event_djs: arrayDjs,
-      });
-      setDataPost({
-        ...dataPost,
         event_title: string,
       });
     };
