@@ -83,7 +83,7 @@ function HomePage() {
         const currentScroll = window.scrollY || window.pageYOffset;
 
         if (
-          currentScroll >= maxHeight &&
+          currentScroll >= maxHeight - 200 && // Cambio aquí, 20px antes del final
           dataEventCard &&
           !finishLazyLoad &&
           !isFiltering &&
