@@ -287,7 +287,6 @@ function CreateEventPage() {
           formData.append("file", file);
           formData.append("upload_preset", "jodify_key");
           formData.append("jodify", "");
-          console.log(formData);
           fetch(cloudinayUrl, {
             method: "post",
             body: formData,
@@ -297,7 +296,6 @@ function CreateEventPage() {
               const secureUrl = data.url
                 ? data.url.replace(/^http:/, "https:")
                 : data.url;
-              console.log(secureUrl);
               setDataPost((dataPost) => ({
                 ...dataPost,
                 event_image: secureUrl,

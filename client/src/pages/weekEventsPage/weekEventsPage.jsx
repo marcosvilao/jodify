@@ -74,7 +74,7 @@ function WeekEventsPage() {
     ];
 
     const rows = [];
-    console.log(dataEvents)
+
     dataEvents.events.map((event) => {
     let bestPromoter;
           let resultadoDjs = event.event_djs.join(" | ");
@@ -100,8 +100,6 @@ function WeekEventsPage() {
 
       })
 
-
-    console.log(dataEvents);
 
     return (
       <div
