@@ -87,7 +87,7 @@ router.get("/djs", getDjs);
 
 router.get("/promoters", getPromoters);
 
-router.post("/create-promoters", postPromoters);
+router.post("/create-promoter", postPromoters);
 
 module.exports = router;
 

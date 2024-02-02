@@ -66,7 +66,7 @@ function CreatePromotersPage() {
     } else {
       setLoader(true);
       axios
-        .post(axiosUrl + "/create-promoters", dataPost)
+        .post(axiosUrl + "/create-promoter", dataPost)
         .then(() => {
           setLoader(false);
           let callbackAlert = () => {

@@ -28,7 +28,7 @@ function App() {
         <Route path="/register-promoter" element={<RegisterPromoterPage />} />
         <Route path="/week-events" element={<WeekEventsPage />} />
         <Route path="/create-event" element={<CreateEventPage />} />
-        <Route path="/create-promoters" element={<CreatePromotersPage />} />
+        <Route path="/create-promoter" element={<CreatePromotersPage />} />
         <Route path="/create-form" element={<CreateFormPage />} />
       </Routes>
     </div>
