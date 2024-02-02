@@ -110,19 +110,19 @@ const createEvent = async (req, res) => {
       event_type,
       event_date,
       event_location,
-      ticket_link,
       event_image,
       event_djs,
       event_city,
       event_promoter,
+      ticket_link,
     } = req.body.event;
-
+    console.log(event_promoter)
     const formattedEventDate = new Date(event_date);
     formattedEventDate.setHours(9, 0, 0);
-    let promoter;
+    let promoters;
 
     if (event_promoter.length > 0) {
-      promoter = event_promoter.map((promoter) => promoter.id);
+      promoters = event_promoter.map((promoter) => promoter.id);
     }
 
     const formattedType = event_type.join(" | ");
@@ -165,8 +165,19 @@ const createEvent = async (req, res) => {
     const insertedId = result.rows[0].id;
 
     if (insertedId && event_promoter.length > 0) {
-      await pool.query(`INSERT INTO public.event_promoters(event_id, promoter_id)
-      VALUES ('${insertedId}', '${promoter}');`);
+
+      for (let promoter of promoters) {
+        
+        const promoterQuery = `
+          INSERT INTO public.event_promoters(event_id, promoter_id)
+          VALUES ($1, $2);
+        `;
+        
+        const promoterValues = [insertedId, promoter];
+      
+        await pool.query(promoterQuery, promoterValues);
+      }
+
     }
 
     res
