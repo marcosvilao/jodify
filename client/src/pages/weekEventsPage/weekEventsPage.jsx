@@ -107,7 +107,6 @@ function WeekEventsPage() {
           width: "100%",
           background: "#ffffff",
           padding: "10px 0px",
-          marginTop: "70px",
         }}
       >
         <h1 style={{ marginLeft: "5px" }}>Tabla de eventos:</h1>
