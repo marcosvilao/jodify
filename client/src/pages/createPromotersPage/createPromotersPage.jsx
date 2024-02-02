@@ -107,14 +107,14 @@ function CreatePromotersPage() {
           Label="escribi el instagram"
         />
 
-        <form className={styles.containerSelect}>
+        <div className={styles.containerSelect}>
           <SelectBlack
             Option="Selecciona la prioridad"
             Array={arrayNumbers}
             OnChange={onChangeSelect}
             Multiple={false}
           />
-        </form>
+        </div>
 
         {!loader ? (
           <ButtonBlue Value="Submit" OnClick={onSubmit} />
