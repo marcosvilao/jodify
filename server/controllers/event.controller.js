@@ -110,13 +110,13 @@ const createEvent = async (req, res) => {
       event_type,
       event_date,
       event_location,
-      ticket_link,
       event_image,
       event_djs,
       event_city,
       event_promoter,
+      ticket_link,
     } = req.body.event;
-
+    console.log(event_promoter)
     const formattedEventDate = new Date(event_date);
     formattedEventDate.setHours(9, 0, 0);
     let promoters;
