@@ -11,7 +11,7 @@ function WeekEventsPage() {
   useEffect(() => {
     if (dataEvents === false) {
       axios
-        .get(axiosUrl + "/events")
+        .get(axiosUrl + "/events-promoters")
         .then((res) => {
           setDataEvents(res.data);
         })
@@ -74,25 +74,32 @@ function WeekEventsPage() {
     ];
 
     const rows = [];
+    console.log(dataEvents)
+    dataEvents.events.map((event) => {
+    let bestPromoter;
+          let resultadoDjs = event.event_djs.join(" | ");
+          if (event.promoters && event.promoters.length > 0) {
+            // Find the promoter with the lowest priority
+            bestPromoter = event.promoters.reduce((minPriorityPromoter, currentPromoter) => {
+              return currentPromoter.priority < minPriorityPromoter.priority ? currentPromoter : minPriorityPromoter;
+            }, event.promoters[0]);
 
-    dataEvents.map((event) => {
-      for (let propiedad in event) {
-        event[propiedad].map((i) => {
-          let resultadoDjs = i.event_djs.join(" | ");
+          } 
+            
           rows.push({
-            id: i.id,
-            evento: i.event_title,
-            lugar: i.event_location,
-            fecha: i.event_date,
+            id: event.id,
+            evento: event.event_title,
+            lugar: event.event_location,
+            fecha: event.event_date,
             djs: resultadoDjs,
-            genero: i.event_type,
-            ticketlink: i.ticket_link,
-            productora: i.name,
-            intagram: i.instagram,
+            genero: event.event_type,
+            ticketlink: event.ticket_link,
+            productora: bestPromoter.name,
+            intagram: bestPromoter.instagram,
           });
-        });
-      }
-    });
+
+      })
+
 
     console.log(dataEvents);
 

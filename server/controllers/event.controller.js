@@ -66,21 +66,35 @@ const getEventsPromoters = async (req, res) => {
       .plus({ days: 7 }) // Obtener la fecha una semana desde hoy
       .toISODate();
 
-    const result = await pool.query(`
-        SELECT e.*, p.* 
-        FROM event e
-        LEFT JOIN promoters p ON p.id = ANY(CAST(e.promoter_id AS uuid[]))
-        WHERE DATE(e.event_date) BETWEEN '${todayInArgentina}' AND '${oneWeekFromNow}'
-        ORDER BY DATE(e.event_date), 
-                 CASE
-                   WHEN p.priority IS NOT NULL THEN p.priority
-                   ELSE 9999
-                 END
-      `);
+      const values = [todayInArgentina, oneWeekFromNow]
+
+    const query = `
+    SELECT 
+    e.*, 
+    COALESCE(
+      jsonb_agg(
+        jsonb_build_object(
+          'id', p.id,
+          'name', p.name, 
+          'priority', p.priority, 
+          'instagram', p.instagram
+        )
+      ),
+      '[]'
+    ) AS promoters
+  FROM event e 
+  LEFT JOIN event_promoters ep ON e.id = ep.event_id 
+  LEFT JOIN promoters p ON p.id = ep.promoter_id 
+  WHERE e.event_date >= $1 AND e.event_date <= $2
+  GROUP BY e.id
+  ORDER BY e.event_date;
+      `;
+
+      const result = await pool.query(query, values);
 
     if (result && result.rows && Array.isArray(result.rows)) {
       const rows = result.rows;
-      res.status(202).json({ eventos: rows });
+      res.status(202).json({ events: rows });
     } else {
       throw new Error("La consulta no devolvió un conjunto de filas.");
     }
@@ -259,66 +273,6 @@ const scrapLink = async (req, res) => {
   }
 };
 
-const filterEvents = async (req, res) => {
-  try {
-    const { dates, city, type, search } = req.body;
-    const { page } = req.params;
-
-    let query = "SELECT * FROM event WHERE TRUE";
-    const values = [];
-
-    let paramCount = 1; // Initialize parameter counter
-
-    if (date) {
-      query += ` AND event_date = $${paramCount}`;
-      values.push(date);
-      paramCount++;
-    } else {
-      query += " AND (event_date IS NULL OR event_date = event_date)";
-    }
-
-    if (city) {
-      query += ` AND city_id = $${paramCount}`;
-      values.push(city);
-      paramCount++;
-    } else {
-      query += " AND (city_id IS NULL OR city_id = city_id)";
-    }
-
-    if (type) {
-      query += ` AND event_type = $${paramCount}`;
-      values.push(type);
-    } else {
-      query += " AND (event_type IS NULL OR event_type = event_type)";
-    }
-
-    const result = await pool.query(query, values);
-    const events = result.rows;
-
-    // Create an object to hold the grouped events
-    const groupedEvents = {};
-
-    // Iterate through each event and group them by event_date
-    events.forEach((event) => {
-      const eventDate = event.event_date;
-      if (!groupedEvents[eventDate]) {
-        groupedEvents[eventDate] = [];
-      }
-      groupedEvents[eventDate].push(event);
-    });
-
-    // Convert the groupedEvents object into an array of objects
-    const groupedEventsArray = Object.keys(groupedEvents).map((date) => ({
-      [date]: groupedEvents[date],
-    }));
-
-    res.status(200).json(groupedEventsArray);
-  } catch (error) {
-    console.error("Error fetching events:", error);
-    res.status(500).json({ error: "An error occurred while fetching events" });
-  }
-};
-
 const filterEventsNew = async (req, res) => {
   try {
     const { dates, cities, types, search, page } = req.body;
@@ -431,7 +385,6 @@ module.exports = {
   updateEvent,
   deleteEvent,
   searchEvent,
-  filterEvents,
   scrapLink,
   getEventsPromoters,
   filterEventsNew,
