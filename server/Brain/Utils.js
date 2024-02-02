@@ -12,7 +12,6 @@ const formatDate = (date) => {
       timeZone: "America/Argentina/Buenos_Aires"
     };
     const formattedDate = inputDate.toLocaleString("en-US", options);
-    console.log(formattedDate);
     return formattedDate;
   };
   

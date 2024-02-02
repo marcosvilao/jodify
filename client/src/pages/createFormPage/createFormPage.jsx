@@ -199,7 +199,6 @@ function CreateFormPage() {
       }
       let string = arrayDjs.join(" | ");
 
-      console.log(arrayDjs);
 
       setErrorLineUp("");
       setDataPost({
@@ -309,7 +308,6 @@ function CreateFormPage() {
           formData.append("file", file);
           formData.append("upload_preset", "jodify_key");
           formData.append("jodify", "");
-          console.log(formData);
           fetch(cloudinayUrl, {
             method: "post",
             body: formData,
@@ -319,7 +317,6 @@ function CreateFormPage() {
               const secureUrl = data.url
                 ? data.url.replace(/^http:/, "https:")
                 : data.url;
-              console.log(secureUrl);
               setDataPost((dataPost) => ({
                 ...dataPost,
                 event_image: secureUrl,
