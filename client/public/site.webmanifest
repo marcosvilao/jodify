@@ -4,27 +4,27 @@
   "OrientationLockType": "portrait",
   "icons": [
     {
-      "src": "../JODIFY_Iso_Gradient.maskable.svg",
+      "src": "media/manifest-icon-192.maskable.png",
       "sizes": "192x192",
-      "type": "image/svg",
+      "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "../JODIFY_Iso_Gradient.maskable.svg",
+      "src": "media/manifest-icon-192.maskable.png",
       "sizes": "192x192",
-      "type": "image/svg",
+      "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "../JODIFY_Iso_Gradient.maskable.svg",
+      "src": "media/manifest-icon-512.maskable.png",
       "sizes": "512x512",
-      "type": "image/svg",
+      "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "../JODIFY_Iso_Gradient.maskable.svg",
+      "src": "media/manifest-icon-512.maskable.png",
       "sizes": "512x512",
-      "type": "image/svg",
+      "type": "image/png",
       "purpose": "maskable"
     }
   ]
