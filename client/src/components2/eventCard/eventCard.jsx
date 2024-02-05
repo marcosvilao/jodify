@@ -10,7 +10,7 @@ function EventCard(props) {
   }
 
   return (
-    <div className={styles.body} onClick={props.OnClick}>
+    <a className={styles.body} onClick={props.OnClick}>
       {!props.Img ? (
         <div className={styles.dontImgContainer}>
           <p style={{ fontSize: "16px", margin: "0px" }}>Img</p>
@@ -69,7 +69,7 @@ function EventCard(props) {
           )}
         </div>
       </div>
-    </div>
+    </a>
   );
 }
 
