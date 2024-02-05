@@ -61,7 +61,13 @@ const customTheme = (outerTheme, hasError) =>
               backgroundColor: "#AE71F9",
               borderStyle: "none",
               borderRadius: "50%",
-              color: "#000000",
+              color: "#ffffff",
+            },
+            "&.Mui-selected:focus": {
+              backgroundColor: "#AE71F9",
+              color: "#ffffff",
+              borderStyle: "none",
+              borderRadius: "50%",
             },
             "&:hover": {
               backgroundColor: "rgba(255, 255, 255, 0.15)",
@@ -78,11 +84,11 @@ const customTheme = (outerTheme, hasError) =>
               backgroundColor: "#AE71F9",
               borderStyle: "none",
               borderRadius: "50%",
-              color: "#000000",
+              color: "#ffffff",
             },
             "&.MuiPickersDay-today-selected:focus": {
               backgroundColor: "#AE71F9",
-              color: "#000000",
+              color: "#ffffff",
               borderStyle: "none",
               borderRadius: "50%",
             },
@@ -92,12 +98,6 @@ const customTheme = (outerTheme, hasError) =>
               borderColor: "#ffffff",
               borderWidth: "1px",
               borderStyle: "solid",
-            },
-            "&.Mui-selected:focus": {
-              backgroundColor: "#AE71F9",
-              color: "#000000",
-              borderStyle: "none",
-              borderRadius: "50%",
             },
             "&.Mui-disabled": {
               color: "gray !important",
