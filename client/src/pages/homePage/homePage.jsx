@@ -256,19 +256,17 @@ function HomePage() {
       let fecha = new Date(fechaOriginal);
       let dia = fecha.getDate();
       let mes = fecha.getMonth() + 1;
-      let año = fecha.getFullYear(); // Obtén el año
       dia = dia < 10 ? "0" + dia : dia;
       mes = mes < 10 ? "0" + mes : mes;
-      let fechaFormateada = dia + "/" + mes + "/" + año; // Incluye el año
+      let fechaFormateada = dia + "/" + mes;
 
       let fechaOriginal2 = filter.dates[1];
       let fecha2 = new Date(fechaOriginal2);
       let dia2 = fecha2.getDate();
       let mes2 = fecha2.getMonth() + 1;
-      let año2 = fecha2.getFullYear(); // Obtén el año para la segunda fecha
       dia2 = dia2 < 10 ? "0" + dia2 : dia2;
       mes2 = mes2 < 10 ? "0" + mes2 : mes2;
-      let fechaFormateada2 = dia2 + "/" + mes2 + "/" + año2; // Incluye el año
+      let fechaFormateada2 = dia2 + "/" + mes2;
 
       if (fechaFormateada === fechaFormateada2) {
         setValueButtonFecha(fechaFormateada);
