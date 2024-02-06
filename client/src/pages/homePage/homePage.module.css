@@ -75,9 +75,10 @@
 }
 
 .containerPicker {
+  position: -webkit-sticky;
+  position: sticky;
   width: 600px;
-  position: fixed;
-  top: 220px;
+  top: 125px;
   z-index: 999;
 }
 
