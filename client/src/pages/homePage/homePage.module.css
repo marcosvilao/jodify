@@ -75,21 +75,31 @@
 }
 
 .containerPicker {
-  position: -webkit-sticky;
-  position: sticky;
-  width: 600px;
-  top: 125px;
+  visibility: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: transparent;
   z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.datePicker {
-  width: 100%;
-  position: relative;
-}
-
-.datePickerContainer {
+.containerUbicacion {
   position: absolute;
-  top: -150px;
+  visibility: hidden;
+}
+
+.containerGenero {
+  position: absolute;
+  visibility: hidden;
+}
+
+.containerUbicacion {
+  width: 300px;
 }
 
 .containerEventCard {
