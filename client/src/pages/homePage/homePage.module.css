@@ -158,12 +158,6 @@
     box-sizing: border-box;
   }
 
-  .containerPicker {
-    width: 100%;
-    padding: 0px 10px;
-    box-sizing: border-box;
-  }
-
   .containerEventCard {
     width: 100%;
     padding: 0px 10px;
@@ -183,10 +177,6 @@
 }
 
 @media screen and (max-width: 500px) {
-  .containerPicker {
-    top: 125px;
-  }
-
   .noHayEventos {
     padding: 0px 30px;
   }
