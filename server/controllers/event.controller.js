@@ -3,7 +3,7 @@ const { linkScrap } = require("../Brain/getEventData");
 const { v4: uuidv4 } = require("uuid");
 const { types } = require("pg");
 const { DateTime } = require("luxon");
-const { formatDate } = require("../Brain/Utils.js");
+const { formatDate, removeAccents } = require("../Brain/Utils.js");
 
 const getEvents = async (req, res, next) => {
   try {
@@ -361,8 +361,10 @@ const filterEventsNew = async (req, res) => {
     }
 
     if (search) {
-      query += ` AND (e.event_title ILIKE $${paramCount} OR e.event_location ILIKE $${paramCount} OR e.event_djs @> ARRAY[$${paramCount}]::character varying[])`;
-      values.push(`%${search}%`);
+      const searchWithoutAccents = removeAccents(search);
+
+      query += ` AND (unaccent(lower(e.event_title)) ILIKE unaccent(lower($${paramCount})) OR unaccent(lower(e.event_location)) ILIKE unaccent(lower($${paramCount})) OR e.event_djs @> ARRAY[unaccent(lower($${paramCount}))]::character varying[])`;
+      values.push(`%${searchWithoutAccents}%`);
       paramCount++;
     }
 

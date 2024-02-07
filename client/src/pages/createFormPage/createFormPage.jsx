@@ -199,7 +199,6 @@ function CreateFormPage() {
       }
       let string = arrayDjs.join(" | ");
 
-
       setErrorLineUp("");
       setDataPost({
         ...dataPost,
@@ -288,12 +287,7 @@ function CreateFormPage() {
             );
           })
           .catch((err) => {
-            console.log(err);
-            Alert(
-              "Error!",
-              "Error interno del servidor, ponerse en contacto con el servidor o intentar luego mas tarde",
-              "error"
-            );
+            Alert("Error!", err.response.data.message, "error");
             setSubmitLoader(false);
           });
       }
@@ -356,7 +350,7 @@ function CreateFormPage() {
           }
         }
       }
-      
+
       setDataPost({
         ...dataPost,
         event_promoter: idPromoters,
