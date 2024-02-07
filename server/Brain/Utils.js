@@ -14,7 +14,12 @@ const formatDate = (date) => {
     const formattedDate = inputDate.toLocaleString("en-US", options);
     return formattedDate;
   };
+
+  function removeAccents(str) {
+    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  }
   
   module.exports = {
     formatDate,
+    removeAccents
   };
