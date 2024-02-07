@@ -287,7 +287,6 @@ function CreateFormPage() {
             );
           })
           .catch((err) => {
-            console.log(err);
             Alert("Error!", err.response.data.message, "error");
             setSubmitLoader(false);
           });
