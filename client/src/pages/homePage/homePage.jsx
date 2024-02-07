@@ -50,8 +50,12 @@ function HomePage() {
         .then((res) => {
           setDataEventCard(res.data);
         })
-        .catch((err) => {
-          console.log(err);
+        .catch(() => {
+          Alert(
+            "Error!",
+            "Error al cargar los eventos, recargar la pagina o ponerse en contacto con el servidor",
+            "error"
+          );
         });
     }
 
@@ -61,8 +65,12 @@ function HomePage() {
         .then((res) => {
           setCities(res.data);
         })
-        .catch((err) => {
-          console.log(err);
+        .catch(() => {
+          Alert(
+            "Error!",
+            "Error al cargar los filtros, recargar la pagina o ponerse en contacto con el servidor",
+            "error"
+          );
         });
     }
 
@@ -72,8 +80,12 @@ function HomePage() {
         .then((res) => {
           setType(res.data);
         })
-        .catch((err) => {
-          console.log(err);
+        .catch(() => {
+          Alert(
+            "Error!",
+            "Error al cargar los filtros, recargar la pagina o ponerse en contacto con el servidor",
+            "error"
+          );
         });
     }
 

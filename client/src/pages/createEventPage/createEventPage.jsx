@@ -267,12 +267,8 @@ function CreateEventPage() {
             formTwo.style.display = "none";
             alert.style.display = "block";
           })
-          .catch(() => {
-            Alert(
-              "Error!",
-              "Error interno del servidor, ponerse en contacto con el servidor o intentar luego mas tarde",
-              "error"
-            );
+          .catch((err) => {
+            Alert("Error!", err.response.data.message, "error");
             setSubmitLoader(false);
           });
       }
