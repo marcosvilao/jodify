@@ -1,52 +1,27 @@
-//const puppeteer = require("puppeteer-extra");
-const StealthPlugin = require("puppeteer-extra-plugin-stealth");
 const puppeteer = require("puppeteer-core");
 const chromium = require("chrome-aws-lambda");
+// Descomenta la siguiente línea si necesitas usar el StealthPlugin
+// const StealthPlugin = require("puppeteer-extra-plugin-stealth");
 
-//puppeteer.use(StealthPlugin());
+// puppeteer.use(StealthPlugin());
 
 const linkScrap = async (link) => {
-  /*
-  let browser;
-  try {
-    browser = await puppeteer.launch({
-      headless: true,
-      devtools: false, // Actualizado para quitar la apertura de devtools
-      args: [
-        "--no-sandbox",
-        "--disable-setuid-sandbox",
-        "--disable-web-security",
-        "--disable-features=IsolateOrigins,site-per-process",
-        "--flag-switches-begin --disable-site-isolation-trials --flag-switches-end",
-      ],
-      executablePath:
-        "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
-    });
-  } catch (error) {
-    console.log(error);
-    return;
-  }
-  */
-  let browser;
+  let browser = null;
   try {
     browser = await puppeteer.launch({
       executablePath: await chromium.executablePath,
       args: chromium.args,
       defaultViewport: chromium.defaultViewport,
       headless: chromium.headless,
+      // Añade opciones adicionales si son necesarias
     });
-  } catch (error) {
-    console.log(error);
-    return;
-  }
-  try {
     const page = await browser.newPage();
+    await page.setUserAgent(chromium.userAgent);
     /*
     await page.setUserAgent(
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36"
     );
     */
-    await page.setUserAgent(chromium.userAgent);
 
     const response = await page.goto(link, {
       waitUntil: "domcontentloaded",
@@ -55,9 +30,12 @@ const linkScrap = async (link) => {
     const statusCode = response.status();
 
     if (statusCode !== 200) {
-      throw new Error(
+      console.error(
         `No se pudo acceder a la página. Código de estado: ${statusCode}`
       );
+      return {
+        error: `No se pudo acceder a la página. Código de estado: ${statusCode}`,
+      };
     }
 
     if (link.includes("passline")) {
@@ -140,15 +118,13 @@ const linkScrap = async (link) => {
       return result;
     }
   } catch (error) {
-    console.error(error);
-    return {
-      error: error,
-    };
+    console.error("Error en linkScrap:", error);
+    return { error: error.message };
   } finally {
-    await browser.close();
+    if (browser !== null) {
+      await browser.close();
+    }
   }
 };
 
-module.exports = {
-  linkScrap,
-};
+module.exports = { linkScrap };

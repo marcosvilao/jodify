@@ -54,7 +54,6 @@ const getEvents = async (req, res, next) => {
   }
 };
 
-
 const getEventsPromoters = async (req, res) => {
   try {
     const todayInArgentina = DateTime.local()
@@ -66,7 +65,7 @@ const getEventsPromoters = async (req, res) => {
       .plus({ days: 7 }) // Obtener la fecha una semana desde hoy
       .toISODate();
 
-      const values = [todayInArgentina, oneWeekFromNow]
+    const values = [todayInArgentina, oneWeekFromNow];
 
     const query = `
     SELECT 
@@ -90,7 +89,7 @@ const getEventsPromoters = async (req, res) => {
   ORDER BY e.event_date;
       `;
 
-      const result = await pool.query(query, values);
+    const result = await pool.query(query, values);
 
     if (result && result.rows && Array.isArray(result.rows)) {
       const rows = result.rows;
@@ -116,7 +115,7 @@ const createEvent = async (req, res) => {
       event_promoter,
       ticket_link,
     } = req.body.event;
-    console.log(event_promoter)
+    console.log(event_promoter);
     const formattedEventDate = new Date(event_date);
     formattedEventDate.setHours(9, 0, 0);
     let promoters;
@@ -165,19 +164,16 @@ const createEvent = async (req, res) => {
     const insertedId = result.rows[0].id;
 
     if (insertedId && event_promoter.length > 0) {
-
       for (let promoter of promoters) {
-        
         const promoterQuery = `
           INSERT INTO public.event_promoters(event_id, promoter_id)
           VALUES ($1, $2);
         `;
-        
+
         const promoterValues = [insertedId, promoter];
-      
+
         await pool.query(promoterQuery, promoterValues);
       }
-
     }
 
     res
@@ -278,9 +274,13 @@ const scrapLink = async (req, res) => {
   try {
     const LINK = req.body.link;
     let data = await linkScrap(LINK);
+    if (data.error) {
+      return res.status(500).json({ error: data.error });
+    }
     res.status(200).json(data);
   } catch (error) {
-    console.log(error);
+    console.error("Error en scrapLink:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
   }
 };
 
