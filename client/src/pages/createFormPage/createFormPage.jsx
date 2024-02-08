@@ -30,6 +30,7 @@ function CreateFormPage() {
   const [promoters, setPromoters] = useState(false);
   const [dataPromoters, setDataPromoters] = useState(false);
   const [dataCardType, setDataCardType] = useState("");
+  const [dataScrapping, setDataScrapping] = useState(false);
   const [dataPost, setDataPost] = useState({
     event_title: "",
     event_type: [],
@@ -43,6 +44,19 @@ function CreateFormPage() {
   });
 
   useEffect(() => {
+    if (!dataScrapping) {
+      axios
+        .post(axiosUrl + "/get-event-data", {
+          link: "https://www.passline.com/eventos/techno-bunker-e110101",
+        })
+        .then((res) => {
+          setDataScrapping(res.data);
+        })
+        .catch(() => {
+          Alert("Error!", "Error en el scrapping", "error");
+        });
+    }
+
     if (!cities) {
       axios
         .get(axiosUrl + "/cities")
@@ -375,6 +389,8 @@ function CreateFormPage() {
     const cleanEvent = () => {
       window.location.reload();
     };
+
+    console.log(dataScrapping);
 
     return (
       <div className={styles.body}>
