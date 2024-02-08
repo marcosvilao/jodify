@@ -41,14 +41,26 @@ const linkScrap = async (link) => {
       );
     }
 
-    await page.waitForSelector("img", { timeout: 30000 });
-
-    let dateText = null;
-
     if (link.includes("passline")) {
+      await page.waitForSelector("img", { timeout: 30000 });
+
+      let dateText = null;
+      let location = null;
+
       const section = await page.$(".cont-head-ficha.contenedor");
+      const div = await page.$(".donde");
+
       if (section) {
         dateText = await section.$eval("li", (li) => li.textContent.trim());
+      }
+
+      if (div) {
+        location = await div.$eval("p", (p) =>
+          p.textContent
+            .trim()
+            .replace(/\r?\n|\r/g, " - ")
+            .replace(/\s+/g, " ")
+        );
       }
 
       const jpgImgSrc = await page.evaluate(() => {
@@ -62,29 +74,56 @@ const linkScrap = async (link) => {
         return null;
       });
 
-      if (dateText === null) {
-        const dateRegex = /\d{2}\/\d{1,2}\/\d{4}/;
-        const pageText = await page.evaluate(() => document.body.textContent);
-        const firstDateMatch = pageText.match(dateRegex);
-        if (firstDateMatch) {
-          dateText = firstDateMatch[0];
-        }
-      }
-
       const result = {
         image: jpgImgSrc || null,
         date: dateText || null,
+        location: location || null,
       };
 
-      console.log(result);
+      return result;
+    } else if (link.includes("venti")) {
+      await page.waitForSelector("img", { timeout: 30000 });
+      await page.waitForSelector(".jss97", { timeout: 30000 });
+
+      const results = await page.evaluate(() => {
+        const elements = Array.from(document.querySelectorAll(".jss97"));
+        let dateText = "";
+        let location = "";
+
+        elements.forEach((element) => {
+          if (element.querySelector('svg[data-testid="EventIcon"]')) {
+            dateText = element.textContent.trim();
+          } else if (element.querySelector('svg[data-testid="PlaceIcon"]')) {
+            location = element.textContent.trim();
+          }
+        });
+
+        return { dateText, location };
+      });
+
+      dateText = results.dateText;
+      location = results.location;
+
+      const jpgImgSrc = await page.evaluate(() => {
+        const imgElement = document.querySelector(".descriptionImage");
+        if (imgElement && imgElement.src.toLowerCase().endsWith(".jpg")) {
+          return imgElement.src;
+        }
+        return null;
+      });
+
+      const result = {
+        image: jpgImgSrc,
+        date: dateText,
+        location: location,
+      };
 
       return result;
     }
   } catch (error) {
     console.error(error);
     return {
-      image: null,
-      date: null,
+      error: error,
     };
   } finally {
     await browser.close();
