@@ -52,8 +52,9 @@ function CreateFormPage() {
         .then((res) => {
           setDataScrapping(res.data);
         })
-        .catch(() => {
-          Alert("Error!", "Error en el scrapping", "error");
+        .catch((err) => {
+          //Alert("Error!", "Error en el scrapping", "error");
+          console.log(err);
         });
     }
 
