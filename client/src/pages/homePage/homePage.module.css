@@ -1,7 +1,7 @@
 .stickyHeader {
   position: -webkit-sticky;
   position: sticky;
-  top: 210px;
+  top: 120px;
   z-index: 9;
   background-color: #0c0c0c;
   padding: 10px 0;
@@ -13,7 +13,7 @@
   height: 150vh;
   display: flex;
   justify-content: center;
-  margin-top: 205px;
+  margin-top: 10px;
 }
 
 .containerSkeleton {
@@ -21,7 +21,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 230px;
+  margin-top: 10px;
 }
 
 .bodyLoaderLazyLoad {
@@ -48,8 +48,8 @@
 }
 
 .containerFixed {
-  position: fixed;
-  top: 80px;
+  position: sticky;
+  top: 0px;
   width: 600px;
   background-color: #0c0c0c;
   z-index: 99;
@@ -61,7 +61,7 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin-top: 10px;
+  margin: 0px;
 }
 
 .containerButtons {
@@ -75,20 +75,31 @@
 }
 
 .containerPicker {
-  width: 600px;
+  visibility: hidden;
   position: fixed;
-  top: 220px;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: transparent;
   z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.datePicker {
-  width: 100%;
-  position: relative;
-}
-
-.datePickerContainer {
+.containerUbicacion {
   position: absolute;
-  top: -150px;
+  visibility: hidden;
+}
+
+.containerGenero {
+  position: absolute;
+  visibility: hidden;
+}
+
+.containerUbicacion {
+  width: 300px;
 }
 
 .containerEventCard {
@@ -98,7 +109,7 @@
 }
 
 .firstElement {
-  margin-top: 210px;
+  margin-top: 0px;
 }
 
 .containerEventCard h1 {
@@ -110,7 +121,6 @@
 
 .noHayEventos {
   width: 100%;
-  height: 50vh;
   color: #ffffff;
   display: flex;
   align-items: center;
@@ -148,12 +158,6 @@
     box-sizing: border-box;
   }
 
-  .containerPicker {
-    width: 100%;
-    padding: 0px 10px;
-    box-sizing: border-box;
-  }
-
   .containerEventCard {
     width: 100%;
     padding: 0px 10px;
@@ -173,10 +177,6 @@
 }
 
 @media screen and (max-width: 500px) {
-  .containerPicker {
-    top: 230px;
-  }
-
   .noHayEventos {
     padding: 0px 30px;
   }

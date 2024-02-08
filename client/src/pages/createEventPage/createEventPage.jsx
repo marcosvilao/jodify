@@ -267,12 +267,8 @@ function CreateEventPage() {
             formTwo.style.display = "none";
             alert.style.display = "block";
           })
-          .catch(() => {
-            Alert(
-              "Error!",
-              "Error interno del servidor, ponerse en contacto con el servidor o intentar luego mas tarde",
-              "error"
-            );
+          .catch((err) => {
+            Alert("Error!", err.response.data.message, "error");
             setSubmitLoader(false);
           });
       }
@@ -287,7 +283,6 @@ function CreateEventPage() {
           formData.append("file", file);
           formData.append("upload_preset", "jodify_key");
           formData.append("jodify", "");
-          console.log(formData);
           fetch(cloudinayUrl, {
             method: "post",
             body: formData,
@@ -297,7 +292,6 @@ function CreateEventPage() {
               const secureUrl = data.url
                 ? data.url.replace(/^http:/, "https:")
                 : data.url;
-              console.log(secureUrl);
               setDataPost((dataPost) => ({
                 ...dataPost,
                 event_image: secureUrl,

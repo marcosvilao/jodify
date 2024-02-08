@@ -66,7 +66,7 @@ function CreatePromotersPage() {
     } else {
       setLoader(true);
       axios
-        .post(axiosUrl + "/create-promoters", dataPost)
+        .post(axiosUrl + "/create-promoter", dataPost)
         .then(() => {
           setLoader(false);
           let callbackAlert = () => {
@@ -107,14 +107,14 @@ function CreatePromotersPage() {
           Label="escribi el instagram"
         />
 
-        <form className={styles.containerSelect}>
+        <div className={styles.containerSelect}>
           <SelectBlack
             Option="Selecciona la prioridad"
             Array={arrayNumbers}
             OnChange={onChangeSelect}
             Multiple={false}
           />
-        </form>
+        </div>
 
         {!loader ? (
           <ButtonBlue Value="Submit" OnClick={onSubmit} />

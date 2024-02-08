@@ -12,10 +12,14 @@ const formatDate = (date) => {
       timeZone: "America/Argentina/Buenos_Aires"
     };
     const formattedDate = inputDate.toLocaleString("en-US", options);
-    console.log(formattedDate);
     return formattedDate;
   };
+
+  function removeAccents(str) {
+    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  }
   
   module.exports = {
     formatDate,
+    removeAccents
   };

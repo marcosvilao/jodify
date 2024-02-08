@@ -25,7 +25,7 @@
 
 .containerImg {
   height: 100%;
-  min-width: 110px;
+  min-width: 84px;
   border-radius: 6.5px;
   background-repeat: no-repeat;
   background-size: cover;
@@ -43,6 +43,7 @@
   flex-shrink: 1;
   overflow: hidden;
   min-width: 0;
+  position: relative;
 }
 
 .Tittle {
@@ -63,20 +64,20 @@
   margin: 0px;
 }
 
-.containerP {
+.containerPOne {
   display: flex;
   width: 100%;
-  align-items: center;
-  flex-direction: column;
-  margin-top: 15px;
+  position: absolute;
+  top: 45px;
+  left: 4px;
 }
 
-.containerP div {
+.containerPTwo {
   display: flex;
   width: 100%;
-  align-items: center;
-  margin-bottom: 2px;
-  margin-right: 7px;
+  position: absolute;
+  top: 65px;
+  left: 4px;
 }
 
 .icon {
@@ -84,7 +85,7 @@
   color: #7c16f5;
 }
 
-.containerP div p {
+.containerData p {
   margin: 0px;
   font-size: 13px;
   opacity: 0-8;
@@ -94,10 +95,6 @@
 }
 
 @media screen and (max-width: 700px) {
-  .containerP {
-    margin-top: 5px;
-  }
-
   .Tittle {
     -webkit-line-clamp: 2;
     font-size: 15px;

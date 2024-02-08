@@ -7,7 +7,6 @@ const {
   updateEvent,
   deleteEvent,
   searchEvent,
-  filterEvents,
   scrapLink,
   UploadImage,
   getEventsPromoters,
@@ -40,8 +39,6 @@ const router = Router();
 router.get("/events", getEvents);
 
 router.get("/events/search", searchEvent);
-
-router.post("/events/filters/:page", filterEvents);
 
 router.post("/events", createEvent);
 
@@ -90,7 +87,7 @@ router.get("/djs", getDjs);
 
 router.get("/promoters", getPromoters);
 
-router.post("/create-promoters", postPromoters);
+router.post("/create-promoter", postPromoters);
 
 module.exports = router;
 

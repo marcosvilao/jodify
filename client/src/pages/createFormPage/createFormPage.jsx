@@ -199,8 +199,6 @@ function CreateFormPage() {
       }
       let string = arrayDjs.join(" | ");
 
-      console.log(arrayDjs);
-
       setErrorLineUp("");
       setDataPost({
         ...dataPost,
@@ -289,12 +287,7 @@ function CreateFormPage() {
             );
           })
           .catch((err) => {
-            console.log(err);
-            Alert(
-              "Error!",
-              "Error interno del servidor, ponerse en contacto con el servidor o intentar luego mas tarde",
-              "error"
-            );
+            Alert("Error!", err.response.data.message, "error");
             setSubmitLoader(false);
           });
       }
@@ -309,7 +302,6 @@ function CreateFormPage() {
           formData.append("file", file);
           formData.append("upload_preset", "jodify_key");
           formData.append("jodify", "");
-          console.log(formData);
           fetch(cloudinayUrl, {
             method: "post",
             body: formData,
@@ -319,7 +311,6 @@ function CreateFormPage() {
               const secureUrl = data.url
                 ? data.url.replace(/^http:/, "https:")
                 : data.url;
-              console.log(secureUrl);
               setDataPost((dataPost) => ({
                 ...dataPost,
                 event_image: secureUrl,
@@ -359,7 +350,7 @@ function CreateFormPage() {
           }
         }
       }
-      
+
       setDataPost({
         ...dataPost,
         event_promoter: idPromoters,

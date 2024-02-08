@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { TextField } from "@mui/material";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -60,7 +61,13 @@ const customTheme = (outerTheme, hasError) =>
               backgroundColor: "#AE71F9",
               borderStyle: "none",
               borderRadius: "50%",
-              color: "#000000",
+              color: "#ffffff",
+            },
+            "&.Mui-selected:focus": {
+              backgroundColor: "#AE71F9",
+              color: "#ffffff",
+              borderStyle: "none",
+              borderRadius: "50%",
             },
             "&:hover": {
               backgroundColor: "rgba(255, 255, 255, 0.15)",
@@ -77,11 +84,11 @@ const customTheme = (outerTheme, hasError) =>
               backgroundColor: "#AE71F9",
               borderStyle: "none",
               borderRadius: "50%",
-              color: "#000000",
+              color: "#ffffff",
             },
             "&.MuiPickersDay-today-selected:focus": {
               backgroundColor: "#AE71F9",
-              color: "#000000",
+              color: "#ffffff",
               borderStyle: "none",
               borderRadius: "50%",
             },
@@ -91,12 +98,6 @@ const customTheme = (outerTheme, hasError) =>
               borderColor: "#ffffff",
               borderWidth: "1px",
               borderStyle: "solid",
-            },
-            "&.Mui-selected:focus": {
-              backgroundColor: "#AE71F9",
-              color: "#000000",
-              borderStyle: "none",
-              borderRadius: "50%",
             },
             "&.Mui-disabled": {
               color: "gray !important",
@@ -177,7 +178,8 @@ const customTheme = (outerTheme, hasError) =>
 function CustomDatePicker(props) {
   const outerTheme = useTheme();
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
-  const hasError = props.Error !== "" && props.Error; // Asumiendo que 'Error' es una cadena
+  const [selectedDate, setSelectedDate] = useState(null);
+  const hasError = props.Error !== "" && props.Error;
 
   const handleOpenDatePicker = () => {
     if (!isDatePickerOpen) {
@@ -195,7 +197,6 @@ function CustomDatePicker(props) {
     }
   };
 
-  // Actualiza la función 'customTheme' para incluir estilos de error
   const themeWithError = customTheme(outerTheme, hasError);
 
   return (
@@ -219,28 +220,36 @@ function CustomDatePicker(props) {
               onClick={handleOpenDatePicker}
             >
               <MobileDatePicker
-                label={props.Label}
                 className={styles.datePicker}
+                label={props.Label}
+                value={selectedDate}
+                onChange={(newValue) => {
+                  setSelectedDate(newValue);
+                  if (props.OnChange) {
+                    props.OnChange(newValue);
+                  }
+                }}
                 onClose={handleCloseDatePicker}
                 open={isDatePickerOpen}
-                onChange={props.OnChange}
-                minDate={dayjs()}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    className={styles.datePicker}
+                    error={!!hasError}
+                  />
+                )}
                 error={!!hasError}
+                minDate={dayjs()}
               />
-
               <CalendarMonthIcon
                 className={styles.icon}
-                label="Seleccion una fecha"
+                onClick={handleOpenDatePicker}
               />
             </div>
             {hasError && (
               <div style={{ width: "100%", marginTop: "5px" }}>
                 <p
-                  style={{
-                    color: "#FF5353",
-                    margin: "0px",
-                    fontSize: "13px",
-                  }}
+                  style={{ color: "#FF5353", margin: "0px", fontSize: "13px" }}
                 >
                   {props.Error}
                 </p>
