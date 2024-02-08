@@ -48,7 +48,41 @@ function HomePage() {
       axios
         .post(`${axiosUrl}/events/filtersNew`, filter)
         .then((res) => {
-          setDataEventCard(res.data);
+          const sortArray = res.data;
+          sortArray.forEach((dateInfo) => {
+            Object.keys(dateInfo).forEach((date) => {
+              dateInfo[date].sort((a, b) => {
+                // Encuentra la prioridad más baja (mayor prioridad) en los promoters de 'a'
+                const priorityA = a.promoters.reduce((min, promoter) => {
+                  if (
+                    promoter.priority !== null &&
+                    (min === null || promoter.priority < min)
+                  ) {
+                    return promoter.priority;
+                  }
+                  return min;
+                }, null);
+
+                // Encuentra la prioridad más baja (mayor prioridad) en los promoters de 'b'
+                const priorityB = b.promoters.reduce((min, promoter) => {
+                  if (
+                    promoter.priority !== null &&
+                    (min === null || promoter.priority < min)
+                  ) {
+                    return promoter.priority;
+                  }
+                  return min;
+                }, null);
+
+                // Comparación para el ordenamiento, tratando null como infinito
+                return (
+                  (priorityA !== null ? priorityA : Infinity) -
+                  (priorityB !== null ? priorityB : Infinity)
+                );
+              });
+            });
+          });
+          setDataEventCard(sortArray);
         })
         .catch(() => {
           Alert(
@@ -533,10 +567,48 @@ function HomePage() {
   };
 
   if (axiosType || axiosCitie || axiosFecha || axiosSearch) {
+    if (openUbicacion) {
+      let ubicaion = document.getElementById("positionUbicacion");
+      let containerFixed = document.getElementById("containerFixed");
+      let containerFixedRect = containerFixed.getBoundingClientRect();
+      let containerFixedBottom = containerFixedRect.bottom;
+      let containerFixedLeft = containerFixedRect.left;
+
+      if (window.innerWidth <= 650) {
+        let sumaResponsive = containerFixedLeft + 15;
+        ubicaion.style.visibility = "visible";
+        ubicaion.style.top = `${containerFixedBottom}px`;
+        ubicaion.style.left = `${sumaResponsive}px`;
+      } else {
+        ubicaion.style.visibility = "visible";
+        ubicaion.style.top = `${containerFixedBottom}px`;
+        ubicaion.style.left = `${containerFixedLeft}px`;
+      }
+    }
+
+    if (openGenero) {
+      let genero = document.getElementById("positionGenero");
+
+      let containerFixed = document.getElementById("containerFixed");
+      let containerFixedRect = containerFixed.getBoundingClientRect();
+      let containerFixedBottom = containerFixedRect.bottom;
+      let containerFixedLeft = containerFixedRect.left;
+      let suma = containerFixedLeft + 95;
+
+      if (window.innerWidth <= 650) {
+        let sumaResponsive = suma + 20;
+        genero.style.visibility = "visible";
+        genero.style.top = `${containerFixedBottom}px`;
+        genero.style.left = `${sumaResponsive}px`;
+      } else {
+        genero.style.visibility = "visible";
+        genero.style.top = `${containerFixedBottom}px`;
+        genero.style.left = `${suma}px`;
+      }
+    }
     axios
       .post(`${axiosUrl}/events/filtersNew`, filter)
       .then((res) => {
-        setDataEventCard(res.data);
         setLoader(false);
         setAxiosType(false);
         setAxiosCitie(false);
@@ -546,6 +618,42 @@ function HomePage() {
         setLazyLoadNoEvents(false);
         setIsFiltering(false);
         setLoaderLazyLoad(false);
+
+        const sortArray = res.data;
+        sortArray.forEach((dateInfo) => {
+          Object.keys(dateInfo).forEach((date) => {
+            dateInfo[date].sort((a, b) => {
+              // Encuentra la prioridad más baja (mayor prioridad) en los promoters de 'a'
+              const priorityA = a.promoters.reduce((min, promoter) => {
+                if (
+                  promoter.priority !== null &&
+                  (min === null || promoter.priority < min)
+                ) {
+                  return promoter.priority;
+                }
+                return min;
+              }, null);
+
+              // Encuentra la prioridad más baja (mayor prioridad) en los promoters de 'b'
+              const priorityB = b.promoters.reduce((min, promoter) => {
+                if (
+                  promoter.priority !== null &&
+                  (min === null || promoter.priority < min)
+                ) {
+                  return promoter.priority;
+                }
+                return min;
+              }, null);
+
+              // Comparación para el ordenamiento, tratando null como infinito
+              return (
+                (priorityA !== null ? priorityA : Infinity) -
+                (priorityB !== null ? priorityB : Infinity)
+              );
+            });
+          });
+        });
+        setDataEventCard(sortArray);
       })
       .catch(() => {
         Alert(
@@ -569,6 +677,39 @@ function HomePage() {
         } else {
           const newArray = [...dataEventCard];
           const dataCards = res.data;
+          dataCards.forEach((dateInfo) => {
+            Object.keys(dateInfo).forEach((date) => {
+              dateInfo[date].sort((a, b) => {
+                // Encuentra la prioridad más baja (mayor prioridad) en los promoters de 'a'
+                const priorityA = a.promoters.reduce((min, promoter) => {
+                  if (
+                    promoter.priority !== null &&
+                    (min === null || promoter.priority < min)
+                  ) {
+                    return promoter.priority;
+                  }
+                  return min;
+                }, null);
+
+                // Encuentra la prioridad más baja (mayor prioridad) en los promoters de 'b'
+                const priorityB = b.promoters.reduce((min, promoter) => {
+                  if (
+                    promoter.priority !== null &&
+                    (min === null || promoter.priority < min)
+                  ) {
+                    return promoter.priority;
+                  }
+                  return min;
+                }, null);
+
+                // Comparación para el ordenamiento, tratando null como infinito
+                return (
+                  (priorityA !== null ? priorityA : Infinity) -
+                  (priorityB !== null ? priorityB : Infinity)
+                );
+              });
+            });
+          });
 
           dataCards.forEach((newData) => {
             const newDate = Object.keys(newData)[0];
