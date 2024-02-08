@@ -1,9 +1,12 @@
-const puppeteer = require("puppeteer-extra");
+//const puppeteer = require("puppeteer-extra");
 const StealthPlugin = require("puppeteer-extra-plugin-stealth");
+const puppeteer = require("puppeteer-core");
+const chromium = require("chrome-aws-lambda");
 
-puppeteer.use(StealthPlugin());
+//puppeteer.use(StealthPlugin());
 
 const linkScrap = async (link) => {
+  /*
   let browser;
   try {
     browser = await puppeteer.launch({
@@ -18,6 +21,19 @@ const linkScrap = async (link) => {
       ],
       executablePath:
         "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+    });
+  } catch (error) {
+    console.log(error);
+    return;
+  }
+  */
+  let browser;
+  try {
+    browser = await puppeteer.launch({
+      executablePath: await chromium.executablePath,
+      args: chromium.args,
+      defaultViewport: chromium.defaultViewport,
+      headless: chromium.headless,
     });
   } catch (error) {
     console.log(error);
