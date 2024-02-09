@@ -10,14 +10,16 @@ const linkScrap = async (link) => {
   try {
     browser = await chromium.puppeteer.launch({
       args: [
-        "--disable-gpu",
         "--disable-setuid-sandbox",
         "--no-sandbox",
         "--no-zygote",
+        "--enable-gpu",
+        "--disable-dev-shm-usage",
       ],
+      ignoreDefaultArgs: ["--disable-extensions"],
       defaultViewport: chromium.defaultViewport,
       executablePath: await chromium.executablePath,
-      headless: chromium.headless,
+      headless: true,
       ignoreHTTPSErrors: true,
     });
     const page = await browser.newPage();
