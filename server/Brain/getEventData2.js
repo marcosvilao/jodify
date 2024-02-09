@@ -23,12 +23,9 @@ const linkScrap2 = async (link) => {
       ignoreHTTPSErrors: true,
     });
     const page = await browser.newPage();
-    await page.setUserAgent(chromium.userAgent);
-    /*
     await page.setUserAgent(
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36"
     );
-    */
 
     const response = await page.goto(link, {
       waitUntil: "domcontentloaded",

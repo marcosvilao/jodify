@@ -47,7 +47,7 @@ function CreateFormPage() {
     if (!dataScrapping) {
       axios
         .post(axiosUrl + "/get-event-data", {
-          link: "https://www.passline.com/eventos/techno-bunker-e110101",
+          link: "https://venti.com.ar/evento/combo-aniversario-11",
         })
         .then((res) => {
           setDataScrapping(res.data);
