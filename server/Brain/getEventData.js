@@ -18,7 +18,7 @@ const linkScrap = async (link) => {
       ],
       ignoreDefaultArgs: ["--disable-extensions"],
       defaultViewport: chromium.defaultViewport,
-      executablePath: await chromium.executablePath,
+      //executablePath: await chromium.executablePath,
       headless: true,
       ignoreHTTPSErrors: true,
     });
