@@ -19,7 +19,6 @@ const linkScrap = async (link) => {
       executablePath: await chromium.executablePath,
       headless: chromium.headless,
       ignoreHTTPSErrors: true,
-      executablePath: "/usr/bin/chromium-browser",
     });
     const page = await browser.newPage();
     await page.setUserAgent(chromium.userAgent);
