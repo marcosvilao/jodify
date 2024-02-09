@@ -1,34 +1,57 @@
-const { chromium } = require("playwright");
+const puppeteer = require("puppeteer-extra");
+const StealthPlugin = require("puppeteer-extra-plugin-stealth");
+
+puppeteer.use(StealthPlugin());
 
 const linkScrap = async (link) => {
-  const browserServer = await chromium.launchServer();
-  const wsEndpoint = browserServer.wsEndpoint();
-  const browser = await chromium.connect({
-    wsEndpoint,
-  });
+  let browser = null;
   try {
+    browser = await puppeteer.launch({
+      executablePath:
+        "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+      headless: true,
+    });
     const page = await browser.newPage();
-    await page.goto(link, { waitUntil: "domcontentloaded" });
-    let result = {};
-    if (link.includes("passline")) {
-      let evaluate = await page.evaluate();
-      console.log(evaluate);
+    await page.setUserAgent(
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36"
+    );
 
+    const response = await page.goto(link, {
+      waitUntil: "domcontentloaded",
+      timeout: 0,
+    });
+    const statusCode = response.status();
+
+    if (statusCode !== 200) {
+      console.error(
+        `No se pudo acceder a la página. Código de estado: ${statusCode}`
+      );
+      return {
+        error: `No se pudo acceder a la página. Código de estado: ${statusCode}`,
+      };
+    }
+
+    if (link.includes("passline")) {
       await page.waitForSelector("img", { timeout: 30000 });
-      const section = await page.$(".cont-head-ficha");
+
+      let dateText = null;
+      let location = null;
+
+      const section = await page.$(".cont-head-ficha.contenedor");
       const div = await page.$(".donde");
 
-      const dateText = section
-        ? await section.$eval("li", (li) => li.textContent.trim())
-        : null;
-      const location = div
-        ? await div.$eval("p", (p) =>
-            p.textContent
-              .trim()
-              .replace(/\r?\n|\r/g, " - ")
-              .replace(/\s+/g, " ")
-          )
-        : null;
+      if (section) {
+        dateText = await section.$eval("li", (li) => li.textContent.trim());
+      }
+
+      if (div) {
+        location = await div.$eval("p", (p) =>
+          p.textContent
+            .trim()
+            .replace(/\r?\n|\r/g, " - ")
+            .replace(/\s+/g, " ")
+        );
+      }
 
       const jpgImgSrc = await page.evaluate(() => {
         const imgElements = Array.from(document.querySelectorAll("img"));
@@ -41,7 +64,13 @@ const linkScrap = async (link) => {
         return null;
       });
 
-      result = { image: jpgImgSrc, date: dateText, location: location };
+      const result = {
+        image: jpgImgSrc || null,
+        date: dateText || null,
+        location: location || null,
+      };
+
+      return result;
     } else if (link.includes("venti")) {
       await page.waitForSelector("img", { timeout: 30000 });
       await page.waitForSelector(".jss97", { timeout: 30000 });
@@ -62,21 +91,32 @@ const linkScrap = async (link) => {
         return { dateText, location };
       });
 
+      dateText = results.dateText;
+      location = results.location;
+
       const jpgImgSrc = await page.evaluate(() => {
         const imgElement = document.querySelector(".descriptionImage");
-        return imgElement && imgElement.src.toLowerCase().endsWith(".jpg")
-          ? imgElement.src
-          : null;
+        if (imgElement && imgElement.src.toLowerCase().endsWith(".jpg")) {
+          return imgElement.src;
+        }
+        return null;
       });
 
-      result = { ...results, image: jpgImgSrc };
+      const result = {
+        image: jpgImgSrc,
+        date: dateText,
+        location: location,
+      };
+
+      return result;
     }
-    return result;
   } catch (error) {
-    console.error("An error occurred:", error);
-    throw error;
+    console.error("Error en linkScrap:", error);
+    return { error: error.message };
   } finally {
-    await browser.close();
+    if (browser !== null) {
+      await browser.close();
+    }
   }
 };
 
