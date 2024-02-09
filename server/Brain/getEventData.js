@@ -1,5 +1,5 @@
 const puppeteer = require("puppeteer-core");
-const chromium = require('chrome-aws-lambda');
+const chromium = require("chrome-aws-lambda");
 // Descomenta la siguiente línea si necesitas usar el StealthPlugin
 // const StealthPlugin = require("puppeteer-extra-plugin-stealth");
 
@@ -9,11 +9,17 @@ const linkScrap = async (link) => {
   let browser = null;
   try {
     browser = await chromium.puppeteer.launch({
-      args: chromium.args,
+      args: [
+        "--disable-gpu",
+        "--disable-setuid-sandbox",
+        "--no-sandbox",
+        "--no-zygote",
+      ],
       defaultViewport: chromium.defaultViewport,
       executablePath: await chromium.executablePath,
       headless: chromium.headless,
       ignoreHTTPSErrors: true,
+      executablePath: "/usr/bin/chromium-browser",
     });
     const page = await browser.newPage();
     await page.setUserAgent(chromium.userAgent);
