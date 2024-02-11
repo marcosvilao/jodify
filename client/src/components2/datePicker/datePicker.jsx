@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TextField } from "@mui/material";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -178,7 +178,9 @@ const customTheme = (outerTheme, hasError) =>
 function CustomDatePicker(props) {
   const outerTheme = useTheme();
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(
+    props.InitialDate ? dayjs(props.InitialDate, "MM/DD/YYYY") : null
+  );
   const hasError = props.Error !== "" && props.Error;
 
   const handleOpenDatePicker = () => {
@@ -198,6 +200,14 @@ function CustomDatePicker(props) {
   };
 
   const themeWithError = customTheme(outerTheme, hasError);
+
+  useEffect(() => {
+    if (props.InitialDate) {
+      setSelectedDate(dayjs(props.InitialDate, "MM/DD/YYYY"));
+    } else {
+      setSelectedDate(null);
+    }
+  }, [props.InitialDate]);
 
   return (
     <ThemeProvider theme={themeWithError}>

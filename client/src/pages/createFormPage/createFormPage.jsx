@@ -15,6 +15,8 @@ function CreateFormPage() {
   const axiosUrl = process.env.REACT_APP_AXIOS_URL;
   const cloudinayUrl = process.env.REACT_APP_CLOUDINARY_URL + "/image/upload";
   const [loader, setLoader] = useState(false);
+  const [loaderPupeteer, setLoaderPupeteer] = useState(false);
+  const [datePupeteer, setDatePupeteer] = useState(false);
   const [submitLoader, setSubmitLoader] = useState(false);
   const [errorEnlace, setErrorEnlace] = useState("");
   const [errorDireccion, setErrorDireccion] = useState("");
@@ -30,7 +32,6 @@ function CreateFormPage() {
   const [promoters, setPromoters] = useState(false);
   const [dataPromoters, setDataPromoters] = useState(false);
   const [dataCardType, setDataCardType] = useState("");
-  const [dataScrapping, setDataScrapping] = useState(false);
   const [dataPost, setDataPost] = useState({
     event_title: "",
     event_type: [],
@@ -44,20 +45,6 @@ function CreateFormPage() {
   });
 
   useEffect(() => {
-    if (!dataScrapping) {
-      axios
-        .post(axiosUrl + "/get-event-data", {
-          link: "https://venti.com.ar/evento/combo-aniversario-11",
-        })
-        .then((res) => {
-          setDataScrapping(res.data);
-        })
-        .catch((err) => {
-          //Alert("Error!", "Error en el scrapping", "error");
-          console.log(err);
-        });
-    }
-
     if (!cities) {
       axios
         .get(axiosUrl + "/cities")
@@ -232,6 +219,8 @@ function CreateFormPage() {
     };
 
     const onChangeDataInput = (e) => {
+      var valueInput = e.target.value;
+
       if (e.target.name === "ticket_link" && errorEnlace) {
         setErrorEnlace("");
       }
@@ -240,10 +229,60 @@ function CreateFormPage() {
         setErrorDireccion("");
       }
 
-      setDataPost({
-        ...dataPost,
-        [e.target.name]: e.target.value,
-      });
+      if (e.target.name === "ticket_link") {
+        setLoaderPupeteer(true);
+        axios
+          .post(axiosUrl + "/get-event-data", {
+            link: valueInput,
+          })
+          .then((res) => {
+            if (valueInput.includes("passline")) {
+              setDatePupeteer(res.data.date);
+              setDataPost({
+                ...dataPost,
+                event_location: res.data.location,
+                event_image: res.data.image,
+                ticket_link: valueInput,
+                event_date: res.data.date,
+              });
+              setLoaderPupeteer(false);
+            } else if (valueInput.includes("venti")) {
+              setDatePupeteer(res.data.date);
+              setDataPost({
+                ...dataPost,
+                event_location: res.data.location,
+                event_image: res.data.image,
+                ticket_link: valueInput,
+                event_date: res.data.date,
+              });
+              setLoaderPupeteer(false);
+            } else {
+              Alert("Error!", "Error en el link proporcionado", "error");
+              setLoaderPupeteer(false);
+              setDataPost({
+                ...dataPost,
+                event_location: "",
+                event_image: "",
+                ticket_link: valueInput,
+              });
+            }
+          })
+          .catch(() => {
+            Alert("Error!", "Error en el link proporcionado", "error");
+            setLoaderPupeteer(false);
+            setDataPost({
+              ...dataPost,
+              event_location: "",
+              event_image: "",
+              ticket_link: valueInput,
+            });
+          });
+      } else {
+        setDataPost({
+          ...dataPost,
+          [e.target.name]: valueInput,
+        });
+      }
     };
 
     const onSubmit = () => {
@@ -391,8 +430,6 @@ function CreateFormPage() {
       window.location.reload();
     };
 
-    console.log(dataScrapping);
-
     return (
       <div className={styles.body}>
         <div className={styles.form}>
@@ -412,28 +449,9 @@ function CreateFormPage() {
             />
           </div>
 
-          <SelectBlack
-            Option="Ciudad"
-            Array={cities}
-            OnChange={onChangeEventCity}
-            Margin="32px 0px 0px 0px"
-            Multiple={false}
-            Error={errorPlace}
-          />
-          <p>Selecciona la ciudad donde figurara el evento</p>
-
-          <SelectBlack
-            Option="Productora"
-            Array={promoters}
-            OnChange={onChangeEventPromoters}
-            Margin="32px 0px 0px 0px"
-          />
-          <p>Selecciona su productora</p>
-
           <InputOutlined
             OnChange={onChangeDataInput}
             Name="ticket_link"
-            Value={dataPost.ticket_link}
             Placeholder="ej. www.jodify.com.ar"
             Label="Link de venta"
             Error={errorEnlace}
@@ -442,7 +460,7 @@ function CreateFormPage() {
           />
           <p>Copiá y pegá aca el link de venta de entradas</p>
 
-          {!loader ? (
+          {!loader && !loaderPupeteer ? (
             <div
               style={{
                 width: "100%",
@@ -478,28 +496,75 @@ function CreateFormPage() {
             </div>
           )}
 
-          <DatePicker
-            OnChange={onChangeEventDate}
-            Label="Fecha el evento"
-            Margin="32px 0px 0px 0px"
-            Error={errorFecha}
-          />
-          <p>Selecciona la fecha del evento</p>
+          {!loaderPupeteer ? (
+            <div>
+              <DatePicker
+                OnChange={onChangeEventDate}
+                Label="Fecha el evento"
+                Margin="32px 0px 0px 0px"
+                Error={errorFecha}
+                InitialDate={datePupeteer}
+              />
+              <p>Selecciona la fecha del evento</p>
+            </div>
+          ) : (
+            <div
+              style={{
+                width: "100%",
+                textAlign: "center",
+                marginTop: "40px",
+              }}
+            >
+              <Loader Color="#7c16f5" Height="30px" Width="30px" />
+            </div>
+          )}
 
-          <InputOutlined
-            OnChange={onChangeDataInput}
-            Name="event_location"
-            Value={dataPost.event_location}
-            Placeholder="ej. Av. Libertador 2647 (Beccar)"
-            Label="Ubicacion"
-            Error={errorDireccion}
+          {!loaderPupeteer ? (
+            <div>
+              <InputOutlined
+                OnChange={onChangeDataInput}
+                Name="event_location"
+                Value={dataPost.event_location}
+                Placeholder="ej. Av. Libertador 2647 (Beccar)"
+                Label="Ubicacion"
+                Error={errorDireccion}
+                Margin="32px 0px 0px 0px"
+                Variant="outlined"
+              />
+              <p>
+                Escribi la direccion o nombre del lugar con la localidad entre
+                parentesis
+              </p>
+            </div>
+          ) : (
+            <div
+              style={{
+                width: "100%",
+                textAlign: "center",
+                marginTop: "40px",
+              }}
+            >
+              <Loader Color="#7c16f5" Height="30px" Width="30px" />
+            </div>
+          )}
+
+          <SelectBlack
+            Option="Ciudad"
+            Array={cities}
+            OnChange={onChangeEventCity}
             Margin="32px 0px 0px 0px"
-            Variant="outlined"
+            Multiple={false}
+            Error={errorPlace}
           />
-          <p>
-            Escribi la direccion o nombre del lugar con la localidad entre
-            parentesis
-          </p>
+          <p>Selecciona la ciudad donde figurara el evento</p>
+
+          <SelectBlack
+            Option="Productora"
+            Array={promoters}
+            OnChange={onChangeEventPromoters}
+            Margin="32px 0px 0px 0px"
+          />
+          <p>Selecciona su productora</p>
 
           <SelectBlack
             Option="Line up"

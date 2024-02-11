@@ -32,7 +32,7 @@ const linkScrap = async (link) => {
     }
 
     if (link.includes("passline")) {
-      await page.waitForSelector("img", { timeout: 30000 });
+      await page.waitForSelector("img", { timeout: 5000 });
 
       let dateText = null;
       let location = null;
@@ -42,6 +42,30 @@ const linkScrap = async (link) => {
 
       if (section) {
         dateText = await section.$eval("li", (li) => li.textContent.trim());
+
+        const fechaStr = String(dateText);
+        const fechaSinDia = fechaStr.replace(/^[^\d]+|\s+hrs\.$/g, "");
+        const [fecha, hora] = fechaSinDia.split(" - ");
+
+        const meses = {
+          Enero: "01",
+          Febrero: "02",
+          Marzo: "03",
+          Abril: "04",
+          Mayo: "05",
+          Junio: "06",
+          Julio: "07",
+          Agosto: "08",
+          Septiembre: "09",
+          Octubre: "10",
+          Noviembre: "11",
+          Diciembre: "12",
+        };
+
+        const [dia, , mesTexto, año] = fecha.match(/\d+|[a-zA-Z]+/g);
+
+        const numeroMes = meses[mesTexto];
+        dateText = `${numeroMes}/${dia}/${año}`;
       }
 
       if (div) {
@@ -51,6 +75,9 @@ const linkScrap = async (link) => {
             .replace(/\r?\n|\r/g, " - ")
             .replace(/\s+/g, " ")
         );
+
+        let partesStringLocation = location.split(" - ");
+        location = partesStringLocation[0];
       }
 
       const jpgImgSrc = await page.evaluate(() => {
@@ -72,43 +99,118 @@ const linkScrap = async (link) => {
 
       return result;
     } else if (link.includes("venti")) {
-      await page.waitForSelector("img", { timeout: 30000 });
-      await page.waitForSelector(".jss97", { timeout: 30000 });
+      let dateText = "";
+      let location = "";
+      let jpgImgSrc = null;
 
-      const results = await page.evaluate(() => {
-        const elements = Array.from(document.querySelectorAll(".jss97"));
-        let dateText = "";
-        let location = "";
+      try {
+        await page.waitForSelector(".jss48", { timeout: 5000 });
+        await page.waitForSelector(".jss51", { timeout: 5000 });
 
-        elements.forEach((element) => {
-          if (element.querySelector('svg[data-testid="EventIcon"]')) {
-            dateText = element.textContent.trim();
-          } else if (element.querySelector('svg[data-testid="PlaceIcon"]')) {
-            location = element.textContent.trim();
-          }
+        const results1 = await page.evaluate(() => {
+          const elements = Array.from(document.querySelectorAll(".jss51"));
+          let dateText = "";
+          let location = "";
+
+          elements.forEach((element) => {
+            if (element.querySelector('svg[data-testid="EventIcon"]')) {
+              dateText = element.textContent.trim();
+
+              let partesFecha = dateText.split("/");
+              let parteFecha1 = "";
+              let parteFecha2 = "";
+
+              if (partesFecha[1] > 9) {
+                parteFecha1 = `${partesFecha[1]}`;
+              } else {
+                parteFecha1 = `0${partesFecha[1]}`;
+              }
+
+              if (partesFecha[0] > 9) {
+                parteFecha2 = `${partesFecha[0]}`;
+              } else {
+                parteFecha2 = `0${partesFecha[0]}`;
+              }
+
+              dateText = `${parteFecha1}/${parteFecha2}/${partesFecha[2]}`;
+            } else if (element.querySelector('svg[data-testid="PlaceIcon"]')) {
+              location = element.textContent.trim();
+            }
+          });
+
+          return { dateText, location };
         });
 
-        return { dateText, location };
-      });
+        dateText = results1.dateText;
+        location = results1.location;
 
-      dateText = results.dateText;
-      location = results.location;
+        jpgImgSrc = await page.evaluate(() => {
+          const imgElement = document.querySelector(".jss48");
+          return imgElement && imgElement.src.toLowerCase().endsWith(".jpg")
+            ? imgElement.src
+            : null;
+        });
+      } catch (error) {
+        console.log(
+          "Intentando con el segundo conjunto de selectores debido a: ",
+          error.message
+        );
 
-      const jpgImgSrc = await page.evaluate(() => {
-        const imgElement = document.querySelector(".descriptionImage");
-        if (imgElement && imgElement.src.toLowerCase().endsWith(".jpg")) {
-          return imgElement.src;
-        }
-        return null;
-      });
+        await page.waitForSelector("img", { timeout: 5000 });
+        await page.waitForSelector(".jss97", { timeout: 5000 });
 
-      const result = {
+        const results2 = await page.evaluate(() => {
+          const elements = Array.from(document.querySelectorAll(".jss97"));
+          let dateText = "";
+          let location = "";
+
+          elements.forEach((element) => {
+            if (element.querySelector('svg[data-testid="EventIcon"]')) {
+              dateText = element.textContent.trim();
+
+              console.log(dateText);
+
+              let partesFecha = dateText.split("/");
+              let parteFecha1 = "";
+              let parteFecha2 = "";
+
+              if (partesFecha[1] > 9) {
+                parteFecha1 = `${partesFecha[1]}`;
+              } else {
+                parteFecha1 = `0${partesFecha[1]}`;
+              }
+
+              if (partesFecha[0] > 9) {
+                parteFecha2 = `${partesFecha[0]}`;
+              } else {
+                parteFecha2 = `0${partesFecha[0]}`;
+              }
+
+              dateText = `${parteFecha1}/${parteFecha2}/${partesFecha[2]}`;
+            } else if (element.querySelector('svg[data-testid="PlaceIcon"]')) {
+              location = element.textContent.trim();
+            }
+          });
+
+          return { dateText, location };
+        });
+
+        dateText = results2.dateText;
+        location = results2.location;
+
+        jpgImgSrc = await page.evaluate(() => {
+          const imgElement = document.querySelector(".descriptionImage");
+          return imgElement && imgElement.src.toLowerCase().endsWith(".jpg")
+            ? imgElement.src
+            : null;
+        });
+      }
+
+      return {
         image: jpgImgSrc,
         date: dateText,
         location: location,
       };
-
-      return result;
     }
   } catch (error) {
     console.error("Error en linkScrap:", error);
