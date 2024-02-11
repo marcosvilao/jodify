@@ -229,6 +229,23 @@ function CreateFormPage() {
         setErrorDireccion("");
       }
 
+      setDataPost({
+        ...dataPost,
+        [e.target.name]: valueInput,
+      });
+    };
+
+    const onChangeDataInput2 = (e) => {
+      var valueInput = e.target.value;
+
+      if (e.target.name === "ticket_link" && errorEnlace) {
+        setErrorEnlace("");
+      }
+
+      if (e.target.name === "event_location" && errorDireccion) {
+        setErrorDireccion("");
+      }
+
       if (e.target.name === "ticket_link") {
         setLoaderPupeteer(true);
         axios
