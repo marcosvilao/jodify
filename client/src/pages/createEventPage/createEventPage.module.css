@@ -94,7 +94,9 @@
 .containerCard {
   border: 1px solid #ffffff;
   border-radius: 13px;
-  height: 106px;
+  height: 114px;
+  padding-left: 6px;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;

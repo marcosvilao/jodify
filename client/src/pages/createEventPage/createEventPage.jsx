@@ -572,6 +572,10 @@ function CreateEventPage() {
             Variant="outlined"
           />
           <p>Si lo deseas, puedes personalizar aqui el nombre del evento.</p>
+          <p>
+            Por defecto el nombre del evento es el line up seleccionados excepto
+            que la cambios aqui.
+          </p>
 
           <div className={styles.containerButton}>
             <Button
