@@ -94,12 +94,11 @@
 .containerCard {
   border: 1px solid #ffffff;
   border-radius: 13px;
-  height: 116px;
-  padding-left: 6px;
   box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-left: 7px;
 }
 
 .form p {
