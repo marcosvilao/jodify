@@ -79,9 +79,13 @@ function CreatePromotersPage() {
             callbackAlert
           );
         })
-        .catch(() => {
+        .catch((error) => {
           setLoader(false);
-          Alert("Error!", "Error interno del servidor", "error");
+          if (error.response.status === 404) {
+            Alert("Error!", error.response.data.message, "error");
+          } else {
+            Alert("Error!", "Error interno del servidor", "error");
+          }
         });
     }
   };
