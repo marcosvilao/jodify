@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styles from "./selectBlack.module.css";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import { outlinedInputClasses } from "@mui/material/OutlinedInput";
 import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 
 const customTheme = (outerTheme, hasError) =>
   createTheme({
@@ -89,6 +90,27 @@ function SelectBlack(props) {
   const optionsArray = props.Array || [];
   const [inputValue, setInputValue] = useState("");
   const [nanMultiselect, setNanMultiselect] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const autoCompleteRef = useRef(null);
+
+  useEffect(() => {
+    // Función para cerrar el menú si se hace clic fuera del componente
+    function handleClickOutside(event) {
+      if (
+        autoCompleteRef.current &&
+        !autoCompleteRef.current.contains(event.target) &&
+        !event.target.classList.contains("MuiAutocomplete-option")
+      ) {
+        setMenuOpen(false);
+      }
+    }
+    // Agregar evento al documento
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      // Limpiar el evento cuando el componente se desmonte
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [autoCompleteRef]);
 
   const handleInputChange = (event, newInputValue) => {
     if (!nanMultiselect) {
@@ -121,98 +143,71 @@ function SelectBlack(props) {
     }
   };
 
-  if (props.Multiple === false) {
-    return (
-      <ThemeProvider theme={customTheme(outerTheme, hasError)}>
-        <div style={{ margin: props.Margin ? props.Margin : "10px 0px" }}>
-          <div className={styles.positionAbsolute}>
-            <Autocomplete
-              freeSolo
-              onKeyDown={handleKeyDown}
-              inputValue={inputValue}
-              onInputChange={handleInputChange}
-              onChange={handleChange}
-              className={styles.selectBlack}
-              multiple={false}
-              id="tags-outlined"
-              options={optionsArray}
-              getOptionLabel={(option) =>
-                typeof option === "object" && option ? option.value : option
-              }
-              filterSelectedOptions
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label={props.Option}
-                  placeholder={props.PlaceHolder}
-                  error={!!hasError}
-                />
-              )}
+  const handleArrowClick = () => {
+    setMenuOpen(!menuOpen);
+  };
+
+  const handleInputClick = () => {
+    setMenuOpen(true);
+  };
+
+  return (
+    <ThemeProvider theme={customTheme(outerTheme, hasError)}>
+      <div style={{ margin: props.Margin ? props.Margin : "10px 0px" }}>
+        <div className={styles.positionAbsolute} ref={autoCompleteRef}>
+          <Autocomplete
+            freeSolo
+            onKeyDown={handleKeyDown}
+            inputValue={inputValue}
+            onInputChange={handleInputChange}
+            onChange={handleChange}
+            open={menuOpen}
+            className={styles.selectBlack}
+            multiple={props.Multiple !== false}
+            id="tags-outlined"
+            options={optionsArray}
+            getOptionLabel={(option) =>
+              typeof option === "object" && option ? option.value : option
+            }
+            filterSelectedOptions
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label={props.Option}
+                placeholder={props.PlaceHolder}
+                error={!!hasError}
+                onClick={handleInputClick}
+              />
+            )}
+          />
+          {!menuOpen ? (
+            <ArrowDropDownIcon
+              className={styles.icon}
+              onClick={handleArrowClick}
             />
-            <ArrowDropDownIcon className={styles.icon} />
-          </div>
-          {hasError && (
-            <div style={{ width: "100%", marginTop: "5px" }}>
-              <p
-                style={{
-                  color: "#FF5353",
-                  margin: "0px",
-                  fontSize: "13px",
-                }}
-              >
-                {props.Error}
-              </p>
-            </div>
+          ) : (
+            <ArrowDropUpIcon
+              className={styles.icon}
+              onClick={handleArrowClick}
+            />
           )}
         </div>
-      </ThemeProvider>
-    );
-  } else {
-    return (
-      <ThemeProvider theme={customTheme(outerTheme, hasError)}>
-        <div style={{ margin: props.Margin ? props.Margin : "10px 0px" }}>
-          <div className={styles.positionAbsolute}>
-            <Autocomplete
-              freeSolo
-              inputValue={inputValue}
-              onInputChange={handleInputChange}
-              onChange={handleChange}
-              className={styles.selectBlack}
-              multiple
-              id="tags-outlined"
-              options={optionsArray}
-              getOptionLabel={(option) =>
-                typeof option === "object" && option ? option.value : option
-              }
-              filterSelectedOptions
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label={props.Option}
-                  placeholder={props.PlaceHolder}
-                  error={!!hasError}
-                />
-              )}
-            />
-            <ArrowDropDownIcon className={styles.icon} />
+        {hasError && (
+          <div style={{ width: "100%", marginTop: "5px" }}>
+            <p
+              style={{
+                color: "#FF5353",
+                margin: "0px",
+                fontSize: "13px",
+              }}
+            >
+              {props.Error}
+            </p>
           </div>
-          {hasError && (
-            <div style={{ width: "100%", marginTop: "5px" }}>
-              <p
-                style={{
-                  color: "#FF5353",
-                  margin: "0px",
-                  fontSize: "13px",
-                }}
-              >
-                {props.Error}
-              </p>
-            </div>
-          )}
-        </div>
-      </ThemeProvider>
-    );
-  }
+        )}
+      </div>
+    </ThemeProvider>
+  );
 }
 
 export default SelectBlack;
