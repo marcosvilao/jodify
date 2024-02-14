@@ -307,7 +307,41 @@ function HomePage() {
     axios
       .post(`${axiosUrl}/events/filtersNew`, filter)
       .then((res) => {
-        setDataEventCard(res.data);
+        const sortArray = res.data;
+        sortArray.forEach((dateInfo) => {
+          Object.keys(dateInfo).forEach((date) => {
+            dateInfo[date].sort((a, b) => {
+              // Encuentra la prioridad más baja (mayor prioridad) en los promoters de 'a'
+              const priorityA = a.promoters.reduce((min, promoter) => {
+                if (
+                  promoter.priority !== null &&
+                  (min === null || promoter.priority < min)
+                ) {
+                  return promoter.priority;
+                }
+                return min;
+              }, null);
+
+              // Encuentra la prioridad más baja (mayor prioridad) en los promoters de 'b'
+              const priorityB = b.promoters.reduce((min, promoter) => {
+                if (
+                  promoter.priority !== null &&
+                  (min === null || promoter.priority < min)
+                ) {
+                  return promoter.priority;
+                }
+                return min;
+              }, null);
+
+              // Comparación para el ordenamiento, tratando null como infinito
+              return (
+                (priorityA !== null ? priorityA : Infinity) -
+                (priorityB !== null ? priorityB : Infinity)
+              );
+            });
+          });
+        });
+        setDataEventCard(sortArray);
         setLoader(false);
         setLazyLoadNoEvents(false);
         setIsFiltering(false);
