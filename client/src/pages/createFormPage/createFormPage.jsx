@@ -484,7 +484,6 @@ function CreateFormPage() {
             Name="ticket_link"
             Placeholder="Prueba scrapping no usar"
             Label="Prueba scrapping no usar"
-            Error={errorEnlace}
             Margin="32px 0px 0px 0px"
             Variant="outlined"
           />
