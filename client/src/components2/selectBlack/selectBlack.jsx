@@ -119,6 +119,7 @@ function SelectBlack(props) {
   };
 
   const handleChange = (event, newValue) => {
+    setMenuOpen(false);
     if (Array.isArray(newValue)) {
       props.OnChange(event, newValue);
     } else if (newValue && typeof newValue === "object") {
@@ -134,6 +135,7 @@ function SelectBlack(props) {
     } else if (newValue === null) {
       setInputValue("");
       setNanMultiselect(false);
+      props.OnChange(event, newValue);
     }
   };
 
