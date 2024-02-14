@@ -27,11 +27,22 @@ const postPromoters = async (req, res) => {
     if (!name || !instagram || !priority) {
       res.status(400).send("Faltan enviar datos obligatorios");
     } else {
+      const queryIg = "SELECT instagram FROM promoters WHERE instagram = $1";
+      const valuesIg = [instagram];
+
+      let duplicatePromoter = await pool.query(queryIg, valuesIg);
+      duplicatePromoter = duplicatePromoter.rows;
+      if (
+        duplicatePromoter.length > 0) {
+        res.status(404).send({ message: "Ya existe esta productora" });
+        return;
+      }
+
       const queryString = `INSERT INTO promoters (name, instagram, priority, id) VALUES ($1, $2, $3, $4)`;
       const values = [name, instagram, priority, id];
       const { rows } = await pool.query(queryString, values);
 
-      res.status(201).send(`Productora creado correctamente`);
+      res.status(201).send(`Productora creada correctamente`);
     }
   } catch (error) {
     console.error("Error interno del servidor:", error);
