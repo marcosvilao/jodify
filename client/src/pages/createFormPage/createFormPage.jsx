@@ -127,11 +127,17 @@ function CreateFormPage() {
               };
             }
           });
-
-          setDataPost({
-            ...dataPost,
-            event_city: newCitie[0],
-          });
+          if (newCitie[0]) {
+            setDataPost({
+              ...dataPost,
+              event_city: newCitie[0],
+            });
+          } else {
+            setDataPost({
+              ...dataPost,
+              event_city: "",
+            });
+          }
         } else {
           setDataPost({
             ...dataPost,
@@ -149,10 +155,17 @@ function CreateFormPage() {
             }
           });
 
-          setDataPost({
-            ...dataPost,
-            event_city: newCitie[0],
-          });
+          if (newCitie[0]) {
+            setDataPost({
+              ...dataPost,
+              event_city: newCitie[0],
+            });
+          } else {
+            setDataPost({
+              ...dataPost,
+              event_city: "",
+            });
+          }
         } else {
           setDataPost({
             ...dataPost,
