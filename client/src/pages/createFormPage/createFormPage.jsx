@@ -297,8 +297,8 @@ function CreateFormPage() {
               });
             }
           })
-          .catch(() => {
-            Alert("Error!", "Error en el link proporcionado", "error");
+          .catch((err) => {
+            Alert("Error!", err, "error");
             setLoaderPupeteer(false);
             setDataPost({
               ...dataPost,
