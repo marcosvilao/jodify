@@ -1,25 +1,38 @@
+const chromium = require("@sparticuz/chromium");
 const puppeteer = require("puppeteer-extra");
-const StealthPlugin = require("puppeteer-extra-plugin-stealth");
+//const StealthPlugin = require("puppeteer-extra-plugin-stealth");
 
-puppeteer.use(StealthPlugin());
+//puppeteer.use(StealthPlugin());
 
 const linkScrap = async (link) => {
   let browser = null;
   try {
     browser = await puppeteer.launch({
+      args: chromium.args,
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath(),
+      headless: chromium.headless,
+      ignoreHTTPSErrors: true,
+    });
+    /*
+    browser = await puppeteer.launch({
       executablePath:
         "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
       headless: true,
     });
+       */
+
     const page = await browser.newPage();
+    /*
     await page.setUserAgent(
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36"
     );
-
+    */
     const response = await page.goto(link, {
       waitUntil: "domcontentloaded",
       timeout: 0,
     });
+
     const statusCode = response.status();
 
     if (statusCode !== 200) {

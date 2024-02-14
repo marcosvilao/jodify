@@ -480,6 +480,17 @@ function CreateFormPage() {
           </div>
 
           <InputOutlined
+            OnChange={onChangeDataInput2}
+            Name="ticket_link"
+            Placeholder="Prueba scrapping no usar"
+            Label="Prueba scrapping no usar"
+            Error={errorEnlace}
+            Margin="32px 0px 0px 0px"
+            Variant="outlined"
+          />
+          <p>Prueba scrapping no usar</p>
+
+          <InputOutlined
             OnChange={onChangeDataInput}
             Name="ticket_link"
             Placeholder="ej. www.jodify.com.ar"
@@ -487,6 +498,7 @@ function CreateFormPage() {
             Error={errorEnlace}
             Margin="32px 0px 0px 0px"
             Variant="outlined"
+            Value={dataPost.ticket_link}
           />
           <p>Copiá y pegá aca el link de venta de entradas</p>
 

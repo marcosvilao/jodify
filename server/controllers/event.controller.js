@@ -274,6 +274,7 @@ const scrapLink = async (req, res) => {
   try {
     const LINK = req.body.link;
     let data = await linkScrap(LINK);
+
     res.status(200).json(data);
   } catch (error) {
     console.error("Error en scrapLink:", error);
