@@ -447,8 +447,6 @@ function CreateFormPage() {
       window.location.reload();
     };
 
-    console.log(dataPost);
-
     return (
       <div className={styles.body}>
         <div className={styles.form}>
