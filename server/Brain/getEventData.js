@@ -1,8 +1,8 @@
-const chromium = require("@sparticuz/chromium");
+//const chromium = require("@sparticuz/chromium");
 const puppeteer = require("puppeteer-extra");
-//const StealthPlugin = require("puppeteer-extra-plugin-stealth");
+const StealthPlugin = require("puppeteer-extra-plugin-stealth");
 
-//puppeteer.use(StealthPlugin());
+puppeteer.use(StealthPlugin());
 
 const linkScrap = async (link) => {
   let browser = null;
@@ -20,8 +20,7 @@ const linkScrap = async (link) => {
         "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
       headless: true,
     });
-       */
-
+     */
     const page = await browser.newPage();
     await page.setUserAgent(
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36"
@@ -46,6 +45,7 @@ const linkScrap = async (link) => {
       await page.waitForSelector("img", { timeout: 5000 });
 
       let dateText = null;
+      let tittle = null;
       let location = null;
 
       const section = await page.$(".cont-head-ficha.contenedor");
@@ -53,6 +53,7 @@ const linkScrap = async (link) => {
 
       if (section) {
         dateText = await section.$eval("li", (li) => li.textContent.trim());
+        tittle = await section.$eval("h3", (h3) => h3.textContent.trim());
 
         const fechaStr = String(dateText);
         const fechaSinDia = fechaStr.replace(/^[^\d]+|\s+hrs\.$/g, "");
@@ -106,17 +107,26 @@ const linkScrap = async (link) => {
         image: jpgImgSrc || null,
         date: dateText || null,
         location: location || null,
+        tittle: tittle || null,
       };
 
       return result;
     } else if (link.includes("venti")) {
-      let dateText = "";
-      let location = "";
+      let dateText = null;
+      let location = null;
       let jpgImgSrc = null;
+      let tittle = null;
 
       try {
         await page.waitForSelector(".jss48", { timeout: 5000 });
+        await page.waitForSelector(".jss49", { timeout: 5000 });
         await page.waitForSelector(".jss51", { timeout: 5000 });
+
+        let divTittle = await page.$(".jss49");
+
+        if (divTittle) {
+          tittle = await divTittle.$eval("h6", (h6) => h6.textContent.trim());
+        }
 
         const results1 = await page.evaluate(() => {
           const elements = Array.from(document.querySelectorAll(".jss51"));
@@ -169,6 +179,13 @@ const linkScrap = async (link) => {
 
         await page.waitForSelector("img", { timeout: 5000 });
         await page.waitForSelector(".jss97", { timeout: 5000 });
+        await page.waitForSelector(".jss95", { timeout: 5000 });
+
+        let divTittle = await page.$(".jss95");
+
+        if (divTittle) {
+          tittle = await divTittle.$eval("h6", (h6) => h6.textContent.trim());
+        }
 
         const results2 = await page.evaluate(() => {
           const elements = Array.from(document.querySelectorAll(".jss97"));
@@ -221,6 +238,7 @@ const linkScrap = async (link) => {
         image: jpgImgSrc,
         date: dateText,
         location: location,
+        tittle: tittle,
       };
     }
   } catch (error) {
