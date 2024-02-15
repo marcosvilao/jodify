@@ -310,8 +310,6 @@ function CreateFormPage() {
       }
     };
 
-    console.log(dataPost);
-
     const onSubmit = () => {
       setSubmitLoader(true);
       if (
