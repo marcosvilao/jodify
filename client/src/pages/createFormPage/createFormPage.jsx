@@ -212,7 +212,6 @@ function CreateFormPage() {
           arrayDjs.push(value[i]);
         }
       }
-      let string = arrayDjs.join(" | ");
 
       setErrorLineUp("");
       setDataPost({
@@ -460,9 +459,10 @@ function CreateFormPage() {
     };
 
     const renameEvent = () => {
+      let string = dataPost.event_djs.join(" | ");
       setDataPost({
         ...dataPost,
-        event_title: dataPost.event_djs,
+        event_title: string,
       });
     };
 

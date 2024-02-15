@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: center;
   padding: 50px 0px;
-  position: relative;
+  min-height: 65vh;
 }
 
 .form {
@@ -121,17 +121,52 @@
 }
 
 .alert {
-  display: none;
+  visibility: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.containerAlert {
+  display: block;
   text-align: center;
   color: #ffffff;
   width: 500px;
-  position: absolute;
-  top: -10px;
 }
 
-.alert h1 {
-  font-size: 60px;
-  font-weight: 200px;
+.alert img {
+  width: 170px;
+  height: 200px;
+  flex-shrink: 0;
+}
+
+.alert h2 {
+  color: #fff;
+  text-align: center;
+  font-family: "Roboto Condensed";
+  font-size: 31px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  margin: 30px 0px 0px 0px;
+}
+
+.alert p {
+  color: #fff;
+  text-align: center;
+  font-family: "Roboto Condensed";
+  font-size: 20px;
+  font-style: normal;
+  line-height: normal;
+  margin: 10px;
+  color: lightgrey;
 }
 
 @media screen and (max-width: 510px) {

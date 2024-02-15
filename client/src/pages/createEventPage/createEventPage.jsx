@@ -277,7 +277,7 @@ function CreateEventPage() {
 
             formOne.style.display = "none";
             formTwo.style.display = "none";
-            alert.style.display = "block";
+            alert.style.visibility = "visible";
           })
           .catch((err) => {
             Alert("Error!", err.response.data.message, "error");
@@ -613,20 +613,25 @@ function CreateEventPage() {
         </div>
 
         <div className={styles.alert} id="alert">
-          <h1>Jodify</h1>
-
-          <h2>¡Tu evento se publicó correctamente!</h2>
-
-          <p>Gracias por elegir Jodify</p>
-
-          <div className={styles.containerButton}>
-            <Button
-              Value="Ir a Jodify"
-              OnClick={onClickRouteHome}
-              Color="#000000"
-              Hover="#1B1C20"
+          <div className={styles.containerAlert} id="alert">
+            <img
+              src="https://s3-alpha-sig.figma.com/img/b5ae/456f/01cfd0a1c2cb1ab5689f93e83cba870d?Expires=1708905600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=GBUK-QsD9wQh-nRGbsB2LKLwvnFZeKRHLatZLFPWzw1387oDP3C8sXBZ1Wd1Ps6FFpyCzDS0fpi3nyMrD7PDay4kA2gxTJWawLhnR-1bkm-YJYHZPVu2NOMIri8DC-xZEduXyDOdSLCaivGRe9vXjI-kctrgBSgzZoxz4YpuV-o8DuyL7b6c-ldObbZLpGdMPm77MF33TUiC-qd~ugDJLeITP9wC80lsQ6ItMuSUB4s4b4k8bpgStgDANMp4VVyMObCxxa07wCEvkpNU2eCajfgpZTAyabej1MXgQH5gFvCShJA6B3j3AAALhySw0S~cBrutzpcvW29jkTkIKlp0JQ__"
+              alt="Error al cargar el logo"
             />
-            <Button Value="Publicar otro evento" OnClick={cleanEvent} />
+
+            <h2>¡Tu evento se publicó correctamente!</h2>
+
+            <p>Gracias por elegir Jodify</p>
+
+            <div className={styles.containerButton}>
+              <Button
+                Value="Ir a Jodify"
+                OnClick={onClickRouteHome}
+                Color="#000000"
+                Hover="#1B1C20"
+              />
+              <Button Value="Publicar otro evento" OnClick={cleanEvent} />
+            </div>
           </div>
         </div>
       </div>
