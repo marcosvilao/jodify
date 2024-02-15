@@ -7,6 +7,7 @@ const puppeteer = require("puppeteer-extra");
 const linkScrap = async (link) => {
   let browser = null;
   try {
+    /*
     browser = await puppeteer.launch({
       args: chromium.args,
       defaultViewport: chromium.defaultViewport,
@@ -14,13 +15,13 @@ const linkScrap = async (link) => {
       headless: chromium.headless,
       ignoreHTTPSErrors: true,
     });
-    /*
+    */
     browser = await puppeteer.launch({
       executablePath:
         "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
       headless: true,
     });
-     */
+
     const page = await browser.newPage();
     await page.setUserAgent(
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36"
@@ -44,78 +45,98 @@ const linkScrap = async (link) => {
     if (link.includes("passline")) {
       await page.waitForSelector("img", { timeout: 5000 });
 
-      let dateText = null;
-      let tittle = null;
-      let location = null;
+      let dateText = "";
+      let tittle = "";
+      let location = "";
 
       const section = await page.$(".cont-head-ficha.contenedor");
       const div = await page.$(".donde");
 
       if (section) {
-        dateText = await section.$eval("li", (li) => li.textContent.trim());
-        tittle = await section.$eval("h3", (h3) => h3.textContent.trim());
+        try {
+          dateText = await section.$eval("li", (li) => li.textContent.trim());
 
-        const fechaStr = String(dateText);
-        const fechaSinDia = fechaStr.replace(/^[^\d]+|\s+hrs\.$/g, "");
-        const [fecha, hora] = fechaSinDia.split(" - ");
+          const fechaStr = String(dateText);
+          const fechaSinDia = fechaStr.replace(/^[^\d]+|\s+hrs\.$/g, "");
+          const [fecha, hora] = fechaSinDia.split(" - ");
 
-        const meses = {
-          Enero: "01",
-          Febrero: "02",
-          Marzo: "03",
-          Abril: "04",
-          Mayo: "05",
-          Junio: "06",
-          Julio: "07",
-          Agosto: "08",
-          Septiembre: "09",
-          Octubre: "10",
-          Noviembre: "11",
-          Diciembre: "12",
-        };
+          const meses = {
+            Enero: "01",
+            Febrero: "02",
+            Marzo: "03",
+            Abril: "04",
+            Mayo: "05",
+            Junio: "06",
+            Julio: "07",
+            Agosto: "08",
+            Septiembre: "09",
+            Octubre: "10",
+            Noviembre: "11",
+            Diciembre: "12",
+          };
 
-        const [dia, , mesTexto, año] = fecha.match(/\d+|[a-zA-Z]+/g);
+          const [dia, , mesTexto, año] = fecha.match(/\d+|[a-zA-Z]+/g);
 
-        const numeroMes = meses[mesTexto];
-        dateText = `${numeroMes}/${dia}/${año}`;
+          const numeroMes = meses[mesTexto];
+          dateText = `${numeroMes}/${dia}/${año}`;
+        } catch (error) {
+          console.log(error);
+          dateText = "";
+        }
+
+        try {
+          tittle = await section.$eval("h3", (h3) => h3.textContent.trim());
+        } catch (error) {
+          console.log(error);
+          tittle = "";
+        }
       }
 
       if (div) {
-        location = await div.$eval("p", (p) =>
-          p.textContent
-            .trim()
-            .replace(/\r?\n|\r/g, " - ")
-            .replace(/\s+/g, " ")
-        );
+        try {
+          location = await div.$eval("p", (p) =>
+            p.textContent
+              .trim()
+              .replace(/\r?\n|\r/g, " - ")
+              .replace(/\s+/g, " ")
+          );
+        } catch (error) {
+          location = "";
+        }
 
         let partesStringLocation = location.split(" - ");
         location = partesStringLocation[0];
       }
 
-      const jpgImgSrc = await page.evaluate(() => {
-        const imgElements = Array.from(document.querySelectorAll("img"));
-        for (const img of imgElements) {
-          const src = img.getAttribute("src");
-          if (src && src.toLowerCase().endsWith(".jpg")) {
-            return src;
+      try {
+        var jpgImgSrc = await page.evaluate(() => {
+          const imgElements = Array.from(document.querySelectorAll("img"));
+          for (const img of imgElements) {
+            const src = img.getAttribute("src");
+            if (src && src.toLowerCase().endsWith(".jpg")) {
+              return src;
+            }
           }
-        }
-        return null;
-      });
+          return "";
+        });
+      } catch (error) {
+        console.log(error);
+        var jpgImgSrc = "";
+      }
 
       const result = {
-        image: jpgImgSrc || null,
-        date: dateText || null,
-        location: location || null,
-        tittle: tittle || null,
+        image: jpgImgSrc || "",
+        date: dateText || "",
+        location: location || "",
+        tittle: tittle || "",
       };
 
       return result;
     } else if (link.includes("venti")) {
-      let dateText = null;
-      let location = null;
-      let jpgImgSrc = null;
-      let tittle = null;
+      let dateText = "";
+      let location = "";
+      let jpgImgSrc = "";
+      let tittle = "";
 
       try {
         await page.waitForSelector(".jss48", { timeout: 5000 });
@@ -125,7 +146,12 @@ const linkScrap = async (link) => {
         let divTittle = await page.$(".jss49");
 
         if (divTittle) {
-          tittle = await divTittle.$eval("h6", (h6) => h6.textContent.trim());
+          try {
+            tittle = await divTittle.$eval("h6", (h6) => h6.textContent.trim());
+          } catch (error) {
+            console.log(error);
+            tittle = "";
+          }
         }
 
         const results1 = await page.evaluate(() => {
@@ -165,12 +191,17 @@ const linkScrap = async (link) => {
         dateText = results1.dateText;
         location = results1.location;
 
-        jpgImgSrc = await page.evaluate(() => {
-          const imgElement = document.querySelector(".jss48");
-          return imgElement && imgElement.src.toLowerCase().endsWith(".jpg")
-            ? imgElement.src
-            : null;
-        });
+        try {
+          jpgImgSrc = await page.evaluate(() => {
+            const imgElement = document.querySelector(".jss48");
+            return imgElement && imgElement.src.toLowerCase().endsWith(".jpg")
+              ? imgElement.src
+              : "";
+          });
+        } catch (error) {
+          console.log(error);
+          jpgImgSrc = "";
+        }
       } catch (error) {
         console.log(
           "Intentando con el segundo conjunto de selectores debido a: ",
@@ -183,8 +214,13 @@ const linkScrap = async (link) => {
 
         let divTittle = await page.$(".jss95");
 
-        if (divTittle) {
-          tittle = await divTittle.$eval("h6", (h6) => h6.textContent.trim());
+        try {
+          if (divTittle) {
+            tittle = await divTittle.$eval("h6", (h6) => h6.textContent.trim());
+          }
+        } catch (error) {
+          console.log(error);
+          tittle = "";
         }
 
         const results2 = await page.evaluate(() => {
@@ -226,12 +262,17 @@ const linkScrap = async (link) => {
         dateText = results2.dateText;
         location = results2.location;
 
-        jpgImgSrc = await page.evaluate(() => {
-          const imgElement = document.querySelector(".descriptionImage");
-          return imgElement && imgElement.src.toLowerCase().endsWith(".jpg")
-            ? imgElement.src
-            : null;
-        });
+        try {
+          jpgImgSrc = await page.evaluate(() => {
+            const imgElement = document.querySelector(".descriptionImage");
+            return imgElement && imgElement.src.toLowerCase().endsWith(".jpg")
+              ? imgElement.src
+              : "";
+          });
+        } catch (error) {
+          console.log(error);
+          jpgImgSrc = "";
+        }
       }
 
       return {
