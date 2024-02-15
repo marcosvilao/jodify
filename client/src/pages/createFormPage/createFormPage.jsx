@@ -230,8 +230,6 @@ function CreateFormPage() {
     };
 
     const onChangeDataInput = (e) => {
-      var valueInput = e.target.value;
-
       if (e.target.name === "ticket_link" && errorEnlace) {
         setErrorEnlace("");
       }
@@ -242,7 +240,7 @@ function CreateFormPage() {
 
       setDataPost({
         ...dataPost,
-        [e.target.name]: valueInput,
+        [e.target.name]: e.target.value,
       });
     };
 
@@ -266,25 +264,25 @@ function CreateFormPage() {
           .then((res) => {
             if (valueInput.includes("passline")) {
               setDatePupeteer(res.data.date);
-              setDataPost({
-                ...dataPost,
+              setDataPost((prevDataPost) => ({
+                ...prevDataPost,
                 event_location: res.data.location,
                 event_image: res.data.image,
                 ticket_link: valueInput,
                 event_date: res.data.date,
-                event_title: res.data.tittle,
-              });
+                event_title: res.data.title,
+              }));
               setLoaderPupeteer(false);
             } else if (valueInput.includes("venti")) {
               setDatePupeteer(res.data.date);
-              setDataPost({
-                ...dataPost,
+              setDataPost((prevDataPost) => ({
+                ...prevDataPost,
                 event_location: res.data.location,
                 event_image: res.data.image,
                 ticket_link: valueInput,
                 event_date: res.data.date,
-                event_title: res.data.tittle,
-              });
+                event_title: res.data.title,
+              }));
               setLoaderPupeteer(false);
             } else {
               Alert("Error!", "Error en el link proporcionado", "error");
@@ -309,13 +307,10 @@ function CreateFormPage() {
               ticket_link: valueInput,
             });
           });
-      } else {
-        setDataPost({
-          ...dataPost,
-          [e.target.name]: valueInput,
-        });
       }
     };
+
+    console.log(dataPost);
 
     const onSubmit = () => {
       setSubmitLoader(true);
