@@ -115,6 +115,7 @@ function SelectBlack(props) {
   const handleInputChange = (event, newInputValue) => {
     if (!nanMultiselect) {
       setInputValue(newInputValue);
+      setMenuOpen(true);
     }
   };
 
