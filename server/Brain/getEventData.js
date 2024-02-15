@@ -7,7 +7,6 @@ puppeteer.use(StealthPlugin());
 const linkScrap = async (link) => {
   let browser = null;
   try {
-    /*
     browser = await puppeteer.launch({
       args: chromium.args,
       defaultViewport: chromium.defaultViewport,
@@ -15,13 +14,13 @@ const linkScrap = async (link) => {
       headless: chromium.headless,
       ignoreHTTPSErrors: true,
     });
-     */
+    /*
     browser = await puppeteer.launch({
       executablePath:
         "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
       headless: true,
     });
-
+     */
     const page = await browser.newPage();
     await page.setUserAgent(
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36"
