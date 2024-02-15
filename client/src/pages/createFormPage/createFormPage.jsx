@@ -218,7 +218,6 @@ function CreateFormPage() {
       setDataPost({
         ...dataPost,
         event_djs: arrayDjs,
-        event_title: string,
       });
     };
 
@@ -266,7 +265,6 @@ function CreateFormPage() {
             link: valueInput,
           })
           .then((res) => {
-            console.log(res.data);
             if (valueInput.includes("passline")) {
               setDatePupeteer(res.data.date);
               setDataPost({
@@ -275,6 +273,7 @@ function CreateFormPage() {
                 event_image: res.data.image,
                 ticket_link: valueInput,
                 event_date: res.data.date,
+                event_title: res.data.tittle,
               });
               setLoaderPupeteer(false);
             } else if (valueInput.includes("venti")) {
@@ -285,6 +284,7 @@ function CreateFormPage() {
                 event_image: res.data.image,
                 ticket_link: valueInput,
                 event_date: res.data.date,
+                event_title: res.data.tittle,
               });
               setLoaderPupeteer(false);
             } else {
@@ -294,18 +294,19 @@ function CreateFormPage() {
                 ...dataPost,
                 event_location: "",
                 event_image: "",
+                event_title: "",
                 ticket_link: valueInput,
               });
             }
           })
           .catch((err) => {
-            console.log(err);
             Alert("Error!", err, "error");
             setLoaderPupeteer(false);
             setDataPost({
               ...dataPost,
               event_location: "",
               event_image: "",
+              event_title: "",
               ticket_link: valueInput,
             });
           });
@@ -458,8 +459,11 @@ function CreateFormPage() {
       }
     };
 
-    const cleanEvent = () => {
-      window.location.reload();
+    const renameEvent = () => {
+      setDataPost({
+        ...dataPost,
+        event_title: dataPost.event_djs,
+      });
     };
 
     return (
@@ -484,24 +488,38 @@ function CreateFormPage() {
           <InputOutlined
             OnChange={onChangeDataInput2}
             Name="ticket_link"
-            Placeholder="Prueba scrapping no usar"
-            Label="Prueba scrapping no usar"
+            Placeholder="ej. https://www.passline.com / https://venti.com.ar"
+            Label="Scrapping"
             Margin="32px 0px 0px 0px"
             Variant="outlined"
           />
-          <p>Prueba scrapping no usar</p>
+          <p>Scrapping solo usar links de passline o venti</p>
 
-          <InputOutlined
-            OnChange={onChangeDataInput}
-            Name="ticket_link"
-            Placeholder="ej. www.jodify.com.ar"
-            Label="Link de venta"
-            Error={errorEnlace}
-            Margin="32px 0px 0px 0px"
-            Variant="outlined"
-            Value={dataPost.ticket_link}
-          />
-          <p>Copiá y pegá aca el link de venta de entradas</p>
+          {!loaderPupeteer ? (
+            <div>
+              <InputOutlined
+                OnChange={onChangeDataInput}
+                Name="ticket_link"
+                Placeholder="ej. www.jodify.com.ar"
+                Label="Link de venta"
+                Error={errorEnlace}
+                Margin="32px 0px 0px 0px"
+                Variant="outlined"
+                Value={dataPost.ticket_link}
+              />
+              <p>Copiá y pegá aca el link de venta de entradas</p>
+            </div>
+          ) : (
+            <div
+              style={{
+                width: "100%",
+                textAlign: "center",
+                marginTop: "40px",
+              }}
+            >
+              <Loader Color="#7c16f5" Height="30px" Width="30px" />
+            </div>
+          )}
 
           {!loader && !loaderPupeteer ? (
             <div
@@ -627,23 +645,37 @@ function CreateFormPage() {
           />
           <p>Selecciona los generon que habra</p>
 
-          <InputOutlined
-            OnChange={onChangeDataInput}
-            Name="event_title"
-            Value={dataPost.event_title}
-            Placeholder="ej. Jodify Winter Fest"
-            Label="Nombre del evento"
-            Error=""
-            Margin="32px 0px 0px 0px"
-            Requiere="false"
-            Variant="outlined"
-          />
-          <p>Si lo deseas, puedes personalizar aqui el nombre del evento</p>
+          {!loaderPupeteer ? (
+            <div>
+              <InputOutlined
+                OnChange={onChangeDataInput}
+                Name="event_title"
+                Value={dataPost.event_title}
+                Placeholder="ej. Jodify Winter Fest"
+                Label="Nombre del evento"
+                Error=""
+                Margin="32px 0px 0px 0px"
+                Requiere="false"
+                Variant="outlined"
+              />
+              <p>Si lo deseas, puedes personalizar aqui el nombre del evento</p>
+            </div>
+          ) : (
+            <div
+              style={{
+                width: "100%",
+                textAlign: "center",
+                marginTop: "40px",
+              }}
+            >
+              <Loader Color="#7c16f5" Height="30px" Width="30px" />
+            </div>
+          )}
 
           <div className={styles.containerButton}>
             <Button
-              Value="Limpiar"
-              OnClick={cleanEvent}
+              Value="Renombrar"
+              OnClick={renameEvent}
               Color="#000000"
               Hover="#1B1C20"
             />
