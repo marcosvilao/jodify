@@ -361,7 +361,14 @@ const filterEventsNew = async (req, res) => {
     if (search) {
       const searchWithoutAccents = removeAccents(search);
 
-      query += ` AND (unaccent(lower(e.event_title)) ILIKE unaccent(lower($${paramCount})) OR unaccent(lower(e.event_location)) ILIKE unaccent(lower($${paramCount})) OR e.event_djs @> ARRAY[unaccent(lower($${paramCount}))]::character varying[])`;
+      query += ` AND (
+          unaccent(lower(e.event_title)) ILIKE unaccent(lower($${paramCount})) 
+          OR (
+              SELECT COUNT(*) 
+              FROM unnest(e.event_djs) AS dj 
+              WHERE unaccent(lower(dj)) ILIKE unaccent(lower($${paramCount}))
+          ) > 0
+      )`;
       values.push(`%${searchWithoutAccents}%`);
       paramCount++;
     }
