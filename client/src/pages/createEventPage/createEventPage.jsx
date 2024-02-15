@@ -199,7 +199,6 @@ function CreateEventPage() {
       setDataPost({
         ...dataPost,
         event_djs: arrayDjs,
-        event_title: string,
       });
     };
 
@@ -421,20 +420,6 @@ function CreateEventPage() {
             </div>
           </div>
 
-          <h3 className={styles.formH3}>Previsualización</h3>
-
-          <div className={styles.containerCard}>
-            <EventCard
-              Img={dataPost.event_image}
-              SecondTittle={dataPost.event_title}
-              Tittle={dataPost.event_djs}
-              Location={dataPost.event_location}
-              Genre={dataCardType}
-              OnClick={onClickEventCard}
-              Color="#AE71F9"
-            />
-          </div>
-
           <SelectBlack
             Option="Lugar del evento"
             Array={cities}
@@ -443,7 +428,7 @@ function CreateEventPage() {
             Multiple={false}
             Error={errorPlace}
           />
-          <p>Elegi la ciudad o porvincia donde queres que figure el evento.</p>
+          <p>Elije la ciudad o provincia donde queres que figure el evento</p>
 
           <InputOutlined
             OnChange={onChangeDataInput}
@@ -456,13 +441,14 @@ function CreateEventPage() {
             Variant="outlined"
           />
           <p>
-            Ingresa el barrio o localidad entre parentesis ej. Crobar (Palermo)
+            Ingresá el lugar o la dirección del evento, incluir el barrio entre
+            parentesis Ej, Crobar (Palermo)
           </p>
 
           <DatePicker
             OnChange={onChangeEventDate}
             Label="Fecha el evento"
-            Margin="32px 0px 0px 0px"
+            Margin="26px 0px 0px 0px"
             Error={errorFecha}
           />
 
@@ -484,6 +470,20 @@ function CreateEventPage() {
               <Loader Color="#7c16f5" Height="30px" Width="30px" />
             </div>
           )}
+
+          <h3 className={styles.formH3}>Así se verá en nuestra cartelera!</h3>
+
+          <div className={styles.containerCard}>
+            <EventCard
+              Img={dataPost.event_image}
+              SecondTittle={dataPost.event_title}
+              Tittle={dataPost.event_djs}
+              Location={dataPost.event_location}
+              Genre={dataCardType}
+              OnClick={onClickEventCard}
+              Color="#AE71F9"
+            />
+          </div>
 
           <div className={styles.containerButton}>
             <Button
@@ -529,20 +529,6 @@ function CreateEventPage() {
             </div>
           </div>
 
-          <h3 className={styles.formH3}>Previsualización</h3>
-
-          <div className={styles.containerCard}>
-            <EventCard
-              Img={dataPost.event_image}
-              SecondTittle={dataPost.event_title}
-              Tittle={dataPost.event_djs}
-              Location={dataPost.event_location}
-              Genre={dataCardType}
-              OnClick={onClickEventCard}
-              Color="#AE71F9"
-            />
-          </div>
-
           <InputOutlined
             OnChange={onChangeDataInput}
             Name="ticket_link"
@@ -554,7 +540,8 @@ function CreateEventPage() {
             Variant="outlined"
           />
           <p>
-            Copiá y pegá el enlace donde los usuarios irán a comprar la entrada.
+            Copiá y pegá el enlace donde los asistentes irán a comprar la
+            entrada
           </p>
 
           <SelectBlack
@@ -573,6 +560,20 @@ function CreateEventPage() {
             Error={errorGeneros}
           />
 
+          <h3 className={styles.formH3}>Previsualización</h3>
+
+          <div className={styles.containerCard}>
+            <EventCard
+              Img={dataPost.event_image}
+              SecondTittle={dataPost.event_title}
+              Tittle={dataPost.event_djs}
+              Location={dataPost.event_location}
+              Genre={dataCardType}
+              OnClick={onClickEventCard}
+              Color="#AE71F9"
+            />
+          </div>
+
           <InputOutlined
             OnChange={onChangeDataInput}
             Name="event_title"
@@ -584,10 +585,9 @@ function CreateEventPage() {
             Requiere="false"
             Variant="outlined"
           />
-          <p>Si lo deseas, puedes personalizar aqui el nombre del evento.</p>
           <p>
-            Por defecto el nombre del evento es el line up seleccionados excepto
-            que la cambios aqui.
+            Ponemos por defecto el line up como nombre del evento, pero puedes
+            elegir editarlo acá
           </p>
 
           <div className={styles.containerButton}>

@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: center;
   padding: 50px 0px;
-  min-height: 75vh;
+  position: relative;
 }
 
 .form {
@@ -33,7 +33,7 @@
   justify-content: center;
   flex-direction: column;
   width: 100%;
-  margin: 0px 0px 50px 0px;
+  margin: 0px 0px 10px 0px;
 }
 
 .linePageContainer {
@@ -88,7 +88,7 @@
   font-weight: 500;
   line-height: normal;
   padding: 0px;
-  margin: 0px 0px 5px 0px;
+  margin: 32px 0px 5px 0px;
 }
 
 .containerCard {
@@ -125,10 +125,13 @@
   text-align: center;
   color: #ffffff;
   width: 500px;
+  position: absolute;
+  top: -10px;
 }
 
 .alert h1 {
   font-size: 60px;
+  font-weight: 200px;
 }
 
 @media screen and (max-width: 510px) {
