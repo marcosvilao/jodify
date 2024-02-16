@@ -275,6 +275,8 @@ function CreateFormPage() {
               setLoaderPupeteer(false);
             } else if (valueInput.includes("venti")) {
               const fechaOriginal = res.data.date;
+              console.log(fechaOriginal);
+
               const partesFecha = fechaOriginal.split("/");
               const mes =
                 partesFecha[1].length === 1
@@ -286,7 +288,6 @@ function CreateFormPage() {
                   : partesFecha[0];
               const año = partesFecha[2];
               const fechaFormateada = `${mes}/${dia}/${año}`;
-
               console.log(fechaFormateada);
 
               setDatePupeteer(fechaFormateada);
