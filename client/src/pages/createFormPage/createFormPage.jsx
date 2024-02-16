@@ -278,15 +278,19 @@ function CreateFormPage() {
               console.log(fechaOriginal);
 
               const partesFecha = fechaOriginal.split("/");
+
               const mes =
-                partesFecha[1].length === 1
-                  ? `0${partesFecha[1]}`
-                  : partesFecha[1];
-              const dia =
                 partesFecha[0].length === 1
                   ? `0${partesFecha[0]}`
                   : partesFecha[0];
+
+              const dia =
+                partesFecha[1].length === 1
+                  ? `0${partesFecha[1]}`
+                  : partesFecha[1];
+
               const año = partesFecha[2];
+
               const fechaFormateada = `${mes}/${dia}/${año}`;
               console.log(fechaFormateada);
 
