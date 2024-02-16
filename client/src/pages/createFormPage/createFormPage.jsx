@@ -274,38 +274,55 @@ function CreateFormPage() {
               }));
               setLoaderPupeteer(false);
             } else if (valueInput.includes("venti")) {
-              setDatePupeteer(res.data.date);
+              const fechaOriginal = res.data.date;
+              const partesFecha = fechaOriginal.split("/");
+              const mes =
+                partesFecha[1].length === 1
+                  ? `0${partesFecha[1]}`
+                  : partesFecha[1];
+              const dia =
+                partesFecha[0].length === 1
+                  ? `0${partesFecha[0]}`
+                  : partesFecha[0];
+              const año = partesFecha[2];
+              const fechaFormateada = `${mes}/${dia}/${año}`;
+
+              setDatePupeteer(fechaFormateada);
               setDataPost((prevDataPost) => ({
                 ...prevDataPost,
                 event_location: res.data.location,
                 event_image: res.data.image,
                 ticket_link: valueInput,
-                event_date: res.data.date,
+                event_date: fechaFormateada,
                 event_title: res.data.tittle,
               }));
               setLoaderPupeteer(false);
             } else {
               Alert("Error!", "Error en el link proporcionado", "error");
               setLoaderPupeteer(false);
-              setDataPost({
-                ...dataPost,
+              setDatePupeteer("");
+              setDataPost((prevDataPost) => ({
+                ...prevDataPost,
                 event_location: "",
                 event_image: "",
                 event_title: "",
+                event_date: "",
                 ticket_link: valueInput,
-              });
+              }));
             }
           })
           .catch((err) => {
             Alert("Error!", err, "error");
             setLoaderPupeteer(false);
-            setDataPost({
-              ...dataPost,
+            setDatePupeteer("");
+            setDataPost((prevDataPost) => ({
+              ...prevDataPost,
               event_location: "",
               event_image: "",
               event_title: "",
+              event_date: "",
               ticket_link: valueInput,
-            });
+            }));
           });
       }
     };
