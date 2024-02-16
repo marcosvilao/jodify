@@ -292,6 +292,12 @@ const filterEventsNew = async (req, res) => {
     const argentinaTime = currentDate.toLocaleString("en-US", options);
 
     let query = `
+    WITH MinPriority AS (
+      SELECT ep.event_id, MIN(p.priority) AS priority
+      FROM event_promoters ep
+      JOIN promoters p ON p.id = ep.promoter_id
+      GROUP BY ep.event_id
+    )
     SELECT 
     e.*, 
     COALESCE(
@@ -301,13 +307,15 @@ const filterEventsNew = async (req, res) => {
           'name', p.name, 
           'priority', p.priority, 
           'instagram', p.instagram
-        )
-      ),
+        )ORDER BY p.priority ASC
+        ) FILTER (WHERE p.id IS NOT NULL),
       '[]'
-    ) AS promoters
+    ) AS promoters,
+    mp.priority AS min_priority
   FROM event e 
   LEFT JOIN event_promoters ep ON e.id = ep.event_id 
-  LEFT JOIN promoters p ON p.id = ep.promoter_id 
+  LEFT JOIN promoters p ON p.id = ep.promoter_id
+  LEFT JOIN MinPriority mp ON e.id = mp.event_id 
   WHERE TRUE 
   `;
     const values = [];
@@ -374,7 +382,7 @@ const filterEventsNew = async (req, res) => {
       paramCount++;
     }
 
-    query += `GROUP BY e.id ORDER BY e.event_date ASC, e.id ASC LIMIT 20 OFFSET $${paramCount}`;
+    query += `GROUP BY e.id, mp.priority ORDER BY e.event_date ASC,mp.priority ASC, e.id ASC LIMIT 20 OFFSET $${paramCount}`;
     values.push(setOff);
     const result = await pool.query(query, values);
     const events = result.rows;
