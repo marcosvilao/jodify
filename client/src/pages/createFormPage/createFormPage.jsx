@@ -287,6 +287,8 @@ function CreateFormPage() {
               const año = partesFecha[2];
               const fechaFormateada = `${mes}/${dia}/${año}`;
 
+              console.log(fechaFormateada);
+
               setDatePupeteer(fechaFormateada);
               setDataPost((prevDataPost) => ({
                 ...prevDataPost,
