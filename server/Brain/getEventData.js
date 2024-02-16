@@ -162,17 +162,11 @@ const linkScrap = async (link) => {
               let parteFecha1 = "";
               let parteFecha2 = "";
 
-              if (partesFecha[1] > 9) {
-                parteFecha1 = `${partesFecha[1]}`;
-              } else {
-                parteFecha1 = `0${partesFecha[1]}`;
-              }
+              let mes = parseInt(partesFecha[1]);
+              let dia = parseInt(partesFecha[0]);
 
-              if (partesFecha[0] > 9) {
-                parteFecha2 = `${partesFecha[0]}`;
-              } else {
-                parteFecha2 = `0${partesFecha[0]}`;
-              }
+              parteFecha1 = mes > 9 ? `${mes}` : `0${mes}`;
+              parteFecha2 = dia > 9 ? `${dia}` : `0${dia}`;
 
               dateText = `${parteFecha1}/${parteFecha2}/${partesFecha[2]}`;
             } else if (element.querySelector('svg[data-testid="PlaceIcon"]')) {
@@ -217,23 +211,15 @@ const linkScrap = async (link) => {
             if (element.querySelector('svg[data-testid="EventIcon"]')) {
               dateText = element.textContent.trim();
 
-              console.log(dateText);
-
               let partesFecha = dateText.split("/");
               let parteFecha1 = "";
               let parteFecha2 = "";
 
-              if (partesFecha[1] > 9) {
-                parteFecha1 = `${partesFecha[1]}`;
-              } else {
-                parteFecha1 = `0${partesFecha[1]}`;
-              }
+              let mes = parseInt(partesFecha[1]);
+              let dia = parseInt(partesFecha[0]);
 
-              if (partesFecha[0] > 9) {
-                parteFecha2 = `${partesFecha[0]}`;
-              } else {
-                parteFecha2 = `0${partesFecha[0]}`;
-              }
+              parteFecha1 = mes > 9 ? `${mes}` : `0${mes}`;
+              parteFecha2 = dia > 9 ? `${dia}` : `0${dia}`;
 
               dateText = `${parteFecha1}/${parteFecha2}/${partesFecha[2]}`;
             } else if (element.querySelector('svg[data-testid="PlaceIcon"]')) {
