@@ -262,6 +262,7 @@ function CreateFormPage() {
             link: valueInput,
           })
           .then((res) => {
+            console.log(res.data);
             if (valueInput.includes("passline")) {
               setDatePupeteer(res.data.date);
               setDataPost((prevDataPost) => ({
@@ -270,7 +271,7 @@ function CreateFormPage() {
                 event_image: res.data.image,
                 ticket_link: valueInput,
                 event_date: res.data.date,
-                event_title: res.data.title,
+                event_title: res.data.tittle,
               }));
               setLoaderPupeteer(false);
             } else if (valueInput.includes("venti")) {
@@ -281,7 +282,7 @@ function CreateFormPage() {
                 event_image: res.data.image,
                 ticket_link: valueInput,
                 event_date: res.data.date,
-                event_title: res.data.title,
+                event_title: res.data.tittle,
               }));
               setLoaderPupeteer(false);
             } else {
@@ -458,6 +459,8 @@ function CreateFormPage() {
         event_title: string,
       });
     };
+
+    console.log(dataPost);
 
     return (
       <div className={styles.body}>

@@ -146,12 +146,7 @@ const linkScrap = async (link) => {
         let divTittle = await page.$(".jss49");
 
         if (divTittle) {
-          try {
-            tittle = await divTittle.$eval("h6", (h6) => h6.textContent.trim());
-          } catch (error) {
-            console.log(error);
-            tittle = "";
-          }
+          tittle = await divTittle.$eval("h6", (h6) => h6.textContent.trim());
         }
 
         const results1 = await page.evaluate(() => {
@@ -191,17 +186,12 @@ const linkScrap = async (link) => {
         dateText = results1.dateText;
         location = results1.location;
 
-        try {
-          jpgImgSrc = await page.evaluate(() => {
-            const imgElement = document.querySelector(".jss48");
-            return imgElement && imgElement.src.toLowerCase().endsWith(".jpg")
-              ? imgElement.src
-              : "";
-          });
-        } catch (error) {
-          console.log(error);
-          jpgImgSrc = "";
-        }
+        jpgImgSrc = await page.evaluate(() => {
+          const imgElement = document.querySelector(".jss48");
+          return imgElement && imgElement.src.toLowerCase().endsWith(".jpg")
+            ? imgElement.src
+            : "";
+        });
       } catch (error) {
         console.log(
           "Intentando con el segundo conjunto de selectores debido a: ",
@@ -214,13 +204,8 @@ const linkScrap = async (link) => {
 
         let divTittle = await page.$(".jss95");
 
-        try {
-          if (divTittle) {
-            tittle = await divTittle.$eval("h6", (h6) => h6.textContent.trim());
-          }
-        } catch (error) {
-          console.log(error);
-          tittle = "";
+        if (divTittle) {
+          tittle = await divTittle.$eval("h6", (h6) => h6.textContent.trim());
         }
 
         const results2 = await page.evaluate(() => {
@@ -262,17 +247,12 @@ const linkScrap = async (link) => {
         dateText = results2.dateText;
         location = results2.location;
 
-        try {
-          jpgImgSrc = await page.evaluate(() => {
-            const imgElement = document.querySelector(".descriptionImage");
-            return imgElement && imgElement.src.toLowerCase().endsWith(".jpg")
-              ? imgElement.src
-              : "";
-          });
-        } catch (error) {
-          console.log(error);
-          jpgImgSrc = "";
-        }
+        jpgImgSrc = await page.evaluate(() => {
+          const imgElement = document.querySelector(".descriptionImage");
+          return imgElement && imgElement.src.toLowerCase().endsWith(".jpg")
+            ? imgElement.src
+            : "";
+        });
       }
 
       return {
