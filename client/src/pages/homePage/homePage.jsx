@@ -10,6 +10,7 @@ import EventCard from "../../components2/eventCard/eventCard";
 import CheckBoxList from "../../components2/checkBoxList/checkBoxList";
 import Alert from "../../components2/alert/alert";
 import SkeletonLoader from "../../components2/loaderSkeleton/loaderSkeleton";
+import Footer from "../../components2/footer/footer";
 
 function HomePage() {
   const axiosUrl = process.env.REACT_APP_AXIOS_URL;
@@ -938,6 +939,8 @@ function HomePage() {
             <p>No hay mas eventos</p>
           </div>
         ) : null}
+
+        <Footer />
       </div>
     );
   }
