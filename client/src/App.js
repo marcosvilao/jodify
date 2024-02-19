@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import WeekEventsPage from "./pages/weekEventsPage/weekEventsPage.jsx";
 import Header from "./components2/header/header.jsx";
+import Footer from "./components2/footer/footer.jsx";
 import HomePage from "./pages/homePage/homePage.jsx";
 import LoginPage from "./pages/loginPage/loginPage.jsx";
 import RegisterPage from "./pages/registerPage/registerPage.jsx";
@@ -31,6 +32,7 @@ function App() {
         <Route path="/create-promoter" element={<CreatePromotersPage />} />
         <Route path="/create-form" element={<CreateFormPage />} />
       </Routes>
+      <Footer />
     </div>
   );
 }

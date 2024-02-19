@@ -1,0 +1,97 @@
+.body {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+  background-color: #0c0c0c;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 600px;
+  height: 100%;
+  border-top: 2px solid transparent;
+  color: #ffffff;
+}
+
+.container:before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  right: 0;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #ea33f7 0%, #7c16f5 100%);
+}
+
+.containerLeft {
+  position: absolute;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  width: 50%;
+  height: 100%;
+}
+
+.container p {
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+.icons {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}
+
+.icons:hover {
+  color: lightgray;
+}
+
+.terminos {
+  position: absolute;
+  right: 20px;
+  cursor: pointer;
+}
+
+.terminos:hover {
+  color: lightgray;
+}
+
+@media screen and (max-width: 650px) {
+  .body {
+    padding: 0px 20px;
+    box-sizing: border-box;
+  }
+
+  .container {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .containerLeft {
+    left: 10px;
+  }
+
+  .container p {
+    font-size: 14px;
+    margin-right: 5px;
+  }
+
+  .icons {
+    width: 20px;
+    height: 20px;
+  }
+
+  .terminos {
+    right: 10px;
+  }
+}
