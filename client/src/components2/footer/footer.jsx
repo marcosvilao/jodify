@@ -38,10 +38,15 @@ function Footer() {
     <div
       className={styles.body}
       style={{
-        transform: `translateY(${hideFooter ? "100%" : "0"})`, // Desplaza el footer hacia abajo cuando se oculta
+        transform: `translateY(${hideFooter ? "100%" : "0"})`,
       }}
     >
-      <div className={styles.container}>
+      <div
+        className={styles.container}
+        style={{
+          transform: `translateY(${hideFooter ? "100%" : "0"})`,
+        }}
+      >
         <div className={styles.containerLeft}>
           <p>©</p>
           <p>Jodify</p>
