@@ -26,7 +26,7 @@
 
 .bodyLoaderLazyLoad {
   width: 100%;
-  height: 20vh;
+  height: 160px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -82,7 +82,7 @@
   width: 100vw;
   height: 100vh;
   background-color: transparent;
-  z-index: 999;
+  z-index: 99999;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -91,6 +91,7 @@
 .containerUbicacion {
   position: absolute;
   visibility: hidden;
+  width: 300px;
 }
 
 .containerGenero {
@@ -98,8 +99,9 @@
   visibility: hidden;
 }
 
-.containerUbicacion {
-  width: 300px;
+.containerFecha {
+  position: absolute;
+  top: 20px;
 }
 
 .containerEventCard {
