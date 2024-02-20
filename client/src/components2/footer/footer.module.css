@@ -47,6 +47,10 @@
   margin-right: 10px;
 }
 
+.icons {
+  margin-top: 3px;
+}
+
 .icons:hover {
   color: lightgray;
 }
