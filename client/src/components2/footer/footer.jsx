@@ -47,6 +47,7 @@ function Footer() {
           <p>Jodify</p>
           <FacebookIcon
             onClick={onClickFacebook}
+            className={styles.icons}
             style={{
               width: "15px",
               height: "15px",
@@ -55,6 +56,7 @@ function Footer() {
             }}
           />
           <InstagramIcon
+            className={styles.icons}
             onClick={onClickInstagram}
             style={{ width: "15px", height: "15px", cursor: "pointer" }}
           />
