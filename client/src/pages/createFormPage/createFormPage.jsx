@@ -6,7 +6,7 @@ import Alert from "../../components2/alert/alert";
 import EventCard from "../../components2/eventCard/eventCard";
 import Loader from "../../components2/loader/loader";
 import SelectBlack from "../../components2/selectBlack/selectBlack";
-import Button from "../../components2/button/button";
+import Button from "../../components2/ButtonCreateEvents/button";
 import InputFile from "../../components2/inputFile/inputFile";
 import DatePicker from "../../components2/datePicker/datePicker";
 import InputOutlined from "../../components2/inputBlack/inputBlack";

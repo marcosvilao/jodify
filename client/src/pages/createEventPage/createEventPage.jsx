@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import styles from "./createEventPage.module.css";
 import SelectBlack from "../../components2/selectBlack/selectBlack";
-import Button from "../../components2/button/button";
+import Button from "../../components2/ButtonCreateEvents/button";
 import axios from "axios";
 import Loader from "../../components2/loader/loader";
 import Alert from "../../components2/alert/alert";

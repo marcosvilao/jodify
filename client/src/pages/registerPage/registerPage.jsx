@@ -8,7 +8,7 @@ import LogoJodify from "../../components2/logoJodify/logoJodify";
 import TittleH1 from "../../components2/tittleH1Auth/tittleH1";
 import IconsAuth0 from "../../components2/iconsAuth0/iconsAuth0";
 import InputFilled from "../../components2/inputBlack/inputBlack";
-import ButtonBlue from "../../components2/button/button";
+import ButtonBlue from "../../components2/ButtonCreateEvents/button";
 import Parrafo from "../../components2/parrafoAuth/parrafo";
 import Alert from "../../components2/alert/alert";
 import Loader from "../../components2/loader/loader";
