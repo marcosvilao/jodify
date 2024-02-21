@@ -4,7 +4,7 @@ import axios from "axios";
 import Alert from "../../components2/alert/alert";
 import InputFilled from "../../components2/inputBlack/inputBlack";
 import SelectBlack from "../../components2/selectBlack/selectBlack";
-import ButtonBlue from "../../components2/button/button";
+import ButtonBlue from "../../components2/ButtonCreateEvents/button";
 import TittleH1 from "../../components2/tittleH1Auth/tittleH1";
 import Loader from "../../components2/loader/loader";
 

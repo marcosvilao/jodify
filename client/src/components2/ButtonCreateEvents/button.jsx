@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 
-function ButtonBlue(props) {
+function ButtonCreateEvents(props) {
   const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseEnter = () => {
@@ -43,4 +43,4 @@ function ButtonBlue(props) {
   );
 }
 
-export default ButtonBlue;
+export default ButtonCreateEvents;
