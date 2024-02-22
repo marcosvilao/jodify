@@ -222,7 +222,6 @@ const linkScrap = async (link) => {
         day: "2-digit", // Día en dos dígitos
         month: "2-digit", // Mes en dos dígitos
         year: "numeric", // Año en formato numérico
-        timeZone: "America/Argentina/Buenos_Aires",
       };
 
       console.log(`Date: ${date}`);
