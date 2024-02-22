@@ -241,15 +241,13 @@ const linkScrap = async (link) => {
       const newDateText = `${yearMoment}-${mesMoment}-${dayMoment}T12:00:00Z`;
       let fecha = moment(newDateText);
 
-      let fechaFormateada = fecha.format("MM-DD-YYYY");
-
-      console.log(`Fecha del scrapping: ${newDateText}`);
+      console.log(`Fecha del scrapping: ${dateText}`);
       console.log(`Fecha preparada para formatear: ${newDateText}`);
-      console.log(`Fecha formateada: ${fechaFormateada}`);
+      console.log(`Fecha formateada: ${fecha}`);
 
       return {
         image: jpgImgSrc,
-        date: fechaFormateada,
+        date: fecha,
         location: location,
         tittle: tittle,
       };
