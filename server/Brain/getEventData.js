@@ -243,8 +243,9 @@ const linkScrap = async (link) => {
 
       let fechaFormateada = fecha.format("MM-DD-YYYY");
 
-      console.log(newDateText);
-      console.log(fechaFormateada);
+      console.log(`Fecha del scrapping: ${newDateText}`);
+      console.log(`Fecha preparada para formatear: ${newDateText}`);
+      console.log(`Fecha formateada: ${fechaFormateada}`);
 
       return {
         image: jpgImgSrc,
