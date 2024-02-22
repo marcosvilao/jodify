@@ -7,6 +7,7 @@ const puppeteer = require("puppeteer-extra");
 const linkScrap = async (link) => {
   let browser = null;
   try {
+    // DEPLOY
     browser = await puppeteer.launch({
       args: chromium.args,
       defaultViewport: chromium.defaultViewport,
@@ -14,6 +15,8 @@ const linkScrap = async (link) => {
       headless: chromium.headless,
       ignoreHTTPSErrors: true,
     });
+
+    // LOCAL
     /*
     browser = await puppeteer.launch({
       executablePath:
@@ -217,15 +220,18 @@ const linkScrap = async (link) => {
         });
       }
 
+      // LOCAL
+      /*
       let parts = dateText.split("/");
-
       const mes = parts[1];
       const day = parts[0];
       const year = parts[2];
-
       const newDateText = `${mes}/${day}/${year}`;
-
       const date = new Date(newDateText);
+      */
+
+      // DEPLOY
+      const date = new Date(dateText);
       date.setHours(12, 0, 0);
 
       const options = {
