@@ -7,6 +7,7 @@ const puppeteer = require("puppeteer-extra");
 const linkScrap = async (link) => {
   let browser = null;
   try {
+    /*
     browser = await puppeteer.launch({
       args: chromium.args,
       defaultViewport: chromium.defaultViewport,
@@ -14,13 +15,12 @@ const linkScrap = async (link) => {
       headless: chromium.headless,
       ignoreHTTPSErrors: true,
     });
-    /*
+    */
     browser = await puppeteer.launch({
       executablePath:
         "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
       headless: true,
     });
-    */
 
     const page = await browser.newPage();
     await page.setUserAgent(
@@ -217,7 +217,16 @@ const linkScrap = async (link) => {
         });
       }
 
-      const date = new Date(dateText + "T12:00:00");
+      let parts = dateText.split("/");
+
+      const mes = parts[1];
+      const day = parts[0];
+      const year = parts[2];
+
+      const newDateText = `${mes}/${day}/${year}`;
+
+      const date = new Date(newDateText);
+      date.setHours(12, 0, 0);
 
       const options = {
         day: "2-digit", // Día en dos dígitos
