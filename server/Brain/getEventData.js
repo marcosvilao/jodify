@@ -1,5 +1,6 @@
 const chromium = require("@sparticuz/chromium");
 const puppeteer = require("puppeteer-extra");
+const moment = require("moment-timezone");
 //const StealthPlugin = require("puppeteer-extra-plugin-stealth");
 
 //puppeteer.use(StealthPlugin());
@@ -8,6 +9,7 @@ const linkScrap = async (link) => {
   let browser = null;
   try {
     // DEPLOY
+    /*
     browser = await puppeteer.launch({
       args: chromium.args,
       defaultViewport: chromium.defaultViewport,
@@ -15,15 +17,14 @@ const linkScrap = async (link) => {
       headless: chromium.headless,
       ignoreHTTPSErrors: true,
     });
-
+   */
     // LOCAL
-    /*
+
     browser = await puppeteer.launch({
       executablePath:
         "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
       headless: true,
     });
-    */
 
     const page = await browser.newPage();
     await page.setUserAgent(
@@ -220,34 +221,31 @@ const linkScrap = async (link) => {
         });
       }
 
-      // LOCAL
-      /*
       let parts = dateText.split("/");
-      const mes = parts[1];
-      const day = parts[0];
-      const year = parts[2];
-      const newDateText = `${mes}/${day}/${year}`;
-      const date = new Date(newDateText);
-      */
+      var mesMoment;
+      var dayMoment;
+      var yearMoment = parts[2];
 
-      // DEPLOY
-      const date = new Date(dateText);
-      date.setHours(12, 0, 0);
+      if (parts[0].length === 1) {
+        mesMoment = `0${parts[0]}`;
+      } else {
+        mesMoment = `${parts[0]}`;
+      }
 
-      const options = {
-        day: "2-digit", // Día en dos dígitos
-        month: "2-digit", // Mes en dos dígitos
-        year: "numeric", // Año en formato numérico
-      };
+      if (parts[1].length === 1) {
+        dayMoment = `0${parts[1]}`;
+      } else {
+        dayMoment = `${parts[1]}`;
+      }
 
-      console.log(`Date: ${date}`);
-      console.log(`Date Text: ${dateText}`);
-      const formateDate = date.toLocaleDateString("en-US", options);
-      console.log(`Formate Date: ${formateDate}`);
+      const newDateText = `${yearMoment}-${mesMoment}-${dayMoment}T12:00:00`;
+      let fecha = moment.tz(newDateText, "America/Argentina/Buenos_Aires");
+
+      let fechaFormateada = fecha.format("MM-DD-YYYY");
 
       return {
         image: jpgImgSrc,
-        date: formateDate,
+        date: fechaFormateada,
         location: location,
         tittle: tittle,
       };
