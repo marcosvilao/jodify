@@ -217,7 +217,8 @@ const linkScrap = async (link) => {
         });
       }
 
-      const date = new Date(dateText);
+      const date = new Date(dateText + "T12:00:00");
+
       const options = {
         day: "2-digit", // Día en dos dígitos
         month: "2-digit", // Mes en dos dígitos
