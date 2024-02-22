@@ -262,7 +262,6 @@ function CreateFormPage() {
             link: valueInput,
           })
           .then((res) => {
-            console.log(res.data);
             if (valueInput.includes("passline")) {
               setDatePupeteer(res.data.date);
               setDataPost((prevDataPost) => ({
