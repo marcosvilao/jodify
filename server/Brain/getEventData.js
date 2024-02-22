@@ -24,7 +24,7 @@ const linkScrap = async (link) => {
         "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
       headless: true,
     });
-    */
+   */
 
     const page = await browser.newPage();
     await page.setUserAgent(
@@ -243,8 +243,9 @@ const linkScrap = async (link) => {
 
       let fechaFormateada = fecha.format("MM-DD-YYYY");
 
-      console.log(`Fecha del scrapping: ${newDateText}`);
+      console.log(`Fecha del scrapping: ${dateText}`);
       console.log(`Fecha preparada para formatear: ${newDateText}`);
+      console.log(`Fecha moments: ${fecha}`);
       console.log(`Fecha formateada: ${fechaFormateada}`);
 
       return {
