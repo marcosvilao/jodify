@@ -9,7 +9,6 @@ const linkScrap = async (link) => {
   let browser = null;
   try {
     // DEPLOY
-
     browser = await puppeteer.launch({
       args: chromium.args,
       defaultViewport: chromium.defaultViewport,
@@ -17,6 +16,7 @@ const linkScrap = async (link) => {
       headless: chromium.headless,
       ignoreHTTPSErrors: true,
     });
+
     // LOCAL
     /*
     browser = await puppeteer.launch({
