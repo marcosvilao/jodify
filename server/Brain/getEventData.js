@@ -139,7 +139,7 @@ const linkScrap = async (link) => {
       let tittle = "";
 
       try {
-        await page.waitForSelector(".jss48", { timeout: 5000 });
+        await page.waitForSelector(".descriptionImage", { timeout: 5000 });
         await page.waitForSelector(".jss49", { timeout: 5000 });
         await page.waitForSelector(".jss51", { timeout: 5000 });
 
@@ -169,7 +169,7 @@ const linkScrap = async (link) => {
         location = results1.location;
 
         jpgImgSrc = await page.evaluate(() => {
-          const imgElement = document.querySelector(".jss48");
+          const imgElement = document.querySelector(".descriptionImage");
           return imgElement && imgElement.src.toLowerCase().endsWith(".jpg")
             ? imgElement.src
             : "";
@@ -180,7 +180,7 @@ const linkScrap = async (link) => {
           error.message
         );
 
-        await page.waitForSelector("img", { timeout: 5000 });
+        await page.waitForSelector(".descriptionImage", { timeout: 5000 });
         await page.waitForSelector(".jss97", { timeout: 5000 });
         await page.waitForSelector(".jss95", { timeout: 5000 });
 
@@ -217,9 +217,20 @@ const linkScrap = async (link) => {
         });
       }
 
+      const date = new Date(dateText);
+      const options = {
+        day: "2-digit", // Día en dos dígitos
+        month: "2-digit", // Mes en dos dígitos
+        year: "numeric", // Año en formato numérico
+        timeZone: "America/Argentina/Buenos_Aires",
+      };
+
+      const formateDate = date.toLocaleDateString("es-AR", options);
+      console.log(formateDate);
+
       return {
         image: jpgImgSrc,
-        date: dateText,
+        date: formateDate,
         location: location,
         tittle: tittle,
       };

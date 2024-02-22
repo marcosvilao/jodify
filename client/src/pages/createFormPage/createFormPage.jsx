@@ -262,6 +262,7 @@ function CreateFormPage() {
             link: valueInput,
           })
           .then((res) => {
+            console.log(res.data);
             if (valueInput.includes("passline")) {
               setDatePupeteer(res.data.date);
               setDataPost((prevDataPost) => ({
@@ -274,33 +275,15 @@ function CreateFormPage() {
               }));
               setLoaderPupeteer(false);
             } else if (valueInput.includes("venti")) {
-              const fechaOriginal = res.data.date;
-              console.log(fechaOriginal);
+              console.log(res.data.date);
 
-              const partesFecha = fechaOriginal.split("/");
-
-              const mes =
-                partesFecha[0].length === 1
-                  ? `0${partesFecha[0]}`
-                  : partesFecha[0];
-
-              const dia =
-                partesFecha[1].length === 1
-                  ? `0${partesFecha[1]}`
-                  : partesFecha[1];
-
-              const año = partesFecha[2];
-
-              const fechaFormateada = `${mes}/${dia}/${año}`;
-              console.log(fechaFormateada);
-
-              setDatePupeteer(fechaFormateada);
+              setDatePupeteer(res.data.date);
               setDataPost((prevDataPost) => ({
                 ...prevDataPost,
                 event_location: res.data.location,
                 event_image: res.data.image,
                 ticket_link: valueInput,
-                event_date: fechaFormateada,
+                event_date: res.data.date,
                 event_title: res.data.tittle,
               }));
               setLoaderPupeteer(false);
