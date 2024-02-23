@@ -262,7 +262,6 @@ function CreateFormPage() {
             link: valueInput,
           })
           .then((res) => {
-            console.log(res.data);
             if (valueInput.includes("passline")) {
               setDatePupeteer(res.data.date);
               setDataPost((prevDataPost) => ({
@@ -275,15 +274,27 @@ function CreateFormPage() {
               }));
               setLoaderPupeteer(false);
             } else if (valueInput.includes("venti")) {
-              console.log(res.data.date);
+              let fecha = res.data.date;
+              let horario = res.data.horario.split(":");
+              let horas = horario[0];
 
-              setDatePupeteer(res.data.date);
+              if (horas >= 21) {
+                let splitFecha = fecha.split("-");
+                fecha = `${splitFecha[0]}-${splitFecha[1] - 1}-${
+                  splitFecha[2]
+                }`;
+              }
+
+              console.log(horas);
+              console.log(fecha);
+
+              setDatePupeteer(fecha);
               setDataPost((prevDataPost) => ({
                 ...prevDataPost,
                 event_location: res.data.location,
                 event_image: res.data.image,
                 ticket_link: valueInput,
-                event_date: res.data.date,
+                event_date: fecha,
                 event_title: res.data.tittle,
               }));
               setLoaderPupeteer(false);
