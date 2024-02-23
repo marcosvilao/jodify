@@ -13,3 +13,11 @@
   transform: translateY(-50%);
   cursor: pointer;
 }
+
+.icon2 {
+  position: absolute;
+  color: #ffffff;
+  right: 10px;
+  top: 54%;
+  cursor: pointer;
+}
