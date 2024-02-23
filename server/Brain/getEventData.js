@@ -17,14 +17,14 @@ const linkScrap = async (link) => {
       ignoreHTTPSErrors: true,
     });
 
-    // LOCAL
     /*
+    // LOCAL
     browser = await puppeteer.launch({
       executablePath:
         "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
       headless: true,
     });
-   */
+    */
 
     const page = await browser.newPage();
     await page.setUserAgent(
@@ -141,11 +141,12 @@ const linkScrap = async (link) => {
       let location = "";
       let jpgImgSrc = "";
       let tittle = "";
+      let horario = "";
 
       try {
-        await page.waitForSelector(".descriptionImage", { timeout: 5000 });
-        await page.waitForSelector(".jss49", { timeout: 5000 });
-        await page.waitForSelector(".jss51", { timeout: 5000 });
+        await page.waitForSelector(".descriptionImage", { timeout: 10000 });
+        await page.waitForSelector(".jss49", { timeout: 10000 });
+        await page.waitForSelector(".jss51", { timeout: 10000 });
 
         let divTittle = await page.$(".jss49");
 
@@ -157,20 +158,26 @@ const linkScrap = async (link) => {
           const elements = Array.from(document.querySelectorAll(".jss51"));
           let dateText = "";
           let location = "";
+          let horario = "";
 
           elements.forEach((element) => {
             if (element.querySelector('svg[data-testid="EventIcon"]')) {
               dateText = element.textContent.trim();
             } else if (element.querySelector('svg[data-testid="PlaceIcon"]')) {
               location = element.textContent.trim();
+            } else if (
+              element.querySelector('svg[data-testid="AccessTimeIcon"]')
+            ) {
+              horario = element.textContent.trim();
             }
           });
 
-          return { dateText, location };
+          return { dateText, location, horario };
         });
 
         dateText = results1.dateText;
         location = results1.location;
+        horario = results1.horario;
 
         jpgImgSrc = await page.evaluate(() => {
           const imgElement = document.querySelector(".descriptionImage");
@@ -184,9 +191,9 @@ const linkScrap = async (link) => {
           error.message
         );
 
-        await page.waitForSelector(".descriptionImage", { timeout: 5000 });
-        await page.waitForSelector(".jss97", { timeout: 5000 });
-        await page.waitForSelector(".jss95", { timeout: 5000 });
+        await page.waitForSelector(".descriptionImage", { timeout: 10000 });
+        await page.waitForSelector(".jss97", { timeout: 10000 });
+        await page.waitForSelector(".jss95", { timeout: 10000 });
 
         let divTittle = await page.$(".jss95");
 
@@ -198,20 +205,26 @@ const linkScrap = async (link) => {
           const elements = Array.from(document.querySelectorAll(".jss97"));
           let dateText = "";
           let location = "";
+          let horario = "";
 
           elements.forEach((element) => {
             if (element.querySelector('svg[data-testid="EventIcon"]')) {
               dateText = element.textContent.trim();
             } else if (element.querySelector('svg[data-testid="PlaceIcon"]')) {
               location = element.textContent.trim();
+            } else if (
+              element.querySelector('svg[data-testid="AccessTimeIcon"]')
+            ) {
+              horario = element.textContent.trim();
             }
           });
 
-          return { dateText, location };
+          return { dateText, location, horario };
         });
 
         dateText = results2.dateText;
         location = results2.location;
+        horario = results2.horario;
 
         jpgImgSrc = await page.evaluate(() => {
           const imgElement = document.querySelector(".descriptionImage");
@@ -227,7 +240,7 @@ const linkScrap = async (link) => {
       var yearMoment = parts[2];
 
       if (parts[0].length === 1) {
-        mesMoment = `0${parts[0]}`;
+        mesMoment = `0${parts[1]}`;
       } else {
         mesMoment = `${parts[0]}`;
       }
@@ -238,9 +251,8 @@ const linkScrap = async (link) => {
         dayMoment = `${parts[1]}`;
       }
 
-      const newDateText = `${yearMoment}-${mesMoment}-${dayMoment}T12:00:00Z`;
+      const newDateText = `${yearMoment}-${mesMoment}-${dayMoment}`;
       let fecha = moment(newDateText);
-
       let fechaFormateada = fecha.format("MM-DD-YYYY");
 
       console.log(`Fecha del scrapping: ${dateText}`);
@@ -253,6 +265,7 @@ const linkScrap = async (link) => {
         date: fechaFormateada,
         location: location,
         tittle: tittle,
+        horario: horario,
       };
     }
   } catch (error) {
