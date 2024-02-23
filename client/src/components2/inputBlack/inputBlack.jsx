@@ -163,6 +163,7 @@ function InputBlack(props) {
           }}
         >
           <TextField
+            onClick={props.OnClick}
             label={props.Label}
             variant={props.Variant ? props.Variant : "filled"}
             className={styles.inputBlack}
