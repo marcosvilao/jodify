@@ -240,7 +240,7 @@ const linkScrap = async (link) => {
       var yearMoment = parts[2];
 
       if (parts[0].length === 1) {
-        mesMoment = `0${parts[1]}`;
+        mesMoment = `0${parts[0]}`;
       } else {
         mesMoment = `${parts[0]}`;
       }
