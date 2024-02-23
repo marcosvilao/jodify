@@ -278,7 +278,7 @@ function CreateFormPage() {
               let horario = res.data.horario.split(":");
               let horas = horario[0];
 
-              if (horas >= 21) {
+              if (horas === "00" || horas === "01" || horas === "02") {
                 let splitFecha = fecha.split("-");
                 fecha = `${splitFecha[0]}-${splitFecha[1] - 1}-${
                   splitFecha[2]
