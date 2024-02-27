@@ -230,8 +230,6 @@ function CustomDatePicker(props) {
     }
   }, [props.InitialDate]);
 
-  console.log(valueSelectedDate);
-
   if (!valueSelectedDate) {
     return (
       <ThemeProvider theme={themeWithError}>
