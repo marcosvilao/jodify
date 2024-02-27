@@ -9,6 +9,7 @@ const linkScrap = async (link) => {
   let browser = null;
   try {
     // DEPLOY
+
     browser = await puppeteer.launch({
       args: chromium.args,
       defaultViewport: chromium.defaultViewport,
@@ -17,8 +18,8 @@ const linkScrap = async (link) => {
       ignoreHTTPSErrors: true,
     });
 
-    /*
     // LOCAL
+    /*
     browser = await puppeteer.launch({
       executablePath:
         "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
@@ -46,8 +47,98 @@ const linkScrap = async (link) => {
       };
     }
 
-    if (link.includes("passline")) {
-      await page.waitForSelector("img", { timeout: 5000 });
+    if (link.includes("ticketpass")) {
+      await page.waitForSelector("img", { timeout: 10000 }); // Espera hasta 10 segundos.
+      let dateText = "";
+      let tittle = "";
+      let location = "";
+
+      const sectionTittleFecha = await page.$(".event-card__container-title");
+      const sectionLocation = await page.$(".event-card__tag-location");
+
+      if (sectionTittleFecha) {
+        try {
+          tittle = await sectionTittleFecha.$eval("h3", (h3) =>
+            h3.textContent.trim()
+          );
+
+          dateText = await sectionTittleFecha.$eval("h6", (h6) =>
+            h6.textContent.trim()
+          );
+
+          var partes = dateText.split(" ");
+          console.log(partes);
+          var dia = partes[1];
+          var mes = partes[3].toLowerCase();
+          var año = partes[4];
+
+          var meses = {
+            enero: "01",
+            febrero: "02",
+            marzo: "03",
+            abril: "04",
+            mayo: "05",
+            junio: "06",
+            julio: "07",
+            agosto: "08",
+            septiembre: "09",
+            octubre: "10",
+            noviembre: "11",
+            dateTexticiembre: "12",
+          };
+
+          var mesNumero = meses[mes];
+          var fechaFormateada = mesNumero + "-" + dia + "-" + año;
+
+          dateText = fechaFormateada;
+        } catch (error) {
+          tittle = "";
+          dateText = "";
+          console.log(error);
+        }
+      }
+
+      if (sectionLocation) {
+        try {
+          location = await sectionLocation.evaluate((p) =>
+            p.textContent.trim()
+          );
+        } catch (error) {
+          location = "";
+          console.log(error);
+        }
+      }
+
+      try {
+        var imageSrc = await page.evaluate(() => {
+          const imgElements = Array.from(document.querySelectorAll("img"));
+          for (const img of imgElements) {
+            const src = img.getAttribute("src");
+            if (src && src.includes("cloudfront.net")) {
+              // Buscar una imagen que contenga "cloudfront.net" en su URL
+              // Si la URL ya es absoluta y contiene el dominio deseado, devuélvela directamente
+              return src.startsWith("http")
+                ? src
+                : `https://www.ticketpass.com.ar${src}`;
+            }
+          }
+          return "";
+        });
+      } catch (error) {
+        imageSrc = "";
+        console.error(error);
+      }
+
+      const result = {
+        image: imageSrc || "",
+        date: dateText || "",
+        location: location || "",
+        tittle: tittle || "",
+      };
+
+      return result;
+    } else if (link.includes("passline")) {
+      await page.waitForSelector("img", { timeout: 10000 });
 
       let dateText = "";
       let tittle = "";
