@@ -209,8 +209,8 @@ function HomePage() {
               key={index}
               Tittle={event.event_djs}
               SecondTittle={event.event_title}
-              Img={event.event_image}
-              Location={event.event_location}
+              Img={event.image_url}
+              Location={event.venue}
               Genre={event.event_type}
               OnClick={() => onClickEventCard(event)}
             />
@@ -562,10 +562,10 @@ function HomePage() {
     }));
     let arrayTypes = filter.types;
 
-    if (arrayTypes.includes(item.type_name)) {
-      arrayTypes = arrayTypes.filter((type) => type !== item.type_name);
+    if (arrayTypes.includes(item.id)) {
+      arrayTypes = arrayTypes.filter((type) => type !== item.id);
     } else {
-      arrayTypes.push(item.type_name);
+      arrayTypes.push(item.id);
     }
 
     setFilter(() => ({

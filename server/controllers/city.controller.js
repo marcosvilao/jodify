@@ -2,7 +2,7 @@ const pool = require('../db');
 
 const getCities = async (req, res, next) => {
     try {
-        const allCities = await pool.query('SELECT * FROM city ORDER BY city_name ASC');
+        const allCities = await pool.query('SELECT * FROM cities ORDER BY city_name ASC');
         
         if (allCities.rows.length > 0) {
             res.status(200).json(allCities.rows);

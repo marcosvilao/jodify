@@ -35,10 +35,10 @@ function CreateFormPage() {
   const [dataPost, setDataPost] = useState({
     event_title: "",
     event_type: [],
-    event_date: "",
-    event_location: "",
+    date_from: "",
+    venue: "",
     ticket_link: "",
-    event_image: "",
+    image_url: "",
     event_djs: [],
     event_city: "",
     event_promoter: [],
@@ -67,7 +67,7 @@ function CreateFormPage() {
         .then((res) => {
           const arrayTypes = [];
           res.data.map((type) => {
-            arrayTypes.push({ value: type.type_name });
+            arrayTypes.push({ value: type.name });
           });
           setTypes(arrayTypes);
         })
@@ -225,7 +225,7 @@ function CreateFormPage() {
       const formattedDate = dayjs(event).format("YYYY-MM-DD");
       setDataPost({
         ...dataPost,
-        event_date: formattedDate,
+        date_from: formattedDate,
       });
     };
 
@@ -234,7 +234,7 @@ function CreateFormPage() {
         setErrorEnlace("");
       }
 
-      if (e.target.name === "event_location" && errorDireccion) {
+      if (e.target.name === "venue" && errorDireccion) {
         setErrorDireccion("");
       }
 
@@ -251,7 +251,7 @@ function CreateFormPage() {
         setErrorEnlace("");
       }
 
-      if (e.target.name === "event_location" && errorDireccion) {
+      if (e.target.name === "venue" && errorDireccion) {
         setErrorDireccion("");
       }
 
@@ -266,10 +266,10 @@ function CreateFormPage() {
               setDatePupeteer(res.data.date);
               setDataPost((prevDataPost) => ({
                 ...prevDataPost,
-                event_location: res.data.location,
-                event_image: res.data.image,
+                venue: res.data.location,
+                image_url: res.data.image,
                 ticket_link: valueInput,
-                event_date: res.data.date,
+                date_from: res.data.date,
                 event_title: res.data.title,
               }));
               setLoaderPupeteer(false);
@@ -277,10 +277,10 @@ function CreateFormPage() {
               setDatePupeteer(res.data.date);
               setDataPost((prevDataPost) => ({
                 ...prevDataPost,
-                event_location: res.data.location,
-                event_image: res.data.image,
+                venue: res.data.location,
+                image_url: res.data.image,
                 ticket_link: valueInput,
-                event_date: res.data.date,
+                date_from: res.data.date,
                 event_title: res.data.title,
               }));
               setLoaderPupeteer(false);
@@ -289,8 +289,8 @@ function CreateFormPage() {
               setLoaderPupeteer(false);
               setDataPost({
                 ...dataPost,
-                event_location: "",
-                event_image: "",
+                venue: "",
+                image_url: "",
                 event_title: "",
                 ticket_link: valueInput,
               });
@@ -301,8 +301,8 @@ function CreateFormPage() {
             setLoaderPupeteer(false);
             setDataPost({
               ...dataPost,
-              event_location: "",
-              event_image: "",
+              venue: "",
+              image_url: "",
               event_title: "",
               ticket_link: valueInput,
             });
@@ -314,16 +314,16 @@ function CreateFormPage() {
       setSubmitLoader(true);
       if (
         dataPost.event_type.length === 0 ||
-        dataPost.event_date.length === 0 ||
-        dataPost.event_location.length === 0 ||
+        dataPost.date_from.length === 0 ||
+        dataPost.venue.length === 0 ||
         dataPost.ticket_link.length === 0 ||
-        dataPost.event_image.length === 0 ||
+        dataPost.image_url.length === 0 ||
         dataPost.event_djs.length === 0 ||
         dataPost.event_city.length === 0
       ) {
         Alert("Error!", "Completar todos los campos", "error");
         setSubmitLoader(false);
-        if (dataPost.event_location.length === 0) {
+        if (dataPost.venue.length === 0) {
           setErrorDireccion("Completar campo");
         }
 
@@ -343,11 +343,11 @@ function CreateFormPage() {
           setErrorGeneros("Completar campo");
         }
 
-        if (dataPost.event_date.length === 0) {
+        if (dataPost.date_from.length === 0) {
           setErrorFecha("Completar campo");
         }
 
-        if (dataPost.event_image.length === 0) {
+        if (dataPost.image_url.length === 0) {
           setErrorFile("Completar campo");
         }
       } else {
@@ -392,7 +392,7 @@ function CreateFormPage() {
                 : data.url;
               setDataPost((dataPost) => ({
                 ...dataPost,
-                event_image: secureUrl,
+                image_url: secureUrl,
               }));
               setLoader(false);
               setErrorFile("");
@@ -468,10 +468,10 @@ function CreateFormPage() {
 
           <div className={styles.containerCard}>
             <EventCard
-              Img={dataPost.event_image}
+              Img={dataPost.image_url}
               SecondTittle={dataPost.event_title}
               Tittle={dataPost.event_djs}
-              Location={dataPost.event_location}
+              Location={dataPost.venue}
               Genre={dataCardType}
               OnClick={onClickEventCard}
               Color="#AE71F9"
@@ -522,14 +522,14 @@ function CreateFormPage() {
             >
               <InputFile
                 OnClick={handleFileChange}
-                File={dataPost.event_image}
+                File={dataPost.image_url}
                 Margin="32px 0px 0px 0px"
                 Error={errorFile}
               />
               <InputOutlined
                 OnChange={onChangeDataInput}
-                Name="event_image"
-                Value={dataPost.event_image}
+                Name="image_url"
+                Value={dataPost.image_url}
                 Placeholder="https://res.cloudinary.com/dqc865z8r/image/upload/v1706719017/lxfzhxfzenjfp"
                 Label="Url imagen"
                 Error={errorDireccion}
@@ -577,8 +577,8 @@ function CreateFormPage() {
             <div>
               <InputOutlined
                 OnChange={onChangeDataInput}
-                Name="event_location"
-                Value={dataPost.event_location}
+                Name="venue"
+                Value={dataPost.venue}
                 Placeholder="ej. Av. Libertador 2647 (Beccar)"
                 Label="Ubicacion"
                 Error={errorDireccion}
