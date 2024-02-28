@@ -68,7 +68,7 @@ function Footer() {
         </div>
 
         <p className={styles.terminos} onClick={onClickTerminosYCondiciones}>
-          Terminos y Condiciones
+          Términos y condiciones
         </p>
       </div>
     </div>
