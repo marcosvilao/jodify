@@ -479,6 +479,7 @@ function CreateEventPage() {
               Location={dataPost.event_location}
               Genre={dataCardType}
               Color="#AE71F9"
+              Link="Default"
             />
           </div>
 
@@ -568,6 +569,7 @@ function CreateEventPage() {
               Location={dataPost.event_location}
               Genre={dataCardType}
               Color="#AE71F9"
+              Link="Default"
             />
           </div>
 

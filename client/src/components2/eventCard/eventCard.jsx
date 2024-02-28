@@ -10,7 +10,12 @@ function EventCard(props) {
   }
 
   return (
-    <a className={styles.body} onClick={props.OnClick} id="eventCard">
+    <a
+      className={styles.body}
+      onClick={props.OnClick}
+      id="eventCard"
+      style={{ cursor: props.Link ? "default" : "pointer" }}
+    >
       {!props.Img ? (
         <div className={styles.dontImgContainer}>
           <p style={{ fontSize: "16px", margin: "0px" }}>Img</p>
