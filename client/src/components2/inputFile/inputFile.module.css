@@ -31,28 +31,38 @@
   justify-content: center;
   cursor: pointer;
   gap: 5px;
-  font-size: 16px;
+}
+
+.inputFileContainer label span {
+  font-size: 12px;
 }
 
 .inputFileContainer input {
   display: none;
 }
 
-.inputFileContainer p {
-  font-size: 12px;
-  margin: 0px;
-  width: 50%;
-  word-wrap: break-word;
-}
-
-.containerSeleccionado {
+.containerRigth {
   width: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: lightgray;
+  padding: 0px 5px;
+  box-sizing: border-box;
+}
+
+.containerRigth p {
+  font-size: 17px;
+  margin: 0px;
+  word-wrap: break-word;
 }
 
 .dondeIcon {
   margin-left: 5px;
+  color: green;
+}
+
+@media screen and (max-width: 400px){
+  .containerRigth p {
+    font-size: 15px;
+  }
 }
