@@ -341,7 +341,7 @@ function CreateEventPage() {
         dataPost.event_image.length === 0 ||
         dataPost.event_city.length === 0
       ) {
-        Alert("Error!", "Completar todos los campos", "error");
+        Alert("", "Completar todos los campos", "");
         setSubmitLoader(false);
         if (dataPost.event_location.length === 0) {
           setErrorDireccion("Completar campo");
