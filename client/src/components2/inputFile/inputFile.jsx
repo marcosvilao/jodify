@@ -20,19 +20,19 @@ function InputFile(props) {
       <div
         className={styles.inputFileContainer}
         style={{
-          border: props.File
-            ? "2px dashed lightgray"
-            : props.Error
-            ? "2px dashed #FF5353"
-            : "2px dashed #ffffff",
+          border: props.Error ? "2px dashed #FF5353" : "2px dashed #ffffff",
         }}
       >
         <label
           for="seleccionar-archivo"
           style={{ color: props.Error ? "#FF5353" : "#AE71F9" }}
         >
-          <FileUploadIcon />
-          <span>Seleccionar Archivo</span>
+          <FileUploadIcon style={{ width: "17px", height: "17px", marginTop: "1.5px" }} />
+          {props.File === "" ? (
+            <span>Seleccionar Archivo</span>
+          ) : (
+            <span>Cambiar Archivo</span>
+          )}
         </label>
         <input
           id="seleccionar-archivo"
@@ -41,10 +41,12 @@ function InputFile(props) {
         />
 
         {props.File === "" ? (
-          <p>Ningun archivo seleccionado</p>
+          <div className={styles.containerRigth}>
+            <p>Ningun archivo seleccionado</p>
+          </div>
         ) : (
-          <div className={styles.containerSeleccionado}>
-            <p>Archivo seleccionado</p>
+          <div className={styles.containerRigth}>
+            <p style={{ color: "green" }}>Archivo seleccionado</p>
             <DoneIcon className={styles.dondeIcon} />
           </div>
         )}
