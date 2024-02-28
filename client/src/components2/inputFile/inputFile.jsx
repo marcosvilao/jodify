@@ -46,7 +46,7 @@ function InputFile(props) {
           </div>
         ) : (
           <div className={styles.containerRigth}>
-            <p style={{ color: "green" }}>Archivo seleccionado</p>
+            <p style={{ color: "#5BDF80" }}>Archivo seleccionado</p>
             <DoneIcon className={styles.dondeIcon} />
           </div>
         )}
