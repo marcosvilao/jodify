@@ -324,7 +324,7 @@ function CreateEventPage() {
               setLoader(false);
             });
         } else {
-          Alert("Error!", "El archivo seleccionado no es una imagen", "error");
+          Alert("", "El archivo seleccionado no es una imagen", "");
           setDataPost((dataPost) => ({
             ...dataPost,
             event_image: "",

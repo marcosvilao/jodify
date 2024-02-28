@@ -311,7 +311,7 @@ function CreateFormPage() {
               }));
               setLoaderPupeteer(false);
             } else {
-              Alert("Error!", "Error en el link proporcionado", "error");
+              Alert("", "El link proporcionado es incorrecto", "");
               setLoaderPupeteer(false);
               setDatePupeteer("");
               setDataPost((prevDataPost) => ({
@@ -351,7 +351,7 @@ function CreateFormPage() {
         dataPost.event_djs.length === 0 ||
         dataPost.event_city.length === 0
       ) {
-        Alert("Error!", "Completar todos los campos", "error");
+        Alert("", "Completar todos los campos", "");
         setSubmitLoader(false);
         if (dataPost.event_location.length === 0) {
           setErrorDireccion("Completar campo");
