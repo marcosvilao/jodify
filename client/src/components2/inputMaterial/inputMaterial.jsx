@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./inputFilled.module.css";
+import styles from "./inputMaterial.module.css";
 import TextField from "@mui/material/TextField";
 import { outlinedInputClasses } from "@mui/material/OutlinedInput";
 import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
@@ -101,7 +101,7 @@ const customTheme = (outerTheme, hasError) =>
     },
   });
 
-function InputBlack(props) {
+function InputMaterial(props) {
   const outerTheme = useTheme();
   const hasError = props.Error !== "" && props.Error;
 
@@ -185,6 +185,6 @@ function InputBlack(props) {
   }
 }
 
-export default InputBlack;
+export default InputMaterial;
 
 //   variant="outlined" variant="filled"

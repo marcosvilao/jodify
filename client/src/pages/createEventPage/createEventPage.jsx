@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import styles from "./createEventPage.module.css";
-import SelectBlack from "../../components2/selectBlack/selectBlack";
+import SelectMaterial from "../../components2/selectMaterial/selectMaterial";
 import Button from "../../components2/ButtonCreateEvents/button";
 import axios from "axios";
 import Loader from "../../components2/loader/loader";
@@ -9,7 +9,7 @@ import Alert from "../../components2/alert/alert";
 import EventCard from "../../components2/eventCard/eventCard";
 import InputFile from "../../components2/inputFile/inputFile";
 import DatePicker from "../../components2/datePicker/datePicker";
-import InputOutlined from "../../components2/inputBlack/inputBlack";
+import InputOutlined from "../../components2/inputMaterial/inputMaterial";
 import { useNavigate } from "react-router-dom";
 
 function CreateEventPage() {
@@ -418,7 +418,7 @@ function CreateEventPage() {
             </div>
           </div>
 
-          <SelectBlack
+          <SelectMaterial
             Option="Lugar del evento"
             Array={cities}
             OnChange={onChangeEventCity}
@@ -542,7 +542,7 @@ function CreateEventPage() {
             entrada
           </p>
 
-          <SelectBlack
+          <SelectMaterial
             Option="Ingresá los géneros musicales del evento"
             Array={types}
             OnChange={onChangeEventType}
@@ -550,7 +550,7 @@ function CreateEventPage() {
             Error={errorGeneros}
           />
 
-          <SelectBlack
+          <SelectMaterial
             Option="Ingresá el line up del evento"
             Array={djs}
             OnChange={onChangeEventDjs}

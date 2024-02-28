@@ -5,11 +5,11 @@ import dayjs from "dayjs";
 import Alert from "../../components2/alert/alert";
 import EventCard from "../../components2/eventCard/eventCard";
 import Loader from "../../components2/loader/loader";
-import SelectBlack from "../../components2/selectBlack/selectBlack";
+import SelectMaterial from "../../components2/selectMaterial/selectMaterial";
 import Button from "../../components2/ButtonCreateEvents/button";
 import InputFile from "../../components2/inputFile/inputFile";
 import DatePicker from "../../components2/datePicker/datePicker";
-import InputOutlined from "../../components2/inputBlack/inputBlack";
+import InputOutlined from "../../components2/inputMaterial/inputMaterial";
 
 function CreateFormPage() {
   const axiosUrl = process.env.REACT_APP_AXIOS_URL;
@@ -632,7 +632,7 @@ function CreateFormPage() {
             </div>
           )}
 
-          <SelectBlack
+          <SelectMaterial
             Option="Ciudad"
             Array={cities}
             OnChange={onChangeEventCity}
@@ -642,7 +642,7 @@ function CreateFormPage() {
           />
           <p>Selecciona la ciudad donde figurara el evento</p>
 
-          <SelectBlack
+          <SelectMaterial
             Option="Productora"
             Array={promoters}
             OnChange={onChangeEventPromoters}
@@ -650,7 +650,7 @@ function CreateFormPage() {
           />
           <p>Selecciona su productora</p>
 
-          <SelectBlack
+          <SelectMaterial
             Option="Line up"
             Array={djs}
             OnChange={onChangeEventDjs}
@@ -659,7 +659,7 @@ function CreateFormPage() {
           />
           <p>Incluye los djs que tocaran</p>
 
-          <SelectBlack
+          <SelectMaterial
             Option="Géneros musicales"
             Array={types}
             OnChange={onChangeEventType}
