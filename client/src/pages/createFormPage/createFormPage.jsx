@@ -468,7 +468,7 @@ function CreateFormPage() {
 
     const onClickEventCard = () => {
       if (dataPost.ticket_link === "") {
-        Alert("Error!", "Completar el campo de Link de Venta", "error");
+        Alert("", "Completar el campo de Link de Venta", "");
       } else {
         let fullUrl;
         if (dataPost.ticket_link.startsWith("https://")) {
