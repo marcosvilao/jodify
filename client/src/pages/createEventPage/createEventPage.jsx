@@ -375,6 +375,8 @@ function CreateEventPage() {
 
       formOne.style.display = "flex";
       formTwo.style.display = "none";
+
+      window.scroll(0, 0);
     };
 
     const cleanEvent = () => {
