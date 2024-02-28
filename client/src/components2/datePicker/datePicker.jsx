@@ -9,7 +9,7 @@ import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import styles from "./datePicker.module.css";
 import dayjs from "dayjs";
-import InputOutlined from "../../components2/inputBlack/inputBlack";
+import InputOutlined from "../inputMaterial/inputMaterial";
 
 const customTheme = (outerTheme, hasError) =>
   createTheme({
