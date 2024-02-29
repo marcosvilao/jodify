@@ -496,18 +496,6 @@ function CreateFormPage() {
             <h1>Crea tu evento</h1>
           </div>
 
-          <div className={styles.containerCard}>
-            <EventCard
-              Img={dataPost.event_image}
-              SecondTittle={dataPost.event_title}
-              Tittle={dataPost.event_djs}
-              Location={dataPost.event_location}
-              Genre={dataCardType}
-              OnClick={onClickEventCard}
-              Color="#AE71F9"
-            />
-          </div>
-
           <InputOutlined
             OnChange={onChangeDataInput2}
             Name="ticket_link"
@@ -694,6 +682,18 @@ function CreateFormPage() {
               <Loader Color="#7c16f5" Height="30px" Width="30px" />
             </div>
           )}
+
+          <div className={styles.containerCard}>
+            <EventCard
+              Img={dataPost.event_image}
+              SecondTittle={dataPost.event_title}
+              Tittle={dataPost.event_djs}
+              Location={dataPost.event_location}
+              Genre={dataCardType}
+              OnClick={onClickEventCard}
+              Color="#AE71F9"
+            />
+          </div>
 
           <div className={styles.containerButton}>
             <Button
