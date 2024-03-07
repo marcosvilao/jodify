@@ -214,6 +214,7 @@ function HomePage() {
               Location={event.event_location}
               Genre={event.event_type}
               OnClick={() => onClickEventCard(event)}
+              ID={event.id}
             />
           ))}
         </div>

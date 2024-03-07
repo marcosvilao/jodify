@@ -53,9 +53,10 @@
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: bold;
-  font-size: 15px;
+  font-size: 18px;
   margin: 0px;
   line-height: 1.2;
+  min-height: 30px;
 }
 
 .TittleTwo {
