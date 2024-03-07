@@ -48,7 +48,7 @@ function EventCard(props) {
             style={{
               height: "20px",
               width: "20px",
-              color: props.Color ? props.Color : "#7c16f5",
+              color: props.Color ? props.Color : "#c18fff",
             }}
           />
           {props.Location ? (
@@ -64,7 +64,7 @@ function EventCard(props) {
             style={{
               height: "20px",
               width: "20px",
-              color: props.Color ? props.Color : "#7c16f5",
+              color: props.Color ? props.Color : "#c18fff",
             }}
           />
           {props.Genre ? (

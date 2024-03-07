@@ -1,36 +1,63 @@
 .body {
   width: 100%;
+  height: 50px;
   position: relative;
   margin: 20px 0px 10px 0px;
+  border-radius: 25px;
+  background-clip: padding-box;
+}
+
+.bodyFocused:before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  bottom: -1px;
+  left: -1px;
+  background: linear-gradient(105deg, #7c16f5 40%, #c18fff 100%);
+  border-radius: 25px;
+  z-index: -1;
+  border: none;
 }
 
 .icon {
-  color: #7c16f5;
+  color: #c18fff;
   width: 25px;
   height: 25px;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  left: 10px;
+  left: 15px;
 }
 
 .inputSearch {
   width: 100%;
-  height: 25px;
-  padding: 8px 0px;
+  height: 50px;
   background-color: #1b1c20;
   border: none;
-  border-radius: 8px;
-  text-indent: 50px;
-  color: #ffffff;
+  border-radius: 25px;
+  color: #c18fff;
   font-size: 16px;
+  box-sizing: border-box;
+  padding-left: 50px;
+  padding-right: 15px;
 }
 
 .inputSearch::placeholder {
   font-size: 16px;
-  opacity: 0.7;
+  color: #725e76;
 }
 
 .inputSearch:focus {
-  outline: 1px solid #7c16f5; /* Puedes cambiar "blue" por el color que prefieras */
+  outline: none;
+  background-image: linear-gradient(
+    90deg,
+    #1e1e1e 38.51%,
+    #3b1d61 94.35%,
+    #3b1d61 94.36%
+  );
+}
+
+.inputSearch:focus::placeholder {
+  color: #c18fff;
 }

@@ -5,7 +5,6 @@
   border-radius: 8px;
   display: flex;
   align-items: center;
-  padding: 8px;
   color: #e8dfe9;
   box-sizing: border-box;
   margin: 10px 0px;
@@ -26,7 +25,8 @@
 .containerImg {
   height: 100%;
   min-width: 84px;
-  border-radius: 6.5px;
+  border-top-left-radius: 6.5px;
+  border-bottom-left-radius: 6.5px;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -37,7 +37,7 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding-left: 8px;
+  padding: 8px;
   box-sizing: border-box;
   flex-grow: 1;
   flex-shrink: 1;
@@ -49,11 +49,11 @@
 .Tittle {
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
+  -webkit-line-clamp: 2;
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 15px;
   margin: 0px;
   line-height: 1.2;
 }
@@ -68,7 +68,7 @@
   display: flex;
   width: 100%;
   position: absolute;
-  top: 45px;
+  top: 50px;
   left: 4px;
 }
 
@@ -76,13 +76,12 @@
   display: flex;
   width: 100%;
   position: absolute;
-  top: 65px;
+  top: 70px;
   left: 4px;
 }
 
 .icon {
   margin-right: 5px;
-  color: #7c16f5;
 }
 
 .body .containerData p {
@@ -95,11 +94,6 @@
 }
 
 @media screen and (max-width: 700px) {
-  .Tittle {
-    -webkit-line-clamp: 2;
-    font-size: 15px;
-  }
-
   .TittleTwo {
     font-size: 16px;
   }

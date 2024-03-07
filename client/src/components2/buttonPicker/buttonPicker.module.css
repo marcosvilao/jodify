@@ -1,10 +1,15 @@
 .buttonPicker {
   background-color: #1b1c20;
   border: none;
-  border-radius: 8px;
+  border-radius: 20px;
   height: 38px;
   color: #ffffff;
-  padding: 0px 10px;
+  padding: 0px 15px;
   font-size: 16px;
   cursor: pointer;
+}
+
+.buttonPicker:hover {
+  background-color: transparent;
+  background-image: linear-gradient(90deg, #ea33f7 0%, #7c16f5 100%);
 }
