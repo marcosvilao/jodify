@@ -200,7 +200,7 @@ function HomePage() {
             ref={(el) => (headersRef.current[i] = el)}
             className={styles.stickyHeader}
             style={{
-              fontSize: "24px",
+              fontSize: "31px",
             }}
           >
             {finalFormattedDate}
