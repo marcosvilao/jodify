@@ -16,7 +16,7 @@ function EventCard(props) {
       if (styleH3SecondTittle.height === "30px") {
         h3SecondTittle.style.fontSize = "18px";
       } else if (styleH3SecondTittle.height !== "30px") {
-        h3SecondTittle.style.fontSize = "16px";
+        h3SecondTittle.style.fontSize = "15px";
       }
     }
 
@@ -24,7 +24,7 @@ function EventCard(props) {
     if (h3StringDjs) {
       const styleH3StringDjs = window.getComputedStyle(h3StringDjs);
       if (styleH3StringDjs.height !== "30px") {
-        h3StringDjs.style.fontSize = "16px";
+        h3StringDjs.style.fontSize = "15px";
       } else if (styleH3StringDjs.height === "30px") {
         h3StringDjs.style.fontSize = "18px";
       }
