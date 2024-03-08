@@ -75,9 +75,7 @@ function CheckBoxList({ cityList, typeList, checkedItems, OnClick, OnClose }) {
                       disableRipple
                       inputProps={{ "aria-labelledby": labelId }}
                       sx={{
-                        color: isChecked
-                          ? "#c18fff"
-                          : theme.jodify_colors._text_white,
+                        color: "#c18fff",
                         "&:hover": {
                           color: "#c18fff",
                         },
