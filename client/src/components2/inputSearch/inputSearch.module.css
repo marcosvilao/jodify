@@ -2,7 +2,7 @@
   width: 100%;
   height: 50px;
   position: relative;
-  margin: 20px 0px 10px 0px;
+  margin: 10px 0px 8px 0px;
   border-radius: 25px;
   background-clip: padding-box;
 }
@@ -14,7 +14,7 @@
   right: -1px;
   bottom: -1px;
   left: -1px;
-  background: linear-gradient(105deg, #7c16f5 40%, #c18fff 100%);
+  background: linear-gradient(105deg, #8800ff 10%, #c18fff 100%);
   border-radius: 25px;
   z-index: -1;
   border: none;

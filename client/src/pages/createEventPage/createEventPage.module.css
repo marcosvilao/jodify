@@ -98,7 +98,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-left: 7px;
+  padding: 12px 9px;
+  padding-bottom: 10px;
 }
 
 .form p {

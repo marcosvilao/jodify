@@ -206,16 +206,18 @@ function HomePage() {
             {finalFormattedDate}
           </h1>
           {event[objectName].map((event, index) => (
-            <EventCard
-              key={index}
-              Tittle={event.event_djs}
-              SecondTittle={event.event_title}
-              Img={event.event_image}
-              Location={event.event_location}
-              Genre={event.event_type}
-              OnClick={() => onClickEventCard(event)}
-              ID={event.id}
-            />
+            <div style={{ marginBottom: "12px" }}>
+              <EventCard
+                key={index}
+                Tittle={event.event_djs}
+                SecondTittle={event.event_title}
+                Img={event.event_image}
+                Location={event.event_location}
+                Genre={event.event_type}
+                OnClick={() => onClickEventCard(event)}
+                ID={event.id}
+              />
+            </div>
           ))}
         </div>
       );
@@ -918,7 +920,7 @@ function HomePage() {
         </div>
 
         {dataEventCard.length !== 0 && !loader ? (
-          <div className={styles.containerEventCard}>{elementDivCard}</div>
+          <div className={styles.bodyEventCard}>{elementDivCard}</div>
         ) : null}
 
         {dataEventCard.length === 0 && !loader ? (
