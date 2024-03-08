@@ -4,7 +4,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Checkbox from "@mui/material/Checkbox";
-import { ItemTextList } from "./checkBoxListStyles.js";
+import ListItemText from '@mui/material/ListItemText';
 import theme from "../../jodifyStyles";
 
 function CheckBoxList({ cityList, typeList, checkedItems, OnClick, OnClose }) {
@@ -82,7 +82,7 @@ function CheckBoxList({ cityList, typeList, checkedItems, OnClick, OnClose }) {
                       }}
                     />
                   </ListItemIcon>
-                  <ItemTextList
+                  <ListItemText
                     id={labelId}
                     primary={isCityList ? item.city_name : item.type_name}
                     sx={{
