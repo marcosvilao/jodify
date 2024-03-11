@@ -32,7 +32,7 @@ function CheckBoxList({ cityList, typeList, checkedItems, OnClick, OnClose }) {
       <div
         ref={listRef}
         style={{
-          maxHeight: "300px",
+          maxHeight: "280px",
           overflowY: "auto",
           scrollbarWidth: "thin",
           scrollbarColor: "#0C0C0C #1B1C20",

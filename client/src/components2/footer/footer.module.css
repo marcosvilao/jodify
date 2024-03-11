@@ -33,7 +33,7 @@
   right: 0;
   left: 0;
   height: 2px;
-  background: linear-gradient(90deg, #ea33f7 0%, #7c16f5 100%);
+  background: linear-gradient(105deg, #8800ff 0%, #c18fff 100%);
 }
 
 .containerLeft {
@@ -70,7 +70,7 @@
 
 @media screen and (max-width: 650px) {
   .body {
-    padding: 0px 20px;
+    padding: 0px 10px;
     box-sizing: border-box;
   }
 
