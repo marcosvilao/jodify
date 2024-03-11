@@ -4,7 +4,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Checkbox from "@mui/material/Checkbox";
-import ListItemText from '@mui/material/ListItemText';
+import ListItemText from "@mui/material/ListItemText";
 import theme from "../../jodifyStyles";
 
 function CheckBoxList({ cityList, typeList, checkedItems, OnClick, OnClose }) {
@@ -29,10 +29,17 @@ function CheckBoxList({ cityList, typeList, checkedItems, OnClick, OnClose }) {
 
   const renderListItems = (list, isCityList) => {
     return (
-      <div ref={listRef}>
+      <div
+        ref={listRef}
+        style={{
+          maxHeight: "300px",
+          overflowY: "auto",
+          scrollbarWidth: "thin",
+          scrollbarColor: "#0C0C0C #1B1C20",
+        }}
+      >
         <List
           sx={{
-            color: theme.jodify_colors._text_white,
             width: "200px",
             bgcolor: theme.jodify_colors._background_gray,
             margin: "0 auto",
@@ -48,7 +55,7 @@ function CheckBoxList({ cityList, typeList, checkedItems, OnClick, OnClose }) {
               <ListItem
                 key={index}
                 disablePadding
-                sx={{ marginBottom: "10px", height: "30px" }}
+                sx={{ marginBottom: "0px", height: "35px" }}
               >
                 <ListItemButton
                   sx={{
@@ -59,7 +66,6 @@ function CheckBoxList({ cityList, typeList, checkedItems, OnClick, OnClose }) {
                     "&:hover": {
                       bgcolor: "#000000",
                       "& .MuiCheckbox-root, & .MuiTypography-root": {
-                        color: "#c18fff",
                         transform: "scale(1.1)",
                       },
                     },
@@ -75,7 +81,18 @@ function CheckBoxList({ cityList, typeList, checkedItems, OnClick, OnClose }) {
                       disableRipple
                       inputProps={{ "aria-labelledby": labelId }}
                       sx={{
-                        color: "#c18fff",
+                        color: isChecked ? "#8800ff" : "#c18fff",
+                        "&.Mui-checked": {
+                          color: "#8800ff",
+                          "&:after": {
+                            content: '""',
+                            position: "absolute",
+                            top: "0",
+                            left: "0",
+                            backgroundColor: "#8800ff",
+                            zIndex: "-1",
+                          },
+                        },
                         "&:hover": {
                           color: "#c18fff",
                         },
@@ -107,7 +124,6 @@ function CheckBoxList({ cityList, typeList, checkedItems, OnClick, OnClose }) {
   return (
     <div
       style={{
-        maxHeight: "280px",
         overflowY: "auto",
         position: "absolute",
         zIndex: "3",
