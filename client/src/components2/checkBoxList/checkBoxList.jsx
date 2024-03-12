@@ -63,12 +63,17 @@ function CheckBoxList({ cityList, typeList, checkedItems, OnClick, OnClose }) {
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
+                    color: theme.jodify_colors._text_white,
                     "&:hover": {
+                      color: "#c18fff",
                       bgcolor: "#000000",
                       "& .MuiCheckbox-root, & .MuiTypography-root": {
                         transform: "scale(1.1)",
                       },
                     },
+                    ...(isChecked && {
+                      color: "#c18fff",
+                    }),
                   }}
                   role={undefined}
                   dense
@@ -81,36 +86,13 @@ function CheckBoxList({ cityList, typeList, checkedItems, OnClick, OnClose }) {
                       disableRipple
                       inputProps={{ "aria-labelledby": labelId }}
                       sx={{
-                        color: isChecked ? "#8800ff" : "#c18fff",
-                        "&.Mui-checked": {
-                          color: "#8800ff",
-                          "&:after": {
-                            content: '""',
-                            position: "absolute",
-                            top: "0",
-                            left: "0",
-                            backgroundColor: "#8800ff",
-                            zIndex: "-1",
-                          },
-                        },
-                        "&:hover": {
-                          color: "#c18fff",
-                        },
+                        color: "#C18FFF",
                       }}
                     />
                   </ListItemIcon>
                   <ListItemText
                     id={labelId}
                     primary={isCityList ? item.city_name : item.type_name}
-                    sx={{
-                      color: theme.jodify_colors._text_white,
-                      "&:hover": {
-                        color: "#c18fff",
-                      },
-                      ...(isChecked && {
-                        color: "#c18fff",
-                      }),
-                    }}
                   />
                 </ListItemButton>
               </ListItem>

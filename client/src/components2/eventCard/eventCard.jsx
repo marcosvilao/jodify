@@ -72,8 +72,8 @@ function EventCard(props) {
           <LocationOnIcon
             className={styles.icon}
             style={{
-              height: "20px",
-              width: "20px",
+              height: "18px",
+              width: "18px",
               color: props.Color ? props.Color : "#c18fff",
             }}
           />
@@ -88,8 +88,8 @@ function EventCard(props) {
           <MusicNoteIcon
             className={styles.icon}
             style={{
-              height: "20px",
-              width: "20px",
+              height: "18px",
+              width: "18px",
               color: props.Color ? props.Color : "#c18fff",
             }}
           />
