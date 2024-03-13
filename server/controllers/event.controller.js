@@ -401,107 +401,169 @@ const scrapLink = async (req, res) => {
 const filterEventsNew = async (req, res) => {
   try {
     const { dates, cities, types, search, page } = req.body;
-    console.log({ dates, cities, types, search, page })
+    console.log(types)
+    const mappedTypes = types.map(type => type?.name)
+    const setOff = page * 20;
+    const currentDate = new Date();
+    currentDate.setDate(currentDate.getDate() - 1);
+    const options = { timeZone: "America/Argentina/Buenos_Aires" };
+    const argentinaTime = currentDate.toLocaleString("en-US", options);
 
-    // Assume formatDate returns a string in a format that PostgreSQL can recognize as a date/timestamp
-    const startDate = formatDate(dates[0]);
-    const endDate = formatDate(dates[1]);
-    const offset = page * 20;
-
-
-
-    // Initialize queryParams with cityIds and typeIds
-    const queryParams = [cities, types];
-    let nextParamIndex = 3; // Start from $3 since $1 and $2 are used for cityIds and typeIds
-
-    let additionalConditions = "";
-
-    // Adjust for date condition
-    if (dates.length === 2) {
-      if (startDate === endDate) {
-        additionalConditions += `AND e.date_from = $${nextParamIndex} `;
-        queryParams.push(startDate);
-      } else {
-        additionalConditions += `AND e.date_from BETWEEN $${nextParamIndex} AND $${nextParamIndex + 1} `;
-        queryParams.push(startDate, endDate);
-        nextParamIndex++; // Increment for the additional endDate parameter
-      }
-      nextParamIndex++;
-    }
-
-    // Adjust for search condition
-    if (search) {
-      additionalConditions += `AND (e.name ILIKE $${nextParamIndex} OR d.name ILIKE $${nextParamIndex} OR p.name ILIKE $${nextParamIndex}) `;
-      queryParams.push(`%${search}%`);
-      nextParamIndex++;
-    }
-
-    // Add the OFFSET parameter at the end
-    additionalConditions += `LIMIT 20 OFFSET $${nextParamIndex}`;
-    queryParams.push(offset);
-
-    let queryText = `
-    WITH promoter_priorities AS (
-      SELECT 
-        ep.event_id,
-        MIN(p.priority) AS min_priority
+    let query = `
+    WITH MinPriority AS (
+      SELECT ep.event_id, MIN(p.priority) AS priority
       FROM event_promoters ep
-      JOIN promoters p ON ep.promoter_id = p.id
+      JOIN promoters p ON p.id = ep.promoter_id
       GROUP BY ep.event_id
-    )
+    ), EventDJs AS (
+      SELECT
+          ed.event_id,
+          jsonb_agg(
+              jsonb_build_object(
+                  'id', d.id,
+                  'name', d.name
+              ) ORDER BY d.name ASC
+          ) AS djs
+      FROM event_djs ed
+      JOIN djs d ON d.id = ed.dj_id
+      GROUP BY ed.event_id
+  ), EventTypes AS (
+      SELECT
+          et.event_id,
+          jsonb_agg(
+              jsonb_build_object(
+                  'id', t.id,
+                  'name', t.name
+              ) ORDER BY t.name ASC
+          ) AS types
+      FROM event_types et
+      JOIN types t ON t.id = et.type_id
+      GROUP BY et.event_id
+  )
     SELECT 
-      e.id, 
-      e.name, 
-      e.date_from, 
-      e.venue, 
-      e.ticket_link, 
-      e.image_url, 
-      e.city_id,
-      json_agg(DISTINCT jsonb_build_object('id', d.id, 'name', d.name)) FILTER (WHERE d.id IS NOT NULL) AS djs,
-      json_agg(DISTINCT jsonb_build_object('id', t.id, 'name', t.name)) FILTER (WHERE t.id IS NOT NULL) AS types,
-      json_agg(DISTINCT jsonb_build_object('id', p.id, 'name', p.name, 'instagram', p.instagram, 'priority', p.priority)) FILTER (WHERE p.id IS NOT NULL) AS promoters,
-      pp.min_priority
-    FROM events e
-    LEFT JOIN event_djs ed ON e.id = ed.event_id
-    LEFT JOIN djs d ON ed.dj_id = d.id
+    e.*, 
+    COALESCE(mp.priority, 4) AS min_priority,
+    COALESCE(
+      jsonb_agg(
+        jsonb_build_object(
+          'id', p.id,
+          'name', p.name, 
+          'priority', p.priority, 
+          'instagram', p.instagram
+        ) ORDER BY p.priority ASC
+      ) FILTER (WHERE p.id IS NOT NULL),
+      '[]'
+    ) AS promoters,
+    COALESCE(ed.djs, '[]') AS djs,
+    COALESCE(et.types, '[]') AS types
+    FROM events e 
+    LEFT JOIN MinPriority mp ON e.id = mp.event_id
     LEFT JOIN event_promoters ep ON e.id = ep.event_id
-    LEFT JOIN promoters p ON ep.promoter_id = p.id
-    LEFT JOIN event_types et ON e.id = et.event_id
-    LEFT JOIN types t ON et.type_id = t.id
-    LEFT JOIN promoter_priorities pp ON e.id = pp.event_id
-    WHERE 
-      e.city_id = ANY($1::uuid[])
-      AND t.id = ANY($2::uuid[])
-      AND e.date_from > CURRENT_TIMESTAMP AT TIME ZONE 'America/Argentina/Buenos_Aires'
-      ${additionalConditions}
-    GROUP BY e.id, pp.min_priority 
-    ORDER BY pp.min_priority, e.date_from, e.id
-    `;
+    LEFT JOIN promoters p ON p.id = ep.promoter_id
+    LEFT JOIN EventDJs ed ON e.id = ed.event_id
+    LEFT JOIN EventTypes et ON e.id = et.event_id
+    WHERE TRUE
+  `;
+    const values = [];
 
-    console.log([queryText, queryParams]); // For debugging
-    const result = await pool.query(queryText, queryParams);
+    let paramCount = 1;
+
+    if (dates && dates.length === 2) {
+      const [date1, date2] = dates;
+      const firstDate = formatDate(date1);
+      const secondDate = formatDate(date2);
+      if (firstDate !== secondDate) {
+        query += ` AND e.date_from >= $${paramCount} AND e.date_from <= $${
+          paramCount + 1
+        }`;
+        values.push(firstDate, secondDate);
+        paramCount += 2;
+      } else {
+        query += `AND (e.date_from = $${paramCount})`;
+        values.push(firstDate);
+        paramCount += 1;
+      }
+    } else {
+      query += `AND (e.date_from >= $${paramCount})`;
+      values.push(argentinaTime);
+      paramCount += 1;
+    }
+
+    if (cities && cities.length > 0) {
+      console.log("city exists");
+      const cityPlaceholders = cities
+        .map((_, index) => `$${paramCount + index}`)
+        .join(", ");
+      query += ` AND e.city_id IN (${cityPlaceholders})`;
+      values.push(...cities);
+      paramCount += cities.length;
+    } else {
+      query += " AND (e.city_id IS NULL OR e.city_id = e.city_id)";
+    }
+
+    if (mappedTypes && mappedTypes.length > 0) {
+      const typeConditions = mappedTypes
+        .map((_, index) => `e.event_type ILIKE $${paramCount + index}`)
+        .join(" OR ");
+      query += ` AND (${typeConditions})`;
+      values.push(...mappedTypes.map((t) => `%${t}%`));
+      paramCount += mappedTypes.length;
+    } else {
+      query += " AND (e.event_type IS NULL OR e.event_type = e.event_type)";
+    }
+
+    if (search) {
+      const searchWithoutAccents = removeAccents(search);
+      // Adjust the search condition to include promoters, djs, venue, and event name
+      query += ` AND (
+        unaccent(lower(e.name)) ILIKE unaccent(lower($${paramCount}))
+        OR unaccent(lower(e.venue)) ILIKE unaccent(lower($${paramCount}))
+        OR EXISTS (
+          SELECT 1 FROM event_djs ed
+          JOIN djs dj ON ed.dj_id = dj.id
+          WHERE ed.event_id = e.id AND unaccent(lower(dj.name)) ILIKE unaccent(lower($${paramCount}))
+        )
+        OR EXISTS (
+          SELECT 1 FROM event_promoters ep
+          JOIN promoters p ON ep.promoter_id = p.id
+          WHERE ep.event_id = e.id AND unaccent(lower(p.name)) ILIKE unaccent(lower($${paramCount}))
+        )
+        OR EXISTS (
+          SELECT 1 FROM event_promoters ep
+          JOIN promoters p ON ep.promoter_id = p.id
+          WHERE ep.event_id = e.id AND unaccent(lower(p.name)) ILIKE unaccent(lower($${paramCount}))
+        )
+      )`;
+      values.push(`%${searchWithoutAccents}%`);
+      paramCount++;
+    }
+
+    query += `GROUP BY e.id, mp.priority, ed.djs, et.types ORDER BY e.date_from ASC,mp.priority ASC, e.id ASC LIMIT 20 OFFSET $${paramCount}`;
+    values.push(setOff);
+    console.log(query)
+    console.log(values)
+    const result = await pool.query(query, values);
     const events = result.rows;
 
     const groupedEvents = {};
+
     events.forEach((event) => {
       const eventDate = event.date_from;
       if (groupedEvents[eventDate]) {
         groupedEvents[eventDate].push(event);
-      } else {
-        groupedEvents[eventDate] = [event];
-      }
+      } else groupedEvents[eventDate] = [event];
     });
 
-    const groupedEventsArray = Object.keys(groupedEvents).map(date => ({
+    const groupedEventsArray = Object.keys(groupedEvents).map((date) => ({
       [date]: groupedEvents[date],
     }));
-
     res.status(200).json(groupedEventsArray);
   } catch (error) {
     console.error("Error fetching events:", error);
     res.status(500).json({ error: "An error occurred while fetching events" });
   }
 };
+
 
 
 module.exports = {

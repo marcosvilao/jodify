@@ -50,6 +50,7 @@ function HomePage() {
         .then((res) => {
           const sortArray = res.data;
           sortArray.forEach((dateInfo) => {
+            console.log(dateInfo)
             Object.keys(dateInfo).forEach((date) => {
               dateInfo[date].sort((a, b) => {
                 // Encuentra la prioridad más baja (mayor prioridad) en los promoters de 'a'
@@ -562,10 +563,10 @@ function HomePage() {
     }));
     let arrayTypes = filter.types;
 
-    if (arrayTypes.includes(item.id)) {
-      arrayTypes = arrayTypes.filter((type) => type !== item.id);
+    if (arrayTypes.includes(item)) {
+      arrayTypes = arrayTypes.filter((type) => type !== item);
     } else {
-      arrayTypes.push(item.id);
+      arrayTypes.push(item);
     }
 
     setFilter(() => ({
@@ -851,9 +852,9 @@ function HomePage() {
               <ButtonPickerSelected
                 Value={
                   filter.types.length > 1
-                    ? filter.types[0] + " + " + (filter.types.length - 1)
+                    ? filter.types[0].name + " + " + (filter.types.length - 1)
                     : filter.types.length === 1
-                    ? filter.types[0]
+                    ? filter.types[0].name
                     : "Género"
                 }
                 OnClick={onClickOpenGenero}
