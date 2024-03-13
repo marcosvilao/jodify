@@ -9,27 +9,6 @@ function EventCard(props) {
     stringDjs = props.Tittle.map((objeto) => objeto).join(" | ");
   }
 
-  useEffect(() => {
-    const h3SecondTittle = document.getElementById(`SecondTittle${props.ID}`);
-    const h3StringDjs = document.getElementById(`StringDjs${props.ID}`);
-    
-    if (h3SecondTittle) {
-      const styleH3SecondTittle = window.getComputedStyle(h3SecondTittle);
-      if (styleH3SecondTittle.height === "22px") {
-        h3SecondTittle.style.fontSize = "18px";
-      } else if (styleH3SecondTittle.height !== "30px") {
-        h3SecondTittle.style.fontSize = "15px";
-      }
-    } else if (h3StringDjs) {
-      const styleH3StringDjs = window.getComputedStyle(h3StringDjs);
-      if (styleH3StringDjs.height !== "22px") {
-        h3StringDjs.style.fontSize = "15px";
-      } else if (styleH3StringDjs.height === "30px") {
-        h3StringDjs.style.fontSize = "18px";
-      }
-    }
-  });
-
   return (
     <a
       className={styles.body}
@@ -50,15 +29,11 @@ function EventCard(props) {
 
       <div className={styles.containerData}>
         {props.SecondTittle ? (
-          <h3 className={styles.Tittle} id={`SecondTittle${props.ID}`}>
-            {props.SecondTittle}
-          </h3>
+          <h3 className={styles.Tittle}>{props.SecondTittle}</h3>
         ) : (
           <div>
             {stringDjs ? (
-              <h3 className={styles.Tittle} id={`StringDjs${props.ID}`}>
-                {stringDjs}
-              </h3>
+              <h3 className={styles.Tittle}>{stringDjs}</h3>
             ) : (
               <h3 className={styles.TittleTwo} style={{ opacity: "0.4" }}>
                 Nombre del evento

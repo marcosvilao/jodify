@@ -86,7 +86,10 @@ function CheckBoxList({ cityList, typeList, checkedItems, OnClick, OnClose }) {
                       disableRipple
                       inputProps={{ "aria-labelledby": labelId }}
                       sx={{
-                        color: "#C18FFF",
+                        color: "#c18fff",
+                        "&.Mui-checked": {
+                          color: "#c18fff",
+                        },
                       }}
                     />
                   </ListItemIcon>

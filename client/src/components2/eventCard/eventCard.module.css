@@ -11,8 +11,8 @@
 
 .dontImgContainer {
   height: 100%;
-  min-width: 85px;
-  max-width: 85px;
+  min-width: 100px;
+  max-width: 100px;
   border: 2px dashed #ffffff;
   display: flex;
   align-items: center;
@@ -23,8 +23,8 @@
 
 .containerImg {
   height: 100%;
-  min-width: 85px;
-  max-width: 85px;
+  min-width: 100px;
+  max-width: 100px;
   border-top-left-radius: 6.5px;
   border-bottom-left-radius: 6.5px;
   background-repeat: no-repeat;
@@ -49,31 +49,34 @@
   -webkit-line-clamp: 2;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-weight: bold;
-  font-size: 18px;
+  font-size: 15px;
   line-height: 1.2;
-  min-height: 22px;
   margin: 0px;
   margin-left: 3px;
+  font-weight: 500;
+  padding-bottom: 1px;
 }
 
 .TittleTwo {
-  font-weight: bold;
-  font-size: 22px;
+  font-size: 17px;
   margin: 0px;
   margin-left: 3px;
+  font-weight: 500;
+  padding-bottom: 1px;
 }
 
 .containerPOne {
   display: flex;
+  align-items: center;
   width: 100%;
   margin: 0px;
+  margin-top: 3px;
   margin-bottom: 2px;
-  padding-top: 5px;
 }
 
 .containerPTwo {
   display: flex;
+  align-items: center;
   width: 100%;
   margin: 0px;
 }
@@ -84,15 +87,10 @@
 
 .body .containerData p {
   margin: 0px;
-  font-size: 13px;
+  font-size: 12px;
   opacity: 0-8;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-@media screen and (max-width: 700px) {
-  .TittleTwo {
-    font-size: 16px;
-  }
+  font-weight: 500;
 }
