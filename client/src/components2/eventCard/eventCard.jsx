@@ -11,6 +11,8 @@ function EventCard(props) {
 
   useEffect(() => {
     const h3SecondTittle = document.getElementById(`SecondTittle${props.ID}`);
+    const h3StringDjs = document.getElementById(`StringDjs${props.ID}`);
+    
     if (h3SecondTittle) {
       const styleH3SecondTittle = window.getComputedStyle(h3SecondTittle);
       if (styleH3SecondTittle.height === "22px") {
@@ -18,10 +20,7 @@ function EventCard(props) {
       } else if (styleH3SecondTittle.height !== "30px") {
         h3SecondTittle.style.fontSize = "15px";
       }
-    }
-
-    const h3StringDjs = document.getElementById(`StringDjs${props.ID}`);
-    if (h3StringDjs) {
+    } else if (h3StringDjs) {
       const styleH3StringDjs = window.getComputedStyle(h3StringDjs);
       if (styleH3StringDjs.height !== "22px") {
         h3StringDjs.style.fontSize = "15px";
