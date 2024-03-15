@@ -220,6 +220,26 @@ function HomePage() {
       );
     });
 
+  useEffect(() => {
+    const updateStickyHeaderTop = () => {
+      const containerFixed = document.getElementById("containerFixed");
+      if (containerFixed && headersRef.current) {
+        const containerFixedHeight = containerFixed.offsetHeight;
+        headersRef.current.forEach((header) => {
+          if (header) header.style.top = `${containerFixedHeight}px`;
+        });
+      }
+    };
+
+    updateStickyHeaderTop();
+
+    window.addEventListener("resize", updateStickyHeaderTop);
+
+    return () => {
+      window.removeEventListener("resize", updateStickyHeaderTop);
+    };
+  }, [dataEventCard]);
+
   const onClickOpenFecha = () => {
     const fondoTransparente = document.getElementById("fondoTransparente");
     if (!openFecha) {
