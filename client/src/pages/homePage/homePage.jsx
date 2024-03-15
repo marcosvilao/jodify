@@ -199,22 +199,22 @@ function HomePage() {
           <h1
             ref={(el) => (headersRef.current[i] = el)}
             className={styles.stickyHeader}
-            style={{
-              fontSize: "24px",
-            }}
           >
             {finalFormattedDate}
           </h1>
           {event[objectName].map((event, index) => (
-            <EventCard
-              key={index}
-              Tittle={event.event_djs}
-              SecondTittle={event.event_title}
-              Img={event.event_image}
-              Location={event.event_location}
-              Genre={event.event_type}
-              OnClick={() => onClickEventCard(event)}
-            />
+            <div style={{ marginBottom: "12px" }}>
+              <EventCard
+                key={index}
+                Tittle={event.event_djs}
+                SecondTittle={event.event_title}
+                Img={event.event_image}
+                Location={event.event_location}
+                Genre={event.event_type}
+                OnClick={() => onClickEventCard(event)}
+                ID={event.id}
+              />
+            </div>
           ))}
         </div>
       );
@@ -609,15 +609,17 @@ function HomePage() {
       let containerFixedBottom = containerFixedRect.bottom;
       let containerFixedLeft = containerFixedRect.left;
 
-      if (window.innerWidth <= 650) {
-        let sumaResponsive = containerFixedLeft + 15;
-        ubicaion.style.visibility = "visible";
-        ubicaion.style.top = `${containerFixedBottom}px`;
-        ubicaion.style.left = `${sumaResponsive}px`;
-      } else {
-        ubicaion.style.visibility = "visible";
-        ubicaion.style.top = `${containerFixedBottom}px`;
-        ubicaion.style.left = `${containerFixedLeft}px`;
+      if (ubicaion) {
+        if (window.innerWidth <= 650) {
+          let sumaResponsive = containerFixedLeft + 15;
+          ubicaion.style.visibility = "visible";
+          ubicaion.style.top = `${containerFixedBottom}px`;
+          ubicaion.style.left = `${sumaResponsive}px`;
+        } else {
+          ubicaion.style.visibility = "visible";
+          ubicaion.style.top = `${containerFixedBottom}px`;
+          ubicaion.style.left = `${containerFixedLeft}px`;
+        }
       }
     }
 
@@ -630,15 +632,17 @@ function HomePage() {
       let containerFixedLeft = containerFixedRect.left;
       let suma = containerFixedLeft + 95;
 
-      if (window.innerWidth <= 650) {
-        let sumaResponsive = suma + 20;
-        genero.style.visibility = "visible";
-        genero.style.top = `${containerFixedBottom}px`;
-        genero.style.left = `${sumaResponsive}px`;
-      } else {
-        genero.style.visibility = "visible";
-        genero.style.top = `${containerFixedBottom}px`;
-        genero.style.left = `${suma}px`;
+      if (genero) {
+        if (window.innerWidth <= 650) {
+          let sumaResponsive = suma + 20;
+          genero.style.visibility = "visible";
+          genero.style.top = `${containerFixedBottom}px`;
+          genero.style.left = `${sumaResponsive}px`;
+        } else {
+          genero.style.visibility = "visible";
+          genero.style.top = `${containerFixedBottom}px`;
+          genero.style.left = `${suma}px`;
+        }
       }
     }
     axios
@@ -913,7 +917,7 @@ function HomePage() {
         </div>
 
         {dataEventCard.length !== 0 && !loader ? (
-          <div className={styles.containerEventCard}>{elementDivCard}</div>
+          <div className={styles.bodyEventCard}>{elementDivCard}</div>
         ) : null}
 
         {dataEventCard.length === 0 && !loader ? (
