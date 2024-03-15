@@ -199,9 +199,6 @@ function HomePage() {
           <h1
             ref={(el) => (headersRef.current[i] = el)}
             className={styles.stickyHeader}
-            style={{
-              fontSize: "25px",
-            }}
           >
             {finalFormattedDate}
           </h1>

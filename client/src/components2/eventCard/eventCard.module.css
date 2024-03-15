@@ -94,3 +94,13 @@
   text-overflow: ellipsis;
   font-weight: 500;
 }
+
+@media screen and (max-width: 500px) {
+  .Tittle {
+    font-size: 13px;
+  }
+
+  .body .containerData p {
+    font-size: 10px;
+  }
+}
