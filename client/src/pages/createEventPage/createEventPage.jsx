@@ -33,10 +33,10 @@ function CreateEventPage() {
   const [dataPost, setDataPost] = useState({
     event_title: "",
     event_type: [],
-    event_date: "",
-    event_location: "",
+    date_from: "",
+    venue: "",
     ticket_link: "",
-    event_image: "",
+    image_url: "",
     event_djs: [],
     event_city: "",
     event_promoter: [],
@@ -65,7 +65,7 @@ function CreateEventPage() {
         .then((res) => {
           const arrayTypes = [];
           res.data.map((type) => {
-            arrayTypes.push({ value: type.type_name });
+            arrayTypes.push({ value: type.name });
           });
           setTypes(arrayTypes);
         })
@@ -109,11 +109,17 @@ function CreateEventPage() {
               };
             }
           });
-
-          setDataPost({
-            ...dataPost,
-            event_city: newCitie[0],
-          });
+          if (newCitie[0]) {
+            setDataPost({
+              ...dataPost,
+              event_city: newCitie[0],
+            });
+          } else {
+            setDataPost({
+              ...dataPost,
+              event_city: "",
+            });
+          }
         } else {
           setDataPost({
             ...dataPost,
@@ -131,10 +137,17 @@ function CreateEventPage() {
             }
           });
 
-          setDataPost({
-            ...dataPost,
-            event_city: newCitie[0],
-          });
+          if (newCitie[0]) {
+            setDataPost({
+              ...dataPost,
+              event_city: newCitie[0],
+            });
+          } else {
+            setDataPost({
+              ...dataPost,
+              event_city: "",
+            });
+          }
         } else {
           setDataPost({
             ...dataPost,
@@ -186,7 +199,6 @@ function CreateEventPage() {
       setDataPost({
         ...dataPost,
         event_djs: arrayDjs,
-        event_title: string,
       });
     };
 
@@ -195,7 +207,7 @@ function CreateEventPage() {
       const formattedDate = dayjs(event).format("YYYY-MM-DD");
       setDataPost({
         ...dataPost,
-        event_date: formattedDate,
+        date_from: formattedDate,
       });
     };
 
@@ -204,7 +216,7 @@ function CreateEventPage() {
         setErrorEnlace("");
       }
 
-      if (e.target.name === "event_location" && errorDireccion) {
+      if (e.target.name === "venue" && errorDireccion) {
         setErrorDireccion("");
       }
 
@@ -218,16 +230,16 @@ function CreateEventPage() {
       setSubmitLoader(true);
       if (
         dataPost.event_type.length === 0 ||
-        dataPost.event_date.length === 0 ||
-        dataPost.event_location.length === 0 ||
+        dataPost.date_from.length === 0 ||
+        dataPost.venue.length === 0 ||
         dataPost.ticket_link.length === 0 ||
-        dataPost.event_image.length === 0 ||
+        dataPost.image_url.length === 0 ||
         dataPost.event_djs.length === 0 ||
         dataPost.event_city.length === 0
       ) {
         Alert("Error!", "Completar todos los campos", "error");
         setSubmitLoader(false);
-        if (dataPost.event_location.length === 0) {
+        if (dataPost.venue.length === 0) {
           setErrorDireccion("Completar campo");
         }
 
@@ -247,11 +259,11 @@ function CreateEventPage() {
           setErrorGeneros("Completar campo");
         }
 
-        if (dataPost.event_date.length === 0) {
+        if (dataPost.date_from.length === 0) {
           setErrorFecha("Completar campo");
         }
 
-        if (dataPost.event_image.length === 0) {
+        if (dataPost.image_url.length === 0) {
           setErrorFile("Completar campo");
         }
       } else {
@@ -265,7 +277,7 @@ function CreateEventPage() {
 
             formOne.style.display = "none";
             formTwo.style.display = "none";
-            alert.style.display = "block";
+            alert.style.visibility = "visible";
           })
           .catch((err) => {
             Alert("Error!", err.response.data.message, "error");
@@ -294,7 +306,7 @@ function CreateEventPage() {
                 : data.url;
               setDataPost((dataPost) => ({
                 ...dataPost,
-                event_image: secureUrl,
+                image_url: secureUrl,
               }));
               setLoader(false);
               setErrorFile("");
@@ -330,14 +342,14 @@ function CreateEventPage() {
 
     const changePages = () => {
       if (
-        dataPost.event_date.length === 0 ||
-        dataPost.event_location.length === 0 ||
-        dataPost.event_image.length === 0 ||
+        dataPost.date_from.length === 0 ||
+        dataPost.venue.length === 0 ||
+        dataPost.image_url.length === 0 ||
         dataPost.event_city.length === 0
       ) {
         Alert("Error!", "Completar todos los campos", "error");
         setSubmitLoader(false);
-        if (dataPost.event_location.length === 0) {
+        if (dataPost.venue.length === 0) {
           setErrorDireccion("Completar campo");
         }
 
@@ -345,11 +357,11 @@ function CreateEventPage() {
           setErrorPlace("Completar campo");
         }
 
-        if (dataPost.event_date.length === 0) {
+        if (dataPost.date_from.length === 0) {
           setErrorFecha("Completar campo");
         }
 
-        if (dataPost.event_image.length === 0) {
+        if (dataPost.image_url.length === 0) {
           setErrorFile("Completar campo");
         }
       } else {
@@ -408,20 +420,6 @@ function CreateEventPage() {
             </div>
           </div>
 
-          <h3 className={styles.formH3}>Previsualización</h3>
-
-          <div className={styles.containerCard}>
-            <EventCard
-              Img={dataPost.event_image}
-              SecondTittle={dataPost.event_title}
-              Tittle={dataPost.event_djs}
-              Location={dataPost.event_location}
-              Genre={dataCardType}
-              OnClick={onClickEventCard}
-              Color="#AE71F9"
-            />
-          </div>
-
           <SelectBlack
             Option="Lugar del evento"
             Array={cities}
@@ -430,12 +428,12 @@ function CreateEventPage() {
             Multiple={false}
             Error={errorPlace}
           />
-          <p>Elegi la ciudad o porvincia donde queres que figure el evento.</p>
+          <p>Elije la ciudad o provincia donde queres que figure el evento</p>
 
           <InputOutlined
             OnChange={onChangeDataInput}
-            Name="event_location"
-            Value={dataPost.event_location}
+            Name="venue"
+            Value={dataPost.venue}
             Placeholder="ej. Av. Libertador 2647 (Palermo)"
             Label="Nombre del complejo o dirección"
             Error={errorDireccion}
@@ -443,20 +441,21 @@ function CreateEventPage() {
             Variant="outlined"
           />
           <p>
-            Ingresa el barrio o localidad entre parentesis ej. Crobar (Palermo)
+            Ingresá el lugar o la dirección del evento, incluir el barrio entre
+            parentesis Ej, Crobar (Palermo)
           </p>
 
           <DatePicker
             OnChange={onChangeEventDate}
             Label="Fecha el evento"
-            Margin="32px 0px 0px 0px"
+            Margin="26px 0px 0px 0px"
             Error={errorFecha}
           />
 
           {!loader ? (
             <InputFile
               OnClick={handleFileChange}
-              File={dataPost.event_image}
+              File={dataPost.image_url}
               Margin="32px 0px 0px 0px"
               Error={errorFile}
             />
@@ -471,6 +470,20 @@ function CreateEventPage() {
               <Loader Color="#7c16f5" Height="30px" Width="30px" />
             </div>
           )}
+
+          <h3 className={styles.formH3}>Así se verá en nuestra cartelera!</h3>
+
+          <div className={styles.containerCard}>
+            <EventCard
+              Img={dataPost.image_url}
+              SecondTittle={dataPost.event_title}
+              Tittle={dataPost.event_djs}
+              Location={dataPost.venue}
+              Genre={dataCardType}
+              OnClick={onClickEventCard}
+              Color="#AE71F9"
+            />
+          </div>
 
           <div className={styles.containerButton}>
             <Button
@@ -516,20 +529,6 @@ function CreateEventPage() {
             </div>
           </div>
 
-          <h3 className={styles.formH3}>Previsualización</h3>
-
-          <div className={styles.containerCard}>
-            <EventCard
-              Img={dataPost.event_image}
-              SecondTittle={dataPost.event_title}
-              Tittle={dataPost.event_djs}
-              Location={dataPost.event_location}
-              Genre={dataCardType}
-              OnClick={onClickEventCard}
-              Color="#AE71F9"
-            />
-          </div>
-
           <InputOutlined
             OnChange={onChangeDataInput}
             Name="ticket_link"
@@ -541,7 +540,8 @@ function CreateEventPage() {
             Variant="outlined"
           />
           <p>
-            Copiá y pegá el enlace donde los usuarios irán a comprar la entrada.
+            Copiá y pegá el enlace donde los asistentes irán a comprar la
+            entrada
           </p>
 
           <SelectBlack
@@ -560,6 +560,20 @@ function CreateEventPage() {
             Error={errorGeneros}
           />
 
+          <h3 className={styles.formH3}>Previsualización</h3>
+
+          <div className={styles.containerCard}>
+            <EventCard
+              Img={dataPost.image_url}
+              SecondTittle={dataPost.event_title}
+              Tittle={dataPost.event_djs}
+              Location={dataPost.venue}
+              Genre={dataCardType}
+              OnClick={onClickEventCard}
+              Color="#AE71F9"
+            />
+          </div>
+
           <InputOutlined
             OnChange={onChangeDataInput}
             Name="event_title"
@@ -571,10 +585,9 @@ function CreateEventPage() {
             Requiere="false"
             Variant="outlined"
           />
-          <p>Si lo deseas, puedes personalizar aqui el nombre del evento.</p>
           <p>
-            Por defecto el nombre del evento es el line up seleccionados excepto
-            que la cambios aqui.
+            Ponemos por defecto el line up como nombre del evento, pero puedes
+            elegir editarlo acá
           </p>
 
           <div className={styles.containerButton}>
@@ -600,20 +613,25 @@ function CreateEventPage() {
         </div>
 
         <div className={styles.alert} id="alert">
-          <h1>Jodify</h1>
-
-          <h2>¡Tu evento se publicó correctamente!</h2>
-
-          <p>Gracias por elegir Jodify</p>
-
-          <div className={styles.containerButton}>
-            <Button
-              Value="Ir a Jodify"
-              OnClick={onClickRouteHome}
-              Color="#000000"
-              Hover="#1B1C20"
+          <div className={styles.containerAlert} id="alert">
+            <img
+              src="https://s3-alpha-sig.figma.com/img/b5ae/456f/01cfd0a1c2cb1ab5689f93e83cba870d?Expires=1708905600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=GBUK-QsD9wQh-nRGbsB2LKLwvnFZeKRHLatZLFPWzw1387oDP3C8sXBZ1Wd1Ps6FFpyCzDS0fpi3nyMrD7PDay4kA2gxTJWawLhnR-1bkm-YJYHZPVu2NOMIri8DC-xZEduXyDOdSLCaivGRe9vXjI-kctrgBSgzZoxz4YpuV-o8DuyL7b6c-ldObbZLpGdMPm77MF33TUiC-qd~ugDJLeITP9wC80lsQ6ItMuSUB4s4b4k8bpgStgDANMp4VVyMObCxxa07wCEvkpNU2eCajfgpZTAyabej1MXgQH5gFvCShJA6B3j3AAALhySw0S~cBrutzpcvW29jkTkIKlp0JQ__"
+              alt="Error al cargar el logo"
             />
-            <Button Value="Publicar otro evento" OnClick={cleanEvent} />
+
+            <h2>¡Tu evento se publicó correctamente!</h2>
+
+            <p>Gracias por elegir Jodify</p>
+
+            <div className={styles.containerButton}>
+              <Button
+                Value="Ir a Jodify"
+                OnClick={onClickRouteHome}
+                Color="#000000"
+                Hover="#1B1C20"
+              />
+              <Button Value="Publicar otro evento" OnClick={cleanEvent} />
+            </div>
           </div>
         </div>
       </div>

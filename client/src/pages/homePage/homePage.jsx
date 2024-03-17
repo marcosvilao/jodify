@@ -50,6 +50,7 @@ function HomePage() {
         .then((res) => {
           const sortArray = res.data;
           sortArray.forEach((dateInfo) => {
+            console.log(dateInfo)
             Object.keys(dateInfo).forEach((date) => {
               dateInfo[date].sort((a, b) => {
                 // Encuentra la prioridad más baja (mayor prioridad) en los promoters de 'a'
@@ -209,8 +210,8 @@ function HomePage() {
               key={index}
               Tittle={event.event_djs}
               SecondTittle={event.event_title}
-              Img={event.event_image}
-              Location={event.event_location}
+              Img={event.image_url}
+              Location={event.venue}
               Genre={event.event_type}
               OnClick={() => onClickEventCard(event)}
             />
@@ -307,7 +308,41 @@ function HomePage() {
     axios
       .post(`${axiosUrl}/events/filtersNew`, filter)
       .then((res) => {
-        setDataEventCard(res.data);
+        const sortArray = res.data;
+        sortArray.forEach((dateInfo) => {
+          Object.keys(dateInfo).forEach((date) => {
+            dateInfo[date].sort((a, b) => {
+              // Encuentra la prioridad más baja (mayor prioridad) en los promoters de 'a'
+              const priorityA = a.promoters.reduce((min, promoter) => {
+                if (
+                  promoter.priority !== null &&
+                  (min === null || promoter.priority < min)
+                ) {
+                  return promoter.priority;
+                }
+                return min;
+              }, null);
+
+              // Encuentra la prioridad más baja (mayor prioridad) en los promoters de 'b'
+              const priorityB = b.promoters.reduce((min, promoter) => {
+                if (
+                  promoter.priority !== null &&
+                  (min === null || promoter.priority < min)
+                ) {
+                  return promoter.priority;
+                }
+                return min;
+              }, null);
+
+              // Comparación para el ordenamiento, tratando null como infinito
+              return (
+                (priorityA !== null ? priorityA : Infinity) -
+                (priorityB !== null ? priorityB : Infinity)
+              );
+            });
+          });
+        });
+        setDataEventCard(sortArray);
         setLoader(false);
         setLazyLoadNoEvents(false);
         setIsFiltering(false);
@@ -528,10 +563,10 @@ function HomePage() {
     }));
     let arrayTypes = filter.types;
 
-    if (arrayTypes.includes(item.type_name)) {
-      arrayTypes = arrayTypes.filter((type) => type !== item.type_name);
+    if (arrayTypes.includes(item)) {
+      arrayTypes = arrayTypes.filter((type) => type !== item);
     } else {
-      arrayTypes.push(item.type_name);
+      arrayTypes.push(item);
     }
 
     setFilter(() => ({
@@ -817,9 +852,9 @@ function HomePage() {
               <ButtonPickerSelected
                 Value={
                   filter.types.length > 1
-                    ? filter.types[0] + " + " + (filter.types.length - 1)
+                    ? filter.types[0].name + " + " + (filter.types.length - 1)
                     : filter.types.length === 1
-                    ? filter.types[0]
+                    ? filter.types[0].name
                     : "Género"
                 }
                 OnClick={onClickOpenGenero}

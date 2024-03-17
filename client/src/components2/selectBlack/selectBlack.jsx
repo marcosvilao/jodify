@@ -115,6 +115,7 @@ function SelectBlack(props) {
   const handleInputChange = (event, newInputValue) => {
     if (!nanMultiselect) {
       setInputValue(newInputValue);
+      setMenuOpen(true);
     }
   };
 
@@ -139,9 +140,9 @@ function SelectBlack(props) {
     }
   };
 
-  const handleKeyDown = (event) => {
+  const handleKeyDown = (event, newValue) => {
     if (event.key === "Delete" || event.key === "Backspace") {
-      handleChange(event, null);
+      handleChange(event, newValue);
     }
   };
 

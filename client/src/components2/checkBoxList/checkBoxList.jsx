@@ -78,7 +78,7 @@ function CheckBoxList({
                   </ListItemIcon>
                   <ItemTextList
                     id={labelId}
-                    primary={isCityList ? item.city_name : item.type_name}
+                    primary={isCityList ? item.city_name : item.name}
                   />
                 </ListItemButton>
               </ListItem>

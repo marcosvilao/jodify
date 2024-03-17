@@ -50,6 +50,47 @@ const importPromoters = async () => {
 
 }
 
+const importDjs = async () => {
+    const dbName = 'verceldb'
+    let cwd = path.join(__dirname);
+    const filePathSQLWrite = cwd + '/imports/eventCreate_Scripts.txt';
+    let writeSQL = fs.createWriteStream(filePathSQLWrite);
+    filePath = cwd + '/imports/promoters.csv';
+    const  csv = fs.readFileSync(filePath, 'utf8');
+    const json = await csvToJson().fromString(csv);
+
+    const config = configDB();
+
+    try {
+            jodifyDB = new Client({
+        ...config,
+        database: dbName,
+      });
+
+      await jodifyDB.connect();
+      console.log('Connection with the database established.');
+
+        for (row of json) {
+            writeSQL.write(`
+            INSERT INTO djs (
+                "name",
+                "social_link"
+            ) VALUES (
+                '${row['name']}',
+                '${row['social_link']}'
+            );` + '\n')
+        }
+
+        await jodifyDB.end();
+        console.log('Finish')
+    } catch (error) {
+        console.log(error)
+        await jodifyDB.end();
+    }
+
+
+}
+
 const getDjs = async () => {
 
     try {

@@ -2,7 +2,7 @@ const pool = require('../db')
 
 const getTypes = async (req, res, next) => {
     try {
-        const allTypes = await pool.query('SELECT * FROM type ORDER BY "type_name" ASC')
+        const allTypes = await pool.query('SELECT * FROM types ORDER BY "name" ASC')
 
         if (allTypes.rows) {
             res.status(200).json(allTypes.rows);

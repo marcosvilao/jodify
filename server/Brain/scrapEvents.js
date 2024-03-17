@@ -152,10 +152,10 @@ const insertBuiltEvents = async () => {
           id,
           event_title,
           event_type,
-          event_date,
-          event_location,
+          date_from,
+          venue,
           ticket_link,
-          event_image,
+          image_url,
           event_djs,
           city_id
         )
