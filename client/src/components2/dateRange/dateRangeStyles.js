@@ -5,7 +5,7 @@ import theme from "../../jodifyStyles";
 export const DateRange = styled(StaticDateRangePicker)`
   .css-1a4q4r2-MuiButtonBase-root-MuiPickersDay-root-MuiDateRangePickerDay-day.Mui-selected {
     color: ${theme.jodify_colors._text_white};
-    background: ${theme.jodify_colors._gradient};
+    background: linear-gradient(105deg, #8800ff 20%, #c18fff 100%);
   }
 
   .css-grqin-MuiButtonBase-root-MuiPickersDay-root-MuiDateRangePickerDay-day:hover {
@@ -18,7 +18,7 @@ export const DateRange = styled(StaticDateRangePicker)`
 
   .css-wlz8ci.Mui-selected {
     color: ${theme.jodify_colors._text_white};
-    background: ${theme.jodify_colors._gradient};
+    background: linear-gradient(105deg, #8800ff 20%, #c18fff 100%);
   }
 
   .MuiDateRangePickerDay-rangeIntervalDayHighlight {
@@ -55,11 +55,11 @@ export const DateRange = styled(StaticDateRangePicker)`
   }
 
   .css-grqin-MuiButtonBase-root-MuiPickersDay-root-MuiDateRangePickerDay-day.Mui-selected {
-    background: ${theme.jodify_colors._gradient};
+    background: linear-gradient(105deg, #8800ff 20%, #c18fff 100%);
   }
 
   .css-1nte4ka.Mui-selected {
-    background: ${theme.jodify_colors._gradient};
+    background: linear-gradient(105deg, #8800ff 20%, #c18fff 100%);
   }
 
   /* .css-138poq7-MuiPickersSlideTransition-root-MuiDayCalendar-slideTransition:not(.MuiDateRangeCalendar-dayDragging) .MuiDateRangePickerDay-dayOutsideRangeInterval{

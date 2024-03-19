@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./inputFile.module.css";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
+import DoneIcon from "@mui/icons-material/Done";
 
 function InputFile(props) {
   return (
@@ -8,7 +9,11 @@ function InputFile(props) {
       className={styles.bodyInputFile}
       style={{ margin: props.Margin ? props.Margin : "10px 0px" }}
     >
-      <label style={{ color: props.Error ? "#FF5353" : "#FFFFFF" }}>
+      <label
+        style={{
+          color: props.File ? "lightgray" : props.Error ? "#FF5353" : "#FFFFFF",
+        }}
+      >
         Imagen:
       </label>
 
@@ -22,8 +27,12 @@ function InputFile(props) {
           for="seleccionar-archivo"
           style={{ color: props.Error ? "#FF5353" : "#AE71F9" }}
         >
-          <FileUploadIcon />
-          <span>Seleccionar Archivo</span>
+          <FileUploadIcon style={{ width: "17px", height: "17px", marginTop: "1.5px" }} />
+          {props.File === "" ? (
+            <span>Seleccionar Archivo</span>
+          ) : (
+            <span>Cambiar Archivo</span>
+          )}
         </label>
         <input
           id="seleccionar-archivo"
@@ -32,11 +41,14 @@ function InputFile(props) {
         />
 
         {props.File === "" ? (
-          <p>Ningun archivo seleccionado</p>
+          <div className={styles.containerRigth}>
+            <p>Ningun archivo seleccionado</p>
+          </div>
         ) : (
-          <p style={{ color: "#FFFFFF" }}>
-            Has seleccionado el archivo correctamente
-          </p>
+          <div className={styles.containerRigth}>
+            <p style={{ color: "#5BDF80" }}>Archivo seleccionado</p>
+            <DoneIcon className={styles.dondeIcon} />
+          </div>
         )}
       </div>
       {props.Error ? <p style={{ color: "#FF5353" }}>{props.Error}</p> : null}

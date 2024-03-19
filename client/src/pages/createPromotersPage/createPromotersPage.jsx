@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import styles from "./createPromotersPage.module.css";
 import axios from "axios";
 import Alert from "../../components2/alert/alert";
-import InputFilled from "../../components2/inputBlack/inputBlack";
-import SelectBlack from "../../components2/selectBlack/selectBlack";
-import ButtonBlue from "../../components2/button/button";
-import TittleH1 from "../../components2/tittleH1/tittleH1";
+import InputFilled from "../../components2/inputMaterial/inputMaterial";
+import SelectMaterial from "../../components2/selectMaterial/selectMaterial";
+import ButtonBlue from "../../components2/ButtonCreateEvents/button";
+import TittleH1 from "../../components2/tittleH1Auth/tittleH1";
 import Loader from "../../components2/loader/loader";
 
 function CreatePromotersPage() {
@@ -112,7 +112,7 @@ function CreatePromotersPage() {
         />
 
         <div className={styles.containerSelect}>
-          <SelectBlack
+          <SelectMaterial
             Option="Selecciona la prioridad"
             Array={arrayNumbers}
             OnChange={onChangeSelect}
@@ -121,7 +121,9 @@ function CreatePromotersPage() {
         </div>
 
         {!loader ? (
-          <ButtonBlue Value="Submit" OnClick={onSubmit} />
+          <div className={styles.containerSelect}>
+            <ButtonBlue Value="Submit" OnClick={onSubmit} />
+          </div>
         ) : (
           <Loader Color="#7c16f5" Height="30px" Width="30px" />
         )}

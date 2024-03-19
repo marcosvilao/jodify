@@ -1,10 +1,17 @@
 .buttonPicker {
   background-color: #1b1c20;
   border: none;
-  border-radius: 8px;
+  border-radius: 20px;
   height: 38px;
   color: #ffffff;
-  padding: 0px 10px;
+  padding: 0px 15px;
   font-size: 16px;
   cursor: pointer;
+}
+
+@media (min-width: 501px) {
+  .buttonPicker:hover {
+    background-color: transparent;
+    background-image: linear-gradient(105deg, #8800ff 0%, #c18fff 100%);
+  }
 }

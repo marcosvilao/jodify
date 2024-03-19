@@ -10,6 +10,7 @@ import EventCard from "../../components2/eventCard/eventCard";
 import CheckBoxList from "../../components2/checkBoxList/checkBoxList";
 import Alert from "../../components2/alert/alert";
 import SkeletonLoader from "../../components2/loaderSkeleton/loaderSkeleton";
+import Footer from "../../components2/footer/footer";
 
 function HomePage() {
   const axiosUrl = process.env.REACT_APP_AXIOS_URL;
@@ -49,6 +50,7 @@ function HomePage() {
         .post(`${axiosUrl}/events/filtersNew`, filter)
         .then((res) => {
           const sortArray = res.data;
+          console.log(sortArray)
           sortArray.forEach((dateInfo) => {
             console.log(dateInfo)
             Object.keys(dateInfo).forEach((date) => {
@@ -199,26 +201,46 @@ function HomePage() {
           <h1
             ref={(el) => (headersRef.current[i] = el)}
             className={styles.stickyHeader}
-            style={{
-              fontSize: "24px",
-            }}
           >
             {finalFormattedDate}
           </h1>
           {event[objectName].map((event, index) => (
-            <EventCard
-              key={index}
-              Tittle={event.event_djs}
-              SecondTittle={event.name}
-              Img={event.image_url}
-              Location={event.venue}
-              Genre={event.event_type}
-              OnClick={() => onClickEventCard(event)}
-            />
+            <div style={{ marginBottom: "12px" }}>
+              <EventCard
+                key={index}
+                Tittle={event.event_djs}
+                SecondTittle={event.name}
+                Img={event.image_url}
+                Location={event.venue}
+                Genre={event.event_type}
+                OnClick={() => onClickEventCard(event)}
+                ID={event.id}
+              />
+            </div>
           ))}
         </div>
       );
     });
+
+  useEffect(() => {
+    const updateStickyHeaderTop = () => {
+      const containerFixed = document.getElementById("containerFixed");
+      if (containerFixed && headersRef.current) {
+        const containerFixedHeight = containerFixed.offsetHeight;
+        headersRef.current.forEach((header) => {
+          if (header) header.style.top = `${containerFixedHeight}px`;
+        });
+      }
+    };
+
+    updateStickyHeaderTop();
+
+    window.addEventListener("resize", updateStickyHeaderTop);
+
+    return () => {
+      window.removeEventListener("resize", updateStickyHeaderTop);
+    };
+  }, [dataEventCard]);
 
   const onClickOpenFecha = () => {
     const fondoTransparente = document.getElementById("fondoTransparente");
@@ -563,10 +585,10 @@ function HomePage() {
     }));
     let arrayTypes = filter.types;
 
-    if (arrayTypes.includes(item)) {
-      arrayTypes = arrayTypes.filter((type) => type !== item);
+    if (arrayTypes.includes(item.name)) {
+      arrayTypes = arrayTypes.filter((type) => type !== item.name);
     } else {
-      arrayTypes.push(item);
+      arrayTypes.push(item.name);
     }
 
     setFilter(() => ({
@@ -609,15 +631,17 @@ function HomePage() {
       let containerFixedBottom = containerFixedRect.bottom;
       let containerFixedLeft = containerFixedRect.left;
 
-      if (window.innerWidth <= 650) {
-        let sumaResponsive = containerFixedLeft + 15;
-        ubicaion.style.visibility = "visible";
-        ubicaion.style.top = `${containerFixedBottom}px`;
-        ubicaion.style.left = `${sumaResponsive}px`;
-      } else {
-        ubicaion.style.visibility = "visible";
-        ubicaion.style.top = `${containerFixedBottom}px`;
-        ubicaion.style.left = `${containerFixedLeft}px`;
+      if (ubicaion) {
+        if (window.innerWidth <= 650) {
+          let sumaResponsive = containerFixedLeft + 15;
+          ubicaion.style.visibility = "visible";
+          ubicaion.style.top = `${containerFixedBottom}px`;
+          ubicaion.style.left = `${sumaResponsive}px`;
+        } else {
+          ubicaion.style.visibility = "visible";
+          ubicaion.style.top = `${containerFixedBottom}px`;
+          ubicaion.style.left = `${containerFixedLeft}px`;
+        }
       }
     }
 
@@ -630,15 +654,17 @@ function HomePage() {
       let containerFixedLeft = containerFixedRect.left;
       let suma = containerFixedLeft + 95;
 
-      if (window.innerWidth <= 650) {
-        let sumaResponsive = suma + 20;
-        genero.style.visibility = "visible";
-        genero.style.top = `${containerFixedBottom}px`;
-        genero.style.left = `${sumaResponsive}px`;
-      } else {
-        genero.style.visibility = "visible";
-        genero.style.top = `${containerFixedBottom}px`;
-        genero.style.left = `${suma}px`;
+      if (genero) {
+        if (window.innerWidth <= 650) {
+          let sumaResponsive = suma + 20;
+          genero.style.visibility = "visible";
+          genero.style.top = `${containerFixedBottom}px`;
+          genero.style.left = `${sumaResponsive}px`;
+        } else {
+          genero.style.visibility = "visible";
+          genero.style.top = `${containerFixedBottom}px`;
+          genero.style.left = `${suma}px`;
+        }
       }
     }
     axios
@@ -913,7 +939,7 @@ function HomePage() {
         </div>
 
         {dataEventCard.length !== 0 && !loader ? (
-          <div className={styles.containerEventCard}>{elementDivCard}</div>
+          <div className={styles.bodyEventCard}>{elementDivCard}</div>
         ) : null}
 
         {dataEventCard.length === 0 && !loader ? (
@@ -939,6 +965,8 @@ function HomePage() {
             <p>No hay mas eventos</p>
           </div>
         ) : null}
+
+        <Footer />
       </div>
     );
   }

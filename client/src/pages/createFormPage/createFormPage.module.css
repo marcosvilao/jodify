@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 50px 0px;
+  padding: 30px 0px;
   min-height: 75vh;
 }
 
@@ -34,7 +34,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-left: 7px;
+  padding: 12px 9px;
+  margin-top: 30px;
 }
 
 .form p {

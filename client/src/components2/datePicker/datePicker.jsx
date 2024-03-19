@@ -9,6 +9,7 @@ import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import styles from "./datePicker.module.css";
 import dayjs from "dayjs";
+import InputOutlined from "../inputMaterial/inputMaterial";
 
 const customTheme = (outerTheme, hasError) =>
   createTheme({
@@ -181,9 +182,21 @@ function CustomDatePicker(props) {
   const [selectedDate, setSelectedDate] = useState(
     props.InitialDate ? dayjs(props.InitialDate, "MM/DD/YYYY") : null
   );
+  const [valueSelectedDate, setValueSelectedDate] = useState(
+    selectedDate ? dayjs(selectedDate).format("DD-MM-YYYY") : false
+  );
   const hasError = props.Error !== "" && props.Error;
 
   const handleOpenDatePicker = () => {
+    if (!isDatePickerOpen) {
+      setIsDatePickerOpen(true);
+    } else {
+      return null;
+    }
+  };
+
+  const handleOpenDatePickerInput = () => {
+    setValueSelectedDate(false);
     if (!isDatePickerOpen) {
       setIsDatePickerOpen(true);
     } else {
@@ -199,6 +212,14 @@ function CustomDatePicker(props) {
     }
   };
 
+  const onChangeDatePicker = (newValue) => {
+    if (props.OnChange) {
+      props.OnChange(newValue);
+      let formatDay = dayjs(newValue).format("DD-MM-YYYY");
+      setValueSelectedDate(formatDay);
+    }
+  };
+
   const themeWithError = customTheme(outerTheme, hasError);
 
   useEffect(() => {
@@ -209,67 +230,96 @@ function CustomDatePicker(props) {
     }
   }, [props.InitialDate]);
 
-  return (
-    <ThemeProvider theme={themeWithError}>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DemoContainer
-          components={["DatePicker"]}
-          sx={{
-            width: "100%",
-            margin: props.Margin ? props.Margin : "10px 0px",
-          }}
-        >
-          <div style={{ width: "100%" }}>
-            <div
-              style={{
-                width: "100%",
-                display: "flex",
-                alignItems: "center",
-                position: "relative",
-              }}
-              onClick={handleOpenDatePicker}
-            >
-              <MobileDatePicker
-                className={styles.datePicker}
-                label={props.Label}
-                value={selectedDate}
-                onChange={(newValue) => {
-                  setSelectedDate(newValue);
-                  if (props.OnChange) {
-                    props.OnChange(newValue);
-                  }
+  if (!valueSelectedDate) {
+    return (
+      <ThemeProvider theme={themeWithError}>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DemoContainer
+            components={["DatePicker"]}
+            sx={{
+              width: "100%",
+              margin: props.Margin ? props.Margin : "10px 0px",
+            }}
+          >
+            <div style={{ width: "100%" }}>
+              <div
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  position: "relative",
                 }}
-                onClose={handleCloseDatePicker}
-                open={isDatePickerOpen}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    className={styles.datePicker}
-                    error={!!hasError}
-                  />
-                )}
-                error={!!hasError}
-                minDate={dayjs()}
-              />
-              <CalendarMonthIcon
-                className={styles.icon}
                 onClick={handleOpenDatePicker}
-              />
-            </div>
-            {hasError && (
-              <div style={{ width: "100%", marginTop: "5px" }}>
-                <p
-                  style={{ color: "#FF5353", margin: "0px", fontSize: "13px" }}
-                >
-                  {props.Error}
-                </p>
+              >
+                <MobileDatePicker
+                  className={styles.datePicker}
+                  label={props.Label}
+                  value={selectedDate}
+                  onChange={(newValue) => {
+                    setSelectedDate(newValue);
+                    if (props.OnChange) {
+                      onChangeDatePicker(newValue);
+                    }
+                  }}
+                  onClose={handleCloseDatePicker}
+                  open={isDatePickerOpen}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      className={styles.datePicker}
+                      error={!!hasError}
+                    />
+                  )}
+                  error={!!hasError}
+                  minDate={dayjs()}
+                />
+                <CalendarMonthIcon
+                  className={styles.icon}
+                  onClick={handleOpenDatePicker}
+                />
               </div>
-            )}
-          </div>
-        </DemoContainer>
-      </LocalizationProvider>
-    </ThemeProvider>
-  );
+              {hasError && (
+                <div style={{ width: "100%", marginTop: "5px" }}>
+                  <p
+                    style={{
+                      color: "#FF5353",
+                      margin: "0px",
+                      fontSize: "13px",
+                    }}
+                  >
+                    {props.Error}
+                  </p>
+                </div>
+              )}
+            </div>
+          </DemoContainer>
+        </LocalizationProvider>
+      </ThemeProvider>
+    );
+  } else {
+    return (
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          position: "relative",
+        }}
+        onClick={handleOpenDatePickerInput}
+      >
+        <InputOutlined
+          Value={valueSelectedDate}
+          Margin="32px 0px 0px 0px"
+          Variant="outlined"
+        />
+        <CalendarMonthIcon
+          OnClick={handleOpenDatePickerInput}
+          className={styles.icon2}
+          onClick={handleOpenDatePickerInput}
+        />
+      </div>
+    );
+  }
 }
 
 export default CustomDatePicker;

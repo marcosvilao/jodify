@@ -1,13 +1,3 @@
-.stickyHeader {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 120px;
-  z-index: 9;
-  background-color: #0c0c0c;
-  padding: 10px 0;
-  box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
-}
-
 .bodyLoader {
   width: 600px;
   height: 150vh;
@@ -26,7 +16,7 @@
 
 .bodyLoaderLazyLoad {
   width: 100%;
-  height: 20vh;
+  height: 160px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -69,9 +59,10 @@
   display: flex;
   align-items: center;
   justify-content: left;
-  margin: 10px 0px;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
+  margin-top: 10px;
+  margin-bottom: 5px;
 }
 
 .containerPicker {
@@ -82,7 +73,7 @@
   width: 100vw;
   height: 100vh;
   background-color: transparent;
-  z-index: 999;
+  z-index: 99999;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -91,6 +82,7 @@
 .containerUbicacion {
   position: absolute;
   visibility: hidden;
+  width: 300px;
 }
 
 .containerGenero {
@@ -98,25 +90,37 @@
   visibility: hidden;
 }
 
-.containerUbicacion {
-  width: 300px;
+.containerFecha {
+  position: absolute;
+  top: 20px;
+}
+
+.bodyEventCard {
+  width: 600px;
+  margin: 0px;
 }
 
 .containerEventCard {
-  width: 600px;
+  width: 100%;
+}
+
+.stickyHeader {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 120px;
+  z-index: 9;
+  background-color: #0c0c0c;
+  padding-bottom: 14px;
+  padding-top: 10px;
   margin: 0px;
-  margin-bottom: 10px;
+  box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
+  font-size: 31px;
+  color: rgb(232, 223, 233);
+  margin: 0px;
 }
 
 .firstElement {
   margin-top: 0px;
-}
-
-.containerEventCard h1 {
-  font-size: 25px;
-  color: rgb(232, 223, 233);
-  margin: 0px;
-  margin-bottom: 10px;
 }
 
 .noHayEventos {
@@ -158,7 +162,7 @@
     box-sizing: border-box;
   }
 
-  .containerEventCard {
+  .bodyEventCard {
     width: 100%;
     padding: 0px 10px;
     box-sizing: border-box;
@@ -177,6 +181,10 @@
 }
 
 @media screen and (max-width: 500px) {
+  .stickyHeader {
+    font-size: 25px;
+  }
+
   .noHayEventos {
     padding: 0px 30px;
   }

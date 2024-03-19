@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import styles from "./createEventPage.module.css";
-import SelectBlack from "../../components2/selectBlack/selectBlack";
-import Button from "../../components2/button/button";
+import SelectMaterial from "../../components2/selectMaterial/selectMaterial";
+import Button from "../../components2/ButtonCreateEvents/button";
 import axios from "axios";
 import Loader from "../../components2/loader/loader";
 import Alert from "../../components2/alert/alert";
 import EventCard from "../../components2/eventCard/eventCard";
 import InputFile from "../../components2/inputFile/inputFile";
 import DatePicker from "../../components2/datePicker/datePicker";
-import InputOutlined from "../../components2/inputBlack/inputBlack";
+import InputOutlined from "../../components2/inputMaterial/inputMaterial";
 import { useNavigate } from "react-router-dom";
 
 function CreateEventPage() {
@@ -237,7 +237,7 @@ function CreateEventPage() {
         dataPost.event_djs.length === 0 ||
         dataPost.event_city.length === 0
       ) {
-        Alert("Error!", "Completar todos los campos", "error");
+        Alert("", "Completar todos los campos", "");
         setSubmitLoader(false);
         if (dataPost.venue.length === 0) {
           setErrorDireccion("Completar campo");
@@ -317,26 +317,20 @@ function CreateEventPage() {
                 "Error en la carga de la imagen, internar luego mas tarde o ponerse en contaco con el servidor",
                 "error"
               );
+              setDataPost((dataPost) => ({
+                ...dataPost,
+                image_url: "",
+              }));
+              setLoader(false);
             });
         } else {
-          Alert("Error!", "Selected file is not an image", "error");
+          Alert("", "El archivo seleccionado no es una imagen", "");
+          setDataPost((dataPost) => ({
+            ...dataPost,
+            image_url: "",
+          }));
           setLoader(false);
         }
-      }
-    };
-
-    const onClickEventCard = () => {
-      if (dataPost.ticket_link === "") {
-        Alert("Error!", "Completar el campo de Link de Venta", "error");
-      } else {
-        let fullUrl;
-        if (dataPost.ticket_link.startsWith("https://")) {
-          fullUrl = dataPost.ticket_link;
-        } else {
-          const baseUrl = "http://";
-          fullUrl = baseUrl + dataPost.ticket_link;
-        }
-        window.open(fullUrl, "_blank");
       }
     };
 
@@ -347,7 +341,7 @@ function CreateEventPage() {
         dataPost.image_url.length === 0 ||
         dataPost.event_city.length === 0
       ) {
-        Alert("Error!", "Completar todos los campos", "error");
+        Alert("", "Completar todos los campos", "");
         setSubmitLoader(false);
         if (dataPost.venue.length === 0) {
           setErrorDireccion("Completar campo");
@@ -370,6 +364,8 @@ function CreateEventPage() {
 
         formOne.style.display = "none";
         formTwo.style.display = "flex";
+
+        window.scroll(0, 0);
       }
     };
 
@@ -379,6 +375,8 @@ function CreateEventPage() {
 
       formOne.style.display = "flex";
       formTwo.style.display = "none";
+
+      window.scroll(0, 0);
     };
 
     const cleanEvent = () => {
@@ -420,7 +418,7 @@ function CreateEventPage() {
             </div>
           </div>
 
-          <SelectBlack
+          <SelectMaterial
             Option="Lugar del evento"
             Array={cities}
             OnChange={onChangeEventCity}
@@ -442,7 +440,7 @@ function CreateEventPage() {
           />
           <p>
             Ingresá el lugar o la dirección del evento, incluir el barrio entre
-            parentesis Ej, Crobar (Palermo)
+            parentesis Ej, Crobar (Palermo)
           </p>
 
           <DatePicker
@@ -480,8 +478,8 @@ function CreateEventPage() {
               Tittle={dataPost.event_djs}
               Location={dataPost.venue}
               Genre={dataCardType}
-              OnClick={onClickEventCard}
               Color="#AE71F9"
+              Link="Default"
             />
           </div>
 
@@ -544,21 +542,22 @@ function CreateEventPage() {
             entrada
           </p>
 
-          <SelectBlack
-            Option="Ingresá el line up del evento"
-            Array={djs}
-            OnChange={onChangeEventDjs}
-            Margin="32px 0px 0px 0px"
-            Error={errorLineUp}
-          />
-
-          <SelectBlack
+          <SelectMaterial
             Option="Ingresá los géneros musicales del evento"
             Array={types}
             OnChange={onChangeEventType}
             Margin="32px 0px 0px 0px"
             Error={errorGeneros}
           />
+
+          <SelectMaterial
+            Option="Ingresá el line up del evento"
+            Array={djs}
+            OnChange={onChangeEventDjs}
+            Margin="32px 0px 0px 0px"
+            Error={errorLineUp}
+          />
+          <p>Selecciona los artistas que participan del evento</p>
 
           <h3 className={styles.formH3}>Previsualización</h3>
 
@@ -569,8 +568,8 @@ function CreateEventPage() {
               Tittle={dataPost.event_djs}
               Location={dataPost.venue}
               Genre={dataCardType}
-              OnClick={onClickEventCard}
               Color="#AE71F9"
+              Link="Default"
             />
           </div>
 

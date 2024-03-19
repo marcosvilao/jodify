@@ -11,6 +11,7 @@ import RegisterPromoterPage from "./pages/register-promoterPage/registerPromoter
 import CreateEventPage from "./pages/createEventPage/createEventPage.jsx";
 import CreatePromotersPage from "./pages/createPromotersPage/createPromotersPage.jsx";
 import CreateFormPage from "./pages/createFormPage/createFormPage.jsx";
+import CreateDjsPage from "./pages/createDjsPage/createDjs.jsx";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/week-events" element={<WeekEventsPage />} />
         <Route path="/create-event" element={<CreateEventPage />} />
         <Route path="/create-promoter" element={<CreatePromotersPage />} />
+        <Route path="/create-djs" element={<CreateDjsPage />} />
         <Route path="/create-form" element={<CreateFormPage />} />
       </Routes>
     </div>
