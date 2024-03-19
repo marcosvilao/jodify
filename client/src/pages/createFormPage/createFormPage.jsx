@@ -27,7 +27,10 @@ function CreateFormPage() {
   const [errorFile, setErrorFile] = useState("");
   const [cities, setCities] = useState(false);
   const [filterCities, setFilterCities] = useState(false);
+  const [dataTypes, setDataTypes] = useState(false);
   const [types, setTypes] = useState(false);
+  const [stringDjs, setStringDjs] = useState([]);
+  const [dataDjs, setDataDjs] = useState(false);
   const [djs, setDjs] = useState(false);
   const [promoters, setPromoters] = useState(false);
   const [dataPromoters, setDataPromoters] = useState(false);
@@ -50,7 +53,6 @@ function CreateFormPage() {
         .get(axiosUrl + "/cities")
         .then((res) => {
           const arrayCities = [];
-          console.log(res.data)
           res.data.map((citie) => {
             arrayCities.push({ value: citie.city_name });
           });
@@ -71,6 +73,7 @@ function CreateFormPage() {
             arrayTypes.push({ value: type.name });
           });
           setTypes(arrayTypes);
+          setDataTypes(res.data);
         })
         .catch(() => {
           Alert("Error!", "Error interno del servidorrr", "error");
@@ -83,7 +86,6 @@ function CreateFormPage() {
         .then((res) => {
           const arrayDjs = [];
           const newArrayDjs = [];
-          console.log(res.data)
           res.data.map((djs) => {
             arrayDjs.push({ value: djs.name });
           });
@@ -93,6 +95,7 @@ function CreateFormPage() {
             newArrayDjs.push({ value: djs });
           });
           setDjs(newArrayDjs);
+          setDataDjs(res.data);
         })
         .catch(() => {
           Alert("Error!", "Error interno del servidorrrr", "error");
@@ -179,46 +182,94 @@ function CreateFormPage() {
 
     const onChangeEventType = (event, value) => {
       let valoresConcatenados = "";
-      let arrayTypes = [];
-      for (let i = 0; i < value.length; i++) {
-        if (value[i].value) {
-          arrayTypes.push(value[i].value);
-          if (value.length === 1) {
-            valoresConcatenados += value[i].value;
-          } else {
-            valoresConcatenados += `${value[i].value} | `;
-          }
-        } else {
-          arrayTypes.push(value[i]);
-          if (value.length === 1) {
-            valoresConcatenados += value[i];
-          } else {
-            valoresConcatenados += `${value[i]} | `;
+      let idTypes = [];
+      let nameTypes = [];
+
+      if (value.length) {
+        for (let i = 0; i < value.length; i++) {
+          for (let j = 0; j < dataTypes.length; j++) {
+            if (
+              dataTypes[j].name === value[i].value ||
+              dataTypes[j].name === value[i]
+            ) {
+              idTypes.push({
+                id: dataTypes[j].id,
+              });
+              nameTypes.push(dataTypes[j].name);
+            }
           }
         }
       }
+
+      valoresConcatenados = nameTypes.join(" | ");
+
       setDataCardType(valoresConcatenados);
       setErrorGeneros("");
       setDataPost({
         ...dataPost,
-        event_type: arrayTypes,
+        event_type: idTypes,
+      });
+    };
+
+    const onChangeEventPromoters = (event, value) => {
+      let idPromoters = [];
+
+      if (value.length) {
+        for (let i = 0; i < value.length; i++) {
+          for (let j = 0; j < dataPromoters.length; j++) {
+            if (
+              dataPromoters[j].name === value[i].value ||
+              dataPromoters[j].name === value[i]
+            ) {
+              idPromoters.push({
+                id: dataPromoters[j].id,
+              });
+            }
+          }
+        }
+      }
+
+      setDataPost({
+        ...dataPost,
+        event_promoter: idPromoters,
       });
     };
 
     const onChangeEventDjs = (event, value) => {
-      let arrayDjs = [];
-      for (let i = 0; i < value.length; i++) {
-        if (value[i].value) {
-          arrayDjs.push(value[i].value);
-        } else {
-          arrayDjs.push(value[i]);
+      let idDjs = [];
+      let arrayDjsName = [];
+
+      if (value.length) {
+        for (let i = 0; i < value.length; i++) {
+          for (let j = 0; j < dataDjs.length; j++) {
+            if (dataDjs[j].name === value[i].value) {
+              idDjs.push({
+                id: dataDjs[j].id,
+              });
+              arrayDjsName.push(dataDjs[j].name);
+            }
+          }
+        }
+      }
+
+      let arrayEntrerValues = value.map((value) => {
+        if (!value.value) {
+          return value;
+        }
+      });
+
+      for (let i = 0; i < arrayEntrerValues.length; i++) {
+        if (arrayEntrerValues[i]) {
+          idDjs.push(arrayEntrerValues[i]);
+          arrayDjsName.push(arrayEntrerValues[i]);
         }
       }
 
       setErrorLineUp("");
+      setStringDjs(arrayDjsName);
       setDataPost({
         ...dataPost,
-        event_djs: arrayDjs,
+        event_djs: idDjs,
       });
     };
 
@@ -444,30 +495,6 @@ function CreateFormPage() {
       }
     };
 
-    const onChangeEventPromoters = (event, value) => {
-      let idPromoters = [];
-
-      if (value.length) {
-        for (let i = 0; i < value.length; i++) {
-          for (let j = 0; j < dataPromoters.length; j++) {
-            if (
-              dataPromoters[j].name === value[i].value ||
-              dataPromoters[j].name === value[i]
-            ) {
-              idPromoters.push({
-                id: dataPromoters[j].id,
-              });
-            }
-          }
-        }
-      }
-
-      setDataPost({
-        ...dataPost,
-        event_promoter: idPromoters,
-      });
-    };
-
     const onClickEventCard = () => {
       if (dataPost.ticket_link === "") {
         Alert("", "Completar el campo de Link de Venta", "");
@@ -689,7 +716,7 @@ function CreateFormPage() {
             <EventCard
               Img={dataPost.image_url}
               SecondTittle={dataPost.name}
-              Tittle={dataPost.event_djs}
+              Tittle={stringDjs}
               Location={dataPost.venue}
               Genre={dataCardType}
               OnClick={onClickEventCard}
