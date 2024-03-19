@@ -88,9 +88,9 @@ function WeekEventsPage() {
             
           rows.push({
             id: event.id,
-            evento: event.event_title,
-            lugar: event.event_location,
-            fecha: event.event_date,
+            evento: event.name,
+            lugar: event.venue,
+            fecha: event.date_from,
             djs: resultadoDjs,
             genero: event.event_type,
             ticketlink: event.ticket_link,

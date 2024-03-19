@@ -28,23 +28,23 @@ const insertBuiltEvents = async () => {
         const query = `
           INSERT INTO event (
             id,
-            event_title,
+            name,
             event_type,
-            event_date,
-            event_location,
+            date_from,
+            venue,
             ticket_link,
-            event_image,
+            image_url,
             event_djs,
             city_id
           )
           VALUES (
             '${uuidv4()}',
-            '${eventData.event_Title}',
+            '${eventData.name}',
             '${eventData.event_Type}',
-            '${eventData.event_Date}',
-            '${eventData.event_Location}',
+            '${eventData.date_from}',
+            '${eventData.venue}',
             '${eventData.ticket_Link}',
-            '${eventData.event_Image}',
+            '${eventData.image_url}',
             ARRAY[${eventData.event_Djs.map(dj => `'${dj}'`).join(', ')}],
             '258fd495-92d3-4119-aa37-0d1c684a0237'
           );

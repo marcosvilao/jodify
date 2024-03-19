@@ -31,12 +31,12 @@ function CreateEventPage() {
   const [errorGeneros, setErrorGeneros] = useState("");
   const [errorFile, setErrorFile] = useState("");
   const [dataPost, setDataPost] = useState({
-    event_title: "",
+    name: "",
     event_type: [],
-    event_date: "",
-    event_location: "",
+    date_from: "",
+    venue: "",
     ticket_link: "",
-    event_image: "",
+    image_url: "",
     event_djs: [],
     event_city: "",
     event_promoter: [],
@@ -207,7 +207,7 @@ function CreateEventPage() {
       const formattedDate = dayjs(event).format("YYYY-MM-DD");
       setDataPost({
         ...dataPost,
-        event_date: formattedDate,
+        date_from: formattedDate,
       });
     };
 
@@ -216,7 +216,7 @@ function CreateEventPage() {
         setErrorEnlace("");
       }
 
-      if (e.target.name === "event_location" && errorDireccion) {
+      if (e.target.name === "venue" && errorDireccion) {
         setErrorDireccion("");
       }
 
@@ -230,16 +230,16 @@ function CreateEventPage() {
       setSubmitLoader(true);
       if (
         dataPost.event_type.length === 0 ||
-        dataPost.event_date.length === 0 ||
-        dataPost.event_location.length === 0 ||
+        dataPost.date_from.length === 0 ||
+        dataPost.venue.length === 0 ||
         dataPost.ticket_link.length === 0 ||
-        dataPost.event_image.length === 0 ||
+        dataPost.image_url.length === 0 ||
         dataPost.event_djs.length === 0 ||
         dataPost.event_city.length === 0
       ) {
         Alert("", "Completar todos los campos", "");
         setSubmitLoader(false);
-        if (dataPost.event_location.length === 0) {
+        if (dataPost.venue.length === 0) {
           setErrorDireccion("Completar campo");
         }
 
@@ -259,11 +259,11 @@ function CreateEventPage() {
           setErrorGeneros("Completar campo");
         }
 
-        if (dataPost.event_date.length === 0) {
+        if (dataPost.date_from.length === 0) {
           setErrorFecha("Completar campo");
         }
 
-        if (dataPost.event_image.length === 0) {
+        if (dataPost.image_url.length === 0) {
           setErrorFile("Completar campo");
         }
       } else {
@@ -306,7 +306,7 @@ function CreateEventPage() {
                 : data.url;
               setDataPost((dataPost) => ({
                 ...dataPost,
-                event_image: secureUrl,
+                image_url: secureUrl,
               }));
               setLoader(false);
               setErrorFile("");
@@ -319,7 +319,7 @@ function CreateEventPage() {
               );
               setDataPost((dataPost) => ({
                 ...dataPost,
-                event_image: "",
+                image_url: "",
               }));
               setLoader(false);
             });
@@ -327,7 +327,7 @@ function CreateEventPage() {
           Alert("", "El archivo seleccionado no es una imagen", "");
           setDataPost((dataPost) => ({
             ...dataPost,
-            event_image: "",
+            image_url: "",
           }));
           setLoader(false);
         }
@@ -336,14 +336,14 @@ function CreateEventPage() {
 
     const changePages = () => {
       if (
-        dataPost.event_date.length === 0 ||
-        dataPost.event_location.length === 0 ||
-        dataPost.event_image.length === 0 ||
+        dataPost.date_from.length === 0 ||
+        dataPost.venue.length === 0 ||
+        dataPost.image_url.length === 0 ||
         dataPost.event_city.length === 0
       ) {
         Alert("", "Completar todos los campos", "");
         setSubmitLoader(false);
-        if (dataPost.event_location.length === 0) {
+        if (dataPost.venue.length === 0) {
           setErrorDireccion("Completar campo");
         }
 
@@ -351,11 +351,11 @@ function CreateEventPage() {
           setErrorPlace("Completar campo");
         }
 
-        if (dataPost.event_date.length === 0) {
+        if (dataPost.date_from.length === 0) {
           setErrorFecha("Completar campo");
         }
 
-        if (dataPost.event_image.length === 0) {
+        if (dataPost.image_url.length === 0) {
           setErrorFile("Completar campo");
         }
       } else {
@@ -430,8 +430,8 @@ function CreateEventPage() {
 
           <InputOutlined
             OnChange={onChangeDataInput}
-            Name="event_location"
-            Value={dataPost.event_location}
+            Name="venue"
+            Value={dataPost.venue}
             Placeholder="ej. Av. Libertador 2647 (Palermo)"
             Label="Nombre del complejo o dirección"
             Error={errorDireccion}
@@ -453,7 +453,7 @@ function CreateEventPage() {
           {!loader ? (
             <InputFile
               OnClick={handleFileChange}
-              File={dataPost.event_image}
+              File={dataPost.image_url}
               Margin="32px 0px 0px 0px"
               Error={errorFile}
             />
@@ -473,10 +473,10 @@ function CreateEventPage() {
 
           <div className={styles.containerCard}>
             <EventCard
-              Img={dataPost.event_image}
-              SecondTittle={dataPost.event_title}
+              Img={dataPost.image_url}
+              SecondTittle={dataPost.name}
               Tittle={dataPost.event_djs}
-              Location={dataPost.event_location}
+              Location={dataPost.venue}
               Genre={dataCardType}
               Color="#AE71F9"
               Link="Default"
@@ -563,10 +563,10 @@ function CreateEventPage() {
 
           <div className={styles.containerCard}>
             <EventCard
-              Img={dataPost.event_image}
-              SecondTittle={dataPost.event_title}
+              Img={dataPost.image_url}
+              SecondTittle={dataPost.name}
               Tittle={dataPost.event_djs}
-              Location={dataPost.event_location}
+              Location={dataPost.venue}
               Genre={dataCardType}
               Color="#AE71F9"
               Link="Default"
@@ -575,8 +575,8 @@ function CreateEventPage() {
 
           <InputOutlined
             OnChange={onChangeDataInput}
-            Name="event_title"
-            Value={dataPost.event_title}
+            Name="name"
+            Value={dataPost.name}
             Placeholder="ej. Jodify Winter Fest"
             Label="Nombre del evento"
             Error=""

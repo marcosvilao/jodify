@@ -207,9 +207,9 @@ function HomePage() {
               <EventCard
                 key={index}
                 Tittle={event.event_djs}
-                SecondTittle={event.event_title}
-                Img={event.event_image}
-                Location={event.event_location}
+                SecondTittle={event.name}
+                Img={event.image_url}
+                Location={event.venue}
                 Genre={event.event_type}
                 OnClick={() => onClickEventCard(event)}
                 ID={event.id}
