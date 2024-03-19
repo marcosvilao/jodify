@@ -33,7 +33,7 @@ function CreateFormPage() {
   const [dataPromoters, setDataPromoters] = useState(false);
   const [dataCardType, setDataCardType] = useState("");
   const [dataPost, setDataPost] = useState({
-    event_title: "",
+    name: "",
     event_type: [],
     date_from: "",
     venue: "",
@@ -270,7 +270,7 @@ function CreateFormPage() {
                 image_url: res.data.image,
                 ticket_link: valueInput,
                 date_from: res.data.date,
-                event_title: res.data.title,
+                name: res.data.title,
               }));
               setLoaderPupeteer(false);
             } else if (valueInput.includes("venti")) {
@@ -281,7 +281,7 @@ function CreateFormPage() {
                 image_url: res.data.image,
                 ticket_link: valueInput,
                 date_from: res.data.date,
-                event_title: res.data.title,
+                name: res.data.title,
               }));
               setLoaderPupeteer(false);
             } else {
@@ -291,7 +291,7 @@ function CreateFormPage() {
                 ...dataPost,
                 venue: "",
                 image_url: "",
-                event_title: "",
+                name: "",
                 ticket_link: valueInput,
               });
             }
@@ -303,7 +303,7 @@ function CreateFormPage() {
               ...dataPost,
               venue: "",
               image_url: "",
-              event_title: "",
+              name: "",
               ticket_link: valueInput,
             });
           });
@@ -455,7 +455,7 @@ function CreateFormPage() {
       let string = dataPost.event_djs.join(" | ");
       setDataPost({
         ...dataPost,
-        event_title: string,
+        name: string,
       });
     };
 
@@ -469,7 +469,7 @@ function CreateFormPage() {
           <div className={styles.containerCard}>
             <EventCard
               Img={dataPost.image_url}
-              SecondTittle={dataPost.event_title}
+              SecondTittle={dataPost.name}
               Tittle={dataPost.event_djs}
               Location={dataPost.venue}
               Genre={dataCardType}
@@ -642,8 +642,8 @@ function CreateFormPage() {
             <div>
               <InputOutlined
                 OnChange={onChangeDataInput}
-                Name="event_title"
-                Value={dataPost.event_title}
+                Name="name"
+                Value={dataPost.name}
                 Placeholder="ej. Jodify Winter Fest"
                 Label="Nombre del evento"
                 Error=""

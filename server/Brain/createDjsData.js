@@ -28,7 +28,7 @@ const insertBuiltEvents = async () => {
         const query = `
           INSERT INTO event (
             id,
-            event_title,
+            name,
             event_type,
             date_from,
             venue,
@@ -39,7 +39,7 @@ const insertBuiltEvents = async () => {
           )
           VALUES (
             '${uuidv4()}',
-            '${eventData.event_Title}',
+            '${eventData.name}',
             '${eventData.event_Type}',
             '${eventData.event_Date}',
             '${eventData.event_Location}',

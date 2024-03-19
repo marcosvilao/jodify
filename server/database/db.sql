@@ -2,7 +2,7 @@ CREATE DATABASE jodifydb
 
 CREATE TABLE event (
     id SERIAL PRIMARY KEY,
-    event_Title VARCHAR(255) NOT NULL UNIQUE,
+    name VARCHAR(255) NOT NULL UNIQUE,
     event_Date DATE NOT NULL,
     event_Location VARCHAR(255) NOT NULL,
     event_Type VARCHAR(255) NOT NULL,

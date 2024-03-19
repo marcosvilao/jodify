@@ -69,14 +69,14 @@ const buildEvents = async () => {
     const scrapEvents = await eventscrap();
     const builtEvents = scrapEvents.map(event => {
     const eventParts = event.eventText.split(' - ');
-    const event_Title = eventParts[0] ? eventParts[0].trim() : '';
+    const name = eventParts[0] ? eventParts[0].trim() : '';
     const event_Date = eventParts[1] ? eventParts[1].trim() : '';
     const event_Location = eventParts[2] ? eventParts[2].trim() : '';
-    const event_Type = event_Title.includes('(') && event_Title.includes(')') ?
-    event_Title.substring(event_Title.indexOf('(') + 1, event_Title.indexOf(')')).trim() : '';
+    const event_Type = name.includes('(') && name.includes(')') ?
+    name.substring(name.indexOf('(') + 1, name.indexOf(')')).trim() : '';
     const ticket_Link = event.hrefValue;
     const event_Image = event.imgValue;
-    let event_Djs = event_Title.split(' + ')
+    let event_Djs = name.split(' + ')
       .map(dj => dj.trim())
       .map(dj => dj.replace(/\([^)]+\)/g, '')); // Remove parentheses and their contents
 
@@ -92,7 +92,7 @@ const buildEvents = async () => {
     // Construct the desired date format: 'YYYY/MM/DD'
     const formattedEvent_Date = `2023/${month}/${DD}`;
 
-    const parts = event_Title.split(' + ');
+    const parts = name.split(' + ');
     let cleanedTitle = parts[0];
     
     if (parts.length > 1) {
@@ -115,7 +115,7 @@ const buildEvents = async () => {
     }
 
     return {
-      event_Title: cleanedTitle,
+      name: cleanedTitle,
       event_Type,
       event_Date: formattedEvent_Date,
       event_Location,
@@ -150,7 +150,7 @@ const insertBuiltEvents = async () => {
       const query = `
         INSERT INTO event (
           id,
-          event_title,
+          name,
           event_type,
           date_from,
           venue,
@@ -161,7 +161,7 @@ const insertBuiltEvents = async () => {
         )
         VALUES (
           '${uuidv4()}',
-          '${eventData.event_Title}',
+          '${eventData.name}',
           '${eventData.event_Type}',
           '${eventData.event_Date}',
           '${eventData.event_Location}',

@@ -31,7 +31,7 @@ function CreateEventPage() {
   const [errorGeneros, setErrorGeneros] = useState("");
   const [errorFile, setErrorFile] = useState("");
   const [dataPost, setDataPost] = useState({
-    event_title: "",
+    name: "",
     event_type: [],
     date_from: "",
     venue: "",
@@ -476,7 +476,7 @@ function CreateEventPage() {
           <div className={styles.containerCard}>
             <EventCard
               Img={dataPost.image_url}
-              SecondTittle={dataPost.event_title}
+              SecondTittle={dataPost.name}
               Tittle={dataPost.event_djs}
               Location={dataPost.venue}
               Genre={dataCardType}
@@ -565,7 +565,7 @@ function CreateEventPage() {
           <div className={styles.containerCard}>
             <EventCard
               Img={dataPost.image_url}
-              SecondTittle={dataPost.event_title}
+              SecondTittle={dataPost.name}
               Tittle={dataPost.event_djs}
               Location={dataPost.venue}
               Genre={dataCardType}
@@ -576,8 +576,8 @@ function CreateEventPage() {
 
           <InputOutlined
             OnChange={onChangeDataInput}
-            Name="event_title"
-            Value={dataPost.event_title}
+            Name="name"
+            Value={dataPost.name}
             Placeholder="ej. Jodify Winter Fest"
             Label="Nombre del evento"
             Error=""

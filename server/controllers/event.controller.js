@@ -105,7 +105,7 @@ const getEventsPromoters = async (req, res) => {
 const createEvent = async (req, res) => {
   try {
     const {
-      event_title,
+      name,
       event_type,
       date_from,
       venue,
@@ -142,14 +142,14 @@ const createEvent = async (req, res) => {
     }
 
     const query = `
-          INSERT INTO event(id, event_title, event_type, date_from, venue, ticket_link, image_url, event_djs, city_id)
+          INSERT INTO event(id, name, event_type, date_from, venue, ticket_link, image_url, event_djs, city_id)
           VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)
           RETURNING id;
       `;
 
     const values = [
       uuidv4(),
-      event_title,
+      name,
       formattedType,
       formattedEventDate,
       venue,
@@ -193,7 +193,7 @@ const updateEvent = async (req, res) => {
 
     const query = `
             UPDATE event
-            SET event_title = $1, date_from = $2, ticket_link = $3, image_url = $4, event_djs = $5
+            SET name = $1, date_from = $2, ticket_link = $3, image_url = $4, event_djs = $5
             WHERE id = $6;
         `;
 
@@ -234,7 +234,7 @@ const searchEvent = async (req, res) => {
 
     const query = `
         SELECT * FROM events
-        WHERE event_title ILIKE $1
+        WHERE name ILIKE $1
            OR venue ILIKE $1
            OR event_type ILIKE $1
            OR $1 = ANY(event_djs);
@@ -362,7 +362,7 @@ const scrapLink = async (req, res) => {
 //       const searchWithoutAccents = removeAccents(search);
 
 //       query += ` AND (
-//           unaccent(lower(e.event_title)) ILIKE unaccent(lower($${paramCount})) 
+//           unaccent(lower(e.name)) ILIKE unaccent(lower($${paramCount})) 
 //           OR (
 //               SELECT COUNT(*) 
 //               FROM unnest(e.event_djs) AS dj 

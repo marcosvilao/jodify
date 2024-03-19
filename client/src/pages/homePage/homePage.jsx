@@ -209,7 +209,7 @@ function HomePage() {
             <EventCard
               key={index}
               Tittle={event.event_djs}
-              SecondTittle={event.event_title}
+              SecondTittle={event.name}
               Img={event.image_url}
               Location={event.venue}
               Genre={event.event_type}
