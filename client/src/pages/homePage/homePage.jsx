@@ -50,6 +50,7 @@ function HomePage() {
         .post(`${axiosUrl}/events/filtersNew`, filter)
         .then((res) => {
           const sortArray = res.data;
+          console.log(sortArray)
           sortArray.forEach((dateInfo) => {
             Object.keys(dateInfo).forEach((date) => {
               dateInfo[date].sort((a, b) => {
