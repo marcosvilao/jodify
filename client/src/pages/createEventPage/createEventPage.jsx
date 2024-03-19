@@ -65,7 +65,7 @@ function CreateEventPage() {
         .then((res) => {
           const arrayTypes = [];
           res.data.map((type) => {
-            arrayTypes.push({ value: type.type_name });
+            arrayTypes.push({ value: type.name });
           });
           setTypes(arrayTypes);
         })

@@ -95,7 +95,7 @@ function CheckBoxList({ cityList, typeList, checkedItems, OnClick, OnClose }) {
                   </ListItemIcon>
                   <ListItemText
                     id={labelId}
-                    primary={isCityList ? item.city_name : item.type_name}
+                    primary={isCityList ? item.city_name : item.name}
                   />
                 </ListItemButton>
               </ListItem>

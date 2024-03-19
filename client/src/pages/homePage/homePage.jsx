@@ -584,10 +584,10 @@ function HomePage() {
     }));
     let arrayTypes = filter.types;
 
-    if (arrayTypes.includes(item.type_name)) {
-      arrayTypes = arrayTypes.filter((type) => type !== item.type_name);
+    if (arrayTypes.includes(item.name)) {
+      arrayTypes = arrayTypes.filter((type) => type !== item.name);
     } else {
-      arrayTypes.push(item.type_name);
+      arrayTypes.push(item.name);
     }
 
     setFilter(() => ({

@@ -11,7 +11,7 @@ const getTypes = async () => {
 
         for (const eventType of eventTypes) {
             const typeId = uuidv4(); // Generate a UUID
-            await pool.query('INSERT INTO "type" (id, type_name) VALUES ($1, $2)', [typeId, eventType]);
+            await pool.query('INSERT INTO "type" (id, name) VALUES ($1, $2)', [typeId, eventType]);
         }
 
         console.log("Event types inserted successfully!");

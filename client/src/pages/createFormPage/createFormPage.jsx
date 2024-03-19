@@ -50,6 +50,7 @@ function CreateFormPage() {
         .get(axiosUrl + "/cities")
         .then((res) => {
           const arrayCities = [];
+          console.log(res.data)
           res.data.map((citie) => {
             arrayCities.push({ value: citie.city_name });
           });
@@ -57,7 +58,7 @@ function CreateFormPage() {
           setFilterCities(res.data);
         })
         .catch(() => {
-          Alert("Error!", "Error interno del servidor", "error");
+          Alert("Error!", "Error interno del servidorr", "error");
         });
     }
 
@@ -67,12 +68,12 @@ function CreateFormPage() {
         .then((res) => {
           const arrayTypes = [];
           res.data.map((type) => {
-            arrayTypes.push({ value: type.type_name });
+            arrayTypes.push({ value: type.name });
           });
           setTypes(arrayTypes);
         })
         .catch(() => {
-          Alert("Error!", "Error interno del servidor", "error");
+          Alert("Error!", "Error interno del servidorrr", "error");
         });
     }
 
@@ -82,6 +83,7 @@ function CreateFormPage() {
         .then((res) => {
           const arrayDjs = [];
           const newArrayDjs = [];
+          console.log(res.data)
           res.data.map((djs) => {
             arrayDjs.push({ value: djs.name });
           });
@@ -93,7 +95,7 @@ function CreateFormPage() {
           setDjs(newArrayDjs);
         })
         .catch(() => {
-          Alert("Error!", "Error interno del servidor", "error");
+          Alert("Error!", "Error interno del servidorrrr", "error");
         });
     }
 
@@ -109,7 +111,7 @@ function CreateFormPage() {
           setDataPromoters(res.data);
         })
         .catch(() => {
-          Alert("Error!", "Error interno del servidor", "error");
+          Alert("Error!", "Error interno del servidorrrrrr", "error");
         });
     }
   }, []);
