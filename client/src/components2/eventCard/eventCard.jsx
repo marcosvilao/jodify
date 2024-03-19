@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./eventCard.module.css";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MusicNoteIcon from "@mui/icons-material/MusicNote";
@@ -10,7 +10,12 @@ function EventCard(props) {
   }
 
   return (
-    <a className={styles.body} onClick={props.OnClick} id="eventCard">
+    <a
+      className={styles.body}
+      onClick={props.OnClick}
+      id="eventCard"
+      style={{ cursor: props.Link ? "default" : "pointer" }}
+    >
       {!props.Img ? (
         <div className={styles.dontImgContainer}>
           <p style={{ fontSize: "16px", margin: "0px" }}>Img</p>
@@ -41,9 +46,9 @@ function EventCard(props) {
           <LocationOnIcon
             className={styles.icon}
             style={{
-              height: "20px",
-              width: "20px",
-              color: props.Color ? props.Color : "#7c16f5",
+              height: "18px",
+              width: "18px",
+              color: props.Color ? props.Color : "#c18fff",
             }}
           />
           {props.Location ? (
@@ -57,9 +62,9 @@ function EventCard(props) {
           <MusicNoteIcon
             className={styles.icon}
             style={{
-              height: "20px",
-              width: "20px",
-              color: props.Color ? props.Color : "#7c16f5",
+              height: "18px",
+              width: "18px",
+              color: props.Color ? props.Color : "#c18fff",
             }}
           />
           {props.Genre ? (

@@ -88,7 +88,7 @@ function WeekEventsPage() {
             
           rows.push({
             id: event.id,
-            evento: event.event_title,
+            evento: event.name,
             lugar: event.venue,
             fecha: event.date_from,
             djs: resultadoDjs,

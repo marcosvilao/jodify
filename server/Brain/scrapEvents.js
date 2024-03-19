@@ -69,14 +69,14 @@ const buildEvents = async () => {
     const scrapEvents = await eventscrap();
     const builtEvents = scrapEvents.map(event => {
     const eventParts = event.eventText.split(' - ');
-    const event_Title = eventParts[0] ? eventParts[0].trim() : '';
-    const event_Date = eventParts[1] ? eventParts[1].trim() : '';
-    const event_Location = eventParts[2] ? eventParts[2].trim() : '';
-    const event_Type = event_Title.includes('(') && event_Title.includes(')') ?
-    event_Title.substring(event_Title.indexOf('(') + 1, event_Title.indexOf(')')).trim() : '';
+    const name = eventParts[0] ? eventParts[0].trim() : '';
+    const date_from = eventParts[1] ? eventParts[1].trim() : '';
+    const venue = eventParts[2] ? eventParts[2].trim() : '';
+    const event_Type = name.includes('(') && name.includes(')') ?
+    name.substring(name.indexOf('(') + 1, name.indexOf(')')).trim() : '';
     const ticket_Link = event.hrefValue;
-    const event_Image = event.imgValue;
-    let event_Djs = event_Title.split(' + ')
+    const image_url = event.imgValue;
+    let event_Djs = name.split(' + ')
       .map(dj => dj.trim())
       .map(dj => dj.replace(/\([^)]+\)/g, '')); // Remove parentheses and their contents
 
@@ -85,14 +85,14 @@ const buildEvents = async () => {
       event_Djs = event_Djs.filter(dj => dj !== event_Type);
     }
 
-    // Parse day, month, and year from the event_Date
-    const [day, monthYear] = event_Date.split(' ');
+    // Parse day, month, and year from the date_from
+    const [day, monthYear] = date_from.split(' ');
     const [DD, month] = monthYear.split('/');
 
     // Construct the desired date format: 'YYYY/MM/DD'
-    const formattedEvent_Date = `2023/${month}/${DD}`;
+    const formatteddate_from = `2023/${month}/${DD}`;
 
-    const parts = event_Title.split(' + ');
+    const parts = name.split(' + ');
     let cleanedTitle = parts[0];
     
     if (parts.length > 1) {
@@ -115,12 +115,12 @@ const buildEvents = async () => {
     }
 
     return {
-      event_Title: cleanedTitle,
+      name: cleanedTitle,
       event_Type,
-      event_Date: formattedEvent_Date,
-      event_Location,
+      date_from: formatteddate_from,
+      venue,
       ticket_Link,
-      event_Image,
+      image_url,
       event_Djs
     };
   });
@@ -150,7 +150,7 @@ const insertBuiltEvents = async () => {
       const query = `
         INSERT INTO event (
           id,
-          event_title,
+          name,
           event_type,
           date_from,
           venue,
@@ -161,12 +161,12 @@ const insertBuiltEvents = async () => {
         )
         VALUES (
           '${uuidv4()}',
-          '${eventData.event_Title}',
+          '${eventData.name}',
           '${eventData.event_Type}',
-          '${eventData.event_Date}',
-          '${eventData.event_Location}',
+          '${eventData.date_from}',
+          '${eventData.venue}',
           '${eventData.ticket_Link}',
-          '${eventData.event_Image}',
+          '${eventData.image_url}',
           ARRAY[${eventData.event_Djs.map(dj => `'${dj}'`).join(', ')}],
           '258fd495-92d3-4119-aa37-0d1c684a0237'
         );

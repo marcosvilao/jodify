@@ -5,11 +5,11 @@ import dayjs from "dayjs";
 import Alert from "../../components2/alert/alert";
 import EventCard from "../../components2/eventCard/eventCard";
 import Loader from "../../components2/loader/loader";
-import SelectBlack from "../../components2/selectBlack/selectBlack";
-import Button from "../../components2/button/button";
+import SelectMaterial from "../../components2/selectMaterial/selectMaterial";
+import Button from "../../components2/ButtonCreateEvents/button";
 import InputFile from "../../components2/inputFile/inputFile";
 import DatePicker from "../../components2/datePicker/datePicker";
-import InputOutlined from "../../components2/inputBlack/inputBlack";
+import InputOutlined from "../../components2/inputMaterial/inputMaterial";
 
 function CreateFormPage() {
   const axiosUrl = process.env.REACT_APP_AXIOS_URL;
@@ -33,7 +33,7 @@ function CreateFormPage() {
   const [dataPromoters, setDataPromoters] = useState(false);
   const [dataCardType, setDataCardType] = useState("");
   const [dataPost, setDataPost] = useState({
-    event_title: "",
+    name: "",
     event_type: [],
     date_from: "",
     venue: "",
@@ -50,6 +50,7 @@ function CreateFormPage() {
         .get(axiosUrl + "/cities")
         .then((res) => {
           const arrayCities = [];
+          console.log(res.data)
           res.data.map((citie) => {
             arrayCities.push({ value: citie.city_name });
           });
@@ -57,7 +58,7 @@ function CreateFormPage() {
           setFilterCities(res.data);
         })
         .catch(() => {
-          Alert("Error!", "Error interno del servidor", "error");
+          Alert("Error!", "Error interno del servidorr", "error");
         });
     }
 
@@ -72,7 +73,7 @@ function CreateFormPage() {
           setTypes(arrayTypes);
         })
         .catch(() => {
-          Alert("Error!", "Error interno del servidor", "error");
+          Alert("Error!", "Error interno del servidorrr", "error");
         });
     }
 
@@ -82,6 +83,7 @@ function CreateFormPage() {
         .then((res) => {
           const arrayDjs = [];
           const newArrayDjs = [];
+          console.log(res.data)
           res.data.map((djs) => {
             arrayDjs.push({ value: djs.name });
           });
@@ -93,7 +95,7 @@ function CreateFormPage() {
           setDjs(newArrayDjs);
         })
         .catch(() => {
-          Alert("Error!", "Error interno del servidor", "error");
+          Alert("Error!", "Error interno del servidorrrr", "error");
         });
     }
 
@@ -109,7 +111,7 @@ function CreateFormPage() {
           setDataPromoters(res.data);
         })
         .catch(() => {
-          Alert("Error!", "Error interno del servidor", "error");
+          Alert("Error!", "Error interno del servidorrrrrr", "error");
         });
     }
   }, []);
@@ -262,7 +264,9 @@ function CreateFormPage() {
             link: valueInput,
           })
           .then((res) => {
-            if (valueInput.includes("passline")) {
+            console.log(res.data);
+            if (valueInput.includes("ticketpass")) {
+              console.log("Ticketpass");
               setDatePupeteer(res.data.date);
               setDataPost((prevDataPost) => ({
                 ...prevDataPost,
@@ -270,42 +274,70 @@ function CreateFormPage() {
                 image_url: res.data.image,
                 ticket_link: valueInput,
                 date_from: res.data.date,
-                event_title: res.data.title,
+                name: res.data.tittle,
+              }));
+              setLoaderPupeteer(false);
+            } else if (valueInput.includes("passline")) {
+              console.log("Passline");
+              setDatePupeteer(res.data.date);
+              setDataPost((prevDataPost) => ({
+                ...prevDataPost,
+                venue: res.data.location,
+                image_url: res.data.image,
+                ticket_link: valueInput,
+                date_from: res.data.date,
+                name: res.data.tittle,
               }));
               setLoaderPupeteer(false);
             } else if (valueInput.includes("venti")) {
-              setDatePupeteer(res.data.date);
+              console.log("Venti");
+              let fecha = res.data.date;
+              let horario = res.data.horario.split(":");
+              let horas = horario[0];
+
+              if (horas === "12" || horas === "01" || horas === "02") {
+                let splitFecha = fecha.split("-");
+                fecha = `${splitFecha[0]}-${splitFecha[1] - 1}-${
+                  splitFecha[2]
+                }`;
+              }
+
+              setDatePupeteer(fecha);
               setDataPost((prevDataPost) => ({
                 ...prevDataPost,
                 venue: res.data.location,
                 image_url: res.data.image,
                 ticket_link: valueInput,
-                date_from: res.data.date,
-                event_title: res.data.title,
+                date_from: fecha,
+                name: res.data.tittle,
               }));
               setLoaderPupeteer(false);
             } else {
-              Alert("Error!", "Error en el link proporcionado", "error");
+              Alert("", "El link proporcionado es incorrecto", "");
               setLoaderPupeteer(false);
-              setDataPost({
-                ...dataPost,
+              setDatePupeteer("");
+              setDataPost((prevDataPost) => ({
+                ...prevDataPost,
                 venue: "",
                 image_url: "",
-                event_title: "",
+                name: "",
+                date_from: "",
                 ticket_link: valueInput,
-              });
+              }));
             }
           })
           .catch((err) => {
             Alert("Error!", err, "error");
             setLoaderPupeteer(false);
-            setDataPost({
-              ...dataPost,
+            setDatePupeteer("");
+            setDataPost((prevDataPost) => ({
+              ...prevDataPost,
               venue: "",
               image_url: "",
-              event_title: "",
+              name: "",
+              date_from: "",
               ticket_link: valueInput,
-            });
+            }));
           });
       }
     };
@@ -321,7 +353,7 @@ function CreateFormPage() {
         dataPost.event_djs.length === 0 ||
         dataPost.event_city.length === 0
       ) {
-        Alert("Error!", "Completar todos los campos", "error");
+        Alert("", "Completar todos los campos", "");
         setSubmitLoader(false);
         if (dataPost.venue.length === 0) {
           setErrorDireccion("Completar campo");
@@ -438,7 +470,7 @@ function CreateFormPage() {
 
     const onClickEventCard = () => {
       if (dataPost.ticket_link === "") {
-        Alert("Error!", "Completar el campo de Link de Venta", "error");
+        Alert("", "Completar el campo de Link de Venta", "");
       } else {
         let fullUrl;
         if (dataPost.ticket_link.startsWith("https://")) {
@@ -455,7 +487,7 @@ function CreateFormPage() {
       let string = dataPost.event_djs.join(" | ");
       setDataPost({
         ...dataPost,
-        event_title: string,
+        name: string,
       });
     };
 
@@ -464,18 +496,6 @@ function CreateFormPage() {
         <div className={styles.form}>
           <div style={{ width: "100%", textAlign: "center" }}>
             <h1>Crea tu evento</h1>
-          </div>
-
-          <div className={styles.containerCard}>
-            <EventCard
-              Img={dataPost.image_url}
-              SecondTittle={dataPost.event_title}
-              Tittle={dataPost.event_djs}
-              Location={dataPost.venue}
-              Genre={dataCardType}
-              OnClick={onClickEventCard}
-              Color="#AE71F9"
-            />
           </div>
 
           <InputOutlined
@@ -602,7 +622,7 @@ function CreateFormPage() {
             </div>
           )}
 
-          <SelectBlack
+          <SelectMaterial
             Option="Ciudad"
             Array={cities}
             OnChange={onChangeEventCity}
@@ -612,7 +632,7 @@ function CreateFormPage() {
           />
           <p>Selecciona la ciudad donde figurara el evento</p>
 
-          <SelectBlack
+          <SelectMaterial
             Option="Productora"
             Array={promoters}
             OnChange={onChangeEventPromoters}
@@ -620,7 +640,7 @@ function CreateFormPage() {
           />
           <p>Selecciona su productora</p>
 
-          <SelectBlack
+          <SelectMaterial
             Option="Line up"
             Array={djs}
             OnChange={onChangeEventDjs}
@@ -629,7 +649,7 @@ function CreateFormPage() {
           />
           <p>Incluye los djs que tocaran</p>
 
-          <SelectBlack
+          <SelectMaterial
             Option="Géneros musicales"
             Array={types}
             OnChange={onChangeEventType}
@@ -642,8 +662,8 @@ function CreateFormPage() {
             <div>
               <InputOutlined
                 OnChange={onChangeDataInput}
-                Name="event_title"
-                Value={dataPost.event_title}
+                Name="name"
+                Value={dataPost.name}
                 Placeholder="ej. Jodify Winter Fest"
                 Label="Nombre del evento"
                 Error=""
@@ -664,6 +684,18 @@ function CreateFormPage() {
               <Loader Color="#7c16f5" Height="30px" Width="30px" />
             </div>
           )}
+
+          <div className={styles.containerCard}>
+            <EventCard
+              Img={dataPost.image_url}
+              SecondTittle={dataPost.name}
+              Tittle={dataPost.event_djs}
+              Location={dataPost.venue}
+              Genre={dataCardType}
+              OnClick={onClickEventCard}
+              Color="#AE71F9"
+            />
+          </div>
 
           <div className={styles.containerButton}>
             <Button

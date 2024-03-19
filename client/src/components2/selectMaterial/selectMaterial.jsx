@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import styles from "./selectBlack.module.css";
+import styles from "./selectMaterial.module.css";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import { outlinedInputClasses } from "@mui/material/OutlinedInput";
@@ -84,7 +84,7 @@ const customTheme = (outerTheme, hasError) =>
     },
   });
 
-function SelectBlack(props) {
+function SelectMaterial(props) {
   const outerTheme = useTheme();
   const hasError = props.Error !== "" && props.Error;
   const optionsArray = props.Array || [];
@@ -213,4 +213,4 @@ function SelectBlack(props) {
   );
 }
 
-export default SelectBlack;
+export default SelectMaterial;
