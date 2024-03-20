@@ -60,7 +60,7 @@ function CreateFormPage() {
           setFilterCities(res.data);
         })
         .catch(() => {
-          Alert("Error!", "Error interno del servidorr", "error");
+          Alert("Error!", "Error al cargar las ciudades", "error");
         });
     }
 
@@ -76,7 +76,7 @@ function CreateFormPage() {
           setDataTypes(res.data);
         })
         .catch(() => {
-          Alert("Error!", "Error interno del servidorrr", "error");
+          Alert("Error!", "Error al cargar los generos", "error");
         });
     }
 
@@ -98,7 +98,7 @@ function CreateFormPage() {
           setDataDjs(res.data);
         })
         .catch(() => {
-          Alert("Error!", "Error interno del servidorrrr", "error");
+          Alert("Error!", "Error al cargar los djs", "error");
         });
     }
 
@@ -114,12 +114,12 @@ function CreateFormPage() {
           setDataPromoters(res.data);
         })
         .catch(() => {
-          Alert("Error!", "Error interno del servidorrrrrr", "error");
+          Alert("Error!", "Error al cargar las productoras", "error");
         });
     }
   }, []);
 
-  if (cities && types && djs && promoters) {
+  if (cities && types && djs && promoters && djs) {
     const onChangeEventCity = (event, value) => {
       setErrorPlace("");
       if (typeof value === "string") {
@@ -361,7 +361,7 @@ function CreateFormPage() {
                   }`;
                 }
               } else {
-                fecha = "12/12/2025";
+                fecha = "";
               }
 
               setDatePupeteer(fecha);
