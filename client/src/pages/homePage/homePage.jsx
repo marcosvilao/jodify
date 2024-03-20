@@ -50,9 +50,9 @@ function HomePage() {
         .post(`${axiosUrl}/events/filtersNew`, filter)
         .then((res) => {
           const sortArray = res.data;
-          console.log(sortArray)
+          console.log(sortArray);
           sortArray.forEach((dateInfo) => {
-            console.log(dateInfo)
+            console.log(dateInfo);
             Object.keys(dateInfo).forEach((date) => {
               dateInfo[date].sort((a, b) => {
                 // Encuentra la prioridad más baja (mayor prioridad) en los promoters de 'a'
@@ -878,9 +878,9 @@ function HomePage() {
               <ButtonPickerSelected
                 Value={
                   filter.types.length > 1
-                    ? filter.types[0].name + " + " + (filter.types.length - 1)
+                    ? filter.types[0] + " + " + (filter.types.length - 1)
                     : filter.types.length === 1
-                    ? filter.types[0].name
+                    ? filter.types[0]
                     : "Género"
                 }
                 OnClick={onClickOpenGenero}
