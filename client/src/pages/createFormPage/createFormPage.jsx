@@ -265,11 +265,17 @@ function CreateFormPage() {
         }
       }
 
+      let titleName = arrayDjsName.join(" | ");
+
       setErrorLineUp("");
       setStringDjs(arrayDjsName);
       setDataPost({
         ...dataPost,
         event_djs: idDjs,
+      });
+      setDataPost({
+        ...dataPost,
+        name: titleName,
       });
     };
 
@@ -343,14 +349,19 @@ function CreateFormPage() {
             } else if (valueInput.includes("venti")) {
               console.log("Venti");
               let fecha = res.data.date;
-              let horario = res.data.horario.split(":");
-              let horas = horario[0];
 
-              if (horas === "12" || horas === "01" || horas === "02") {
-                let splitFecha = fecha.split("-");
-                fecha = `${splitFecha[0]}-${splitFecha[1] - 1}-${
-                  splitFecha[2]
-                }`;
+              if (fecha) {
+                let horario = res.data.horario.split(":");
+                let horas = horario[0];
+
+                if (horas === "12" || horas === "01" || horas === "02") {
+                  let splitFecha = fecha.split("-");
+                  fecha = `${splitFecha[0]}-${splitFecha[1] - 1}-${
+                    splitFecha[2]
+                  }`;
+                }
+              } else {
+                fecha = "12/12/2025";
               }
 
               setDatePupeteer(fecha);
