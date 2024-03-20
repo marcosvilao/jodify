@@ -17,7 +17,11 @@ const eventRoutes = require("./routes/events.routes");
 const app = express();
 
 app.use(function (req, res, next) {
-  var allowedOrigins = ["https://jodify.com.ar", "https://jodify.vercel.app"];
+  var allowedOrigins = [
+    "https://jodify.com.ar",
+    "https://jodify.vercel.app",
+    "https://jodify-qa-client.vercel.app",
+  ];
   var origin = req.headers.origin;
   if (allowedOrigins.includes(origin)) {
     res.setHeader("Access-Control-Allow-Origin", origin);
