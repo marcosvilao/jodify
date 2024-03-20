@@ -47,6 +47,8 @@ function CreateFormPage() {
     event_promoter: [],
   });
 
+  console.log(dataPost);
+
   useEffect(() => {
     if (!cities) {
       axios
@@ -267,14 +269,13 @@ function CreateFormPage() {
 
       let titleName = arrayDjsName.join(" | ");
 
+      console.log(idDjs);
+
       setErrorLineUp("");
       setStringDjs(arrayDjsName);
       setDataPost({
         ...dataPost,
         event_djs: idDjs,
-      });
-      setDataPost({
-        ...dataPost,
         name: titleName,
       });
     };
