@@ -1,6 +1,5 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import WeekEventsPage from "./pages/weekEventsPage/weekEventsPage.jsx";
 import Header from "./components2/header/header.jsx";
 import HomePage from "./pages/homePage/homePage.jsx";
 import LoginPage from "./pages/loginPage/loginPage.jsx";
@@ -27,7 +26,6 @@ function App() {
           element={<LinkResetPasswordPage />}
         />
         <Route path="/register-promoter" element={<RegisterPromoterPage />} />
-        <Route path="/week-events" element={<WeekEventsPage />} />
         <Route path="/create-event" element={<CreateEventPage />} />
         <Route path="/create-promoter" element={<CreatePromotersPage />} />
         <Route path="/create-djs" element={<CreateDjsPage />} />

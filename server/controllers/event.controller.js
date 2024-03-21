@@ -54,53 +54,7 @@ const getEvents = async (req, res, next) => {
   }
 };
 
-const getEventsPromoters = async (req, res) => {
-  try {
-    const todayInArgentina = DateTime.local()
-      .setZone("America/Argentina/Buenos_Aires")
-      .toISODate();
 
-    const oneWeekFromNow = DateTime.local()
-      .setZone("America/Argentina/Buenos_Aires")
-      .plus({ days: 7 }) // Obtener la fecha una semana desde hoy
-      .toISODate();
-
-    const values = [todayInArgentina, oneWeekFromNow];
-
-    const query = `
-    SELECT 
-    e.*, 
-    COALESCE(
-      jsonb_agg(
-        jsonb_build_object(
-          'id', p.id,
-          'name', p.name, 
-          'priority', p.priority, 
-          'instagram', p.instagram
-        )
-      ),
-      '[]'
-    ) AS promoters
-  FROM events e 
-  LEFT JOIN event_promoters ep ON e.id = ep.event_id 
-  LEFT JOIN promoters p ON p.id = ep.promoter_id 
-  WHERE e.date_from >= $1 AND e.date_from <= $2
-  GROUP BY e.id
-  ORDER BY e.date_from;
-      `;
-
-    const result = await pool.query(query, values);
-
-    if (result && result.rows && Array.isArray(result.rows)) {
-      const rows = result.rows;
-      res.status(202).json({ events: rows });
-    } else {
-      throw new Error("La consulta no devolvió un conjunto de filas.");
-    }
-  } catch (error) {
-    res.status(404).send("Error interno del servidor: " + error.message);
-  }
-};
 
 const createEvent = async (req, res) => {
   try {
@@ -491,6 +445,5 @@ module.exports = {
   deleteEvent,
   searchEvent,
   scrapLink,
-  getEventsPromoters,
   filterEventsNew,
 };

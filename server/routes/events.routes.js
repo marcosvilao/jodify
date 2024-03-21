@@ -9,7 +9,6 @@ const {
   searchEvent,
   scrapLink,
   UploadImage,
-  getEventsPromoters,
   filterEventsNew,
 } = require("../controllers/event.controller");
 const { getCities } = require("../controllers/city.controller");
@@ -47,8 +46,6 @@ router.put("/events/:id", updateEvent);
 router.delete("/events", deleteEvent);
 
 router.post("/get-event-data", scrapLink);
-
-router.get("/events-promoters", getEventsPromoters);
 
 router.post("/events/filtersNew", filterEventsNew);
 
