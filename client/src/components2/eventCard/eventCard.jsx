@@ -10,6 +10,8 @@ function EventCard(props) {
   }
   const genreNames = props.Genre?.map(genre => genre.name).join(" | ");
 
+  console.log(props.Genre)
+
   return (
     <a
       className={styles.body}

@@ -1,31 +1,30 @@
 const chromium = require("@sparticuz/chromium");
 const puppeteer = require("puppeteer-extra");
 const moment = require("moment-timezone");
+require("dotenv").config();
 //const StealthPlugin = require("puppeteer-extra-plugin-stealth");
 
 //puppeteer.use(StealthPlugin());
 
 const linkScrap = async (link) => {
+  const SCRAPPING = process.env.SCRAPPING;
   let browser = null;
   try {
-    // DEPLOY
-
-    browser = await puppeteer.launch({
-      args: chromium.args,
-      defaultViewport: chromium.defaultViewport,
-      executablePath: await chromium.executablePath(),
-      headless: chromium.headless,
-      ignoreHTTPSErrors: true,
-    });
-
-    // LOCAL
-    /*
-    browser = await puppeteer.launch({
-      executablePath:
-        "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
-      headless: true,
-    });
-    */
+    if (SCRAPPING) {
+      browser = await puppeteer.launch({
+        args: chromium.args,
+        defaultViewport: chromium.defaultViewport,
+        executablePath: await chromium.executablePath(),
+        headless: chromium.headless,
+        ignoreHTTPSErrors: true,
+      });
+    } else {
+      browser = await puppeteer.launch({
+        executablePath:
+          "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+        headless: true,
+      });
+    }
 
     const page = await browser.newPage();
     await page.setUserAgent(
