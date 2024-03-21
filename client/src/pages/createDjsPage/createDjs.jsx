@@ -15,9 +15,10 @@ function CreatePromotersPage() {
   const [types, setTypes] = useState(false);
   const [errorLineUp, setErrorLineUp] = useState("");
   const [errorGeneros, setErrorGeneros] = useState("");
+  const [errorInstagram, setErrorInstagram] = useState("");
   const [dataPost, setDataPost] = useState({
     type: [],
-    name: "",
+    name: [],
     instagram: "",
   });
 
@@ -41,7 +42,7 @@ function CreatePromotersPage() {
     setErrorLineUp("");
     setDataPost({
       ...dataPost,
-      event_djs: arrayDjs,
+      name: arrayDjs,
     });
   };
 
@@ -58,24 +59,32 @@ function CreatePromotersPage() {
     setErrorGeneros("");
     setDataPost({
       ...dataPost,
-      event_type: arrayTypes,
+      type: arrayTypes,
     });
   };
 
   const onSubmit = () => {
     setLoader(true);
-    if (dataPost.event_type.length === 0 || dataPost.event_djs.length === 0) {
+    if (dataPost.type.length === 0 || dataPost.name.length === 0) {
       Alert("", "Completar todos los campos", "");
       setLoader(false);
 
-      if (dataPost.event_djs.length === 0) {
+      if (dataPost.type.length === 0) {
         setErrorLineUp("Completar campo");
       }
 
-      if (dataPost.event_type.length === 0) {
+      if (dataPost.name.length === 0) {
         setErrorGeneros("Completar campo");
       }
+
+      if (dataPost.instagram.length === 0) {
+        setErrorInstagram("Completar campo");
+      }
     } else {
+      let callbackAlert = () => {
+        window.location.reload();
+      };
+      Alert("Success!", "Dj creado correctamente!", "success", callbackAlert);
       setLoader(false);
     }
   };
@@ -147,10 +156,11 @@ function CreatePromotersPage() {
           <InputFilled
             OnChange={onChangeInput}
             Name="instagram"
-            Value={dataPost.name}
+            Value={dataPost.instagram}
             Placeholder="escribi el instagram"
             Label="escribi el instagram"
             Margin="10px 0px 25px 0px"
+            Error={errorInstagram}
           />
         </div>
 
