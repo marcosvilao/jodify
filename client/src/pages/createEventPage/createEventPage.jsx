@@ -165,7 +165,6 @@ function CreateEventPage() {
     };
 
     const onChangeEventType = (event, value) => {
-      let valoresConcatenados = "";
       let idTypes = [];
       let nameTypes = [];
 
@@ -179,15 +178,13 @@ function CreateEventPage() {
               idTypes.push({
                 id: dataTypes[j].id,
               });
-              nameTypes.push(dataTypes[j].name);
+              nameTypes.push({ name: dataTypes[j].name });
             }
           }
         }
       }
 
-      valoresConcatenados = nameTypes.join(" | ");
-
-      setDataCardType(valoresConcatenados);
+      setDataCardType(nameTypes);
       setErrorGeneros("");
       setDataPost({
         ...dataPost,
