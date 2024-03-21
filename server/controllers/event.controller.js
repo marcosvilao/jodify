@@ -78,21 +78,6 @@ const createEvent = async (req, res) => {
     const formattedEventDate = new Date(date_from);
     formattedEventDate.setHours(9, 0, 0);
 
-    // const querydate = "SELECT ticket_link FROM events WHERE ticket_link = $1";
-    // const valuesLink = [ticket_link];
-
-    // let duplicateEvent = await pool.query(querydate, valuesLink);
-    // duplicateEvent = duplicateEvent.rows;
-
-    // if (
-    //   duplicateEvent.length > 0 &&
-    //   !duplicateEvent[0]?.ticket_link.toLowerCase().includes("instagram") &&
-    //   !duplicateEvent[0]?.ticket_link.toLowerCase().includes("espacioro")
-    // ) {
-    //   res.status(404).send({ message: "Ya existe este evento" });
-    //   return;
-    // }
-
     const event = {
       id : uuidv4(),
       name,
@@ -436,6 +421,52 @@ const filterEventsNew = async (req, res) => {
   }
 };
 
+const updateEventInteraction = async (req, res) => {
+  try {
+    const {id} = req.params
+    let event = await pool.query(`SELECT * FROM events WHERE id = '${id}'`)
+    event = event.rows[0]
+    if(event){
+      const interactions = event.interactions + 1
+      await pool.query(`UPDATE events SET interactions = ${interactions} WHERE id = '${id}';`)
+      res.status(200).json({message : 'Interaction added'});
+    }
+    
+  } catch (error) {
+    console.log(error)
+  }
+
+}
+
+const checkLinkDuplicate = async (req, res) => {
+
+  try {
+    const {link} = req.body
+    const querydate = "SELECT ticket_link FROM events WHERE ticket_link = $1";
+    const valuesLink = [link];
+
+    let duplicateEvent = await pool.query(querydate, valuesLink);
+    duplicateEvent = duplicateEvent.rows;
+
+    if (
+      duplicateEvent.length > 0 &&
+      !duplicateEvent[0]?.ticket_link.toLowerCase().includes("instagram") &&
+      !duplicateEvent[0]?.ticket_link.toLowerCase().includes("espacioro")
+    ) {
+      res.status(404).send({ message: "Ya existe este evento" });
+      return;
+    }
+
+    
+  } catch (error) {
+    console.log(error)
+  }
+
+  
+}
+
+
+
 
 
 module.exports = {
@@ -446,4 +477,6 @@ module.exports = {
   searchEvent,
   scrapLink,
   filterEventsNew,
+  updateEventInteraction,
+  checkLinkDuplicate
 };
