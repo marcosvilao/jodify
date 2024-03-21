@@ -25,7 +25,7 @@ function CreateEventPage() {
   const [djs, setDjs] = useState(false);
   const [dataDjs, setDataDjs] = useState(false);
   const [dataTypes, setDataTypes] = useState(false);
-  const [dataCardType, setDataCardType] = useState("");
+  const [dataCardType, setDataCardType] = useState([]);
   const [errorEnlace, setErrorEnlace] = useState("");
   const [errorDireccion, setErrorDireccion] = useState("");
   const [errorLineUp, setErrorLineUp] = useState("");

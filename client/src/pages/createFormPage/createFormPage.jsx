@@ -34,7 +34,7 @@ function CreateFormPage() {
   const [djs, setDjs] = useState(false);
   const [promoters, setPromoters] = useState(false);
   const [dataPromoters, setDataPromoters] = useState(false);
-  const [dataCardType, setDataCardType] = useState("");
+  const [dataCardType, setDataCardType] = useState([]);
   const [dataPost, setDataPost] = useState({
     name: "",
     event_type: [],
