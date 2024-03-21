@@ -3,6 +3,7 @@ import styles from "./createDjs.module.css";
 import axios from "axios";
 import Alert from "../../components2/alert/alert";
 import SelectMaterial from "../../components2/selectMaterial/selectMaterial";
+import InputFilled from "../../components2/inputMaterial/inputMaterial";
 import ButtonBlue from "../../components2/ButtonCreateEvents/button";
 import TittleH1 from "../../components2/tittleH1Auth/tittleH1";
 import Loader from "../../components2/loader/loader";
@@ -15,9 +16,17 @@ function CreatePromotersPage() {
   const [errorLineUp, setErrorLineUp] = useState("");
   const [errorGeneros, setErrorGeneros] = useState("");
   const [dataPost, setDataPost] = useState({
-    event_type: [],
-    event_djs: [],
+    type: [],
+    name: "",
+    instagram: "",
   });
+
+  const onChangeInput = (e) => {
+    setDataPost({
+      ...dataPost,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const onChangeEventDjs = (event, value) => {
     let arrayDjs = [];
@@ -129,8 +138,19 @@ function CreatePromotersPage() {
             Option="Géneros musicales"
             Array={types}
             OnChange={onChangeEventType}
-            Margin="10px 0px 32px 0px"
+            Margin="10px 0px 0px 0px"
             Error={errorGeneros}
+          />
+        </div>
+
+        <div className={styles.containerSelect}>
+          <InputFilled
+            OnChange={onChangeInput}
+            Name="instagram"
+            Value={dataPost.name}
+            Placeholder="escribi el instagram"
+            Label="escribi el instagram"
+            Margin="10px 0px 25px 0px"
           />
         </div>
 
