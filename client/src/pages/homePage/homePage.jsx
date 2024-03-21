@@ -208,11 +208,11 @@ function HomePage() {
             <div style={{ marginBottom: "12px" }}>
               <EventCard
                 key={index}
-                Tittle={event.event_djs}
+                Tittle={event.djs}
                 SecondTittle={event.name}
                 Img={event.image_url}
                 Location={event.venue}
-                Genre={event.event_type}
+                Genre={event.types}
                 OnClick={() => onClickEventCard(event)}
                 ID={event.id}
               />
@@ -585,10 +585,10 @@ function HomePage() {
     }));
     let arrayTypes = filter.types;
 
-    if (arrayTypes.includes(item.name)) {
-      arrayTypes = arrayTypes.filter((type) => type !== item.name);
+    if (arrayTypes.some(type => type.id === item.id)) {
+      arrayTypes = arrayTypes.filter((type) => type.id !== item.id);
     } else {
-      arrayTypes.push(item.name);
+      arrayTypes.push(item);
     }
 
     setFilter(() => ({
@@ -878,9 +878,9 @@ function HomePage() {
               <ButtonPickerSelected
                 Value={
                   filter.types.length > 1
-                    ? filter.types[0] + " + " + (filter.types.length - 1)
+                    ? filter.types[0].name + " + " + (filter.types.length - 1)
                     : filter.types.length === 1
-                    ? filter.types[0]
+                    ? filter.types[0].name
                     : "Género"
                 }
                 OnClick={onClickOpenGenero}
