@@ -47,8 +47,6 @@ function CreateFormPage() {
     event_promoter: [],
   });
 
-  console.log(dataPost);
-
   useEffect(() => {
     if (!cities) {
       axios
@@ -266,8 +264,6 @@ function CreateFormPage() {
 
       let titleName = arrayDjsName.join(" | ");
 
-      console.log(idDjs);
-
       setErrorLineUp("");
       setStringDjs(arrayDjsName);
       setDataPost({
@@ -287,6 +283,23 @@ function CreateFormPage() {
     };
 
     const onChangeDataInput = (e) => {
+
+      /*
+      if (e.target.name === "ticket_link") {
+        axios
+          .post(`${axiosUrl}/check-link/`, {
+            link: e.target.value,
+          })
+          .then((res) => {
+            Alert("", "Ya existe el link", "");
+            console.log(res.data);
+          })
+          .catch((err) => {
+            Alert("Error!", `Error`, "error");
+          });
+      }
+      */
+
       if (e.target.name === "ticket_link" && errorEnlace) {
         setErrorEnlace("");
       }
