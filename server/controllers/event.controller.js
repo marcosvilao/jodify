@@ -54,8 +54,6 @@ const getEvents = async (req, res, next) => {
   }
 };
 
-
-
 const createEvent = async (req, res) => {
   try {
     const {
@@ -70,22 +68,26 @@ const createEvent = async (req, res) => {
       ticket_link,
     } = req.body.event;
 
-    let typesIDs = event_type.length > 0 ? event_type.map(type => type.id) : null;
-    let djsIDs = event_djs.length > 0 ? event_djs.map(dj => dj.id) : null;
-    let promotersIDs = event_promoter.length > 0 ? event_promoter.map(promoter => promoter.id) : null;
-    let cityID = event_city.id
+    let typesIDs =
+      event_type.length > 0 ? event_type.map((type) => type.id) : null;
+    let djsIDs = event_djs.length > 0 ? event_djs.map((dj) => dj.id) : null;
+    let promotersIDs =
+      event_promoter.length > 0
+        ? event_promoter.map((promoter) => promoter.id)
+        : null;
+    let cityID = event_city.id;
 
     const formattedEventDate = new Date(date_from);
     formattedEventDate.setHours(9, 0, 0);
 
     const event = {
-      id : uuidv4(),
+      id: uuidv4(),
       name,
       date_from,
       venue,
       ticket_link,
       image_url,
-    }
+    };
 
     const query = `
           INSERT INTO events(id, name, date_from, venue, ticket_link, image_url, city_id)
@@ -145,8 +147,6 @@ const createEvent = async (req, res) => {
         await pool.query(query, IDs);
       }
     }
-
-
 
     res
       .status(201)
@@ -257,9 +257,9 @@ const scrapLink = async (req, res) => {
 const filterEventsNew = async (req, res) => {
   try {
     const { dates, cities, types, search, page } = req.body;
-    console.log(req.body)
-    console.log(types)
-    const mappedTypes = types.map(type => type?.id)
+    console.log(req.body);
+    console.log(types);
+    const mappedTypes = types.map((type) => type?.id);
     const setOff = page * 20;
     const currentDate = new Date();
     currentDate.setDate(currentDate.getDate() - 1);
@@ -359,8 +359,10 @@ const filterEventsNew = async (req, res) => {
     }
 
     if (mappedTypes && mappedTypes.length > 0) {
-      console.log('Filtering by event types');
-      const typePlaceholders = mappedTypes.map((_, index) => `$${paramCount + index}`).join(", ");
+      console.log("Filtering by event types");
+      const typePlaceholders = mappedTypes
+        .map((_, index) => `$${paramCount + index}`)
+        .join(", ");
       query += ` AND EXISTS (
         SELECT 1 FROM event_types et
         WHERE et.event_id = e.id AND et.type_id IN (${typePlaceholders})
@@ -397,8 +399,8 @@ const filterEventsNew = async (req, res) => {
 
     query += `GROUP BY e.id, mp.priority, ed.djs, et.types ORDER BY e.date_from ASC,mp.priority ASC, e.id ASC LIMIT 20 OFFSET $${paramCount}`;
     values.push(setOff);
-    console.log(query)
-    console.log(values)
+    console.log(query);
+    console.log(values);
     const result = await pool.query(query, values);
     const events = result.rows;
 
@@ -423,25 +425,24 @@ const filterEventsNew = async (req, res) => {
 
 const updateEventInteraction = async (req, res) => {
   try {
-    const {id} = req.params
-    let event = await pool.query(`SELECT * FROM events WHERE id = '${id}'`)
-    event = event.rows[0]
-    if(event){
-      const interactions = event.interactions + 1
-      await pool.query(`UPDATE events SET interactions = ${interactions} WHERE id = '${id}';`)
-      res.status(200).json({message : 'Interaction added'});
+    const { id } = req.params;
+    let event = await pool.query(`SELECT * FROM events WHERE id = '${id}'`);
+    event = event.rows[0];
+    if (event) {
+      const interactions = event.interactions + 1;
+      await pool.query(
+        `UPDATE events SET interactions = ${interactions} WHERE id = '${id}';`
+      );
+      res.status(200).json({ message: "Interaction added" });
     }
-    
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-
-}
+};
 
 const checkLinkDuplicate = async (req, res) => {
-
   try {
-    const {link} = req.body
+    const { link } = req.body;
     const querydate = "SELECT ticket_link FROM events WHERE ticket_link = $1";
     const valuesLink = [link];
 
@@ -453,21 +454,13 @@ const checkLinkDuplicate = async (req, res) => {
       !duplicateEvent[0]?.ticket_link.toLowerCase().includes("instagram") &&
       !duplicateEvent[0]?.ticket_link.toLowerCase().includes("espacioro")
     ) {
-      res.status(404).send({ message: "Ya existe este evento" });
+      res.status(200).send({ message: "Ya existe este evento" });
       return;
     }
-
-    
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-
-  
-}
-
-
-
-
+};
 
 module.exports = {
   getEvents,
@@ -478,5 +471,5 @@ module.exports = {
   scrapLink,
   filterEventsNew,
   updateEventInteraction,
-  checkLinkDuplicate
+  checkLinkDuplicate,
 };

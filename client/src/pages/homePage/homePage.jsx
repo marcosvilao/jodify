@@ -50,9 +50,7 @@ function HomePage() {
         .post(`${axiosUrl}/events/filtersNew`, filter)
         .then((res) => {
           const sortArray = res.data;
-          console.log(sortArray);
           sortArray.forEach((dateInfo) => {
-            console.log(dateInfo);
             Object.keys(dateInfo).forEach((date) => {
               dateInfo[date].sort((a, b) => {
                 // Encuentra la prioridad más baja (mayor prioridad) en los promoters de 'a'
@@ -185,10 +183,19 @@ function HomePage() {
 
       let objectName = Object.keys(dataEventCard[i])[0];
 
-      const onClickEventCard = (clickedEvent) => {
-        if (clickedEvent && clickedEvent.ticket_link) {
-          window.open(clickedEvent.ticket_link, "_blank");
+      const onClickEventCard = (event) => {
+        if (event && event.ticket_link) {
+          window.open(event.ticket_link, "_blank");
         }
+
+        axios
+          .put(`${axiosUrl}/add-interaction/${event.id}`)
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch(() => {
+            Alert("Error!", "Error", "error");
+          });
       };
 
       const additionalClass = i === 0 ? styles.firstElement : "";
@@ -585,7 +592,7 @@ function HomePage() {
     }));
     let arrayTypes = filter.types;
 
-    if (arrayTypes.some(type => type.id === item.id)) {
+    if (arrayTypes.some((type) => type.id === item.id)) {
       arrayTypes = arrayTypes.filter((type) => type.id !== item.id);
     } else {
       arrayTypes.push(item);

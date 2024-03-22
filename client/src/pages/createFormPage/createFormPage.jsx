@@ -47,8 +47,6 @@ function CreateFormPage() {
     event_promoter: [],
   });
 
-  console.log(dataPost);
-
   useEffect(() => {
     if (!cities) {
       axios
@@ -266,8 +264,6 @@ function CreateFormPage() {
 
       let titleName = arrayDjsName.join(" | ");
 
-      console.log(idDjs);
-
       setErrorLineUp("");
       setStringDjs(arrayDjsName);
       setDataPost({
@@ -287,6 +283,19 @@ function CreateFormPage() {
     };
 
     const onChangeDataInput = (e) => {
+      if (e.target.name === "ticket_link") {
+        axios
+          .post(`${axiosUrl}/check-link/`, {
+            link: e.target.value,
+          })
+          .then((res) => {
+            Alert("", `${res.data.message}`, "");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+
       if (e.target.name === "ticket_link" && errorEnlace) {
         setErrorEnlace("");
       }
@@ -304,90 +313,78 @@ function CreateFormPage() {
     const onChangeDataInput2 = (e) => {
       var valueInput = e.target.value;
 
-      if (e.target.name === "ticket_link" && errorEnlace) {
-        setErrorEnlace("");
-      }
+      axios
+        .post(`${axiosUrl}/check-link/`, {
+          link: valueInput,
+        })
+        .then((res) => {
+          Alert("", `${res.data.message}`, "");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
 
-      if (e.target.name === "venue" && errorDireccion) {
-        setErrorDireccion("");
-      }
+      setLoaderPupeteer(true);
+      axios
+        .post(axiosUrl + "/get-event-data", {
+          link: valueInput,
+        })
+        .then((res) => {
+          console.log(res.data);
+          if (valueInput.includes("ticketpass")) {
+            console.log("Ticketpass");
+            setDatePupeteer(res.data.date);
+            setDataPost((prevDataPost) => ({
+              ...prevDataPost,
+              venue: res.data.location,
+              image_url: res.data.image,
+              ticket_link: valueInput,
+              date_from: res.data.date,
+              name: res.data.tittle,
+            }));
+            setLoaderPupeteer(false);
+          } else if (valueInput.includes("passline")) {
+            console.log("Passline");
+            setDatePupeteer(res.data.date);
+            setDataPost((prevDataPost) => ({
+              ...prevDataPost,
+              venue: res.data.location,
+              image_url: res.data.image,
+              ticket_link: valueInput,
+              date_from: res.data.date,
+              name: res.data.tittle,
+            }));
+            setLoaderPupeteer(false);
+          } else if (valueInput.includes("venti")) {
+            console.log("Venti");
+            let fecha = res.data.date;
 
-      if (e.target.name === "ticket_link") {
-        setLoaderPupeteer(true);
-        axios
-          .post(axiosUrl + "/get-event-data", {
-            link: valueInput,
-          })
-          .then((res) => {
-            console.log(res.data);
-            if (valueInput.includes("ticketpass")) {
-              console.log("Ticketpass");
-              setDatePupeteer(res.data.date);
-              setDataPost((prevDataPost) => ({
-                ...prevDataPost,
-                venue: res.data.location,
-                image_url: res.data.image,
-                ticket_link: valueInput,
-                date_from: res.data.date,
-                name: res.data.tittle,
-              }));
-              setLoaderPupeteer(false);
-            } else if (valueInput.includes("passline")) {
-              console.log("Passline");
-              setDatePupeteer(res.data.date);
-              setDataPost((prevDataPost) => ({
-                ...prevDataPost,
-                venue: res.data.location,
-                image_url: res.data.image,
-                ticket_link: valueInput,
-                date_from: res.data.date,
-                name: res.data.tittle,
-              }));
-              setLoaderPupeteer(false);
-            } else if (valueInput.includes("venti")) {
-              console.log("Venti");
-              let fecha = res.data.date;
+            if (fecha) {
+              let horario = res.data.horario.split(":");
+              let horas = horario[0];
 
-              if (fecha) {
-                let horario = res.data.horario.split(":");
-                let horas = horario[0];
-
-                if (horas === "12" || horas === "01" || horas === "02") {
-                  let splitFecha = fecha.split("-");
-                  fecha = `${splitFecha[0]}-${splitFecha[1] - 1}-${
-                    splitFecha[2]
-                  }`;
-                }
-              } else {
-                fecha = "";
+              if (horas === "12" || horas === "01" || horas === "02") {
+                let splitFecha = fecha.split("-");
+                fecha = `${splitFecha[0]}-${splitFecha[1] - 1}-${
+                  splitFecha[2]
+                }`;
               }
-
-              setDatePupeteer(fecha);
-              setDataPost((prevDataPost) => ({
-                ...prevDataPost,
-                venue: res.data.location,
-                image_url: res.data.image,
-                ticket_link: valueInput,
-                date_from: fecha,
-                name: res.data.tittle,
-              }));
-              setLoaderPupeteer(false);
             } else {
-              Alert("", "El link proporcionado es incorrecto", "");
-              setLoaderPupeteer(false);
-              setDatePupeteer("");
-              setDataPost((prevDataPost) => ({
-                ...prevDataPost,
-                venue: "",
-                image_url: "",
-                name: "",
-                date_from: "",
-                ticket_link: valueInput,
-              }));
+              fecha = "";
             }
-          })
-          .catch((err) => {
-            Alert("Error!", err, "error");
+
+            setDatePupeteer(fecha);
+            setDataPost((prevDataPost) => ({
+              ...prevDataPost,
+              venue: res.data.location,
+              image_url: res.data.image,
+              ticket_link: valueInput,
+              date_from: fecha,
+              name: res.data.tittle,
+            }));
+            setLoaderPupeteer(false);
+          } else {
+            Alert("", "El link proporcionado es incorrecto", "");
             setLoaderPupeteer(false);
             setDatePupeteer("");
             setDataPost((prevDataPost) => ({
@@ -398,8 +395,21 @@ function CreateFormPage() {
               date_from: "",
               ticket_link: valueInput,
             }));
-          });
-      }
+          }
+        })
+        .catch((err) => {
+          Alert("Error!", err, "error");
+          setLoaderPupeteer(false);
+          setDatePupeteer("");
+          setDataPost((prevDataPost) => ({
+            ...prevDataPost,
+            venue: "",
+            image_url: "",
+            name: "",
+            date_from: "",
+            ticket_link: valueInput,
+          }));
+        });
     };
 
     const onSubmit = () => {
