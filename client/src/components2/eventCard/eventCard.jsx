@@ -14,7 +14,7 @@ function EventCard(props) {
     <a
       className={styles.body}
       onClick={props.OnClick}
-      id="eventCard"
+      id={props.ID}
       style={{ cursor: props.Link ? "default" : "pointer" }}
     >
       {!props.Img ? (
