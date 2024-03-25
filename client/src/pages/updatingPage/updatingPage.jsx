@@ -6,7 +6,13 @@ function UpadatingPage() {
   return (
     <div className={styles.body}>
       <div className={styles.container}>
-        <HandymanIcon className={styles.icon} />
+        <HandymanIcon
+          sx={{
+            color: "white",
+            width: "50px",
+            height: "50px",
+          }}
+        />
         <h1 className={styles.h1Repeair}>
           Estamos relizando tareas de mantenmiento por favor ingresar nuevamente
           en unos minutos
