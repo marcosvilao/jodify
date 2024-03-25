@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Header from "./components2/header/header.jsx";
 import HomePage from "./pages/homePage/homePage.jsx";
+import UpadatingPage from "./pages/updatingPage/updatingPage.jsx";
 import LoginPage from "./pages/loginPage/loginPage.jsx";
 import RegisterPage from "./pages/registerPage/registerPage.jsx";
 import ResetPasswordPage from "./pages/reset-passwordPage/resetPasswordPage.jsx";
