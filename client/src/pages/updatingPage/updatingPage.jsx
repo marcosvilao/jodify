@@ -14,8 +14,8 @@ function UpadatingPage() {
           }}
         />
         <h1 className={styles.h1Repeair}>
-          Estamos relizando tareas de mantenmiento por favor ingresar nuevamente
-          en unos minutos
+          Estamos realizando tareas de mantenimiento, por favor ingresar
+          nuevamente en unos minutos
         </h1>
 
         <h3 className={styles.h3Repeair}>Disculpe las molestias</h3>
