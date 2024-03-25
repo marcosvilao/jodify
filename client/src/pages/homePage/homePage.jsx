@@ -183,10 +183,19 @@ function HomePage() {
 
       let objectName = Object.keys(dataEventCard[i])[0];
 
-      const onClickEventCard = (clickedEvent) => {
-        if (clickedEvent && clickedEvent.ticket_link) {
-          window.open(clickedEvent.ticket_link, "_blank");
+      const onClickEventCard = (event) => {
+        if (event && event.ticket_link) {
+          window.open(event.ticket_link, "_blank");
         }
+
+        axios
+          .put(`${axiosUrl}/add-interaction/${event.id}`)
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch(() => {
+            Alert("Error!", "Error", "error");
+          });
       };
 
       const additionalClass = i === 0 ? styles.firstElement : "";
@@ -206,11 +215,11 @@ function HomePage() {
             <div style={{ marginBottom: "12px" }}>
               <EventCard
                 key={index}
-                Tittle={event.event_djs}
-                SecondTittle={event.event_title}
-                Img={event.event_image}
-                Location={event.event_location}
-                Genre={event.event_type}
+                Tittle={event.djs}
+                SecondTittle={event.name}
+                Img={event.image_url}
+                Location={event.venue}
+                Genre={event.types}
                 OnClick={() => onClickEventCard(event)}
                 ID={event.id}
               />
@@ -583,10 +592,10 @@ function HomePage() {
     }));
     let arrayTypes = filter.types;
 
-    if (arrayTypes.includes(item.type_name)) {
-      arrayTypes = arrayTypes.filter((type) => type !== item.type_name);
+    if (arrayTypes.some((type) => type.id === item.id)) {
+      arrayTypes = arrayTypes.filter((type) => type.id !== item.id);
     } else {
-      arrayTypes.push(item.type_name);
+      arrayTypes.push(item);
     }
 
     setFilter(() => ({
@@ -876,9 +885,9 @@ function HomePage() {
               <ButtonPickerSelected
                 Value={
                   filter.types.length > 1
-                    ? filter.types[0] + " + " + (filter.types.length - 1)
+                    ? filter.types[0].name + " + " + (filter.types.length - 1)
                     : filter.types.length === 1
-                    ? filter.types[0]
+                    ? filter.types[0].name
                     : "Género"
                 }
                 OnClick={onClickOpenGenero}

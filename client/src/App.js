@@ -1,8 +1,8 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import WeekEventsPage from "./pages/weekEventsPage/weekEventsPage.jsx";
 import Header from "./components2/header/header.jsx";
 import HomePage from "./pages/homePage/homePage.jsx";
+import UpadatingPage from "./pages/updatingPage/updatingPage.jsx";
 import LoginPage from "./pages/loginPage/loginPage.jsx";
 import RegisterPage from "./pages/registerPage/registerPage.jsx";
 import ResetPasswordPage from "./pages/reset-passwordPage/resetPasswordPage.jsx";
@@ -18,7 +18,7 @@ function App() {
     <div>
       <Header />
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<UpadatingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register-user" element={<RegisterPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
@@ -27,7 +27,6 @@ function App() {
           element={<LinkResetPasswordPage />}
         />
         <Route path="/register-promoter" element={<RegisterPromoterPage />} />
-        <Route path="/week-events" element={<WeekEventsPage />} />
         <Route path="/create-event" element={<CreateEventPage />} />
         <Route path="/create-promoter" element={<CreatePromotersPage />} />
         <Route path="/create-djs" element={<CreateDjsPage />} />

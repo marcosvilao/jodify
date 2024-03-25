@@ -1,31 +1,30 @@
 const chromium = require("@sparticuz/chromium");
 const puppeteer = require("puppeteer-extra");
 const moment = require("moment-timezone");
+require("dotenv").config();
 //const StealthPlugin = require("puppeteer-extra-plugin-stealth");
 
 //puppeteer.use(StealthPlugin());
 
 const linkScrap = async (link) => {
+  const SCRAPPING = process.env.SCRAPPING;
   let browser = null;
   try {
-    // DEPLOY
-
-    browser = await puppeteer.launch({
-      args: chromium.args,
-      defaultViewport: chromium.defaultViewport,
-      executablePath: await chromium.executablePath(),
-      headless: chromium.headless,
-      ignoreHTTPSErrors: true,
-    });
-
-    // LOCAL
-    /*
-    browser = await puppeteer.launch({
-      executablePath:
-        "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
-      headless: true,
-    });
-    */
+    if (SCRAPPING) {
+      browser = await puppeteer.launch({
+        args: chromium.args,
+        defaultViewport: chromium.defaultViewport,
+        executablePath: await chromium.executablePath(),
+        headless: chromium.headless,
+        ignoreHTTPSErrors: true,
+      });
+    } else {
+      browser = await puppeteer.launch({
+        executablePath:
+          "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+        headless: true,
+      });
+    }
 
     const page = await browser.newPage();
     await page.setUserAgent(
@@ -235,18 +234,34 @@ const linkScrap = async (link) => {
       let horario = "";
 
       try {
-        await page.waitForSelector(".descriptionImage", { timeout: 10000 });
-        await page.waitForSelector(".jss49", { timeout: 10000 });
-        await page.waitForSelector(".jss51", { timeout: 10000 });
+        await page.waitForSelector(".jss96", { timeout: 10000 });
+        await page.waitForSelector(".jss97", { timeout: 10000 });
+        await page.waitForSelector(".jss99", { timeout: 10000 });
 
-        let divTittle = await page.$(".jss49");
-
+        let divTittle = await page.$(".jss97");
         if (divTittle) {
-          tittle = await divTittle.$eval("h6", (h6) => h6.textContent.trim());
+          try {
+            tittle = await divTittle.$eval("h6", (h6) => h6.textContent.trim());
+          } catch (error) {
+            tittle = "";
+            console.log(error);
+          }
+        }
+
+        try {
+          jpgImgSrc = await page.evaluate(() => {
+            const imgElement = document.querySelector(".jss96");
+            return imgElement && imgElement.src.toLowerCase().endsWith(".jpg")
+              ? imgElement.src
+              : "";
+          });
+        } catch (error) {
+          jpgImgSrc = "";
+          console.log(error);
         }
 
         const results1 = await page.evaluate(() => {
-          const elements = Array.from(document.querySelectorAll(".jss51"));
+          const elements = Array.from(document.querySelectorAll(".jss99"));
           let dateText = "";
           let location = "";
           let horario = "";
@@ -269,31 +284,36 @@ const linkScrap = async (link) => {
         dateText = results1.dateText;
         location = results1.location;
         horario = results1.horario;
-
-        jpgImgSrc = await page.evaluate(() => {
-          const imgElement = document.querySelector(".descriptionImage");
-          return imgElement && imgElement.src.toLowerCase().endsWith(".jpg")
-            ? imgElement.src
-            : "";
-        });
       } catch (error) {
-        console.log(
-          "Intentando con el segundo conjunto de selectores debido a: ",
-          error.message
-        );
+        console.log(error);
+        await page.waitForSelector(".jss49", { timeout: 10000 });
+        await page.waitForSelector(".jss50", { timeout: 10000 });
+        await page.waitForSelector(".jss52", { timeout: 10000 });
 
-        await page.waitForSelector(".descriptionImage", { timeout: 10000 });
-        await page.waitForSelector(".jss97", { timeout: 10000 });
-        await page.waitForSelector(".jss95", { timeout: 10000 });
-
-        let divTittle = await page.$(".jss95");
-
+        let divTittle = await page.$(".jss50");
         if (divTittle) {
-          tittle = await divTittle.$eval("h6", (h6) => h6.textContent.trim());
+          try {
+            tittle = await divTittle.$eval("h6", (h6) => h6.textContent.trim());
+          } catch (error) {
+            tittle = "";
+            console.log(error);
+          }
         }
 
-        const results2 = await page.evaluate(() => {
-          const elements = Array.from(document.querySelectorAll(".jss97"));
+        try {
+          jpgImgSrc = await page.evaluate(() => {
+            const imgElement = document.querySelector(".jss49");
+            return imgElement && imgElement.src.toLowerCase().endsWith(".jpg")
+              ? imgElement.src
+              : "";
+          });
+        } catch (error) {
+          jpgImgSrc = "";
+          console.log(error);
+        }
+
+        const results1 = await page.evaluate(() => {
+          const elements = Array.from(document.querySelectorAll(".jss52"));
           let dateText = "";
           let location = "";
           let horario = "";
@@ -313,51 +333,49 @@ const linkScrap = async (link) => {
           return { dateText, location, horario };
         });
 
-        dateText = results2.dateText;
-        location = results2.location;
-        horario = results2.horario;
-
-        jpgImgSrc = await page.evaluate(() => {
-          const imgElement = document.querySelector(".descriptionImage");
-          return imgElement && imgElement.src.toLowerCase().endsWith(".jpg")
-            ? imgElement.src
-            : "";
-        });
+        dateText = results1.dateText;
+        location = results1.location;
+        horario = results1.horario;
       }
 
-      let parts = dateText.split("/");
-      var mesMoment;
-      var dayMoment;
-      var yearMoment = parts[2];
+      if (dateText.length) {
+        let parts = dateText.split("/");
+        var mesMoment;
+        var dayMoment;
+        var yearMoment = parts[2];
 
-      if (parts[0].length === 1) {
-        mesMoment = `0${parts[0]}`;
+        if (parts[0].length === 1) {
+          mesMoment = `0${parts[0]}`;
+        } else {
+          mesMoment = `${parts[0]}`;
+        }
+
+        if (parts[1].length === 1) {
+          dayMoment = `0${parts[1]}`;
+        } else {
+          dayMoment = `${parts[1]}`;
+        }
+
+        const newDateText = `${yearMoment}-${mesMoment}-${dayMoment}`;
+        let fecha = moment(newDateText);
+        let fechaFormateada = fecha.format("MM-DD-YYYY");
+
+        return {
+          image: jpgImgSrc,
+          date: fechaFormateada,
+          location: location,
+          tittle: tittle,
+          horario: horario,
+        };
       } else {
-        mesMoment = `${parts[0]}`;
+        return {
+          image: jpgImgSrc,
+          date: dateText,
+          location: location,
+          tittle: tittle,
+          horario: horario,
+        };
       }
-
-      if (parts[1].length === 1) {
-        dayMoment = `0${parts[1]}`;
-      } else {
-        dayMoment = `${parts[1]}`;
-      }
-
-      const newDateText = `${yearMoment}-${mesMoment}-${dayMoment}`;
-      let fecha = moment(newDateText);
-      let fechaFormateada = fecha.format("MM-DD-YYYY");
-
-      console.log(`Fecha del scrapping: ${dateText}`);
-      console.log(`Fecha preparada para formatear: ${newDateText}`);
-      console.log(`Fecha moments: ${fecha}`);
-      console.log(`Fecha formateada: ${fechaFormateada}`);
-
-      return {
-        image: jpgImgSrc,
-        date: fechaFormateada,
-        location: location,
-        tittle: tittle,
-        horario: horario,
-      };
     }
   } catch (error) {
     console.error("Error en linkScrap:", error);

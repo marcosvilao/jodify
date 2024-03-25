@@ -3,6 +3,7 @@ import styles from "./createDjs.module.css";
 import axios from "axios";
 import Alert from "../../components2/alert/alert";
 import SelectMaterial from "../../components2/selectMaterial/selectMaterial";
+import InputFilled from "../../components2/inputMaterial/inputMaterial";
 import ButtonBlue from "../../components2/ButtonCreateEvents/button";
 import TittleH1 from "../../components2/tittleH1Auth/tittleH1";
 import Loader from "../../components2/loader/loader";
@@ -14,10 +15,19 @@ function CreatePromotersPage() {
   const [types, setTypes] = useState(false);
   const [errorLineUp, setErrorLineUp] = useState("");
   const [errorGeneros, setErrorGeneros] = useState("");
+  const [errorInstagram, setErrorInstagram] = useState("");
   const [dataPost, setDataPost] = useState({
-    event_type: [],
-    event_djs: [],
+    type: [],
+    name: [],
+    instagram: "",
   });
+
+  const onChangeInput = (e) => {
+    setDataPost({
+      ...dataPost,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const onChangeEventDjs = (event, value) => {
     let arrayDjs = [];
@@ -32,7 +42,7 @@ function CreatePromotersPage() {
     setErrorLineUp("");
     setDataPost({
       ...dataPost,
-      event_djs: arrayDjs,
+      name: arrayDjs,
     });
   };
 
@@ -49,24 +59,32 @@ function CreatePromotersPage() {
     setErrorGeneros("");
     setDataPost({
       ...dataPost,
-      event_type: arrayTypes,
+      type: arrayTypes,
     });
   };
 
   const onSubmit = () => {
     setLoader(true);
-    if (dataPost.event_type.length === 0 || dataPost.event_djs.length === 0) {
+    if (dataPost.type.length === 0 || dataPost.name.length === 0) {
       Alert("", "Completar todos los campos", "");
       setLoader(false);
 
-      if (dataPost.event_djs.length === 0) {
+      if (dataPost.type.length === 0) {
         setErrorLineUp("Completar campo");
       }
 
-      if (dataPost.event_type.length === 0) {
+      if (dataPost.name.length === 0) {
         setErrorGeneros("Completar campo");
       }
+
+      if (dataPost.instagram.length === 0) {
+        setErrorInstagram("Completar campo");
+      }
     } else {
+      let callbackAlert = () => {
+        window.location.reload();
+      };
+      Alert("Success!", "Dj creado correctamente!", "success", callbackAlert);
       setLoader(false);
     }
   };
@@ -78,7 +96,7 @@ function CreatePromotersPage() {
         .then((res) => {
           const arrayTypes = [];
           res.data.map((type) => {
-            arrayTypes.push({ value: type.type_name });
+            arrayTypes.push({ value: type.name });
           });
           setTypes(arrayTypes);
         })
@@ -129,8 +147,20 @@ function CreatePromotersPage() {
             Option="Géneros musicales"
             Array={types}
             OnChange={onChangeEventType}
-            Margin="10px 0px 32px 0px"
+            Margin="10px 0px 0px 0px"
             Error={errorGeneros}
+          />
+        </div>
+
+        <div className={styles.containerSelect}>
+          <InputFilled
+            OnChange={onChangeInput}
+            Name="instagram"
+            Value={dataPost.instagram}
+            Placeholder="escribi el instagram"
+            Label="escribi el instagram"
+            Margin="10px 0px 25px 0px"
+            Error={errorInstagram}
           />
         </div>
 

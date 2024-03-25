@@ -2,7 +2,7 @@ const pool = require('../db')
 
 const getDjs = async (req, res, next) => {
     try {
-        const allDjs = await pool.query('SELECT name FROM djs ORDER BY "name" ASC')
+        const allDjs = await pool.query('SELECT * FROM djs ORDER BY "name" ASC')
 
         if (allDjs.rows) {
             res.status(200).json(allDjs.rows);

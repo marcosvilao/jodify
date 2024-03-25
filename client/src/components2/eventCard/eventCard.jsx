@@ -8,12 +8,13 @@ function EventCard(props) {
   if (props.Tittle && props.Tittle.length) {
     stringDjs = props.Tittle.map((objeto) => objeto).join(" | ");
   }
+  const genreNames = props.Genre?.map(genre => genre.name).join(" | ");
 
   return (
     <a
       className={styles.body}
       onClick={props.OnClick}
-      id="eventCard"
+      id={props.ID}
       style={{ cursor: props.Link ? "default" : "pointer" }}
     >
       {!props.Img ? (
@@ -67,8 +68,8 @@ function EventCard(props) {
               color: props.Color ? props.Color : "#c18fff",
             }}
           />
-          {props.Genre ? (
-            <p>{props.Genre}</p>
+          {genreNames ? (
+            <p>{genreNames}</p>
           ) : (
             <p style={{ opacity: "0.4" }}>Género musical</p>
           )}

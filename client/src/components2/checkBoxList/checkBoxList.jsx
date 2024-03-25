@@ -5,7 +5,20 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Checkbox from "@mui/material/Checkbox";
 import ListItemText from "@mui/material/ListItemText";
+import { createTheme } from "@mui/material/styles";
 import theme from "../../jodifyStyles";
+
+const themes = createTheme({
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 500,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
+    },
+  },
+});
 
 function CheckBoxList({ cityList, typeList, checkedItems, OnClick, OnClose }) {
   const listRef = useRef(null);
@@ -64,16 +77,18 @@ function CheckBoxList({ cityList, typeList, checkedItems, OnClick, OnClose }) {
                     justifyContent: "center",
                     alignItems: "center",
                     color: theme.jodify_colors._text_white,
-                    "&:hover": {
-                      color: "#c18fff",
-                      bgcolor: "#000000",
-                      "& .MuiCheckbox-root, & .MuiTypography-root": {
-                        transform: "scale(1.1)",
-                      },
-                    },
                     ...(isChecked && {
                       color: "#c18fff",
                     }),
+                    [themes.breakpoints.up("sm")]: {
+                      "&:hover": {
+                        color: "#c18fff",
+                        bgcolor: "#000000",
+                        "& .MuiCheckbox-root, & .MuiTypography-root": {
+                          transform: "scale(1.1)",
+                        },
+                      },
+                    },
                   }}
                   role={undefined}
                   dense
@@ -95,7 +110,7 @@ function CheckBoxList({ cityList, typeList, checkedItems, OnClick, OnClose }) {
                   </ListItemIcon>
                   <ListItemText
                     id={labelId}
-                    primary={isCityList ? item.city_name : item.type_name}
+                    primary={isCityList ? item.city_name : item.name}
                   />
                 </ListItemButton>
               </ListItem>

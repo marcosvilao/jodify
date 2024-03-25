@@ -27,18 +27,21 @@ function CreateFormPage() {
   const [errorFile, setErrorFile] = useState("");
   const [cities, setCities] = useState(false);
   const [filterCities, setFilterCities] = useState(false);
+  const [dataTypes, setDataTypes] = useState(false);
   const [types, setTypes] = useState(false);
+  const [stringDjs, setStringDjs] = useState([]);
+  const [dataDjs, setDataDjs] = useState(false);
   const [djs, setDjs] = useState(false);
   const [promoters, setPromoters] = useState(false);
   const [dataPromoters, setDataPromoters] = useState(false);
-  const [dataCardType, setDataCardType] = useState("");
+  const [dataCardType, setDataCardType] = useState([]);
   const [dataPost, setDataPost] = useState({
-    event_title: "",
+    name: "",
     event_type: [],
-    event_date: "",
-    event_location: "",
+    date_from: "",
+    venue: "",
     ticket_link: "",
-    event_image: "",
+    image_url: "",
     event_djs: [],
     event_city: "",
     event_promoter: [],
@@ -57,7 +60,7 @@ function CreateFormPage() {
           setFilterCities(res.data);
         })
         .catch(() => {
-          Alert("Error!", "Error interno del servidor", "error");
+          Alert("Error!", "Error al cargar las ciudades", "error");
         });
     }
 
@@ -67,12 +70,13 @@ function CreateFormPage() {
         .then((res) => {
           const arrayTypes = [];
           res.data.map((type) => {
-            arrayTypes.push({ value: type.type_name });
+            arrayTypes.push({ value: type.name });
           });
           setTypes(arrayTypes);
+          setDataTypes(res.data);
         })
         .catch(() => {
-          Alert("Error!", "Error interno del servidor", "error");
+          Alert("Error!", "Error al cargar los generos", "error");
         });
     }
 
@@ -91,9 +95,10 @@ function CreateFormPage() {
             newArrayDjs.push({ value: djs });
           });
           setDjs(newArrayDjs);
+          setDataDjs(res.data);
         })
         .catch(() => {
-          Alert("Error!", "Error interno del servidor", "error");
+          Alert("Error!", "Error al cargar los djs", "error");
         });
     }
 
@@ -109,12 +114,12 @@ function CreateFormPage() {
           setDataPromoters(res.data);
         })
         .catch(() => {
-          Alert("Error!", "Error interno del servidor", "error");
+          Alert("Error!", "Error al cargar las productoras", "error");
         });
     }
   }, []);
 
-  if (cities && types && djs && promoters) {
+  if (cities && types && djs && promoters && djs) {
     const onChangeEventCity = (event, value) => {
       setErrorPlace("");
       if (typeof value === "string") {
@@ -176,47 +181,95 @@ function CreateFormPage() {
     };
 
     const onChangeEventType = (event, value) => {
-      let valoresConcatenados = "";
-      let arrayTypes = [];
-      for (let i = 0; i < value.length; i++) {
-        if (value[i].value) {
-          arrayTypes.push(value[i].value);
-          if (value.length === 1) {
-            valoresConcatenados += value[i].value;
-          } else {
-            valoresConcatenados += `${value[i].value} | `;
-          }
-        } else {
-          arrayTypes.push(value[i]);
-          if (value.length === 1) {
-            valoresConcatenados += value[i];
-          } else {
-            valoresConcatenados += `${value[i]} | `;
+      let idTypes = [];
+      let nameTypes = [];
+
+      if (value.length) {
+        for (let i = 0; i < value.length; i++) {
+          for (let j = 0; j < dataTypes.length; j++) {
+            if (
+              dataTypes[j].name === value[i].value ||
+              dataTypes[j].name === value[i]
+            ) {
+              idTypes.push({
+                id: dataTypes[j].id,
+              });
+              nameTypes.push({ name: dataTypes[j].name });
+            }
           }
         }
       }
-      setDataCardType(valoresConcatenados);
+
+      setDataCardType(nameTypes);
       setErrorGeneros("");
       setDataPost({
         ...dataPost,
-        event_type: arrayTypes,
+        event_type: idTypes,
+      });
+    };
+
+    const onChangeEventPromoters = (event, value) => {
+      let idPromoters = [];
+
+      if (value.length) {
+        for (let i = 0; i < value.length; i++) {
+          for (let j = 0; j < dataPromoters.length; j++) {
+            if (
+              dataPromoters[j].name === value[i].value ||
+              dataPromoters[j].name === value[i]
+            ) {
+              idPromoters.push({
+                id: dataPromoters[j].id,
+              });
+            }
+          }
+        }
+      }
+
+      setDataPost({
+        ...dataPost,
+        event_promoter: idPromoters,
       });
     };
 
     const onChangeEventDjs = (event, value) => {
-      let arrayDjs = [];
-      for (let i = 0; i < value.length; i++) {
-        if (value[i].value) {
-          arrayDjs.push(value[i].value);
-        } else {
-          arrayDjs.push(value[i]);
+      let idDjs = [];
+      let arrayDjsName = [];
+
+      if (value.length) {
+        for (let i = 0; i < value.length; i++) {
+          for (let j = 0; j < dataDjs.length; j++) {
+            if (dataDjs[j].name === value[i].value) {
+              idDjs.push({
+                id: dataDjs[j].id,
+              });
+              arrayDjsName.push(dataDjs[j].name);
+            }
+          }
         }
       }
 
+      let arrayEntrerValues = value.map((value) => {
+        if (!value.value) {
+          return value;
+        }
+      });
+
+      for (let i = 0; i < arrayEntrerValues.length; i++) {
+        if (arrayEntrerValues[i]) {
+          idDjs.push(arrayEntrerValues[i]);
+          arrayDjsName.push(arrayEntrerValues[i]);
+        }
+      }
+
+      let titleName = arrayDjsName.join(" | ");
+
       setErrorLineUp("");
+      setStringDjs(arrayDjsName);
       setDataPost({
         ...dataPost,
-        event_djs: arrayDjs,
+        event_djs: idDjs,
+        name: titleName,
       });
     };
 
@@ -225,16 +278,29 @@ function CreateFormPage() {
       const formattedDate = dayjs(event).format("YYYY-MM-DD");
       setDataPost({
         ...dataPost,
-        event_date: formattedDate,
+        date_from: formattedDate,
       });
     };
 
     const onChangeDataInput = (e) => {
+      if (e.target.name === "ticket_link") {
+        axios
+          .post(`${axiosUrl}/check-link/`, {
+            link: e.target.value,
+          })
+          .then((res) => {
+            Alert("", `${res.data.message}`, "");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+
       if (e.target.name === "ticket_link" && errorEnlace) {
         setErrorEnlace("");
       }
 
-      if (e.target.name === "event_location" && errorDireccion) {
+      if (e.target.name === "venue" && errorDireccion) {
         setErrorDireccion("");
       }
 
@@ -247,49 +313,53 @@ function CreateFormPage() {
     const onChangeDataInput2 = (e) => {
       var valueInput = e.target.value;
 
-      if (e.target.name === "ticket_link" && errorEnlace) {
-        setErrorEnlace("");
-      }
+      axios
+        .post(`${axiosUrl}/check-link/`, {
+          link: valueInput,
+        })
+        .then((res) => {
+          Alert("", `${res.data.message}`, "");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
 
-      if (e.target.name === "event_location" && errorDireccion) {
-        setErrorDireccion("");
-      }
+      setLoaderPupeteer(true);
+      axios
+        .post(axiosUrl + "/get-event-data", {
+          link: valueInput,
+        })
+        .then((res) => {
+          console.log(res.data);
+          if (valueInput.includes("ticketpass")) {
+            console.log("Ticketpass");
+            setDatePupeteer(res.data.date);
+            setDataPost((prevDataPost) => ({
+              ...prevDataPost,
+              venue: res.data.location,
+              image_url: res.data.image,
+              ticket_link: valueInput,
+              date_from: res.data.date,
+              name: res.data.tittle,
+            }));
+            setLoaderPupeteer(false);
+          } else if (valueInput.includes("passline")) {
+            console.log("Passline");
+            setDatePupeteer(res.data.date);
+            setDataPost((prevDataPost) => ({
+              ...prevDataPost,
+              venue: res.data.location,
+              image_url: res.data.image,
+              ticket_link: valueInput,
+              date_from: res.data.date,
+              name: res.data.tittle,
+            }));
+            setLoaderPupeteer(false);
+          } else if (valueInput.includes("venti")) {
+            console.log("Venti");
+            let fecha = res.data.date;
 
-      if (e.target.name === "ticket_link") {
-        setLoaderPupeteer(true);
-        axios
-          .post(axiosUrl + "/get-event-data", {
-            link: valueInput,
-          })
-          .then((res) => {
-            console.log(res.data);
-            if (valueInput.includes("ticketpass")) {
-              console.log("Ticketpass");
-              setDatePupeteer(res.data.date);
-              setDataPost((prevDataPost) => ({
-                ...prevDataPost,
-                event_location: res.data.location,
-                event_image: res.data.image,
-                ticket_link: valueInput,
-                event_date: res.data.date,
-                event_title: res.data.tittle,
-              }));
-              setLoaderPupeteer(false);
-            } else if (valueInput.includes("passline")) {
-              console.log("Passline");
-              setDatePupeteer(res.data.date);
-              setDataPost((prevDataPost) => ({
-                ...prevDataPost,
-                event_location: res.data.location,
-                event_image: res.data.image,
-                ticket_link: valueInput,
-                event_date: res.data.date,
-                event_title: res.data.tittle,
-              }));
-              setLoaderPupeteer(false);
-            } else if (valueInput.includes("venti")) {
-              console.log("Venti");
-              let fecha = res.data.date;
+            if (fecha) {
               let horario = res.data.horario.split(":");
               let horas = horario[0];
 
@@ -299,61 +369,63 @@ function CreateFormPage() {
                   splitFecha[2]
                 }`;
               }
-
-              setDatePupeteer(fecha);
-              setDataPost((prevDataPost) => ({
-                ...prevDataPost,
-                event_location: res.data.location,
-                event_image: res.data.image,
-                ticket_link: valueInput,
-                event_date: fecha,
-                event_title: res.data.tittle,
-              }));
-              setLoaderPupeteer(false);
             } else {
-              Alert("", "El link proporcionado es incorrecto", "");
-              setLoaderPupeteer(false);
-              setDatePupeteer("");
-              setDataPost((prevDataPost) => ({
-                ...prevDataPost,
-                event_location: "",
-                event_image: "",
-                event_title: "",
-                event_date: "",
-                ticket_link: valueInput,
-              }));
+              fecha = "";
             }
-          })
-          .catch((err) => {
-            Alert("Error!", err, "error");
+
+            setDatePupeteer(fecha);
+            setDataPost((prevDataPost) => ({
+              ...prevDataPost,
+              venue: res.data.location,
+              image_url: res.data.image,
+              ticket_link: valueInput,
+              date_from: fecha,
+              name: res.data.tittle,
+            }));
+            setLoaderPupeteer(false);
+          } else {
+            Alert("", "El link proporcionado es incorrecto", "");
             setLoaderPupeteer(false);
             setDatePupeteer("");
             setDataPost((prevDataPost) => ({
               ...prevDataPost,
-              event_location: "",
-              event_image: "",
-              event_title: "",
-              event_date: "",
+              venue: "",
+              image_url: "",
+              name: "",
+              date_from: "",
               ticket_link: valueInput,
             }));
-          });
-      }
+          }
+        })
+        .catch((err) => {
+          Alert("Error!", err, "error");
+          setLoaderPupeteer(false);
+          setDatePupeteer("");
+          setDataPost((prevDataPost) => ({
+            ...prevDataPost,
+            venue: "",
+            image_url: "",
+            name: "",
+            date_from: "",
+            ticket_link: valueInput,
+          }));
+        });
     };
 
     const onSubmit = () => {
       setSubmitLoader(true);
       if (
         dataPost.event_type.length === 0 ||
-        dataPost.event_date.length === 0 ||
-        dataPost.event_location.length === 0 ||
+        dataPost.date_from.length === 0 ||
+        dataPost.venue.length === 0 ||
         dataPost.ticket_link.length === 0 ||
-        dataPost.event_image.length === 0 ||
+        dataPost.image_url.length === 0 ||
         dataPost.event_djs.length === 0 ||
         dataPost.event_city.length === 0
       ) {
         Alert("", "Completar todos los campos", "");
         setSubmitLoader(false);
-        if (dataPost.event_location.length === 0) {
+        if (dataPost.venue.length === 0) {
           setErrorDireccion("Completar campo");
         }
 
@@ -373,11 +445,11 @@ function CreateFormPage() {
           setErrorGeneros("Completar campo");
         }
 
-        if (dataPost.event_date.length === 0) {
+        if (dataPost.date_from.length === 0) {
           setErrorFecha("Completar campo");
         }
 
-        if (dataPost.event_image.length === 0) {
+        if (dataPost.image_url.length === 0) {
           setErrorFile("Completar campo");
         }
       } else {
@@ -422,7 +494,7 @@ function CreateFormPage() {
                 : data.url;
               setDataPost((dataPost) => ({
                 ...dataPost,
-                event_image: secureUrl,
+                image_url: secureUrl,
               }));
               setLoader(false);
               setErrorFile("");
@@ -440,30 +512,6 @@ function CreateFormPage() {
           setLoader(false);
         }
       }
-    };
-
-    const onChangeEventPromoters = (event, value) => {
-      let idPromoters = [];
-
-      if (value.length) {
-        for (let i = 0; i < value.length; i++) {
-          for (let j = 0; j < dataPromoters.length; j++) {
-            if (
-              dataPromoters[j].name === value[i].value ||
-              dataPromoters[j].name === value[i]
-            ) {
-              idPromoters.push({
-                id: dataPromoters[j].id,
-              });
-            }
-          }
-        }
-      }
-
-      setDataPost({
-        ...dataPost,
-        event_promoter: idPromoters,
-      });
     };
 
     const onClickEventCard = () => {
@@ -485,7 +533,7 @@ function CreateFormPage() {
       let string = dataPost.event_djs.join(" | ");
       setDataPost({
         ...dataPost,
-        event_title: string,
+        name: string,
       });
     };
 
@@ -540,14 +588,14 @@ function CreateFormPage() {
             >
               <InputFile
                 OnClick={handleFileChange}
-                File={dataPost.event_image}
+                File={dataPost.image_url}
                 Margin="32px 0px 0px 0px"
                 Error={errorFile}
               />
               <InputOutlined
                 OnChange={onChangeDataInput}
-                Name="event_image"
-                Value={dataPost.event_image}
+                Name="image_url"
+                Value={dataPost.image_url}
                 Placeholder="https://res.cloudinary.com/dqc865z8r/image/upload/v1706719017/lxfzhxfzenjfp"
                 Label="Url imagen"
                 Error={errorDireccion}
@@ -595,8 +643,8 @@ function CreateFormPage() {
             <div>
               <InputOutlined
                 OnChange={onChangeDataInput}
-                Name="event_location"
-                Value={dataPost.event_location}
+                Name="venue"
+                Value={dataPost.venue}
                 Placeholder="ej. Av. Libertador 2647 (Beccar)"
                 Label="Ubicacion"
                 Error={errorDireccion}
@@ -660,8 +708,8 @@ function CreateFormPage() {
             <div>
               <InputOutlined
                 OnChange={onChangeDataInput}
-                Name="event_title"
-                Value={dataPost.event_title}
+                Name="name"
+                Value={dataPost.name}
                 Placeholder="ej. Jodify Winter Fest"
                 Label="Nombre del evento"
                 Error=""
@@ -685,10 +733,10 @@ function CreateFormPage() {
 
           <div className={styles.containerCard}>
             <EventCard
-              Img={dataPost.event_image}
-              SecondTittle={dataPost.event_title}
-              Tittle={dataPost.event_djs}
-              Location={dataPost.event_location}
+              Img={dataPost.image_url}
+              SecondTittle={dataPost.name}
+              Tittle={stringDjs}
+              Location={dataPost.venue}
               Genre={dataCardType}
               OnClick={onClickEventCard}
               Color="#AE71F9"

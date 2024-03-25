@@ -9,8 +9,9 @@ const {
   searchEvent,
   scrapLink,
   UploadImage,
-  getEventsPromoters,
   filterEventsNew,
+  updateEventInteraction,
+  checkLinkDuplicate
 } = require("../controllers/event.controller");
 const { getCities } = require("../controllers/city.controller");
 // const {createUser, verifyUser} = require('../controllers/user.controller')
@@ -42,13 +43,15 @@ router.get("/events/search", searchEvent);
 
 router.post("/events", createEvent);
 
+router.put("/add-interaction/:id", updateEventInteraction);
+
+router.post("/check-link/", checkLinkDuplicate);
+
 router.put("/events/:id", updateEvent);
 
 router.delete("/events", deleteEvent);
 
 router.post("/get-event-data", scrapLink);
-
-router.get("/events-promoters", getEventsPromoters);
 
 router.post("/events/filtersNew", filterEventsNew);
 
