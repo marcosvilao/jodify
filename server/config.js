@@ -2,10 +2,10 @@ require("dotenv").config();
 
 const configDB = () => {
   const config = {
-    user: process.env.QA_USER,
-    host: process.env.QA_HOST,
-    password: process.env.QA_PASSWORD,
-    port: process.env.QA_PORT,
+    user: process.env.USER,
+    host: process.env.HOST,
+    password: process.env.PASSWORD,
+    port: process.env.PORT,
     ssl: true,
   };
   console.log(config);
