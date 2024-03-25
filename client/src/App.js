@@ -18,7 +18,7 @@ function App() {
     <div>
       <Header />
       <Routes>
-        <Route path="/" element={<UpadatingPage />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register-user" element={<RegisterPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
