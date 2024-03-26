@@ -10,7 +10,6 @@ const linkScrap = async (link) => {
   const SCRAPPING = process.env.SCRAPPING;
   let browser = null;
   try {
-    /*
     if (SCRAPPING) {
       browser = await puppeteer.launch({
         args: chromium.args,
@@ -26,15 +25,6 @@ const linkScrap = async (link) => {
         headless: true,
       });
     }
-    */
-
-    browser = await puppeteer.launch({
-      args: chromium.args,
-      defaultViewport: chromium.defaultViewport,
-      executablePath: await chromium.executablePath(),
-      headless: chromium.headless,
-      ignoreHTTPSErrors: true,
-    });
 
     const page = await browser.newPage();
     await page.setUserAgent(
