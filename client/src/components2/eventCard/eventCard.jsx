@@ -11,7 +11,7 @@ function EventCard(props) {
   const genreNames = props.Genre?.map(genre => genre.name).join(" | ");
 
   return (
-    <a
+    <div
       className={styles.body}
       onClick={props.OnClick}
       id={props.ID}
@@ -75,7 +75,7 @@ function EventCard(props) {
           )}
         </div>
       </div>
-    </a>
+    </div>
   );
 }
 

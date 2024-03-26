@@ -188,14 +188,11 @@ function HomePage() {
           .put(`${axiosUrl}/add-interaction/${event.id}`)
           .then((res) => {
             console.log(res.data);
+            window.open(event.ticket_link, "_blank");
           })
           .catch((error) => {
             console.log(error);
           });
-
-          if (event && event.ticket_link) {
-            window.open(event.ticket_link, "_blank");
-          }
       };
 
       const additionalClass = i === 0 ? styles.firstElement : "";
