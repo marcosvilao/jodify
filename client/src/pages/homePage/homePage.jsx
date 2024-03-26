@@ -183,11 +183,7 @@ function HomePage() {
 
       let objectName = Object.keys(dataEventCard[i])[0];
 
-      const onClickEventCard = (clickedEvent) => {
-        if (clickedEvent && clickedEvent.ticket_link) {
-          window.open(clickedEvent.ticket_link, "_blank");
-        }
-
+      const onClickEventCard = (event) => {
         axios
           .put(`${axiosUrl}/add-interaction/${event.id}`)
           .then((res) => {
@@ -196,6 +192,10 @@ function HomePage() {
           .catch((error) => {
             console.log(error);
           });
+
+          if (event && event.ticket_link) {
+            window.open(event.ticket_link, "_blank");
+          }
       };
 
       const additionalClass = i === 0 ? styles.firstElement : "";
