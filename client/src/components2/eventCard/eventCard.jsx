@@ -10,23 +10,10 @@ function EventCard(props) {
   }
   const genreNames = props.Genre?.map((genre) => genre.name).join(" | ");
 
-  const handleClickCard = async (e) => {
-    e.preventDefault();
-    if(props.TicketLink && props.OnClick) {
-      try {
-        await props.OnClick();
-        //window.open(props.TicketLink, "_blank");
-        window.open("https://www.google.com.ar/webhp", "_blank");
-      } catch (error) {
-        console.error("Error al interactuar con el evento:", error);
-      }
-    }
-  };
-
   return (
     <div
       className={styles.body}
-      onClick={(e) => handleClickCard(e)}
+      onClick={props.OnClick}
       id={props.ID}
       style={{ cursor: props.Link ? "default" : "pointer" }}
     >
