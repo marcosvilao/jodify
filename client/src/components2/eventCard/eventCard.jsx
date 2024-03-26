@@ -12,8 +12,15 @@ function EventCard(props) {
 
   const handleClickCard = async (e) => {
     e.preventDefault();
-    await props.OnClick();
-    window.open(props.TicketLink, "_blank");
+    if(props.TicketLink && props.OnClick) {
+      try {
+        await props.OnClick();
+        //window.open(props.TicketLink, "_blank");
+        window.open("https://www.google.com.ar/webhp", "_blank");
+      } catch (error) {
+        console.error("Error al interactuar con el evento:", error);
+      }
+    }
   };
 
   return (

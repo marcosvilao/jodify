@@ -184,7 +184,7 @@ function HomePage() {
       let objectName = Object.keys(dataEventCard[i])[0];
 
       const onClickEventCard = (id) => {
-        axios
+        return axios
           .put(`${axiosUrl}/add-interaction/${id}`)
           .then((res) => {
             console.log(res.data);
