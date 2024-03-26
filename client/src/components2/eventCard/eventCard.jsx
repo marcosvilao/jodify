@@ -10,10 +10,10 @@ function EventCard(props) {
   }
   const genreNames = props.Genre?.map((genre) => genre.name).join(" | ");
 
-  const handleClickCard = (e) => {
-    console.log(e);
+  const handleClickCard = async (e) => {
     e.preventDefault();
-    props.OnClick();
+    await props.OnClick();
+    window.open(props.TicketLink, "_blank");
   };
 
   return (
