@@ -193,8 +193,8 @@ function HomePage() {
           .then((res) => {
             console.log(res.data);
           })
-          .catch(() => {
-            Alert("Error!", "Error", "error");
+          .catch((error) => {
+            console.log(error);
           });
       };
 
