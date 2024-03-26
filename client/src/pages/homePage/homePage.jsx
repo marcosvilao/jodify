@@ -183,9 +183,13 @@ function HomePage() {
 
       let objectName = Object.keys(dataEventCard[i])[0];
 
-      const onClickEventCard = (id) => {
-        return axios
-          .put(`${axiosUrl}/add-interaction/${id}`)
+      const onClickEventCard = (event) => {
+        if (event && event.ticket_link) {
+          window.open(event.ticket_link, "_blank");
+        }
+
+        axios
+          .put(`${axiosUrl}/add-interaction/${event.id}`)
           .then((res) => {
             console.log(res.data);
           })
@@ -216,8 +220,7 @@ function HomePage() {
                 Img={event.image_url}
                 Location={event.venue}
                 Genre={event.types}
-                OnClick={() => onClickEventCard(event.id)}
-                TicketLink={event.ticket_link}
+                OnClick={() => onClickEventCard(event)}
                 ID={event.id}
               />
             </div>
