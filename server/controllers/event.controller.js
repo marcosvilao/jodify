@@ -130,8 +130,10 @@ const createEvent = async (req, res) => {
         `;
 
         const IDs = [insertedId, id];
+        if(id){
+          await pool.query(query, IDs);
+        }
 
-        await pool.query(query, IDs);
       }
     }
 
