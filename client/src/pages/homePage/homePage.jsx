@@ -183,9 +183,9 @@ function HomePage() {
 
       let objectName = Object.keys(dataEventCard[i])[0];
 
-      const onClickEventCard = (clickedEvent) => {
-        if (clickedEvent && clickedEvent.ticket_link) {
-          window.open(clickedEvent.ticket_link, "_blank");
+      const onClickEventCard = (event) => {
+        if (event && event.ticket_link) {
+          window.open(event.ticket_link, "_blank");
         }
 
         axios
