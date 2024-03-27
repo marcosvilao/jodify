@@ -506,6 +506,7 @@ function CreateEventPage() {
               Genre={dataCardType}
               Color="#AE71F9"
               Link="Default"
+              EventImg="true"
             />
           </div>
 
@@ -596,6 +597,7 @@ function CreateEventPage() {
               Genre={dataCardType}
               Color="#AE71F9"
               Link="Default"
+              EventImg="true"
             />
           </div>
 
