@@ -692,6 +692,7 @@ function CreateFormPage() {
             OnChange={onChangeEventDjs}
             Margin="32px 0px 0px 0px"
             Error={errorLineUp}
+            FreeSolo="true"
           />
           <p>Incluye los djs que tocaran</p>
 
