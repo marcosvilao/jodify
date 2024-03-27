@@ -189,15 +189,15 @@ function HomePage() {
           .put(`${axiosUrl}/add-interaction/${event.id}`)
           .then((res) => {
             console.log(res.data);
-            if (event && event.ticket_link) {
-              setTimeout(() => {
-                window.open(event.ticket_link, "_blank");
-              }, 100); 
-            }
           })
           .catch((error) => {
             console.log(error);
           });
+          if (event && event.ticket_link) {
+            setTimeout(() => {
+              window.open(event.ticket_link, "_blank");
+            }, 100); 
+          }
       };
 
       const additionalClass = i === 0 ? styles.firstElement : "";
