@@ -741,6 +741,7 @@ function CreateFormPage() {
               Genre={dataCardType}
               OnClick={onClickEventCard}
               Color="#AE71F9"
+              EventImg="true"
             />
           </div>
 

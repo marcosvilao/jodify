@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./eventCard.module.css";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MusicNoteIcon from "@mui/icons-material/MusicNote";
@@ -10,6 +10,20 @@ function EventCard(props) {
   }
   const genreNames = props.Genre?.map((genre) => genre.name).join(" | ");
 
+  const [backgroundImage, setBackgroundImage] = useState(
+    `url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtUrkpYuR15MZHeLQ_dTpNnG-1_uJFE4kE4FHkhAqaKw&s")`
+  );
+
+  useEffect(() => {
+    const img = new Image();
+    img.src = props.Img;
+    img.onload = () => setBackgroundImage(`url("${props.Img}")`);
+    img.onerror = () =>
+      setBackgroundImage(
+        `url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtUrkpYuR15MZHeLQ_dTpNnG-1_uJFE4kE4FHkhAqaKw&s")`
+      );
+  }, [props.Img]);
+
   return (
     <a
       className={styles.body}
@@ -17,14 +31,16 @@ function EventCard(props) {
       id={props.ID}
       style={{ cursor: props.Link ? "default" : "pointer" }}
     >
-      {!props.Img ? (
+      {props.EventImg ? (
         <div className={styles.dontImgContainer}>
           <p style={{ fontSize: "16px", margin: "0px" }}>Img</p>
         </div>
       ) : (
         <div
           className={styles.containerImg}
-          style={{ backgroundImage: `url("${props.Img}")` }}
+          style={{
+            backgroundImage: backgroundImage,
+          }}
         ></div>
       )}
 
