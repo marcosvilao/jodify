@@ -187,16 +187,14 @@ function HomePage() {
 
         axios
           .put(`${axiosUrl}/add-interaction/${event.id}`)
-          .then((res) => {
+          .then((res) => {            
+            if (event.ticket_link && res.data) {
+              window.open(event.ticket_link, "_blank");
+          }
           })
           .catch((error) => {
             console.log(error);
           });
-          if (event && event.ticket_link) {
-            setTimeout(() => {
-              window.open(event.ticket_link, "_blank");
-            }, 100); 
-          }
       };
 
       const additionalClass = i === 0 ? styles.firstElement : "";
