@@ -185,7 +185,9 @@ function HomePage() {
 
       const onClickEventCard = (event) => {
         if (event && event.ticket_link) {
-          window.open(event.ticket_link, "_blank");
+          setTimeout(() => {
+            window.open(event.ticket_link, "_blank");
+          }, 100); 
         }
 
         axios
