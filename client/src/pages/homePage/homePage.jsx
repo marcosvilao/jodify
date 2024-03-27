@@ -184,16 +184,16 @@ function HomePage() {
       let objectName = Object.keys(dataEventCard[i])[0];
 
       const onClickEventCard = (event) => {
-        if (event && event.ticket_link) {
-          setTimeout(() => {
-            window.open(event.ticket_link, "_blank");
-          }, 100); 
-        }
 
         axios
           .put(`${axiosUrl}/add-interaction/${event.id}`)
           .then((res) => {
             console.log(res.data);
+            if (event && event.ticket_link) {
+              setTimeout(() => {
+                window.open(event.ticket_link, "_blank");
+              }, 100); 
+            }
           })
           .catch((error) => {
             console.log(error);
