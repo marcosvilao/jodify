@@ -196,7 +196,7 @@ function HomePage() {
           if (event && event.ticket_link) {
             setTimeout(() => {
               window.open(event.ticket_link, "_blank");
-            }, 50); 
+            }, 100); 
           }
       };
 
