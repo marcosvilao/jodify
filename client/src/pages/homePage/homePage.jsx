@@ -188,7 +188,6 @@ function HomePage() {
         axios
           .put(`${axiosUrl}/add-interaction/${event.id}`)
           .then((res) => {
-            console.log(res.data);
           })
           .catch((error) => {
             console.log(error);
