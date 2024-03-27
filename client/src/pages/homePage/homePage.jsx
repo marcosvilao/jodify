@@ -189,7 +189,9 @@ function HomePage() {
           .put(`${axiosUrl}/add-interaction/${event.id}`)
           .then((res) => {            
             if (event.ticket_link && res.data) {
-              window.open(event.ticket_link, "_blank");
+              setTimeout(() => {
+                window.open(event.ticket_link, "_blank");
+              }, 50);
           }
           })
           .catch((error) => {
