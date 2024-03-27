@@ -9,6 +9,7 @@ import Modal from "react-modal";
 import { LicenseInfo } from "@mui/x-license-pro";
 import { Analytics } from "@vercel/analytics/react";
 import { Auth0Provider } from "@auth0/auth0-react";
+import * as serviceWorkerRegistration from './serviceWorkerRegistration.js';
 
 const mui = process.env.REACT_APP_MUI;
 
@@ -37,3 +38,7 @@ root.render(
     </React.StrictMode>
   </Provider>
 );
+
+
+
+serviceWorkerRegistration.register();
