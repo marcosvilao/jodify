@@ -154,63 +154,122 @@ function SelectMaterial(props) {
     setMenuOpen(true);
   };
 
-  return (
-    <ThemeProvider theme={customTheme(outerTheme, hasError)}>
-      <div style={{ margin: props.Margin ? props.Margin : "10px 0px" }}>
-        <div className={styles.positionAbsolute} ref={autoCompleteRef}>
-          <Autocomplete
-            freeSolo
-            onKeyDown={handleKeyDown}
-            inputValue={inputValue}
-            onInputChange={handleInputChange}
-            onChange={handleChange}
-            open={menuOpen}
-            className={styles.selectBlack}
-            multiple={props.Multiple !== false}
-            id="tags-outlined"
-            options={optionsArray}
-            getOptionLabel={(option) =>
-              typeof option === "object" && option ? option.value : option
-            }
-            filterSelectedOptions
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label={props.Option}
-                placeholder={props.PlaceHolder}
-                error={!!hasError}
-                onClick={handleInputClick}
+  if (props.FreeSolo) {
+    return (
+      <ThemeProvider theme={customTheme(outerTheme, hasError)}>
+        <div style={{ margin: props.Margin ? props.Margin : "10px 0px" }}>
+          <div className={styles.positionAbsolute} ref={autoCompleteRef}>
+            <Autocomplete
+              freeSolo
+              onKeyDown={handleKeyDown}
+              inputValue={inputValue}
+              onInputChange={handleInputChange}
+              onChange={handleChange}
+              open={menuOpen}
+              className={styles.selectBlack}
+              multiple={props.Multiple !== false}
+              id="tags-outlined"
+              options={optionsArray}
+              getOptionLabel={(option) =>
+                typeof option === "object" && option ? option.value : option
+              }
+              filterSelectedOptions
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={props.Option}
+                  placeholder={props.PlaceHolder}
+                  error={!!hasError}
+                  onClick={handleInputClick}
+                />
+              )}
+            />
+            {!menuOpen ? (
+              <ArrowDropDownIcon
+                className={styles.icon}
+                onClick={handleArrowClick}
+              />
+            ) : (
+              <ArrowDropUpIcon
+                className={styles.icon}
+                onClick={handleArrowClick}
               />
             )}
-          />
-          {!menuOpen ? (
-            <ArrowDropDownIcon
-              className={styles.icon}
-              onClick={handleArrowClick}
-            />
-          ) : (
-            <ArrowDropUpIcon
-              className={styles.icon}
-              onClick={handleArrowClick}
-            />
+          </div>
+          {hasError && (
+            <div style={{ width: "100%", marginTop: "5px" }}>
+              <p
+                style={{
+                  color: "#FF5353",
+                  margin: "0px",
+                  fontSize: "13px",
+                }}
+              >
+                {props.Error}
+              </p>
+            </div>
           )}
         </div>
-        {hasError && (
-          <div style={{ width: "100%", marginTop: "5px" }}>
-            <p
-              style={{
-                color: "#FF5353",
-                margin: "0px",
-                fontSize: "13px",
-              }}
-            >
-              {props.Error}
-            </p>
+      </ThemeProvider>
+    );
+  } else {
+    return (
+      <ThemeProvider theme={customTheme(outerTheme, hasError)}>
+        <div style={{ margin: props.Margin ? props.Margin : "10px 0px" }}>
+          <div className={styles.positionAbsolute} ref={autoCompleteRef}>
+            <Autocomplete
+              onKeyDown={handleKeyDown}
+              inputValue={inputValue}
+              onInputChange={handleInputChange}
+              onChange={handleChange}
+              open={menuOpen}
+              className={styles.selectBlack}
+              multiple={props.Multiple !== false}
+              id="tags-outlined"
+              options={optionsArray}
+              getOptionLabel={(option) =>
+                typeof option === "object" && option ? option.value : option
+              }
+              filterSelectedOptions
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={props.Option}
+                  placeholder={props.PlaceHolder}
+                  error={!!hasError}
+                  onClick={handleInputClick}
+                />
+              )}
+            />
+            {!menuOpen ? (
+              <ArrowDropDownIcon
+                className={styles.icon}
+                onClick={handleArrowClick}
+              />
+            ) : (
+              <ArrowDropUpIcon
+                className={styles.icon}
+                onClick={handleArrowClick}
+              />
+            )}
           </div>
-        )}
-      </div>
-    </ThemeProvider>
-  );
+          {hasError && (
+            <div style={{ width: "100%", marginTop: "5px" }}>
+              <p
+                style={{
+                  color: "#FF5353",
+                  margin: "0px",
+                  fontSize: "13px",
+                }}
+              >
+                {props.Error}
+              </p>
+            </div>
+          )}
+        </div>
+      </ThemeProvider>
+    );
+  }
 }
 
 export default SelectMaterial;
