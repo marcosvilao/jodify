@@ -199,8 +199,8 @@ function CreateFormPage() {
     };
 
     const onChangeEventType = (event, value) => {
-      let idTypes = [];
-      let nameTypes = [];
+      let idTypes = dataPost.event_type;
+      let nameTypes = dataCardType;
 
       if (value.length) {
         for (let i = 0; i < value.length; i++) {
@@ -218,17 +218,48 @@ function CreateFormPage() {
         }
       }
 
-      setDataCardType(nameTypes);
+      let djGeneroNameSinDuplicados = [
+        ...new Set(nameTypes.map((obj) => obj.name)),
+      ].map((name) => ({ name }));
+
+      let idTypesSinDuplicados = [...new Set(idTypes.map((obj) => obj.id))].map(
+        (id) => ({ id })
+      );
+
+      setDataCardType(djGeneroNameSinDuplicados);
       setErrorGeneros("");
       setDataPost({
         ...dataPost,
-        event_type: idTypes,
+        event_type: idTypesSinDuplicados,
       });
     };
+
+    console.log(dataPost);
 
     const onChangeEventDjs = (event, value) => {
       let idDjs = [];
       let arrayDjsName = [];
+      let djGeneroName = dataCardType;
+      let idTypes = dataPost.event_type;
+
+      for (let i = 0; i < dataDjs.length; i++) {
+        for (let j = 0; j < value.length; j++) {
+          if (dataDjs[i].name === value[j].value) {
+            dataDjs[i].types.map((type) => {
+              djGeneroName.push({ name: type.name });
+              idTypes.push({ id: type.id });
+            });
+          }
+        }
+      }
+
+      let djGeneroNameSinDuplicados = [
+        ...new Set(djGeneroName.map((obj) => obj.name)),
+      ].map((name) => ({ name }));
+
+      let idTypesSinDuplicados = [...new Set(idTypes.map((obj) => obj.id))].map(
+        (id) => ({ id })
+      );
 
       if (value.length) {
         for (let i = 0; i < value.length; i++) {
@@ -259,11 +290,16 @@ function CreateFormPage() {
       let titleName = arrayDjsName.join(" | ");
 
       setErrorLineUp("");
+      setErrorGeneros("");
+
       setStringDjs(arrayDjsName);
+      setDataCardType(djGeneroNameSinDuplicados);
+
       setDataPost({
         ...dataPost,
         event_djs: idDjs,
         name: titleName,
+        event_type: idTypesSinDuplicados,
       });
     };
 
@@ -524,10 +560,9 @@ function CreateFormPage() {
     };
 
     const renameEvent = () => {
-      let string = dataPost.event_djs.join(" | ");
       setDataPost({
         ...dataPost,
-        name: string,
+        name: "",
       });
     };
 
