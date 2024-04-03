@@ -34,6 +34,7 @@
 
 .containerData {
   height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -41,6 +42,16 @@
   padding-right: 3px;
   box-sizing: border-box;
   overflow: hidden;
+  position: relative;
+}
+
+.containerShare {
+  position: absolute;
+  background-color: #1b1c20;
+  bottom: 0px;
+  right: 0px;
+  padding-bottom: 5px;
+  padding-right: 5px;
 }
 
 .Tittle {
@@ -85,6 +96,14 @@
   margin-right: 5px;
 }
 
+.iconShare {
+  color: #c18fff;
+}
+
+.iconShare:hover {
+  color: #7c16f5;
+}
+
 .body .containerData p {
   margin: 0px;
   font-size: 12px;
@@ -96,6 +115,10 @@
 }
 
 @media screen and (max-width: 500px) {
+  .containerShare {
+    padding-right: 2px;
+  }
+
   .Tittle {
     font-size: 13px;
   }

@@ -46,52 +46,59 @@ function HomePage() {
 
   useEffect(() => {
     if (!dataEventCard) {
-      axios
-        .post(`${axiosUrl}/events/filtersNew`, filter)
-        .then((res) => {
-          const sortArray = res.data;
-          sortArray.forEach((dateInfo) => {
-            Object.keys(dateInfo).forEach((date) => {
-              dateInfo[date].sort((a, b) => {
-                // Encuentra la prioridad más baja (mayor prioridad) en los promoters de 'a'
-                const priorityA = a.promoters.reduce((min, promoter) => {
-                  if (
-                    promoter.priority !== null &&
-                    (min === null || promoter.priority < min)
-                  ) {
-                    return promoter.priority;
-                  }
-                  return min;
-                }, null);
+      const urlParams = new URLSearchParams(window.location.search);
+      const sharedEventId = urlParams.get("sharedEventId");
 
-                // Encuentra la prioridad más baja (mayor prioridad) en los promoters de 'b'
-                const priorityB = b.promoters.reduce((min, promoter) => {
-                  if (
-                    promoter.priority !== null &&
-                    (min === null || promoter.priority < min)
-                  ) {
-                    return promoter.priority;
-                  }
-                  return min;
-                }, null);
+      if (sharedEventId) {
+        console.log(sharedEventId);
+      } else {
+        axios
+          .post(`${axiosUrl}/events/filtersNew`, filter)
+          .then((res) => {
+            const sortArray = res.data;
+            sortArray.forEach((dateInfo) => {
+              Object.keys(dateInfo).forEach((date) => {
+                dateInfo[date].sort((a, b) => {
+                  // Encuentra la prioridad más baja (mayor prioridad) en los promoters de 'a'
+                  const priorityA = a.promoters.reduce((min, promoter) => {
+                    if (
+                      promoter.priority !== null &&
+                      (min === null || promoter.priority < min)
+                    ) {
+                      return promoter.priority;
+                    }
+                    return min;
+                  }, null);
 
-                // Comparación para el ordenamiento, tratando null como infinito
-                return (
-                  (priorityA !== null ? priorityA : Infinity) -
-                  (priorityB !== null ? priorityB : Infinity)
-                );
+                  // Encuentra la prioridad más baja (mayor prioridad) en los promoters de 'b'
+                  const priorityB = b.promoters.reduce((min, promoter) => {
+                    if (
+                      promoter.priority !== null &&
+                      (min === null || promoter.priority < min)
+                    ) {
+                      return promoter.priority;
+                    }
+                    return min;
+                  }, null);
+
+                  // Comparación para el ordenamiento, tratando null como infinito
+                  return (
+                    (priorityA !== null ? priorityA : Infinity) -
+                    (priorityB !== null ? priorityB : Infinity)
+                  );
+                });
               });
             });
+            setDataEventCard(sortArray);
+          })
+          .catch(() => {
+            Alert(
+              "Error!",
+              "Error al cargar los eventos, recargar la pagina o ponerse en contacto con el servidor",
+              "error"
+            );
           });
-          setDataEventCard(sortArray);
-        })
-        .catch(() => {
-          Alert(
-            "Error!",
-            "Error al cargar los eventos, recargar la pagina o ponerse en contacto con el servidor",
-            "error"
-          );
-        });
+      }
     }
 
     if (!cities) {
@@ -184,8 +191,6 @@ function HomePage() {
       let objectName = Object.keys(dataEventCard[i])[0];
 
       const onClickEventCard = (event) => {
-        console.log(event.image_url);
-
         axios
           .put(`${axiosUrl}/add-interaction/${event.id}`)
           .then((res) => {
@@ -201,6 +206,21 @@ function HomePage() {
       };
 
       const additionalClass = i === 0 ? styles.firstElement : "";
+
+      const onClickShare = (event) => {
+        const shareData = {
+          url: `${window.location.origin}/?sharedEventId=${event.id}`,
+        };
+
+        if (navigator.share) {
+          navigator
+            .share(shareData)
+            .then(() => console.log("Contenido compartido!"))
+            .catch((error) => console.log("Error al compartir:", error));
+        } else {
+          console.log("La API Web Share no está soportada en este navegador.");
+        }
+      };
 
       return (
         <div
@@ -224,6 +244,7 @@ function HomePage() {
                 Genre={event.types}
                 OnClick={() => onClickEventCard(event)}
                 ID={event.id}
+                Share={() => onClickShare(event)}
               />
             </div>
           ))}

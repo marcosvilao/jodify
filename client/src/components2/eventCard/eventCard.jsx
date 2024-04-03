@@ -2,6 +2,14 @@ import React, { useEffect, useState } from "react";
 import styles from "./eventCard.module.css";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MusicNoteIcon from "@mui/icons-material/MusicNote";
+import ShareIcon from "@mui/icons-material/Share";
+import ImgDefault1 from "../../assets/img-event-card-default/img-1.jpg";
+import ImgDefault2 from "../../assets/img-event-card-default/img-2.jpg";
+import ImgDefault3 from "../../assets/img-event-card-default/img-3.jpg";
+import ImgDefault4 from "../../assets/img-event-card-default/img-4.jpg";
+import ImgDefault5 from "../../assets/img-event-card-default/img-5.jpg";
+import ImgDefault6 from "../../assets/img-event-card-default/img-6.jpg";
+import LoadingImg from "../../assets/loading-img.png";
 
 function EventCard(props) {
   let stringDjs = "";
@@ -11,18 +19,34 @@ function EventCard(props) {
   const genreNames = props.Genre?.map((genre) => genre.name).join(" | ");
 
   const [backgroundImage, setBackgroundImage] = useState(
-    `url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtUrkpYuR15MZHeLQ_dTpNnG-1_uJFE4kE4FHkhAqaKw&s")`
+    `url("${LoadingImg}")`
   );
 
   useEffect(() => {
+    const imgDefaults = [
+      ImgDefault1,
+      ImgDefault2,
+      ImgDefault3,
+      ImgDefault4,
+      ImgDefault5,
+      ImgDefault6,
+    ];
     const img = new Image();
     img.src = props.Img;
     img.onload = () => setBackgroundImage(`url("${props.Img}")`);
-    img.onerror = () =>
-      setBackgroundImage(
-        `url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtUrkpYuR15MZHeLQ_dTpNnG-1_uJFE4kE4FHkhAqaKw&s")`
-      );
+    img.onerror = () => {
+      const randomImg =
+        imgDefaults[Math.floor(Math.random() * imgDefaults.length)];
+      setBackgroundImage(`url("${randomImg}")`);
+    };
   }, [props.Img]);
+
+  const handleShareClick = (event) => {
+    event.stopPropagation();
+    if (props.Share) {
+      props.Share();
+    }
+  };
 
   return (
     <a
@@ -89,6 +113,17 @@ function EventCard(props) {
           ) : (
             <p style={{ opacity: "0.4" }}>Género musical</p>
           )}
+        </div>
+
+        <div className={styles.containerShare} onClick={handleShareClick}>
+          <ShareIcon
+            className={styles.iconShare}
+            style={{
+              height: "18px",
+              width: "18px",
+    
+            }}
+          />
         </div>
       </div>
     </a>
