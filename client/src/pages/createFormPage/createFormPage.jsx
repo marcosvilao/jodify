@@ -85,16 +85,10 @@ function CreateFormPage() {
         .get(axiosUrl + "/djs")
         .then((res) => {
           const arrayDjs = [];
-          const newArrayDjs = [];
           res.data.map((djs) => {
             arrayDjs.push({ value: djs.name });
           });
-          const arrayDjsSet = new Set(arrayDjs.map((objeto) => objeto.value));
-          let arrayNoDuplicates = Array.from(arrayDjsSet);
-          arrayNoDuplicates.map((djs) => {
-            newArrayDjs.push({ value: djs });
-          });
-          setDjs(newArrayDjs);
+          setDjs(arrayDjs);
           setDataDjs(res.data);
         })
         .catch(() => {
@@ -180,6 +174,30 @@ function CreateFormPage() {
       }
     };
 
+    const onChangeEventPromoters = (event, value) => {
+      let idPromoters = [];
+
+      if (value.length) {
+        for (let i = 0; i < value.length; i++) {
+          for (let j = 0; j < dataPromoters.length; j++) {
+            if (
+              dataPromoters[j].name === value[i].value ||
+              dataPromoters[j].name === value[i]
+            ) {
+              idPromoters.push({
+                id: dataPromoters[j].id,
+              });
+            }
+          }
+        }
+      }
+
+      setDataPost({
+        ...dataPost,
+        event_promoter: idPromoters,
+      });
+    };
+
     const onChangeEventType = (event, value) => {
       let idTypes = [];
       let nameTypes = [];
@@ -205,30 +223,6 @@ function CreateFormPage() {
       setDataPost({
         ...dataPost,
         event_type: idTypes,
-      });
-    };
-
-    const onChangeEventPromoters = (event, value) => {
-      let idPromoters = [];
-
-      if (value.length) {
-        for (let i = 0; i < value.length; i++) {
-          for (let j = 0; j < dataPromoters.length; j++) {
-            if (
-              dataPromoters[j].name === value[i].value ||
-              dataPromoters[j].name === value[i]
-            ) {
-              idPromoters.push({
-                id: dataPromoters[j].id,
-              });
-            }
-          }
-        }
-      }
-
-      setDataPost({
-        ...dataPost,
-        event_promoter: idPromoters,
       });
     };
 

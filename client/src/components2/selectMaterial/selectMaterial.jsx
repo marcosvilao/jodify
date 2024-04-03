@@ -158,7 +158,7 @@ function SelectMaterial(props) {
     return (
       <ThemeProvider theme={customTheme(outerTheme, hasError)}>
         <div style={{ margin: props.Margin ? props.Margin : "10px 0px" }}>
-          <div className={styles.positionAbsolute} ref={autoCompleteRef}>
+          <div ref={autoCompleteRef}>
             <Autocomplete
               freeSolo
               onKeyDown={handleKeyDown}
@@ -184,17 +184,6 @@ function SelectMaterial(props) {
                 />
               )}
             />
-            {!menuOpen ? (
-              <ArrowDropDownIcon
-                className={styles.icon}
-                onClick={handleArrowClick}
-              />
-            ) : (
-              <ArrowDropUpIcon
-                className={styles.icon}
-                onClick={handleArrowClick}
-              />
-            )}
           </div>
           {hasError && (
             <div style={{ width: "100%", marginTop: "5px" }}>
@@ -216,7 +205,7 @@ function SelectMaterial(props) {
     return (
       <ThemeProvider theme={customTheme(outerTheme, hasError)}>
         <div style={{ margin: props.Margin ? props.Margin : "10px 0px" }}>
-          <div className={styles.positionAbsolute} ref={autoCompleteRef}>
+          <div ref={autoCompleteRef}>
             <Autocomplete
               onKeyDown={handleKeyDown}
               inputValue={inputValue}
@@ -241,17 +230,6 @@ function SelectMaterial(props) {
                 />
               )}
             />
-            {!menuOpen ? (
-              <ArrowDropDownIcon
-                className={styles.icon}
-                onClick={handleArrowClick}
-              />
-            ) : (
-              <ArrowDropUpIcon
-                className={styles.icon}
-                onClick={handleArrowClick}
-              />
-            )}
           </div>
           {hasError && (
             <div style={{ width: "100%", marginTop: "5px" }}>
