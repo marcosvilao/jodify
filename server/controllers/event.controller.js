@@ -280,7 +280,17 @@ const filterEventsNew = async (req, res) => {
           jsonb_agg(
               jsonb_build_object(
                   'id', d.id,
-                  'name', d.name
+                  'name', d.name,
+                  'types', (
+                    SELECT jsonb_agg(
+                        jsonb_build_object(
+                            'id', t.id,
+                            'name', t.name
+                        )
+                    ) FROM dj_types djt
+                    JOIN types t ON t.id = djt.type_id
+                    WHERE djt.dj_id = d.id
+                )
               ) ORDER BY d.name ASC
           ) AS djs
       FROM event_djs ed
