@@ -4,8 +4,6 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import { outlinedInputClasses } from "@mui/material/OutlinedInput";
 import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 
 const customTheme = (outerTheme, hasError) =>
   createTheme({
@@ -144,10 +142,6 @@ function SelectMaterial(props) {
     if (event.key === "Delete" || event.key === "Backspace") {
       handleChange(event, newValue);
     }
-  };
-
-  const handleArrowClick = () => {
-    setMenuOpen(!menuOpen);
   };
 
   const handleInputClick = () => {
