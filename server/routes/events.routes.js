@@ -1,8 +1,8 @@
-const { Router } = require("express");
-const session = require("express-session");
-const passport = require("passport");
+const { Router } = require('express')
+const session = require('express-session')
+const passport = require('passport')
 const {
-  getEvents,
+  // getEvents,
   createEvent,
   updateEvent,
   deleteEvent,
@@ -11,56 +11,53 @@ const {
   UploadImage,
   filterEventsNew,
   updateEventInteraction,
-  checkLinkDuplicate
-} = require("../controllers/event.controller");
-const { getCities } = require("../controllers/city.controller");
+  checkLinkDuplicate,
+} = require('../controllers/event.controller')
+const { getCities } = require('../controllers/city.controller')
 // const {createUser, verifyUser} = require('../controllers/user.controller')
 // const {checkAdmin} = require('../middlewares/authMiddleware');
-const { getTypes } = require("../controllers/type.controller");
-const { getDjs } = require("../controllers/djs.controller");
-const {
-  getPromoters,
-  postPromoters,
-} = require("../controllers/promoters.controller");
+const { getTypes } = require('../controllers/type.controller')
+const { getDjs } = require('../controllers/djs.controller')
+const { getPromoters, postPromoters } = require('../controllers/promoters.controller')
 const {
   createUser,
   getUser,
   getAuth0User,
   createAuth0User,
-} = require("../controllers/user.controller.js");
+} = require('../controllers/user.controller.js')
 const {
   postResetPassword,
   postResetPasswordEmail,
-} = require("../controllers/resetPassword.controllers.js");
+} = require('../controllers/resetPassword.controllers.js')
 
-const router = Router();
+const router = Router()
 
 //events
 
-router.get("/events", getEvents);
+// router.get("/events", getEvents);
 
-router.get("/events/search", searchEvent);
+router.get('/events/search', searchEvent)
 
-router.post("/events", createEvent);
+router.post('/events', createEvent)
 
-router.put("/add-interaction/:id", updateEventInteraction);
+router.put('/add-interaction/:id', updateEventInteraction)
 
-router.post("/check-link/", checkLinkDuplicate);
+router.post('/check-link/', checkLinkDuplicate)
 
-router.put("/events/:id", updateEvent);
+router.put('/events/:id', updateEvent)
 
-router.delete("/events", deleteEvent);
+router.delete('/events', deleteEvent)
 
-router.post("/get-event-data", scrapLink);
+router.post('/get-event-data', scrapLink)
 
-router.post("/events/filtersNew", filterEventsNew);
+router.post('/events/filtersNew', filterEventsNew)
 
 //users
 
-router.post("/create-users", createUser);
-router.post("/login", getUser);
-router.post("/auth0/login", getAuth0User);
-router.post("/auth0/register", createAuth0User);
+router.post('/create-users', createUser)
+router.post('/login', getUser)
+router.post('/auth0/login', getAuth0User)
+router.post('/auth0/register', createAuth0User)
 
 // router.post('/register', createUser)
 
@@ -76,25 +73,25 @@ router.post("/auth0/register", createAuth0User);
 
 //cities
 
-router.get("/cities", getCities);
+router.get('/cities', getCities)
 
 //tpyes
 
-router.get("/types", getTypes);
+router.get('/types', getTypes)
 
 //djs
 
-router.get("/djs", getDjs);
+router.get('/djs', getDjs)
 
 //promoters
 
-router.get("/promoters", getPromoters);
+router.get('/promoters', getPromoters)
 
-router.post("/create-promoter", postPromoters);
+router.post('/create-promoter', postPromoters)
 
-module.exports = router;
+module.exports = router
 
 // reset password routes
 
-router.post("/reset-password", postResetPassword);
-router.post("/reset-password/:id/:token", postResetPasswordEmail);
+router.post('/reset-password', postResetPassword)
+router.post('/reset-password/:id/:token', postResetPasswordEmail)
