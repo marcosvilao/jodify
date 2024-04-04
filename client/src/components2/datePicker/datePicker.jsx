@@ -27,6 +27,9 @@ const customTheme = (outerTheme, hasError) =>
           root: {
             "& .MuiTypography-root": {
               color: "#ffffff !important",
+              fontSize: "20px",
+              fontWeight: "bold",
+              fontFamily: "Roboto Condensed, sans-serif",
             },
           },
         },
@@ -48,6 +51,9 @@ const customTheme = (outerTheme, hasError) =>
           root: {
             color: "#ffffff",
             fontWeight: "bold",
+            "&.Mui-disabled": {
+              color: "#725E76 !important",
+            },
           },
         },
       },
@@ -101,7 +107,7 @@ const customTheme = (outerTheme, hasError) =>
               borderStyle: "solid",
             },
             "&.Mui-disabled": {
-              color: "gray !important",
+              color: "#725E76 !important",
             },
           },
         },
