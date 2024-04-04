@@ -11,6 +11,7 @@ import CheckBoxList from "../../components2/checkBoxList/checkBoxList";
 import Alert from "../../components2/alert/alert";
 import SkeletonLoader from "../../components2/loaderSkeleton/loaderSkeleton";
 import Footer from "../../components2/footer/footer";
+import LogoCompartir from "../../assets/Jodify-logo.png";
 
 function HomePage() {
   const axiosUrl = process.env.REACT_APP_AXIOS_URL;
@@ -249,8 +250,6 @@ function HomePage() {
       const additionalClass = i === 0 ? styles.firstElement : "";
 
       const onClickShare = async (event) => {
-        console.log(finalFormattedDate);
-
         // Tu fecha original
         const fechaOriginal = finalFormattedDate;
 
@@ -292,26 +291,25 @@ function HomePage() {
         const fechaStringJoin = fechaStringSplit.join("/");
 
         try {
-          const imagenRespuesta = await fetch(event.image_url);
+          const imagenRespuesta = await fetch(LogoCompartir);
           const blob = await imagenRespuesta.blob();
           const file = new File([blob], "event-image.png", {
             type: "image/png",
           });
 
+          console.log(file);
+
           const shareData = {
             title: "Jodify",
-            text: event.name,
+            text: `${event.djs}`,
             url: `${window.location.origin}/?sharedEventId=${event.id}&eventDate=${fechaStringJoin}`,
-            files: [file],
           };
 
-          if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          if (navigator.share) {
             await navigator.share(shareData);
             console.log("Contenido compartido!");
           } else {
-            console.log(
-              "Compartir archivos no es soportado por este navegador."
-            );
+            console.log("Compartir no es soportado por este navegador.");
           }
         } catch (error) {
           console.log("Error al compartir:", error);
