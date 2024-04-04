@@ -6,7 +6,7 @@ import theme from "../../jodifyStyles";
 import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
 import dayjs from "dayjs";
 
-const customTheme = (outerTheme, hasError) =>
+const customTheme = (outerTheme) =>
   createTheme({
     palette: {
       mode: outerTheme.palette.mode,
@@ -20,6 +20,7 @@ const customTheme = (outerTheme, hasError) =>
               fontSize: "20px",
               fontWeight: "bold",
               fontFamily: "Roboto Condensed, sans-serif",
+              letterSpacing: "0",
             },
           },
         },
@@ -130,6 +131,13 @@ const customTheme = (outerTheme, hasError) =>
         styleOverrides: {
           weekDayLabel: {
             color: "#ffffff",
+          },
+        },
+      },
+      MuiDateRangePickerDay: {
+        styleOverrides: {
+          rangeIntervalDayHighlight: {
+            backgroundColor: "#343335",
           },
         },
       },
