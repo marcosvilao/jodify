@@ -248,7 +248,7 @@ function HomePage() {
 
       const additionalClass = i === 0 ? styles.firstElement : "";
 
-      const onClickShare = (event) => {
+      const onClickShare = async (event) => {
         console.log(finalFormattedDate);
 
         // Tu fecha original
@@ -291,17 +291,30 @@ function HomePage() {
         const fechaStringSplit = fechaString.split(" ");
         const fechaStringJoin = fechaStringSplit.join("/");
 
-        const shareData = {
-          url: `${window.location.origin}/?sharedEventId=${event.id}&eventDate=${fechaStringJoin}`,
-        };
+        try {
+          const imagenRespuesta = await fetch(event.image_url);
+          const blob = await imagenRespuesta.blob();
+          const file = new File([blob], "event-image.png", {
+            type: "image/png",
+          });
 
-        if (navigator.share) {
-          navigator
-            .share(shareData)
-            .then(() => console.log("Contenido compartido!"))
-            .catch((error) => console.log("Error al compartir:", error));
-        } else {
-          console.log("La API Web Share no está soportada en este navegador.");
+          const shareData = {
+            title: "Jodify",
+            text: event.name,
+            url: `${window.location.origin}/?sharedEventId=${event.id}&eventDate=${fechaStringJoin}`,
+            files: [file],
+          };
+
+          if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            await navigator.share(shareData);
+            console.log("Contenido compartido!");
+          } else {
+            console.log(
+              "Compartir archivos no es soportado por este navegador."
+            );
+          }
+        } catch (error) {
+          console.log("Error al compartir:", error);
         }
       };
 
