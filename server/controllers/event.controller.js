@@ -4,6 +4,7 @@ const { v4: uuidv4 } = require('uuid')
 const { types } = require('pg')
 const { DateTime } = require('luxon')
 const { formatDate, removeAccents } = require('../Brain/Utils.js')
+const { getImageFromCache } = require('../utils/cacheFunction/cacheFunction.js')
 
 const createEvent = async (req, res) => {
   try {
@@ -351,6 +352,29 @@ const filterEventsNew = async (req, res) => {
     values.push(setOff)
     const result = await pool.query(query, values)
     const events = result.rows
+
+    //-----remplazamos la url de cloudinary por la url del cache:
+
+    for (const e of events) {
+      if (e.image_url.startsWith('https://res.cloudinary.com')) {
+        const buffer = await getImageFromCache(e.image_url)
+
+        //se convierte el buffer en una url para mandar al front
+
+        const base64Image = Buffer.from(buffer).toString('base64')
+
+        // tipo de imagen: .jpg, .png etc.
+        const type = e.image_url.match(/\.([^.]+)$/)
+        if (!type) return null
+        const contentType = type[1].toLowerCase()
+
+        const imageUrl = `data:${contentType};base64,${base64Image}`
+
+        e.image_url = imageUrl
+      }
+    }
+
+    //-------------------------
 
     const groupedEvents = {}
 
