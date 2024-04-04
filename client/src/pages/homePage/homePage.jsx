@@ -291,7 +291,7 @@ function HomePage() {
         const fechaStringJoin = fechaStringSplit.join("/");
 
         try {
-          const imagenRespuesta = await fetch(LogoCompartir);
+          const imagenRespuesta = await fetch(event.image_url);
           const blob = await imagenRespuesta.blob();
           const file = new File([blob], "event-image.png", {
             type: "image/png",
@@ -301,8 +301,9 @@ function HomePage() {
 
           const shareData = {
             title: "Jodify",
-            text: `${event.djs}`,
+            text: "Plataforma para encontrar tu evento favorito",
             url: `${window.location.origin}/?sharedEventId=${event.id}&eventDate=${fechaStringJoin}`,
+            files: [file],
           };
 
           if (navigator.share) {
