@@ -50,15 +50,20 @@ function HomePage() {
       const urlParams = new URLSearchParams(window.location.search);
       const sharedEventId = urlParams.get("sharedEventId");
       const eventDate = urlParams.get("eventDate");
-      const sharedArrayDates = [eventDate, eventDate];
 
-      let fechaOriginal = sharedArrayDates[0];
-      let fecha = new Date(fechaOriginal);
-      let dia = fecha.getDate();
-      let mes = fecha.getMonth() + 1;
-      dia = dia < 10 ? "0" + dia : dia;
-      mes = mes < 10 ? "0" + mes : mes;
-      let fechaFormateada = dia + "/" + mes;
+      if (eventDate) {
+        var eventDateSplit = eventDate.split("/");
+        var eventDateJoin = eventDateSplit.join(" ");
+        var sharedArrayDates = [eventDateJoin, eventDateJoin];
+
+        var fechaOriginal = sharedArrayDates[0];
+        var fecha = new Date(fechaOriginal);
+        var dia = fecha.getDate();
+        var mes = fecha.getMonth() + 1;
+        dia = dia < 10 ? "0" + dia : dia;
+        mes = mes < 10 ? "0" + mes : mes;
+        var fechaFormateada = dia + "/" + mes;
+      }
 
       axios
         .post(
@@ -283,8 +288,11 @@ function HomePage() {
         // Convertimos a string. El formato exacto dependerá de la localización y configuración del entorno.
         const fechaString = fecha.toString();
 
+        const fechaStringSplit = fechaString.split(" ");
+        const fechaStringJoin = fechaStringSplit.join("/");
+
         const shareData = {
-          url: `${window.location.origin}/?sharedEventId=${event.id}&eventDate=${fechaString}`,
+          url: `${window.location.origin}/?sharedEventId=${event.id}&eventDate=${fechaStringJoin}`,
         };
 
         if (navigator.share) {
