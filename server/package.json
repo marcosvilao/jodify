@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "@sparticuz/chromium": "^110.0.1",
+    "axios": "^1.6.8",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
@@ -22,6 +23,7 @@
     "express-flash": "^0.0.2",
     "express-session": "^1.17.3",
     "jsonwebtoken": "^9.0.2",
+    "lru-cache": "^10.2.0",
     "luxon": "^3.4.4",
     "moment-timezone": "^0.5.45",
     "morgan": "^1.10.0",
