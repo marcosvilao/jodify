@@ -50,6 +50,7 @@
 
 .inputSearch:focus {
   outline: none;
+  color: #f2f2f2;
   background-image: linear-gradient(
     90deg,
     #1e1e1e 38.51%,
