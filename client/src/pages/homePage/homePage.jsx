@@ -41,6 +41,7 @@ function HomePage() {
     dates: [],
     types: [],
     search: "",
+    sharedId: "",
   });
   const [endReached, setEndReached] = useState(false);
 
@@ -48,57 +49,92 @@ function HomePage() {
     if (!dataEventCard) {
       const urlParams = new URLSearchParams(window.location.search);
       const sharedEventId = urlParams.get("sharedEventId");
+      const eventDate = urlParams.get("eventDate");
+      const sharedArrayDates = [eventDate, eventDate];
 
-      if (sharedEventId) {
-        console.log(sharedEventId);
-      } else {
-        axios
-          .post(`${axiosUrl}/events/filtersNew`, filter)
-          .then((res) => {
-            const sortArray = res.data;
-            sortArray.forEach((dateInfo) => {
-              Object.keys(dateInfo).forEach((date) => {
-                dateInfo[date].sort((a, b) => {
-                  // Encuentra la prioridad más baja (mayor prioridad) en los promoters de 'a'
-                  const priorityA = a.promoters.reduce((min, promoter) => {
-                    if (
-                      promoter.priority !== null &&
-                      (min === null || promoter.priority < min)
-                    ) {
-                      return promoter.priority;
-                    }
-                    return min;
-                  }, null);
+      let fechaOriginal = sharedArrayDates[0];
+      let fecha = new Date(fechaOriginal);
+      let dia = fecha.getDate();
+      let mes = fecha.getMonth() + 1;
+      dia = dia < 10 ? "0" + dia : dia;
+      mes = mes < 10 ? "0" + mes : mes;
+      let fechaFormateada = dia + "/" + mes;
 
-                  // Encuentra la prioridad más baja (mayor prioridad) en los promoters de 'b'
-                  const priorityB = b.promoters.reduce((min, promoter) => {
-                    if (
-                      promoter.priority !== null &&
-                      (min === null || promoter.priority < min)
-                    ) {
-                      return promoter.priority;
-                    }
-                    return min;
-                  }, null);
+      axios
+        .post(
+          `${axiosUrl}/events/filtersNew`,
+          sharedEventId
+            ? {
+                page: 0,
+                cities: [],
+                dates: sharedArrayDates,
+                types: [],
+                search: "",
+                sharedId: sharedEventId,
+              }
+            : filter
+        )
+        .then((res) => {
+          const sortArray = res.data;
+          sortArray.forEach((dateInfo) => {
+            Object.keys(dateInfo).forEach((date) => {
+              dateInfo[date].sort((a, b) => {
+                // Verificar primero si alguno de los eventos es el evento compartido y debe ir primero
+                if (a.id === sharedEventId) return -1;
+                if (b.id === sharedEventId) return 1;
 
-                  // Comparación para el ordenamiento, tratando null como infinito
-                  return (
-                    (priorityA !== null ? priorityA : Infinity) -
-                    (priorityB !== null ? priorityB : Infinity)
-                  );
-                });
+                // Encuentra la prioridad más baja (mayor prioridad) en los promoters de 'a'
+                const priorityA = a.promoters.reduce((min, promoter) => {
+                  if (
+                    promoter.priority !== null &&
+                    (min === null || promoter.priority < min)
+                  ) {
+                    return promoter.priority;
+                  }
+                  return min;
+                }, null);
+
+                // Encuentra la prioridad más baja (mayor prioridad) en los promoters de 'b'
+                const priorityB = b.promoters.reduce((min, promoter) => {
+                  if (
+                    promoter.priority !== null &&
+                    (min === null || promoter.priority < min)
+                  ) {
+                    return promoter.priority;
+                  }
+                  return min;
+                }, null);
+
+                // Comparación para el ordenamiento, tratando null como infinito
+                return (
+                  (priorityA !== null ? priorityA : Infinity) -
+                  (priorityB !== null ? priorityB : Infinity)
+                );
               });
             });
-            setDataEventCard(sortArray);
-          })
-          .catch(() => {
-            Alert(
-              "Error!",
-              "Error al cargar los eventos, recargar la pagina o ponerse en contacto con el servidor",
-              "error"
-            );
           });
-      }
+          if (sharedEventId) {
+            setFilter({
+              page: 0,
+              cities: [],
+              dates: sharedArrayDates,
+              types: [],
+              search: "",
+              sharedId: sharedEventId,
+            });
+            setDataEventCard(sortArray);
+            setValueButtonFecha(fechaFormateada);
+          } else {
+            setDataEventCard(sortArray);
+          }
+        })
+        .catch(() => {
+          Alert(
+            "Error!",
+            "Error al cargar los eventos, recargar la pagina o ponerse en contacto con el servidor",
+            "error"
+          );
+        });
     }
 
     if (!cities) {
@@ -208,8 +244,47 @@ function HomePage() {
       const additionalClass = i === 0 ? styles.firstElement : "";
 
       const onClickShare = (event) => {
+        console.log(finalFormattedDate);
+
+        // Tu fecha original
+        const fechaOriginal = finalFormattedDate;
+
+        // Extraemos el día y el mes
+        const partes = fechaOriginal.split(", ");
+        const dia = partes[1].split(" de ")[0]; // "5"
+        const mesNombre = partes[1].split(" de ")[1]; // "Abril"
+
+        // Convertimos el mes a su número correspondiente
+        const meses = {
+          Enero: 0,
+          Febrero: 1,
+          Marzo: 2,
+          Abril: 3,
+          Mayo: 4,
+          Junio: 5,
+          Julio: 6,
+          Agosto: 7,
+          Septiembre: 8,
+          Octubre: 9,
+          Noviembre: 10,
+          Diciembre: 11,
+        };
+
+        const mes = meses[mesNombre];
+
+        // Creamos un objeto Date con la fecha. Asumimos el año 2024.
+        const fecha = new Date(2024, mes, dia, 9, 0, 0);
+
+        // Para ajustar al huso horario de Argentina, puedes restar 3 horas,
+        // pero esto depende de si necesitas considerar el horario de verano.
+        // Esto es un ejemplo simple que no lo considera.
+        fecha.setHours(fecha.getHours());
+
+        // Convertimos a string. El formato exacto dependerá de la localización y configuración del entorno.
+        const fechaString = fecha.toString();
+
         const shareData = {
-          url: `${window.location.origin}/?sharedEventId=${event.id}`,
+          url: `${window.location.origin}/?sharedEventId=${event.id}&eventDate=${fechaString}`,
         };
 
         if (navigator.share) {
@@ -295,6 +370,7 @@ function HomePage() {
         ...filter,
         dates: [],
         page: 0,
+        sharedId: "",
       }));
     } else if (value[1] === null) {
       let arrayDates = [value[0].$d, value[0].$d];
@@ -306,6 +382,7 @@ function HomePage() {
         ...filter,
         dates: arraySetHoures,
         page: 0,
+        sharedId: "",
       }));
     } else if (value[1] !== null) {
       let arrayDates = [value[0].$d, value[1].$d];
@@ -313,10 +390,12 @@ function HomePage() {
       arrayDates.map((fecha) => {
         arraySetHoures.push(new Date(fecha.setHours(9, 0, 0)));
       });
+
       setFilter(() => ({
         ...filter,
         dates: arraySetHoures,
         page: 0,
+        sharedId: "",
       }));
     } else {
       return null;
@@ -423,6 +502,7 @@ function HomePage() {
         ...filter,
         dates: [],
         page: 0,
+        sharedId: "",
       }));
       if (openFecha) {
         setOpenFecha(false);
@@ -495,6 +575,7 @@ function HomePage() {
       ...filter,
       cities: [],
       page: 0,
+      sharedId: "",
     }));
   };
 
@@ -538,6 +619,7 @@ function HomePage() {
       ...filter,
       cities: arrayCitiesId,
       page: 0,
+      sharedId: "",
     }));
   };
 
@@ -584,6 +666,7 @@ function HomePage() {
         ...filter,
         types: [],
         page: 0,
+        sharedId: "",
       }));
 
       let resetCheckedItems = Object.keys(checkedItems).reduce((acc, key) => {
@@ -625,6 +708,7 @@ function HomePage() {
       ...filter,
       types: arrayTypes,
       page: 0,
+      sharedId: "",
     }));
     setLoader(true);
     setAxiosType(true);
@@ -644,6 +728,7 @@ function HomePage() {
       ...filter,
       search: e.target.value,
       page: 0,
+      sharedId: "",
     }));
     setAxiosSearch(true);
     setLazyLoadNoEvents(false);
@@ -755,7 +840,7 @@ function HomePage() {
       });
   }
 
-  if (lazyLoad) {
+  if (lazyLoad && !filter.sharedId) {
     axios
       .post(`${axiosUrl}/events/filtersNew`, filter)
       .then((res) => {
@@ -984,13 +1069,13 @@ function HomePage() {
           </div>
         ) : null}
 
-        {loaderLazyLoad ? (
+        {!filter.sharedId && loaderLazyLoad ? (
           <div className={styles.bodyLoaderLazyLoad}>
             <Loader Color="#7c16f5" Height="50px" Width="50px" />
           </div>
         ) : null}
 
-        {lazyLoadNoEvents ? (
+        {filter.sharedId || lazyLoadNoEvents ? (
           <div className={styles.bodyLoaderLazyLoad}>
             <p>No hay mas eventos</p>
           </div>
