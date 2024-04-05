@@ -240,7 +240,7 @@ function CreateFormPage() {
 
       let idTypes = [];
       let nameTypes = [];
-      let arrayEventCardGeneros = [];
+      let valueChipType = [];
 
       if (value.length) {
         for (let i = 0; i < value.length; i++) {
@@ -274,26 +274,27 @@ function CreateFormPage() {
         for (let i = 0; i < dataTypes.length; i++) {
           for (let j = 0; j < djsGenerosID.length; j++) {
             if (dataTypes[i].id === djsGenerosID[j]) {
-              nameTypes.push(dataTypes[i].name);
+              nameTypes.push({ name: dataTypes[i].name });
               idTypes.push({ id: dataTypes[i].id });
             }
           }
-        }
-
-        for (let i = 0; i < nameTypes.length; i++) {
-          arrayEventCardGeneros.push({ name: nameTypes[i] });
         }
 
         let idTypesSinDuplicados = [
           ...new Set(idTypes.map((obj) => obj.id)),
         ].map((id) => ({ id }));
 
-        console.log(idTypes);
-        console.log(idTypesSinDuplicados);
+        let djGeneroNameSinDuplicados = [
+          ...new Set(nameTypes.map((obj) => obj.name)),
+        ].map((name) => ({ name }));
+
+        for (let i = 0; i < djGeneroNameSinDuplicados.length; i++) {
+          valueChipType.push(djGeneroNameSinDuplicados[i].name);
+        }
 
         setErrorLineUp("");
-        setValueChipsTypes(nameTypes);
-        setDataCardType(arrayEventCardGeneros);
+        setValueChipsTypes(valueChipType);
+        setDataCardType(djGeneroNameSinDuplicados);
 
         setValueChipsDjs(value);
         setStringDjs(arrayDjsName);
