@@ -12,6 +12,8 @@ import Alert from "../../components2/alert/alert";
 import SkeletonLoader from "../../components2/loaderSkeleton/loaderSkeleton";
 import Footer from "../../components2/footer/footer";
 import LogoCompartir from "../../assets/Jodify-logo.png";
+import { Helmet } from 'react-helmet';
+
 
 function HomePage() {
   const axiosUrl = process.env.REACT_APP_AXIOS_URL;
@@ -36,6 +38,11 @@ function HomePage() {
   const [valueButtonFecha, setValueButtonFecha] = useState(false);
   const [citieName, setCitieName] = useState(["Ubicación"]);
   const [isFiltering, setIsFiltering] = useState(false);
+  const [currentEventForShare, setCurrentEventForShare] = useState({
+    title: "Jodify",
+    image: LogoCompartir,
+    genre: "Disfrutar es simple",
+});
   const [filter, setFilter] = useState({
     page: 0,
     cities: [],
@@ -249,6 +256,10 @@ function HomePage() {
 
       const additionalClass = i === 0 ? styles.firstElement : "";
 
+      const handleEventShare = (eventDetails) => {
+        setCurrentEventForShare(eventDetails);
+    };
+
       const onClickShare = async (event) => {
         // Tu fecha original
         const fechaOriginal = finalFormattedDate;
@@ -291,19 +302,12 @@ function HomePage() {
         const fechaStringJoin = fechaStringSplit.join("/");
 
         try {
-          const imagenRespuesta = await fetch(event.image_url);
-          const blob = await imagenRespuesta.blob();
-          const file = new File([blob], "event-image.png", {
-            type: "image/png",
-          });
 
-          console.log(file);
 
           const shareData = {
-            title: "Jodify",
-            text: "Plataforma para encontrar tu evento favorito",
-            url: `${window.location.origin}/?sharedEventId=${event.id}&eventDate=${fechaStringJoin}`,
-            files: [file],
+            // title: "Jodify",
+            // text: "Plataforma para encontrar tu evento favorito",
+            url: `${window.location.origin}/?sharedEventId=${event.id}&eventDate=${fechaStringJoin}`
           };
 
           if (navigator.share) {
@@ -322,6 +326,12 @@ function HomePage() {
           key={i}
           className={`${styles.containerEventCard} ${additionalClass}`}
         >
+            <Helmet>
+                <title>{currentEventForShare.title}</title>
+                <meta property="og:title" content={currentEventForShare.title} />
+                <meta property="og:description" content={currentEventForShare.genre} />
+                <meta property="og:image" content={currentEventForShare.image} />
+            </Helmet>
           <h1
             ref={(el) => (headersRef.current[i] = el)}
             className={styles.stickyHeader}
@@ -339,7 +349,7 @@ function HomePage() {
                 Genre={event.types}
                 OnClick={() => onClickEventCard(event)}
                 ID={event.id}
-                Share={() => onClickShare(event)}
+                Share={() => onClickShare(handleEventShare)}
               />
             </div>
           ))}

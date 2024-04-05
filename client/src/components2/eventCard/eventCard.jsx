@@ -43,8 +43,15 @@ function EventCard(props) {
 
   const handleShareClick = (event) => {
     event.stopPropagation();
+    const eventDetails = {
+      title: props.SecondTittle || stringDjs || "Nombre del evento",
+      image: props.Img,
+      genre: genreNames || "Género musical",
+  };
+
+
     if (props.Share) {
-      props.Share();
+      props.Share(eventDetails);
     }
   };
 
