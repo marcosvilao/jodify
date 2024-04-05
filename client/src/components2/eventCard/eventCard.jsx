@@ -47,8 +47,7 @@ function EventCard(props) {
       title: props.SecondTittle || stringDjs || "Nombre del evento",
       image: props.Img,
       genre: genreNames || "Género musical",
-  };
-
+    };
 
     if (props.Share) {
       props.Share(eventDetails);
@@ -62,7 +61,7 @@ function EventCard(props) {
       id={props.ID}
       style={{ cursor: props.Link ? "default" : "pointer" }}
     >
-      {props.EventImg ? (
+      {!props.Img ? (
         <div className={styles.dontImgContainer}>
           <p style={{ fontSize: "16px", margin: "0px" }}>Img</p>
         </div>
@@ -128,7 +127,6 @@ function EventCard(props) {
             style={{
               height: "18px",
               width: "18px",
-    
             }}
           />
         </div>

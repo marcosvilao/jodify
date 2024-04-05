@@ -35,6 +35,10 @@ function CreateFormPage() {
   const [promoters, setPromoters] = useState(false);
   const [dataPromoters, setDataPromoters] = useState(false);
   const [dataCardType, setDataCardType] = useState([]);
+  const [valueChipsCiudad, setValueChipsCiudad] = useState([]);
+  const [valueChipsProductora, setValueChipsProductora] = useState([]);
+  const [valueChipsDjs, setValueChipsDjs] = useState([]);
+  const [valueChipsTypes, setValueChipsTypes] = useState([]);
   const [dataPost, setDataPost] = useState({
     name: "",
     event_type: [],
@@ -46,6 +50,8 @@ function CreateFormPage() {
     event_city: "",
     event_promoter: [],
   });
+
+  console.log(dataPost);
 
   useEffect(() => {
     if (!cities) {
@@ -116,99 +122,80 @@ function CreateFormPage() {
   if (cities && types && djs && promoters && djs) {
     const onChangeEventCity = (event, value) => {
       setErrorPlace("");
-      if (typeof value === "string") {
-        if (value) {
-          let newCitie = filterCities.filter((citie) => {
-            if (citie.city_name === value) {
-              return {
-                id: citie.id,
-                name: citie.city_name,
-              };
-            }
-          });
-          if (newCitie[0]) {
-            setDataPost({
-              ...dataPost,
-              event_city: newCitie[0],
-            });
-          } else {
-            setDataPost({
-              ...dataPost,
-              event_city: "",
-            });
+
+      if (value.length) {
+        let newCitie = filterCities.filter((citie) => {
+          if (citie.city_name === value[value.length - 1].value) {
+            return {
+              id: citie.id,
+              name: citie.city_name,
+            };
           }
+        });
+
+        if (newCitie[0]) {
+          setDataPost({
+            ...dataPost,
+            event_city: newCitie[0],
+          });
+          setValueChipsCiudad([newCitie[0].city_name]);
         } else {
           setDataPost({
             ...dataPost,
             event_city: "",
           });
+          setValueChipsCiudad([]);
         }
       } else {
-        if (value) {
-          let newCitie = filterCities.filter((citie) => {
-            if (citie.city_name === value.value) {
-              return {
-                id: citie.id,
-                name: citie.city_name,
-              };
-            }
-          });
-
-          if (newCitie[0]) {
-            setDataPost({
-              ...dataPost,
-              event_city: newCitie[0],
-            });
-          } else {
-            setDataPost({
-              ...dataPost,
-              event_city: "",
-            });
-          }
-        } else {
-          setDataPost({
-            ...dataPost,
-            event_city: "",
-          });
-        }
+        setDataPost({
+          ...dataPost,
+          event_city: "",
+        });
+        setValueChipsCiudad([]);
       }
     };
 
     const onChangeEventPromoters = (event, value) => {
       let idPromoters = [];
+      let namePromoters = [];
 
       if (value.length) {
-        for (let i = 0; i < value.length; i++) {
-          for (let j = 0; j < dataPromoters.length; j++) {
-            if (
-              dataPromoters[j].name === value[i].value ||
-              dataPromoters[j].name === value[i]
-            ) {
-              idPromoters.push({
-                id: dataPromoters[j].id,
-              });
+        if (value.length) {
+          for (let i = 0; i < value.length; i++) {
+            for (let j = 0; j < dataPromoters.length; j++) {
+              if (dataPromoters[j].name === value[i].value) {
+                idPromoters.push({
+                  id: dataPromoters[j].id,
+                });
+                namePromoters.push(dataPromoters[j].name);
+              }
             }
           }
         }
-      }
 
-      setDataPost({
-        ...dataPost,
-        event_promoter: idPromoters,
-      });
+        setDataPost({
+          ...dataPost,
+          event_promoter: idPromoters,
+        });
+        setValueChipsProductora(namePromoters);
+      } else {
+        setDataPost({
+          ...dataPost,
+          event_promoter: [],
+        });
+        setValueChipsProductora([]);
+      }
     };
 
     const onChangeEventType = (event, value) => {
-      let idTypes = dataPost.event_type;
-      let nameTypes = dataCardType;
+      let idTypes = [];
+      let nameTypes = [];
+      let valueChipType = [];
 
       if (value.length) {
         for (let i = 0; i < value.length; i++) {
           for (let j = 0; j < dataTypes.length; j++) {
-            if (
-              dataTypes[j].name === value[i].value ||
-              dataTypes[j].name === value[i]
-            ) {
+            if (dataTypes[j].name === value[i].value) {
               idTypes.push({
                 id: dataTypes[j].id,
               });
@@ -216,50 +203,44 @@ function CreateFormPage() {
             }
           }
         }
+
+        let djGeneroNameSinDuplicados = [
+          ...new Set(nameTypes.map((obj) => obj.name)),
+        ].map((name) => ({ name }));
+
+        let idTypesSinDuplicados = [
+          ...new Set(idTypes.map((obj) => obj.id)),
+        ].map((id) => ({ id }));
+
+        for (let i = 0; i < djGeneroNameSinDuplicados.length; i++) {
+          valueChipType.push(djGeneroNameSinDuplicados[i].name);
+        }
+
+        setErrorGeneros("");
+        setDataCardType(djGeneroNameSinDuplicados);
+        setValueChipsTypes(valueChipType);
+        setDataPost({
+          ...dataPost,
+          event_type: idTypesSinDuplicados,
+        });
+      } else {
+        setDataCardType([]);
+        setValueChipsTypes([]);
+        setDataPost({
+          ...dataPost,
+          event_type: [],
+        });
       }
-
-      let djGeneroNameSinDuplicados = [
-        ...new Set(nameTypes.map((obj) => obj.name)),
-      ].map((name) => ({ name }));
-
-      let idTypesSinDuplicados = [...new Set(idTypes.map((obj) => obj.id))].map(
-        (id) => ({ id })
-      );
-
-      setDataCardType(djGeneroNameSinDuplicados);
-      setErrorGeneros("");
-      setDataPost({
-        ...dataPost,
-        event_type: idTypesSinDuplicados,
-      });
     };
-
-    console.log(dataPost);
 
     const onChangeEventDjs = (event, value) => {
       let idDjs = [];
       let arrayDjsName = [];
-      let djGeneroName = dataCardType;
-      let idTypes = dataPost.event_type;
+      let djsGenerosID = [];
 
-      for (let i = 0; i < dataDjs.length; i++) {
-        for (let j = 0; j < value.length; j++) {
-          if (dataDjs[i].name === value[j].value) {
-            dataDjs[i].types.map((type) => {
-              djGeneroName.push({ name: type.name });
-              idTypes.push({ id: type.id });
-            });
-          }
-        }
-      }
-
-      let djGeneroNameSinDuplicados = [
-        ...new Set(djGeneroName.map((obj) => obj.name)),
-      ].map((name) => ({ name }));
-
-      let idTypesSinDuplicados = [...new Set(idTypes.map((obj) => obj.id))].map(
-        (id) => ({ id })
-      );
+      let idTypes = [];
+      let nameTypes = [];
+      let arrayEventCardGeneros = [];
 
       if (value.length) {
         for (let i = 0; i < value.length; i++) {
@@ -268,39 +249,67 @@ function CreateFormPage() {
               idDjs.push({
                 id: dataDjs[j].id,
               });
-              arrayDjsName.push(dataDjs[j].name);
+              dataDjs[j].types.map((type) => {
+                djsGenerosID.push(type.id);
+              });
+            } else if (dataDjs[j].name === value[i]) {
+              idDjs.push({
+                id: dataDjs[j].id,
+              });
+              dataDjs[j].types.map((type) => {
+                djsGenerosID.push(type.id);
+              });
             }
           }
         }
-      }
 
-      let arrayEntrerValues = value.map((value) => {
-        if (!value.value) {
-          return value;
+        for (let i = 0; i < value.length; i++) {
+          if (value[i].value) {
+            arrayDjsName.push(value[i].value);
+          } else {
+            arrayDjsName.push(value[i]);
+          }
         }
-      });
 
-      for (let i = 0; i < arrayEntrerValues.length; i++) {
-        if (arrayEntrerValues[i]) {
-          idDjs.push(arrayEntrerValues[i]);
-          arrayDjsName.push(arrayEntrerValues[i]);
+        for (let i = 0; i < dataTypes.length; i++) {
+          for (let j = 0; j < djsGenerosID.length; j++) {
+            if (dataTypes[i].id === djsGenerosID[j]) {
+              nameTypes.push(dataTypes[i].name);
+              idTypes.push({ id: dataTypes[i].id });
+            }
+          }
         }
+
+        for (let i = 0; i < nameTypes.length; i++) {
+          arrayEventCardGeneros.push({ name: nameTypes[i] });
+        }
+
+        let idTypesSinDuplicados = [
+          ...new Set(idTypes.map((obj) => obj.id)),
+        ].map((id) => ({ id }));
+
+        console.log(idTypes);
+        console.log(idTypesSinDuplicados);
+
+        setErrorLineUp("");
+        setValueChipsTypes(nameTypes);
+        setDataCardType(arrayEventCardGeneros);
+
+        setValueChipsDjs(value);
+        setStringDjs(arrayDjsName);
+        setDataPost({
+          ...dataPost,
+          event_djs: idDjs,
+          event_type: idTypesSinDuplicados,
+        });
+      } else {
+        setValueChipsDjs([]);
+        setStringDjs([]);
+        setDataPost({
+          ...dataPost,
+          event_djs: [],
+        });
       }
-
-      let titleName = arrayDjsName.join(" | ");
-
-      setErrorLineUp("");
-      setErrorGeneros("");
-
-      setStringDjs(arrayDjsName);
-      setDataCardType(djGeneroNameSinDuplicados);
-
-      setDataPost({
-        ...dataPost,
-        event_djs: idDjs,
-        name: titleName,
-        event_type: idTypesSinDuplicados,
-      });
     };
 
     const onChangeEventDate = (event) => {
@@ -702,8 +711,8 @@ function CreateFormPage() {
             Array={cities}
             OnChange={onChangeEventCity}
             Margin="32px 0px 0px 0px"
-            Multiple={false}
             Error={errorPlace}
+            ValuesChips={valueChipsCiudad}
           />
           <p>Selecciona la ciudad donde figurara el evento</p>
 
@@ -712,6 +721,7 @@ function CreateFormPage() {
             Array={promoters}
             OnChange={onChangeEventPromoters}
             Margin="32px 0px 0px 0px"
+            ValuesChips={valueChipsProductora}
           />
           <p>Selecciona su productora</p>
 
@@ -722,6 +732,7 @@ function CreateFormPage() {
             Margin="32px 0px 0px 0px"
             Error={errorLineUp}
             FreeSolo="true"
+            ValuesChips={valueChipsDjs}
           />
           <p>Incluye los djs que tocaran</p>
 
@@ -731,6 +742,7 @@ function CreateFormPage() {
             OnChange={onChangeEventType}
             Margin="32px 0px 0px 0px"
             Error={errorGeneros}
+            ValuesChips={valueChipsTypes}
           />
           <p>Selecciona los generon que habra</p>
 
@@ -770,7 +782,6 @@ function CreateFormPage() {
               Genre={dataCardType}
               OnClick={onClickEventCard}
               Color="#AE71F9"
-              EventImg="true"
             />
           </div>
 
