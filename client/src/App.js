@@ -12,7 +12,7 @@ import CreateEventPage from "./pages/createEventPage/createEventPage.jsx";
 import CreatePromotersPage from "./pages/createPromotersPage/createPromotersPage.jsx";
 import CreateFormPage from "./pages/createFormPage/createFormPage.jsx";
 import CreateDjsPage from "./pages/createDjsPage/createDjs.jsx";
-
+import { Helmet } from "react-helmet";
 function App() {
   return (
     <div>
