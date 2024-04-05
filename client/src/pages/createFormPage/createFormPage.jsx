@@ -51,8 +51,6 @@ function CreateFormPage() {
     event_promoter: [],
   });
 
-  console.log(dataPost);
-
   useEffect(() => {
     if (!cities) {
       axios
