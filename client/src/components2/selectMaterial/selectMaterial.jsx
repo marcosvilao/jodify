@@ -4,6 +4,8 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import { outlinedInputClasses } from "@mui/material/OutlinedInput";
 import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 
 const customTheme = (outerTheme, hasError) =>
   createTheme({
@@ -148,11 +150,23 @@ function SelectMaterial(props) {
     setMenuOpen(true);
   };
 
+  const handleArrowClick = () => {
+    setMenuOpen(!menuOpen);
+  };
+
+  var values = [];
+
+  if (props.ValuesChips) {
+    var values = props.ValuesChips;
+  } else {
+    var values = [];
+  }
+  
   if (props.FreeSolo) {
     return (
       <ThemeProvider theme={customTheme(outerTheme, hasError)}>
         <div style={{ margin: props.Margin ? props.Margin : "10px 0px" }}>
-          <div ref={autoCompleteRef}>
+          <div className={styles.positionAbsolute} ref={autoCompleteRef}>
             <Autocomplete
               freeSolo
               onKeyDown={handleKeyDown}
@@ -161,9 +175,10 @@ function SelectMaterial(props) {
               onChange={handleChange}
               open={menuOpen}
               className={styles.selectBlack}
-              multiple={props.Multiple !== false}
+              multiple={true}
               id="tags-outlined"
               options={optionsArray}
+              value={values}
               getOptionLabel={(option) =>
                 typeof option === "object" && option ? option.value : option
               }
@@ -178,6 +193,17 @@ function SelectMaterial(props) {
                 />
               )}
             />
+            {!menuOpen ? (
+              <ArrowDropDownIcon
+                className={styles.icon}
+                onClick={handleArrowClick}
+              />
+            ) : (
+              <ArrowDropUpIcon
+                className={styles.icon}
+                onClick={handleArrowClick}
+              />
+            )}
           </div>
           {hasError && (
             <div style={{ width: "100%", marginTop: "5px" }}>
@@ -199,17 +225,21 @@ function SelectMaterial(props) {
     return (
       <ThemeProvider theme={customTheme(outerTheme, hasError)}>
         <div style={{ margin: props.Margin ? props.Margin : "10px 0px" }}>
-          <div ref={autoCompleteRef}>
+          <div className={styles.positionAbsolute} ref={autoCompleteRef}>
             <Autocomplete
+              freeSolo
               onKeyDown={handleKeyDown}
               inputValue={inputValue}
               onInputChange={handleInputChange}
               onChange={handleChange}
               open={menuOpen}
               className={styles.selectBlack}
-              multiple={props.Multiple !== false}
+              multiple={true}
               id="tags-outlined"
               options={optionsArray}
+              value={optionsArray.filter((option) =>
+                values.includes(option.value)
+              )}
               getOptionLabel={(option) =>
                 typeof option === "object" && option ? option.value : option
               }
@@ -224,6 +254,17 @@ function SelectMaterial(props) {
                 />
               )}
             />
+            {!menuOpen ? (
+              <ArrowDropDownIcon
+                className={styles.icon}
+                onClick={handleArrowClick}
+              />
+            ) : (
+              <ArrowDropUpIcon
+                className={styles.icon}
+                onClick={handleArrowClick}
+              />
+            )}
           </div>
           {hasError && (
             <div style={{ width: "100%", marginTop: "5px" }}>
