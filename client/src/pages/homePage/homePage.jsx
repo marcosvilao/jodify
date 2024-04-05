@@ -41,7 +41,7 @@ function HomePage() {
   const [currentEventForShare, setCurrentEventForShare] = useState({
     title: "Jodify",
     image: LogoCompartir,
-    genre: "Disfrutar es simple",
+    genre: "disfrutar es urgente",
 });
   const [filter, setFilter] = useState({
     page: 0,
@@ -326,7 +326,7 @@ function HomePage() {
           key={i}
           className={`${styles.containerEventCard} ${additionalClass}`}
         >
-            <Helmet>
+          <Helmet>
                 <title>{currentEventForShare.title}</title>
                 <meta property="og:title" content={currentEventForShare.title} />
                 <meta property="og:description" content={currentEventForShare.genre} />
@@ -973,6 +973,12 @@ function HomePage() {
   if (!dataEventCard || !types || !cities) {
     return (
       <div className={styles.body}>
+                  <Helmet>
+                <title>{currentEventForShare.title}</title>
+                <meta property="og:title" content={currentEventForShare.title} />
+                <meta property="og:description" content={currentEventForShare.genre} />
+                <meta property="og:image" content={currentEventForShare.image} />
+            </Helmet>
         <div className={styles.containerFixed}>
           <div className={styles.containerInput}>
             <InputSearch PlaceHolder="Buscá un evento, artista o club" />
@@ -993,6 +999,12 @@ function HomePage() {
   } else {
     return (
       <div className={styles.body}>
+                  <Helmet>
+                <title>{currentEventForShare.title}</title>
+                <meta property="og:title" content={currentEventForShare.title} />
+                <meta property="og:description" content={currentEventForShare.genre} />
+                <meta property="og:image" content={currentEventForShare.image} />
+            </Helmet>
         <div className={styles.containerFixed} id="containerFixed">
           <div className={styles.containerInput}>
             <InputSearch
