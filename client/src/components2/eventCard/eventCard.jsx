@@ -41,16 +41,16 @@ function EventCard(props) {
     };
   }, [props.Img]);
 
-  const handleShareClick = (event) => {
+  const handleShareClick = async (event) => {
     event.stopPropagation();
     const eventDetails = {
       title: props.SecondTittle || stringDjs || "Nombre del evento",
       image: props.Img,
       genre: genreNames || "Género musical",
     };
-
-    if (props.Share) {
-      props.LoadDetails(eventDetails)
+    const isLoaded = await props.LoadDetails(eventDetails)
+    if (props.Share && isLoaded) {
+      console.log(isLoaded)
       props.Share(eventDetails);
     }                     
   };

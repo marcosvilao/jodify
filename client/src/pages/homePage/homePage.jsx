@@ -256,9 +256,10 @@ function HomePage() {
 
       const additionalClass = i === 0 ? styles.firstElement : "";
 
-      const handleEventShare = (eventDetails) => {
+      const handleEventShare = async (eventDetails) => {
         console.log(eventDetails)
         setCurrentEventForShare(eventDetails);
+        return true
     };
       const onClickShare = async (event) => {
         // Tu fecha original
