@@ -257,9 +257,9 @@ function HomePage() {
       const additionalClass = i === 0 ? styles.firstElement : "";
 
       const handleEventShare = (eventDetails) => {
+        console.log(eventDetails)
         setCurrentEventForShare(eventDetails);
     };
-
       const onClickShare = async (event) => {
         // Tu fecha original
         const fechaOriginal = finalFormattedDate;
@@ -320,7 +320,6 @@ function HomePage() {
           console.log("Error al compartir:", error);
         }
       };
-
       return (
         <div
           key={i}
@@ -349,6 +348,7 @@ function HomePage() {
                 Genre={event.types}
                 OnClick={() => onClickEventCard(event)}
                 ID={event.id}
+                LoadDetails={handleEventShare}
                 Share={() => onClickShare(handleEventShare)}
               />
             </div>

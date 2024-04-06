@@ -50,8 +50,9 @@ function EventCard(props) {
     };
 
     if (props.Share) {
+      props.LoadDetails(eventDetails)
       props.Share(eventDetails);
-    }
+    }                     
   };
 
   return (
