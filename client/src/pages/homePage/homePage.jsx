@@ -11,9 +11,6 @@ import CheckBoxList from "../../components2/checkBoxList/checkBoxList";
 import Alert from "../../components2/alert/alert";
 import SkeletonLoader from "../../components2/loaderSkeleton/loaderSkeleton";
 import Footer from "../../components2/footer/footer";
-import LogoCompartir from "../../assets/Jodify-logo.png";
-import { Helmet } from 'react-helmet';
-
 
 function HomePage() {
   const axiosUrl = process.env.REACT_APP_AXIOS_URL;
@@ -38,11 +35,6 @@ function HomePage() {
   const [valueButtonFecha, setValueButtonFecha] = useState(false);
   const [citieName, setCitieName] = useState(["Ubicación"]);
   const [isFiltering, setIsFiltering] = useState(false);
-  const [currentEventForShare, setCurrentEventForShare] = useState({
-    title: "Jodify",
-    image: LogoCompartir,
-    genre: "disfrutar es urgente",
-});
   const [filter, setFilter] = useState({
     page: 0,
     cities: [],
@@ -57,21 +49,6 @@ function HomePage() {
     if (!dataEventCard) {
       const urlParams = new URLSearchParams(window.location.search);
       const sharedEventId = urlParams.get("sharedEventId");
-      const eventDate = urlParams.get("eventDate");
-
-      if (eventDate) {
-        var eventDateSplit = eventDate.split("/");
-        var eventDateJoin = eventDateSplit.join(" ");
-        var sharedArrayDates = [eventDateJoin, eventDateJoin];
-
-        var fechaOriginal = sharedArrayDates[0];
-        var fecha = new Date(fechaOriginal);
-        var dia = fecha.getDate();
-        var mes = fecha.getMonth() + 1;
-        dia = dia < 10 ? "0" + dia : dia;
-        mes = mes < 10 ? "0" + mes : mes;
-        var fechaFormateada = dia + "/" + mes;
-      }
 
       axios
         .post(
@@ -80,7 +57,7 @@ function HomePage() {
             ? {
                 page: 0,
                 cities: [],
-                dates: sharedArrayDates,
+                dates: [],
                 types: [],
                 search: "",
                 sharedId: sharedEventId,
@@ -130,13 +107,12 @@ function HomePage() {
             setFilter({
               page: 0,
               cities: [],
-              dates: sharedArrayDates,
+              dates: [],
               types: [],
               search: "",
               sharedId: sharedEventId,
             });
             setDataEventCard(sortArray);
-            setValueButtonFecha(fechaFormateada);
           } else {
             setDataEventCard(sortArray);
           }
@@ -256,59 +232,10 @@ function HomePage() {
 
       const additionalClass = i === 0 ? styles.firstElement : "";
 
-      const handleEventShare = async (eventDetails) => {
-        console.log(eventDetails)
-        setCurrentEventForShare(eventDetails);
-        return true
-    };
       const onClickShare = async (event) => {
-        // Tu fecha original
-        const fechaOriginal = finalFormattedDate;
-
-        // Extraemos el día y el mes
-        const partes = fechaOriginal.split(", ");
-        const dia = partes[1].split(" de ")[0]; // "5"
-        const mesNombre = partes[1].split(" de ")[1]; // "Abril"
-
-        // Convertimos el mes a su número correspondiente
-        const meses = {
-          Enero: 0,
-          Febrero: 1,
-          Marzo: 2,
-          Abril: 3,
-          Mayo: 4,
-          Junio: 5,
-          Julio: 6,
-          Agosto: 7,
-          Septiembre: 8,
-          Octubre: 9,
-          Noviembre: 10,
-          Diciembre: 11,
-        };
-
-        const mes = meses[mesNombre];
-
-        // Creamos un objeto Date con la fecha. Asumimos el año 2024.
-        const fecha = new Date(2024, mes, dia, 9, 0, 0);
-
-        // Para ajustar al huso horario de Argentina, puedes restar 3 horas,
-        // pero esto depende de si necesitas considerar el horario de verano.
-        // Esto es un ejemplo simple que no lo considera.
-        fecha.setHours(fecha.getHours());
-
-        // Convertimos a string. El formato exacto dependerá de la localización y configuración del entorno.
-        const fechaString = fecha.toString();
-
-        const fechaStringSplit = fechaString.split(" ");
-        const fechaStringJoin = fechaStringSplit.join("/");
-
         try {
-
-
           const shareData = {
-            // title: "Jodify",
-            // text: "Plataforma para encontrar tu evento favorito",
-            url: `${window.location.origin}/?sharedEventId=${event.id}&eventDate=${fechaStringJoin}`
+            url: `${window.location.origin}/?sharedEventId=${event.id}`,
           };
 
           if (navigator.share) {
@@ -326,12 +253,6 @@ function HomePage() {
           key={i}
           className={`${styles.containerEventCard} ${additionalClass}`}
         >
-          <Helmet>
-                <title>{currentEventForShare.title}</title>
-                <meta property="og:title" content={currentEventForShare.title} />
-                <meta property="og:description" content={currentEventForShare.genre} />
-                <meta property="og:image" content={currentEventForShare.image} />
-            </Helmet>
           <h1
             ref={(el) => (headersRef.current[i] = el)}
             className={styles.stickyHeader}
@@ -349,8 +270,7 @@ function HomePage() {
                 Genre={event.types}
                 OnClick={() => onClickEventCard(event)}
                 ID={event.id}
-                LoadDetails={handleEventShare}
-                Share={() => onClickShare(handleEventShare)}
+                Share={() => onClickShare(event)}
               />
             </div>
           ))}
@@ -974,12 +894,6 @@ function HomePage() {
   if (!dataEventCard || !types || !cities) {
     return (
       <div className={styles.body}>
-                  <Helmet>
-                <title>{currentEventForShare.title}</title>
-                <meta property="og:title" content={currentEventForShare.title} />
-                <meta property="og:description" content={currentEventForShare.genre} />
-                <meta property="og:image" content={currentEventForShare.image} />
-            </Helmet>
         <div className={styles.containerFixed}>
           <div className={styles.containerInput}>
             <InputSearch PlaceHolder="Buscá un evento, artista o club" />
@@ -1000,12 +914,6 @@ function HomePage() {
   } else {
     return (
       <div className={styles.body}>
-                  <Helmet>
-                <title>{currentEventForShare.title}</title>
-                <meta property="og:title" content={currentEventForShare.title} />
-                <meta property="og:description" content={currentEventForShare.genre} />
-                <meta property="og:image" content={currentEventForShare.image} />
-            </Helmet>
         <div className={styles.containerFixed} id="containerFixed">
           <div className={styles.containerInput}>
             <InputSearch

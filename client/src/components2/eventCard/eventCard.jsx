@@ -41,20 +41,6 @@ function EventCard(props) {
     };
   }, [props.Img]);
 
-  const handleShareClick = async (event) => {
-    event.stopPropagation();
-    const eventDetails = {
-      title: props.SecondTittle || stringDjs || "Nombre del evento",
-      image: props.Img,
-      genre: genreNames || "Género musical",
-    };
-    const isLoaded = await props.LoadDetails(eventDetails)
-    if (props.Share && isLoaded) {
-      console.log(isLoaded)
-      props.Share(eventDetails);
-    }                     
-  };
-
   return (
     <a
       className={styles.body}
@@ -122,7 +108,7 @@ function EventCard(props) {
           )}
         </div>
 
-        <div className={styles.containerShare} onClick={handleShareClick}>
+        <div className={styles.containerShare} onClick={props.Share}>
           <ShareIcon
             className={styles.iconShare}
             style={{
