@@ -153,8 +153,14 @@ class EventFacade {
       paramCount++
     }
 
-    query += `GROUP BY e.id, mp.priority, ed.djs, et.types ORDER BY e.date_from ASC,mp.priority ASC, e.id ASC ${
-      sharedId ? 'LIMIT NULL' : 'LIMIT 20'
+    if (sharedId) {
+      query += `AND (e.id = $${paramCount} OR (e.date_from = (SELECT date_from FROM events WHERE id = $${paramCount}) AND e.id != $${paramCount}))`
+      values.push(sharedId)
+      paramCount++
+    }
+
+    query += `GROUP BY e.id, mp.priority, ed.djs, et.types ORDER BY e.date_from ASC, mp.priority ASC, e.id ASC ${
+      sharedId ? '' : 'LIMIT 20'
     } OFFSET $${paramCount}`
 
     values.push(setOff)

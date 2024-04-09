@@ -29,7 +29,7 @@ class EventHelper {
   async getAllEvents(data) {
     const { types, page } = data
 
-    console.log('data', data)
+    // console.log('data', data)
 
     const setOff = page * 20
     const currentDate = new Date()
