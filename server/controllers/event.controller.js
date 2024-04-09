@@ -314,7 +314,7 @@ const filterEventsNew = async (req, res) => {
       query += ` AND EXISTS (
         SELECT 1 FROM event_types et
         WHERE et.event_id = e.id AND et.type_id IN (${typePlaceholders})
-      )`
+        )`
       values.push(...mappedTypes)
       paramCount += mappedTypes.length
     }
@@ -329,6 +329,7 @@ const filterEventsNew = async (req, res) => {
           SELECT 1 FROM event_djs ed
           JOIN djs dj ON ed.dj_id = dj.id
           WHERE ed.event_id = e.id AND unaccent(lower(dj.name)) ILIKE unaccent(lower($${paramCount}))
+
         )
         OR EXISTS (
           SELECT 1 FROM event_types et
@@ -346,6 +347,7 @@ const filterEventsNew = async (req, res) => {
           WHERE ep.event_id = e.id AND unaccent(lower(p.name)) ILIKE unaccent(lower($${paramCount}))
         )
       )`
+
       values.push(`%${searchWithoutAccents}%`)
       paramCount++
     }
@@ -357,7 +359,6 @@ const filterEventsNew = async (req, res) => {
     values.push(setOff)
     const result = await pool.query(query, values)
     const events = result.rows
-
     //-----remplazamos la url de cloudinary por la url del cache:
 
     for (const e of events) {
