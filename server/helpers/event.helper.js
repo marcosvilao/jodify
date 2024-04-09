@@ -27,7 +27,7 @@ class EventHelper {
   }
 
   async getAllEvents(data) {
-    const { types, page } = data
+    const { types, page, sharedId } = data
 
     // console.log('data', data)
 
@@ -46,6 +46,7 @@ class EventHelper {
     }
 
     const events = await facade.getEvents(data)
+    // console.log('event', events)
 
     for (const e of events) {
       if (e.image_url.startsWith('https://res.cloudinary.com')) {
@@ -66,7 +67,13 @@ class EventHelper {
       }
     }
 
-    return responseGetEvents(events)
+    const response = responseGetEvents(events)
+
+    if (response[0] && sharedId) {
+      response.push({ date: events[0].date_from })
+    }
+
+    return response
   }
 
   async searchEvent(searchQuery) {

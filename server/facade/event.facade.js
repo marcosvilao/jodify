@@ -207,8 +207,6 @@ class EventFacade {
 
     const newEvent = await pool.query(query, values)
 
-    console.log('asd', newEvent)
-
     if (!newEvent) return null
 
     return newEvent.rows[0].id
