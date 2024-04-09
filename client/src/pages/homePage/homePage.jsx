@@ -65,7 +65,24 @@ function HomePage() {
             : filter
         )
         .then((res) => {
-          const sortArray = res.data;
+          var sortArray = [];
+
+          if (sharedEventId) {
+            sortArray.push(res.data[0]);
+            var fechaISO = res.data[1].date;
+            var fecha = new Date(fechaISO);
+
+            var dia = fecha.getDate();
+            var mes = fecha.getMonth() + 1;
+
+            dia = dia < 10 ? "0" + dia : dia;
+            mes = mes < 10 ? "0" + mes : mes;
+
+            var fechaFormateada = dia + "/" + mes;
+          } else {
+            sortArray = res.data;
+          }
+
           sortArray.forEach((dateInfo) => {
             Object.keys(dateInfo).forEach((date) => {
               dateInfo[date].sort((a, b) => {
@@ -100,6 +117,9 @@ function HomePage() {
             });
           });
           if (sharedEventId) {
+            setValueButtonFecha(fechaFormateada);
+            setOpenFecha(true);
+            setDataEventCard(sortArray);
             setFilter({
               page: 0,
               cities: [],
@@ -108,12 +128,12 @@ function HomePage() {
               search: "",
               sharedId: sharedEventId,
             });
-            setDataEventCard(sortArray);
           } else {
             setDataEventCard(sortArray);
           }
         })
-        .catch(() => {
+        .catch((err) => {
+          console.log(err);
           Alert(
             "Error!",
             "Error al cargar los eventos, recargar la pagina o ponerse en contacto con el servidor",
@@ -296,13 +316,8 @@ function HomePage() {
 
   const onClickOpenFecha = () => {
     const fondoTransparente = document.getElementById("fondoTransparente");
-    if (!openFecha) {
-      setOpenFecha(true);
-      fondoTransparente.style.visibility = "visible";
-    } else {
-      setOpenFecha(false);
-      fondoTransparente.style.visibility = "hidden";
-    }
+    fondoTransparente.style.visibility = "visible";
+    setOpenFecha(true);
     setOpenGenero(false);
     setOpenUbicacion(false);
   };
@@ -317,7 +332,6 @@ function HomePage() {
         ...filter,
         dates: [],
         page: 0,
-
         sharedId: "",
       }));
     } else if (value[1] === null) {
@@ -330,7 +344,6 @@ function HomePage() {
         ...filter,
         dates: arraySetHoures,
         page: 0,
-
         sharedId: "",
       }));
     } else if (value[1] !== null) {
@@ -344,7 +357,6 @@ function HomePage() {
         ...filter,
         dates: arraySetHoures,
         page: 0,
-
         sharedId: "",
       }));
     } else {
