@@ -128,7 +128,7 @@ function HomePage() {
 
     if (!cities) {
       axios
-        .get(`${axiosUrl}/cities`)
+        .get(`${axiosUrl}/jodify/city`)
         .then((res) => {
           setCities(res.data);
         })
@@ -143,7 +143,7 @@ function HomePage() {
 
     if (!types) {
       axios
-        .get(`${axiosUrl}/types `)
+        .get(`${axiosUrl}/jodify/types `)
         .then((res) => {
           setType(res.data);
         })
@@ -217,7 +217,7 @@ function HomePage() {
 
       const onClickEventCard = (event) => {
         axios
-          .put(`${axiosUrl}/add-interaction/${event.id}`)
+          .patch(`${axiosUrl}/events/add-interaction/${event.id}`)
           .then((res) => {
             if (event.ticket_link && res.data) {
               setTimeout(() => {
@@ -321,6 +321,7 @@ function HomePage() {
         ...filter,
         dates: [],
         page: 0,
+
         sharedId: "",
       }));
     } else if (value[1] === null) {
@@ -333,6 +334,7 @@ function HomePage() {
         ...filter,
         dates: arraySetHoures,
         page: 0,
+
         sharedId: "",
       }));
     } else if (value[1] !== null) {
@@ -346,6 +348,7 @@ function HomePage() {
         ...filter,
         dates: arraySetHoures,
         page: 0,
+
         sharedId: "",
       }));
     } else {
@@ -453,8 +456,10 @@ function HomePage() {
         ...filter,
         dates: [],
         page: 0,
+
         sharedId: "",
       }));
+
       if (openFecha) {
         setOpenFecha(false);
       }
@@ -526,6 +531,7 @@ function HomePage() {
       ...filter,
       cities: [],
       page: 0,
+
       sharedId: "",
     }));
   };
@@ -570,6 +576,7 @@ function HomePage() {
       ...filter,
       cities: arrayCitiesId,
       page: 0,
+
       sharedId: "",
     }));
   };
@@ -617,6 +624,7 @@ function HomePage() {
         ...filter,
         types: [],
         page: 0,
+
         sharedId: "",
       }));
 
@@ -659,6 +667,7 @@ function HomePage() {
       ...filter,
       types: arrayTypes,
       page: 0,
+
       sharedId: "",
     }));
     setLoader(true);
@@ -679,6 +688,7 @@ function HomePage() {
       ...filter,
       search: e.target.value,
       page: 0,
+
       sharedId: "",
     }));
     setAxiosSearch(true);
