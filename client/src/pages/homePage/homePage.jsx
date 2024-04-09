@@ -69,11 +69,9 @@ function HomePage() {
           sortArray.forEach((dateInfo) => {
             Object.keys(dateInfo).forEach((date) => {
               dateInfo[date].sort((a, b) => {
-                // Verificar primero si alguno de los eventos es el evento compartido y debe ir primero
                 if (a.id === sharedEventId) return -1;
                 if (b.id === sharedEventId) return 1;
 
-                // Encuentra la prioridad más baja (mayor prioridad) en los promoters de 'a'
                 const priorityA = a.promoters.reduce((min, promoter) => {
                   if (
                     promoter.priority !== null &&
@@ -84,7 +82,6 @@ function HomePage() {
                   return min;
                 }, null);
 
-                // Encuentra la prioridad más baja (mayor prioridad) en los promoters de 'b'
                 const priorityB = b.promoters.reduce((min, promoter) => {
                   if (
                     promoter.priority !== null &&
@@ -95,7 +92,6 @@ function HomePage() {
                   return min;
                 }, null);
 
-                // Comparación para el ordenamiento, tratando null como infinito
                 return (
                   (priorityA !== null ? priorityA : Infinity) -
                   (priorityB !== null ? priorityB : Infinity)
