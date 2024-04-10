@@ -108,6 +108,7 @@ function EventCard(props) {
           )}
         </div>
 
+        {/*
         <div className={styles.containerShare} onClick={props.Share}>
           <ShareIcon
             className={styles.iconShare}
@@ -117,6 +118,7 @@ function EventCard(props) {
             }}
           />
         </div>
+       */}
       </div>
     </a>
   );
