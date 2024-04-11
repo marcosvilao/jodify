@@ -139,6 +139,11 @@ class EventFacade {
           WHERE ed.event_id = e.id AND unaccent(lower(dj.name)) ILIKE unaccent(lower($${paramCount}))
           )
           OR EXISTS (
+            SELECT 1 FROM event_types et
+            JOIN types tp ON et.type_id = tp.id
+            WHERE et.event_id = e.id AND unaccent(lower(tp.name)) ILIKE unaccent(lower($${paramCount}))
+            )
+          OR EXISTS (
             SELECT 1 FROM event_promoters ep
             JOIN promoters p ON ep.promoter_id = p.id
             WHERE ep.event_id = e.id AND unaccent(lower(p.name)) ILIKE unaccent(lower($${paramCount}))
