@@ -17,8 +17,10 @@ class EventFacade {
     return event.rows[0]
   }
 
-  async getEvents(data) {
-    const { dates, cities, search, sharedId, setOff, argentinaTime, mappedTypes } = data
+  async getEvents() {}
+
+  async getEventsByFilter(data) {
+    const { dates, citiesId, search, sharedId, setOff, argentinaTime, typesId, limit } = data
 
     let query = `
     WITH MinPriority AS (
@@ -108,23 +110,23 @@ class EventFacade {
       paramCount += 1
     }
 
-    if (cities && cities.length > 0) {
-      const cityPlaceholders = cities.map((_, index) => `$${paramCount + index}`).join(', ')
+    if (citiesId && citiesId.length > 0) {
+      const cityPlaceholders = citiesId.map((_, index) => `$${paramCount + index}`).join(', ')
       query += ` AND e.city_id IN (${cityPlaceholders})`
-      values.push(...cities)
-      paramCount += cities.length
+      values.push(...citiesId)
+      paramCount += citiesId.length
     } else {
       query += ' AND (e.city_id IS NULL OR e.city_id = e.city_id)'
     }
 
-    if (mappedTypes && mappedTypes.length > 0) {
-      const typePlaceholders = mappedTypes.map((_, index) => `$${paramCount + index}`).join(', ')
+    if (typesId && typesId.length > 0) {
+      const typePlaceholders = typesId.map((_, index) => `$${paramCount + index}`).join(', ')
       query += ` AND EXISTS (
         SELECT 1 FROM event_types et
         WHERE et.event_id = e.id AND et.type_id IN (${typePlaceholders})
         )`
-      values.push(...mappedTypes)
-      paramCount += mappedTypes.length
+      values.push(...typesId)
+      paramCount += typesId.length
     }
 
     if (search) {
@@ -165,7 +167,7 @@ class EventFacade {
     }
 
     query += `GROUP BY e.id, mp.priority, ed.djs, et.types ORDER BY e.date_from ASC, mp.priority ASC, e.id ASC ${
-      sharedId ? '' : 'LIMIT 20'
+      sharedId || !limit ? '' : `LIMIT ${limit}`
     } OFFSET $${paramCount}`
 
     values.push(setOff)

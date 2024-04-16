@@ -24,6 +24,17 @@ route.get('/search', async (req, res) => {
   }
 })
 
+route.get('/filters', validateGetAllEventsQuery, async (req, res) => {
+  const { data } = res.locals
+  try {
+    const response = await helper.getAllEventsByFilter(data)
+
+    return res.status(200).send(response)
+  } catch (error) {
+    return res.status(500).json({ message: 'Error get events', error: error.message })
+  }
+})
+
 route.get('/:id', validateEventId, async (req, res) => {
   const { event } = res.locals
 
@@ -37,7 +48,6 @@ route.get('/:id', validateEventId, async (req, res) => {
 route.post('/create', validateEventCreateData, async (req, res) => {
   const { data } = res.locals
   try {
-    console.log('data:', data)
     const response = await helper.createEvent(data)
 
     return res.status(200).send({ message: 'Event created successfully', eventId: response })
@@ -47,6 +57,7 @@ route.post('/create', validateEventCreateData, async (req, res) => {
 })
 
 route.post('/check-link', async (req, res) => {
+  // TODO esto tendria que ser get
   const { link } = req.body
 
   try {
@@ -58,17 +69,6 @@ route.post('/check-link', async (req, res) => {
     return res.status(404).send({ message: 'nop' })
   } catch (error) {
     return res.status(500).json({ error: error.message })
-  }
-})
-
-route.post('/filtersNew', validateGetAllEventsQuery, async (req, res) => {
-  const { data } = res.locals
-  try {
-    const response = await helper.getAllEvents(data)
-
-    return res.status(200).send(response)
-  } catch (error) {
-    return res.status(500).json({ message: 'Error get events', error: error.message })
   }
 })
 
