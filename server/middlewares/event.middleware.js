@@ -77,27 +77,36 @@ async function validateEventCreateData(req, res, next) {
 }
 
 async function validateGetAllEventsQuery(req, res, next) {
-  let { dates, cities, types, search, page, sharedId } = req.body
+  let { dates, citiesId, typesId, search, page, sharedId, limit } = req.query
 
-  if (types && !Array.isArray(types)) {
-    const message = 'types debe ser un arreglo de strings'
-    return res.status(404).send({ message })
+  if (typesId) {
+    typesId = String(typesId).split(',')
+    const invalidUuidv4 = typesId.find((e) => !UUIDV4RegEx.test(e))
+    if (invalidUuidv4) {
+      const message = `El id del type: '${invalidUuidv4}' es invalido.`
+      return res.status(404).send({ message })
+    }
   }
-  if (dates && !Array.isArray(dates)) {
-    const message = 'dates debe ser un arreglo de strings'
-    return res.status(404).send({ message })
+
+  if (citiesId) {
+    citiesId = String(citiesId).split(',')
+    const invalidUuidv4 = citiesId.find((e) => !UUIDV4RegEx.test(e))
+    if (invalidUuidv4) {
+      const message = `El id del city: '${invalidUuidv4}' es invalido.`
+      return res.status(404).send({ message })
+    }
   }
-  if (cities && !Array.isArray(cities)) {
-    const message = 'cities debe ser un arreglo de strings'
-    return res.status(404).send({ message })
+  if (dates) {
+    dates = String(dates).split(',')
   }
 
   if (page === undefined) {
-    const message = 'debe ingresar el numero de la pagina'
-    return res.status(404).send({ message })
+    // const message = 'debe ingresar el numero de la pagina'
+    // return res.status(404).send({ message })
+    page = 0
   }
 
-  res.locals.data = { dates, cities, types, search, page, sharedId }
+  res.locals.data = { dates, citiesId, typesId, search, page, sharedId, limit }
 
   next()
 }
