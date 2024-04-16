@@ -26,8 +26,8 @@ class EventHelper {
     return null
   }
 
-  async getAllEvents(data) {
-    const { types, page, sharedId } = data
+  async getAllEventsByFilter(data) {
+    const { page, sharedId } = data
 
     // console.log('data', data)
 
@@ -40,12 +40,12 @@ class EventHelper {
     data.argentinaTime = argentinaTime
     data.setOff = setOff
 
-    if (types) {
-      const mappedTypes = types.map((type) => type?.id)
-      data.mappedTypes = mappedTypes
-    }
+    // if (types) {
+    //   const mappedTypes = types.map((type) => type?.id)
+    //   data.mappedTypes = mappedTypes
+    // }
 
-    const events = await facade.getEvents(data)
+    const events = await facade.getEventsByFilter(data)
     // console.log('event', events)
 
     for (const e of events) {
