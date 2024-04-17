@@ -89,7 +89,7 @@ class EventHelper {
       event_type,
       date_from,
       venue,
-      image_url,
+      image,
       event_djs,
       event_city,
       event_promoter,
@@ -111,7 +111,7 @@ class EventHelper {
       date_from,
       venue,
       ticket_link,
-      image_url,
+      image,
     }
 
     const values = [
@@ -120,7 +120,7 @@ class EventHelper {
       formattedEventDate,
       event.venue,
       event.ticket_link,
-      event.image_url,
+      event.image,
       cityID,
     ]
 

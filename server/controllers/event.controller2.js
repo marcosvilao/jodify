@@ -45,7 +45,7 @@ route.get('/:id', validateEventId, async (req, res) => {
   }
 })
 
-route.post('/create', validateEventCreateData, async (req, res) => {
+route.post('/create', fileUploadMiddleware, validateEventCreateData, async (req, res) => {
   const { data } = res.locals
   try {
     const response = await helper.createEvent(data)

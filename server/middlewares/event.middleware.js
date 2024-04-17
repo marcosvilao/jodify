@@ -1,5 +1,5 @@
 const { EventHelper } = require('../helpers/event.helper.js')
-const { uploadImg } = require('../utils/cloudinary/auxFunctionsCloudinary.js')
+const uploadImg = require('../utils/cloudinary/auxFunctionsCloudinary.js')
 const file = require('../utils/cloudinary/files.js')
 const { UUIDV4RegEx } = require('../utils/regex.js')
 
@@ -27,43 +27,53 @@ async function validateEventId(req, res, next) {
 }
 
 async function validateEventCreateData(req, res, next) {
-  const {
+  let {
     name,
     venue,
-    image_url, // esta no va a estar
+    image_url,
     date_from,
     event_city,
     ticket_link,
     event_type,
     event_djs,
     event_promoter,
-  } = req.body.event
+  } = req.body
 
-  // event_type = Array.isArray(event_type) ? event_type : event_type?.split(',') // arrays
+  let imageCloud
 
-  if (!name || !venue || !date_from || !event_city || !ticket_link) {
-    const message = 'Para crear un producto debe ingresar..'
+  //TODO con scrapping pasa el post sin name
+
+  if (!venue || !date_from || !event_city || !ticket_link) {
+    const message =
+      'Para crear un producto debe ingresar name, venue, date_from, event_city, ticket_link'
     return res.status(404).send({ message })
   }
+  event_type = event_type ? JSON.parse(event_type) : null
+  event_djs = event_djs ? JSON.parse(event_djs) : null
+  event_promoter = event_promoter ? JSON.parse(event_promoter) : null
+  event_city = event_city ? JSON.parse(event_city) : null
 
-  // if (!req.files?.image) {
-  //   const message = 'To create a product you need a image'
-  //   return res.status(404).send({ message })
-  // }
-  // const { image } = req.files
+  if (req.files?.image && !image_url) {
+    // if (!req.files?.image) {
+    //   const message = 'To create a product you need a image'
+    //   return res.status(404).send({ message })
+    // }
+    const { image } = req.files
 
-  // const response = await uploadImg(image, file.EVENTS)
+    const response = await uploadImg(image, file.EVENTS)
 
-  // if (typeof response === 'string') {
-  //   const message = 'Error Cloudinary response'
-  //   return res.status(404).send({ message })
-  // }
+    if (typeof response === 'string') {
+      const message = 'Error Cloudinary response'
+      return res.status(404).send({ message })
+    }
+
+    imageCloud = response[0]
+  }
 
   const data = {
     name,
-    //   image: response,
+    image: image_url ? { image_url } : imageCloud,
     venue,
-    image_url,
     date_from,
     event_city,
     ticket_link,

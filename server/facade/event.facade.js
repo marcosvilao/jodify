@@ -202,7 +202,7 @@ class EventFacade {
 
   async createEvent(values) {
     const query = `
-          INSERT INTO events(id, name, date_from, venue, ticket_link, image_url, city_id)
+          INSERT INTO events(id, name, date_from, venue, ticket_link, image, city_id)
           VALUES($1, $2, $3, $4, $5, $6, $7)
           RETURNING id;
       `
