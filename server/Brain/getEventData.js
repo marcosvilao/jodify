@@ -2,9 +2,6 @@ const chromium = require("@sparticuz/chromium");
 const puppeteer = require("puppeteer-extra");
 const moment = require("moment-timezone");
 require("dotenv").config();
-//const StealthPlugin = require("puppeteer-extra-plugin-stealth");
-
-//puppeteer.use(StealthPlugin());
 
 const linkScrap = async (link) => {
   const SCRAPPING = process.env.SCRAPPING;
@@ -179,7 +176,7 @@ const linkScrap = async (link) => {
         }
 
         try {
-          tittle = await section.$eval("h3", (h3) => h3.textContent.trim());
+          tittle = await section.$eval("h1", (h1) => h1.textContent.trim());
         } catch (error) {
           console.log(error);
           tittle = "";
