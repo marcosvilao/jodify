@@ -5,6 +5,7 @@ require("dotenv").config();
 
 const linkScrap = async (link) => {
   const SCRAPPING = process.env.SCRAPPING;
+  console.log(SCRAPPING);
   let browser = null;
   try {
     if (SCRAPPING) {
@@ -43,7 +44,11 @@ const linkScrap = async (link) => {
       };
     }
 
+    console.log("Lanzando el navegador");
+    console.log("Navegando a:", link);
+
     if (link.includes("ticketpass")) {
+      console.log("Ingreso a la pagina");
       await page.waitForSelector("img", { timeout: 10000 }); // Espera hasta 10 segundos.
       let dateText = "";
       let tittle = "";
@@ -134,6 +139,7 @@ const linkScrap = async (link) => {
 
       return result;
     } else if (link.includes("passline")) {
+      console.log("Ingreso a la pagina");
       await page.waitForSelector("img", { timeout: 10000 });
 
       let dateText = "";
@@ -224,6 +230,7 @@ const linkScrap = async (link) => {
 
       return result;
     } else if (link.includes("venti")) {
+      console.log("Ingreso a la pagina");
       let dateText = "";
       let location = "";
       let jpgImgSrc = "";
