@@ -3,7 +3,6 @@ const puppeteer = require('puppeteer-extra')
 const moment = require('moment-timezone')
 require('dotenv').config()
 //const StealthPlugin = require("puppeteer-extra-plugin-stealth");
-
 //puppeteer.use(StealthPlugin());
 
 const linkScrapping = async (link) => {
