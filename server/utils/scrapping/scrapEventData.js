@@ -178,7 +178,9 @@ const linkScrapping = async (link) => {
         }
 
         try {
+
           tittle = await section.$eval("h1", (h1) => h1.textContent.trim());
+
         } catch (error) {
           console.log(error);
           tittle = "";
