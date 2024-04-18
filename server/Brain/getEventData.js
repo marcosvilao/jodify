@@ -6,6 +6,7 @@ require("dotenv").config();
 const linkScrap = async (link) => {
   const SCRAPPING = process.env.SCRAPPING;
   console.log(SCRAPPING);
+  console.log(link);
   let browser = null;
   try {
     if (SCRAPPING) {
@@ -36,10 +37,12 @@ const linkScrap = async (link) => {
     const page = await browser.newPage();
 
     console.log("2");
-    
+
     await page.setUserAgent(
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36"
     );
+
+    console.log(page);
 
     console.log("3");
 
