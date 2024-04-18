@@ -63,10 +63,10 @@ app.use(express.json())
 
 //-------------------------
 
-app.use(eventRoutes);
+// app.use(eventRoutes);
 
 
-// app.use(routes);
+app.use(routes);
 
 app.use((err, req, res, next) => {
   return res.json({
