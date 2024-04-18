@@ -13,10 +13,10 @@ const linkScrap = async (link) => {
       browser = await puppeteer.launch({
         args: [
           ...chromium.args,
-          // "--no-sandbox", // Desactivar el modo sandbox puede ayudar si hay problemas de permisos
-          // "--disable-setuid-sandbox",
+          "--no-sandbox", // Desactivar el modo sandbox puede ayudar si hay problemas de permisos
+          "--disable-setuid-sandbox",
           "--disable-dev-shm-usage", // Ayuda en entornos con poca memoria
-          // "--single-process", // Puede ser útil en ciertos entornos, aunque no recomendado en producción
+          "--single-process", // Puede ser útil en ciertos entornos, aunque no recomendado en producción
           "--no-zygote", // Ayuda a evitar problemas de estabilidad en entornos sin GUI
         ],
         defaultViewport: chromium.defaultViewport,
