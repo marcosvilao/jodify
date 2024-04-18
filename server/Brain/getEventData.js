@@ -10,7 +10,14 @@ const linkScrap = async (link) => {
   try {
     if (SCRAPPING) {
       browser = await puppeteer.launch({
-        args: chromium.args,
+        args: [
+          ...chromium.args,
+          "--no-sandbox", // Desactivar el modo sandbox puede ayudar si hay problemas de permisos
+          "--disable-setuid-sandbox",
+          "--disable-dev-shm-usage", // Ayuda en entornos con poca memoria
+          "--single-process", // Puede ser útil en ciertos entornos, aunque no recomendado en producción
+          "--no-zygote", // Ayuda a evitar problemas de estabilidad en entornos sin GUI
+        ],
         defaultViewport: chromium.defaultViewport,
         executablePath: await chromium.executablePath(),
         headless: chromium.headless,
@@ -24,16 +31,28 @@ const linkScrap = async (link) => {
       });
     }
 
+    console.log("1");
+
     const page = await browser.newPage();
+
+    console.log("2");
+    
     await page.setUserAgent(
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36"
     );
+
+    console.log("3");
+
     const response = await page.goto(link, {
       waitUntil: "domcontentloaded",
       timeout: 0,
     });
 
+    console.log("4");
+
     const statusCode = response.status();
+
+    console.log("5");
 
     if (statusCode !== 200) {
       console.error(
