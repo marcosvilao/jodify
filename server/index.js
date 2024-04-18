@@ -62,7 +62,9 @@ app.use(express.json())
 // passportConfig(passport);
 
 //-------------------------
-app.use(eventRoutes)
+
+app.use(eventRoutes);
+
 
 // app.use(routes);
 
