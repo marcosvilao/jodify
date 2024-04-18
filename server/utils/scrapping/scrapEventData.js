@@ -377,22 +377,10 @@ const linkScrapping = async (link) => {
       }
     }
   } catch (error) {
-    console.error(`Intento ${attempts + 1}: ${error.message}`);
-    if (
-      error.message.includes("Protocol error (Page.navigate): Target closed")
-    ) {
-      attempts++;
-      if (attempts >= maxRetries) {
-        console.error("Se alcanzó el máximo número de intentos. Abortando...");
-        return {
-          error: "Failed to complete the operation after several attempts.",
-        };
-      }
-    } else {
-      return { error: error.message }; // Devuelve otro tipo de errores inmediatamente
-    }
+    console.error("Error en linkScrap:", error);
+    return { error: error.message };
   } finally {
-    if (browser) {
+    if (browser !== null) {
       await browser.close();
     }
   }
