@@ -13,10 +13,10 @@ const linkScrap = async (link) => {
       browser = await puppeteer.launch({
         args: [
           ...chromium.args,
-          "--no-sandbox", // Desactivar el modo sandbox puede ayudar si hay problemas de permisos
-          "--disable-setuid-sandbox",
+          // "--no-sandbox", // Desactivar el modo sandbox puede ayudar si hay problemas de permisos
+          // "--disable-setuid-sandbox",
           "--disable-dev-shm-usage", // Ayuda en entornos con poca memoria
-          "--single-process", // Puede ser útil en ciertos entornos, aunque no recomendado en producción
+          // "--single-process", // Puede ser útil en ciertos entornos, aunque no recomendado en producción
           "--no-zygote", // Ayuda a evitar problemas de estabilidad en entornos sin GUI
         ],
         defaultViewport: chromium.defaultViewport,
@@ -46,10 +46,16 @@ const linkScrap = async (link) => {
 
     console.log("3");
 
-    const response = await page.goto(link, {
-      waitUntil: "domcontentloaded",
-      timeout: 0,
-    });
+    try {
+      const response = await page.goto(link, {
+        waitUntil: "domcontentloaded",
+        timeout: 0,
+      });
+    } catch (error) {
+      console.error("Failed to navigate:", error);
+      // Optionally, add logic to retry navigation or perform cleanup
+    }
+    
 
     console.log("4");
 
