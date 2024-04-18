@@ -11,7 +11,14 @@ const linkScrapping = async (link) => {
   try {
     if (SCRAPPING) {
       browser = await puppeteer.launch({
-        args: chromium.args,
+        args: [
+          ...chromium.args,
+          "--no-sandbox", // Desactivar el modo sandbox puede ayudar si hay problemas de permisos
+          "--disable-setuid-sandbox",
+          "--disable-dev-shm-usage", // Ayuda en entornos con poca memoria
+          "--single-process", // Puede ser útil en ciertos entornos, aunque no recomendado en producción
+          "--no-zygote", // Ayuda a evitar problemas de estabilidad en entornos sin GUI
+        ],
         defaultViewport: chromium.defaultViewport,
         executablePath: await chromium.executablePath(),
         headless: chromium.headless,
@@ -45,7 +52,11 @@ const linkScrapping = async (link) => {
       };
     }
 
+    console.log("Lanzando el navegador");
+    console.log("Navegando a:", link);
+
     if (link.includes("ticketpass")) {
+      console.log("Ingreso a la pagina");
       await page.waitForSelector("img", { timeout: 10000 }); // Espera hasta 10 segundos.
       let dateText = "";
       let tittle = "";
@@ -136,6 +147,7 @@ const linkScrapping = async (link) => {
 
       return result;
     } else if (link.includes("passline")) {
+      console.log("Ingreso a la pagina");
       await page.waitForSelector("img", { timeout: 10000 });
 
       let dateText = "";
@@ -226,6 +238,7 @@ const linkScrapping = async (link) => {
 
       return result;
     } else if (link.includes("venti")) {
+      console.log("Ingreso a la pagina");
       let dateText = "";
       let location = "";
       let jpgImgSrc = "";
