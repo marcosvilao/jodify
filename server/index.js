@@ -19,27 +19,33 @@ const eventRoutes = require('./routes/events.routes')
 
 const app = express()
 
-app.use(function (req, res, next) {
-  var allowedOrigins = [
-    'https://jodify.com.ar',
-    'https://jodify.vercel.app',
-    'https://jodify-qa-client.vercel.app',
-    'https://l.instagram.com/',
-    'https://jodifynext.vercel.app',
-  ]
-  var origin = req.headers.origin
-  if (allowedOrigins.includes(origin)) {
-    res.setHeader('Access-Control-Allow-Origin', origin)
-  }
+// app.use(function (req, res, next) {
+//   var allowedOrigins = [
+//     'https://jodify.com.ar',
+//     'https://jodify.vercel.app',
+//     'https://jodify-qa-client.vercel.app',
+//     'https://l.instagram.com/',
+//     'https://jodifynext.vercel.app',
+//   ]
+//   var origin = req.headers.origin
+//   if (allowedOrigins.includes(origin)) {
+//     res.setHeader('Access-Control-Allow-Origin', origin)
+//   }
 
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
-  next()
-})
+//   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+//   next()
+// })
+
+const corsOptions = {
+  origin: ['https://jodify.vercel.app', 'https://jodify-qa-client.vercel.app', 'https://jodifynext.vercel.app'],
+  optionsSuccessStatus: 200
+};
+
 app.set('view engine', 'ejs') // Set EJS as the view engine
 app.set('views', path.join(__dirname, 'views')) // Set the views directory
 app.use(bodyParser.urlencoded({ extended: false }))
 
-app.use(cors())
+app.use(cors(corsOptions));
 app.use(morgan('dev'))
 app.use(express.json())
 
