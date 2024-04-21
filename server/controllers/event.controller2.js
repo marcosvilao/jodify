@@ -133,10 +133,12 @@ route.post("/get-event-data", async (req, res) => {
 
   try {
     const LINK = req.body.link;
+    console.log(LINK)
     let data = await linkScrapping(LINK);
 
     res.status(200).json(data);
   } catch (error) {
+    console.log(error)
     res.status(500).send({ message: message.error });
   }
 });

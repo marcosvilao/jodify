@@ -9,6 +9,7 @@ const linkScrapping = async (link) => {
   const SCRAPPING = process.env.SCRAPPING;
   let browser = null;
   try {
+    console.log(SCRAPPING)
     if (SCRAPPING) {
       browser = await puppeteer.launch({
         args: [
@@ -31,6 +32,8 @@ const linkScrapping = async (link) => {
         headless: true,
       });
     }
+
+    console.log('launching browser', browser)
 
     const page = await browser.newPage();
     await page.setUserAgent(
