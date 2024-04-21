@@ -36,10 +36,18 @@ const linkScrapping = async (link) => {
     await page.setUserAgent(
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36"
     );
-    const response = await page.goto(link, {
+
+    console.log('page', page)
+    let response
+    try {
+      response = await page.goto(link, {
       waitUntil: "domcontentloaded",
       timeout: 30000,
     });
+    } catch (error) {
+      console.log(error)
+    }
+    console.log(response)
 
     const statusCode = response.status();
 

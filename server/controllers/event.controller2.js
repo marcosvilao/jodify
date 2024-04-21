@@ -8,6 +8,7 @@ const {
   validateEventUpdateData,
 } = require("../middlewares/event.middleware.js");
 const { linkScrap } = require("../Brain/getEventData.js");
+const { linkScrapping } = require("../utils/scrapping/scrapEventData.js")
 
 const route = Router();
 
@@ -132,7 +133,7 @@ route.post("/get-event-data", async (req, res) => {
 
   try {
     const LINK = req.body.link;
-    let data = await linkScrap(LINK);
+    let data = await linkScrapping(LINK);
 
     res.status(200).json(data);
   } catch (error) {
