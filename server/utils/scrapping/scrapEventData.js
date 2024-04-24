@@ -2,21 +2,22 @@ const chromium = require("@sparticuz/chromium");
 const puppeteer = require("puppeteer-extra");
 const moment = require("moment-timezone");
 require("dotenv").config();
+//const StealthPlugin = require("puppeteer-extra-plugin-stealth");
+//puppeteer.use(StealthPlugin());
 
-const linkScrap = async (link) => {
+const linkScrapping = async (link) => {
   const SCRAPPING = process.env.SCRAPPING;
-  console.log(SCRAPPING);
-  console.log(link);
   let browser = null;
   try {
+    console.log(SCRAPPING)
     if (SCRAPPING) {
       browser = await puppeteer.launch({
         args: [
           ...chromium.args,
-          // "--no-sandbox", // Desactivar el modo sandbox puede ayudar si hay problemas de permisos
-          // "--disable-setuid-sandbox",
+          "--no-sandbox", // Desactivar el modo sandbox puede ayudar si hay problemas de permisos
+          "--disable-setuid-sandbox",
           "--disable-dev-shm-usage", // Ayuda en entornos con poca memoria
-          // "--single-process", // Puede ser útil en ciertos entornos, aunque no recomendado en producción
+          "--single-process", // Puede ser útil en ciertos entornos, aunque no recomendado en producción
           "--no-zygote", // Ayuda a evitar problemas de estabilidad en entornos sin GUI
         ],
         defaultViewport: chromium.defaultViewport,
@@ -32,36 +33,26 @@ const linkScrap = async (link) => {
       });
     }
 
-    console.log("1");
+    console.log('launching browser', browser)
 
     const page = await browser.newPage();
-
-    console.log("2");
-
     await page.setUserAgent(
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36"
     );
 
-    console.log(page);
-
-    console.log("3");
-    let response;
+    console.log('page', page)
+    let response
     try {
-        response = await page.goto(link, {
-        waitUntil: "domcontentloaded",
-        timeout: 0,
-      });
+      response = await page.goto(link, {
+      waitUntil: "domcontentloaded",
+      timeout: 30000,
+    });
     } catch (error) {
-      console.error("Failed to navigate:", error);
-      // Optionally, add logic to retry navigation or perform cleanup
+      console.log(error)
     }
-    
-
-    console.log("4");
+    console.log(response)
 
     const statusCode = response.status();
-
-    console.log("5");
 
     if (statusCode !== 200) {
       console.error(
@@ -419,4 +410,4 @@ const linkScrap = async (link) => {
   }
 };
 
-module.exports = { linkScrap };
+module.exports = { linkScrapping };

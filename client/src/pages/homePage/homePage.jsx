@@ -41,19 +41,54 @@ function HomePage() {
     dates: [],
     types: [],
     search: "",
+    sharedId: "",
   });
   const [endReached, setEndReached] = useState(false);
 
   useEffect(() => {
     if (!dataEventCard) {
+      const urlParams = new URLSearchParams(window.location.search);
+      const sharedEventId = urlParams.get("sharedEventId");
+
       axios
-        .post(`${axiosUrl}/events/filtersNew`, filter)
+        .post(
+          `${axiosUrl}/events/filtersNew`,
+          sharedEventId
+            ? {
+                page: 0,
+                cities: [],
+                dates: [],
+                types: [],
+                search: "",
+                sharedId: sharedEventId,
+              }
+            : filter
+        )
         .then((res) => {
-          const sortArray = res.data;
+          var sortArray = [];
+
+          if (sharedEventId) {
+            sortArray.push(res.data[0]);
+            var fechaISO = res.data[1].date;
+            var fecha = new Date(fechaISO);
+
+            var dia = fecha.getDate();
+            var mes = fecha.getMonth() + 1;
+
+            dia = dia < 10 ? "0" + dia : dia;
+            mes = mes < 10 ? "0" + mes : mes;
+
+            var fechaFormateada = dia + "/" + mes;
+          } else {
+            sortArray = res.data;
+          }
+
           sortArray.forEach((dateInfo) => {
             Object.keys(dateInfo).forEach((date) => {
               dateInfo[date].sort((a, b) => {
-                // Encuentra la prioridad más baja (mayor prioridad) en los promoters de 'a'
+                if (a.id === sharedEventId) return -1;
+                if (b.id === sharedEventId) return 1;
+
                 const priorityA = a.promoters.reduce((min, promoter) => {
                   if (
                     promoter.priority !== null &&
@@ -64,7 +99,6 @@ function HomePage() {
                   return min;
                 }, null);
 
-                // Encuentra la prioridad más baja (mayor prioridad) en los promoters de 'b'
                 const priorityB = b.promoters.reduce((min, promoter) => {
                   if (
                     promoter.priority !== null &&
@@ -75,7 +109,6 @@ function HomePage() {
                   return min;
                 }, null);
 
-                // Comparación para el ordenamiento, tratando null como infinito
                 return (
                   (priorityA !== null ? priorityA : Infinity) -
                   (priorityB !== null ? priorityB : Infinity)
@@ -83,9 +116,24 @@ function HomePage() {
               });
             });
           });
-          setDataEventCard(sortArray);
+          if (sharedEventId) {
+            setValueButtonFecha(fechaFormateada);
+            setOpenFecha(true);
+            setDataEventCard(sortArray);
+            setFilter({
+              page: 0,
+              cities: [],
+              dates: [],
+              types: [],
+              search: "",
+              sharedId: sharedEventId,
+            });
+          } else {
+            setDataEventCard(sortArray);
+          }
         })
-        .catch(() => {
+        .catch((err) => {
+          console.log(err);
           Alert(
             "Error!",
             "Error al cargar los eventos, recargar la pagina o ponerse en contacto con el servidor",
@@ -96,7 +144,7 @@ function HomePage() {
 
     if (!cities) {
       axios
-        .get(`${axiosUrl}/cities`)
+        .get(`${axiosUrl}/jodify/city`)
         .then((res) => {
           setCities(res.data);
         })
@@ -111,7 +159,7 @@ function HomePage() {
 
     if (!types) {
       axios
-        .get(`${axiosUrl}/types `)
+        .get(`${axiosUrl}/jodify/types `)
         .then((res) => {
           setType(res.data);
         })
@@ -184,14 +232,14 @@ function HomePage() {
       let objectName = Object.keys(dataEventCard[i])[0];
 
       const onClickEventCard = (event) => {
-        if (event && event.ticket_link) {
-          window.open(event.ticket_link, "_blank");
-        }
-
         axios
-          .put(`${axiosUrl}/add-interaction/${event.id}`)
+          .patch(`${axiosUrl}/events/add-interaction/${event.id}`)
           .then((res) => {
-            console.log(res.data);
+            if (event.ticket_link && res.data) {
+              setTimeout(() => {
+                window.open(event.ticket_link, "_blank");
+              }, 50);
+            }
           })
           .catch((error) => {
             console.log(error);
@@ -200,6 +248,22 @@ function HomePage() {
 
       const additionalClass = i === 0 ? styles.firstElement : "";
 
+      const onClickShare = async (event) => {
+        try {
+          const shareData = {
+            url: `${window.location.origin}/?sharedEventId=${event.id}`,
+          };
+
+          if (navigator.share) {
+            await navigator.share(shareData);
+            console.log("Contenido compartido!");
+          } else {
+            console.log("Compartir no es soportado por este navegador.");
+          }
+        } catch (error) {
+          console.log("Error al compartir:", error);
+        }
+      };
       return (
         <div
           key={i}
@@ -222,6 +286,7 @@ function HomePage() {
                 Genre={event.types}
                 OnClick={() => onClickEventCard(event)}
                 ID={event.id}
+                Share={() => onClickShare(event)}
               />
             </div>
           ))}
@@ -251,13 +316,8 @@ function HomePage() {
 
   const onClickOpenFecha = () => {
     const fondoTransparente = document.getElementById("fondoTransparente");
-    if (!openFecha) {
-      setOpenFecha(true);
-      fondoTransparente.style.visibility = "visible";
-    } else {
-      setOpenFecha(false);
-      fondoTransparente.style.visibility = "hidden";
-    }
+    fondoTransparente.style.visibility = "visible";
+    setOpenFecha(true);
     setOpenGenero(false);
     setOpenUbicacion(false);
   };
@@ -272,6 +332,7 @@ function HomePage() {
         ...filter,
         dates: [],
         page: 0,
+        sharedId: "",
       }));
     } else if (value[1] === null) {
       let arrayDates = [value[0].$d, value[0].$d];
@@ -283,6 +344,7 @@ function HomePage() {
         ...filter,
         dates: arraySetHoures,
         page: 0,
+        sharedId: "",
       }));
     } else if (value[1] !== null) {
       let arrayDates = [value[0].$d, value[1].$d];
@@ -290,10 +352,12 @@ function HomePage() {
       arrayDates.map((fecha) => {
         arraySetHoures.push(new Date(fecha.setHours(9, 0, 0)));
       });
+
       setFilter(() => ({
         ...filter,
         dates: arraySetHoures,
         page: 0,
+        sharedId: "",
       }));
     } else {
       return null;
@@ -400,7 +464,10 @@ function HomePage() {
         ...filter,
         dates: [],
         page: 0,
+
+        sharedId: "",
       }));
+
       if (openFecha) {
         setOpenFecha(false);
       }
@@ -472,6 +539,8 @@ function HomePage() {
       ...filter,
       cities: [],
       page: 0,
+
+      sharedId: "",
     }));
   };
 
@@ -515,6 +584,8 @@ function HomePage() {
       ...filter,
       cities: arrayCitiesId,
       page: 0,
+
+      sharedId: "",
     }));
   };
 
@@ -561,6 +632,8 @@ function HomePage() {
         ...filter,
         types: [],
         page: 0,
+
+        sharedId: "",
       }));
 
       let resetCheckedItems = Object.keys(checkedItems).reduce((acc, key) => {
@@ -602,6 +675,8 @@ function HomePage() {
       ...filter,
       types: arrayTypes,
       page: 0,
+
+      sharedId: "",
     }));
     setLoader(true);
     setAxiosType(true);
@@ -621,6 +696,8 @@ function HomePage() {
       ...filter,
       search: e.target.value,
       page: 0,
+
+      sharedId: "",
     }));
     setAxiosSearch(true);
     setLazyLoadNoEvents(false);
@@ -732,7 +809,7 @@ function HomePage() {
       });
   }
 
-  if (lazyLoad) {
+  if (lazyLoad && !filter.sharedId) {
     axios
       .post(`${axiosUrl}/events/filtersNew`, filter)
       .then((res) => {
@@ -961,13 +1038,13 @@ function HomePage() {
           </div>
         ) : null}
 
-        {loaderLazyLoad ? (
+        {!filter.sharedId && loaderLazyLoad ? (
           <div className={styles.bodyLoaderLazyLoad}>
             <Loader Color="#7c16f5" Height="50px" Width="50px" />
           </div>
         ) : null}
 
-        {lazyLoadNoEvents ? (
+        {filter.sharedId || lazyLoadNoEvents ? (
           <div className={styles.bodyLoaderLazyLoad}>
             <p>No hay mas eventos</p>
           </div>
