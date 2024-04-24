@@ -9,17 +9,9 @@ const linkScrapping = async (link) => {
   const SCRAPPING = process.env.SCRAPPING;
   let browser = null;
   try {
-    console.log(SCRAPPING)
     if (SCRAPPING) {
       browser = await puppeteer.launch({
-        args: [
-          ...chromium.args,
-          "--no-sandbox", // Desactivar el modo sandbox puede ayudar si hay problemas de permisos
-          "--disable-setuid-sandbox",
-          "--disable-dev-shm-usage", // Ayuda en entornos con poca memoria
-          "--single-process", // Puede ser útil en ciertos entornos, aunque no recomendado en producción
-          "--no-zygote", // Ayuda a evitar problemas de estabilidad en entornos sin GUI
-        ],
+        args: chromium.args,
         defaultViewport: chromium.defaultViewport,
         executablePath: await chromium.executablePath(),
         headless: chromium.headless,
@@ -33,24 +25,14 @@ const linkScrapping = async (link) => {
       });
     }
 
-    console.log('launching browser', browser)
-
     const page = await browser.newPage();
     await page.setUserAgent(
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36"
     );
-
-    console.log('page', page)
-    let response
-    try {
-      response = await page.goto(link, {
+    const response = await page.goto(link, {
       waitUntil: "domcontentloaded",
-      timeout: 30000,
+      timeout: 0,
     });
-    } catch (error) {
-      console.log(error)
-    }
-    console.log(response)
 
     const statusCode = response.status();
 
@@ -63,11 +45,7 @@ const linkScrapping = async (link) => {
       };
     }
 
-    console.log("Lanzando el navegador");
-    console.log("Navegando a:", link);
-
     if (link.includes("ticketpass")) {
-      console.log("Ingreso a la pagina");
       await page.waitForSelector("img", { timeout: 10000 }); // Espera hasta 10 segundos.
       let dateText = "";
       let tittle = "";
@@ -158,7 +136,6 @@ const linkScrapping = async (link) => {
 
       return result;
     } else if (link.includes("passline")) {
-      console.log("Ingreso a la pagina");
       await page.waitForSelector("img", { timeout: 10000 });
 
       let dateText = "";
@@ -201,7 +178,7 @@ const linkScrapping = async (link) => {
         }
 
         try {
-          tittle = await section.$eval("h1", (h1) => h1.textContent.trim());
+          tittle = await section.$eval("h3", (h3) => h3.textContent.trim());
         } catch (error) {
           console.log(error);
           tittle = "";
@@ -249,7 +226,6 @@ const linkScrapping = async (link) => {
 
       return result;
     } else if (link.includes("venti")) {
-      console.log("Ingreso a la pagina");
       let dateText = "";
       let location = "";
       let jpgImgSrc = "";
