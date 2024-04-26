@@ -26,6 +26,7 @@ app.use(function (req, res, next) {
     'https://jodify-qa-client.vercel.app',
     'https://l.instagram.com/',
     'https://jodifynext.vercel.app',
+    'jodify-qa-next.vercel.app',
   ]
   var origin = req.headers.origin
   if (allowedOrigins.includes(origin)) {
