@@ -17,7 +17,8 @@ class PromoterHelper {
 
     data.id = id
 
-    await facade.createPromoter(data)
+    const newPromoter = await facade.createPromoter(data)
+    return newPromoter
   }
 }
 

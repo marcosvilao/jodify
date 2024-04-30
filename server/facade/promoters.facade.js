@@ -10,22 +10,25 @@ class PromoterFacade {
   }
 
   async getPromoterByInstagram(instagram) {
-    const queryIg = 'SELECT instagram FROM promoters WHERE instagram = $1'
+    const queryIg = 'SELECT * FROM promoters WHERE instagram = $1'
     const valuesIg = [instagram]
 
     const promoter = await pool.query(queryIg, valuesIg)
 
-    if (!promoter) return []
+    if (!promoter || !promoter.rows[0]) return null
 
-    return promoter.rows
+    return promoter.rows[0]
   }
 
   async createPromoter(data) {
     const { name, instagram, priority, id } = data
 
-    const queryString = `INSERT INTO promoters (name, instagram, priority, id) VALUES ($1, $2, $3, $4)`
+    const queryString = `INSERT INTO promoters (name, instagram, priority, id) VALUES ($1, $2, $3, $4) RETURNING *`
     const values = [name, instagram, priority, id]
-    await pool.query(queryString, values)
+    const promoter = await pool.query(queryString, values)
+
+    if (!promoter || !promoter.rows[0]) return null
+    return promoter.rows[0]
   }
 }
 

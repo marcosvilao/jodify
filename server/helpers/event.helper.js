@@ -49,22 +49,23 @@ class EventHelper {
     // console.log('event', events)
 
     for (const e of events) {
-
+      // if (e.image.image_url.startsWith('https://res.cloudinary.com')) {
       if (e.image.secure_url) {
-        const buffer = await getImageFromCache(e.image.secure_url)
+        // const buffer = await getImageFromCache(e.image.secure_url)
 
-        //se convierte el buffer en una url para mandar al front
+        // //se convierte el buffer en una url para mandar al front
 
-        const base64Image = Buffer.from(buffer).toString('base64')
+        // const base64Image = Buffer.from(buffer).toString('base64')
 
-        // tipo de imagen: .jpg, .png etc.
-        const type = e.image.secure_url.match(/\.([^.]+)$/)
-        if (!type) return null
-        const contentType = type[1].toLowerCase()
+        // // tipo de imagen: .jpg, .png etc.
+        // const type = e.image.secure_url.match(/\.([^.]+)$/)
+        // if (!type) return null
+        // const contentType = type[1].toLowerCase()
 
-        const imageUrl = `data:${contentType};base64,${base64Image}`
+        // const imageUrl = `data:${contentType};base64,${base64Image}`
 
-        e.image.image_url = imageUrl
+        // e.image.image_url = imageUrl
+        e.image.image_url = e.image.secure_url
       }
     }
 

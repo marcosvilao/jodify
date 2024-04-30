@@ -12,7 +12,7 @@ async function validateCreatePromoterData(req, res, next) {
 
   const promoterExist = await helper.getPromoterByInstagram(instagram)
 
-  if (promoterExist[0]) {
+  if (!promoterExist) {
     const message = `Ya existe un productor con el instagram: ${instagram}`
     return res.status(404).send({ message })
   }
