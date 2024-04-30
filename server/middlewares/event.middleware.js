@@ -41,8 +41,6 @@ async function validateEventCreateData(req, res, next) {
 
   let imageCloud
 
-  //TODO con scrapping pasa el post sin name
-
   if (!venue || !date_from || !event_city || !ticket_link) {
     const message =
       'Para crear un producto debe ingresar name, venue, date_from, event_city, ticket_link'
