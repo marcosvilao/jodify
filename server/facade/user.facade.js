@@ -51,6 +51,8 @@ class UserFacade {
     if (phone) setParts.push(`phone = '${phone}'`)
     if (email) setParts.push(`email = '${email}'`)
 
+    setParts.push(`updatedAt = CURRENT_TIMESTAMP`)
+
     const setClause = setParts.join(', ')
 
     const query = `UPDATE users SET ${setClause} WHERE id = '${id}' RETURNING *;`
