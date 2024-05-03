@@ -84,7 +84,7 @@ class EventHelper {
     return responseGetEvents(event)
   }
 
-  async createEvent(data) {
+  async createEventByForm(data) {
     const {
       name,
       event_type,
@@ -137,8 +137,6 @@ class EventHelper {
 
     if (djsIDs[0]) {
       for (const id of djsIDs) {
-        //TODO puede que no tenga un id??
-
         if (id) {
           await facade.relationshipEventId([eventId, id], 'event_djs', 'dj_id')
         }
@@ -154,12 +152,46 @@ class EventHelper {
     return eventId
   }
 
-  async updateEvent(id, data) {
-    const { title, date, image, link, djs } = data
+  async updateEvent(id, data, event) {
+    const {
+      name,
+      date_from,
+      ticket_link,
+      image,
+      venue,
+      city_id,
+      event_djs,
+      event_promoter,
+      event_type,
+    } = data
 
-    //logica modificar imagen (eliminar la vieja)
+    if (image) {
+      const imageDelete = event.image.public_id
 
-    await facade.updateEvent([title, date, link, image, djs, id])
+      await deleteImage(imageDelete)
+    }
+
+    if (event_djs) {
+      for (const djId of event_djs) {
+        await facade.updateRelationshipEvent('event_djs', 'dj_id', djId, id)
+      }
+    }
+
+    if (event_promoter) {
+      for (const promoterId of event_promoter) {
+        await facade.updateRelationshipEvent('event_promoters', 'promoter_id', promoterId, id)
+      }
+    }
+
+    if (event_type) {
+      for (const typeId of event_type) {
+        await facade.updateRelationshipEvent('event_types', 'type_id', typeId, id)
+      }
+    }
+
+    const eventUpdated = await facade.updateEvent(id, data)
+
+    return eventUpdated
   }
 
   async updateEventInteraction(id, event) {
