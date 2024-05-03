@@ -2,8 +2,12 @@ const { EventHelper } = require('../helpers/event.helper.js')
 const uploadImg = require('../utils/cloudinary/auxFunctionsCloudinary.js')
 const file = require('../utils/cloudinary/files.js')
 const { UUIDV4RegEx } = require('../utils/regex.js')
+const { PromoterHelper } = require('../helpers/promoters.helper.js')
+const { GenericHelper } = require('../helpers/generic.helper.js')
 
 const helper = new EventHelper()
+const helperPromoter = new PromoterHelper()
+const helperGeneric = new GenericHelper()
 
 async function validateEventId(req, res, next) {
   const { id } = req.params
@@ -85,7 +89,7 @@ async function validateEventCreateData(req, res, next) {
 }
 
 async function validateGetAllEventsQuery(req, res, next) {
-  let { dates, citiesId, typesId, search, page, sharedId, limit } = req.query
+  let { dates, citiesId, typesId, search, page, sharedId, limit, status, promoterId } = req.query
 
   if (typesId) {
     typesId = String(typesId).split(',')
@@ -94,6 +98,16 @@ async function validateGetAllEventsQuery(req, res, next) {
       const message = `El id del type: '${invalidUuidv4}' es invalido.`
       return res.status(404).send({ message })
     }
+  }
+
+  if (status && String(status) !== 'finalized') {
+    const message = `El único valor valido para status es 'finalized'.`
+    return res.status(404).send({ message })
+  }
+
+  if (promoterId && !UUIDV4RegEx.test(String(promoterId))) {
+    const message = `promoterId: '${promoterId}' no es un uuid valido.`
+    return res.status(404).send({ message })
   }
 
   if (citiesId) {
@@ -114,15 +128,57 @@ async function validateGetAllEventsQuery(req, res, next) {
     page = 0
   }
 
-  res.locals.data = { dates, citiesId, typesId, search, page, sharedId, limit }
+  res.locals.data = { dates, citiesId, typesId, search, page, sharedId, limit, status, promoterId }
 
   next()
 }
 
 async function validateEventUpdateData(req, res, next) {
-  const { title, date, image, link, djs } = req.body
+  const { name, date_from, ticket_link, venue, city_id, event_djs, event_promoter, event_type } =
+    req.body
 
-  res.locals.data = { title, date, image, link, djs }
+  //TODO event_promoter tiene que ser un arreglo de id
+  if (
+    !name &&
+    !date_from &&
+    !ticket_link &&
+    !venue &&
+    !city_id &&
+    !event_djs &&
+    !event_promoter &&
+    !event_type
+  ) {
+    const message =
+      'Para actualizar un evento debe ingresar alguno de los siguientes parámetros: name, date_from, ticket_link, venue, city_id, event_djs, event_promoter o event_type.'
+    return res.status(404).send({ message })
+  }
+
+  let imageCloud = null
+
+  if (req.file?.image) {
+    const { image } = req.files
+
+    const response = await uploadImg(image, file.EVENTS)
+
+    if (typeof response === 'string') {
+      const message = 'Error Cloudinary response'
+      return res.status(404).send({ message })
+    }
+
+    imageCloud = response[0]
+  }
+
+  res.locals.data = {
+    name,
+    date_from,
+    ticket_link,
+    image: imageCloud,
+    venue,
+    city_id,
+    event_djs,
+    event_promoter,
+    event_type,
+  }
 
   next()
 }

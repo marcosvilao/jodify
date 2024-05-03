@@ -8,6 +8,10 @@ class PromoterHelper {
     return await facade.getPromoters()
   }
 
+  async getPromoterById(id) {
+    return await facade.getPromoterById(id)
+  }
+
   async getPromoterByInstagram(instagram) {
     return await facade.getPromoterByInstagram(instagram)
   }
@@ -19,6 +23,10 @@ class PromoterHelper {
 
     const newPromoter = await facade.createPromoter(data)
     return newPromoter
+  }
+
+  async updatePromoter(id, data) {
+    return await facade.updatePromoter(id, data)
   }
 }
 

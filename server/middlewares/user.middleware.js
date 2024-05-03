@@ -2,6 +2,7 @@ const { UserHelper } = require('../helpers/user.helper.js')
 const { PromoterHelper } = require('../helpers/promoters.helper.js')
 const bcrypt = require('bcryptjs')
 const { UUIDV4RegEx } = require('../utils/regex.js')
+const jwt = require('jsonwebtoken')
 
 const helper = new UserHelper()
 const helperPromoter = new PromoterHelper()
@@ -178,6 +179,70 @@ async function validatePassword(req, res, next) {
   next()
 }
 
+async function validateDataUpdateUser(req, res, next) {
+  const { promoter_name, instagram, promoter_id, email, phone } = req.body
+  const { user } = res.locals
+
+  if (!promoter_id && !promoter_name && !instagram && !email && !phone) {
+    const message =
+      'Para actualizar los datos del usuario debe ingresar alguno de los siguientes parámetros: email, phone, promoter_name, promoter_id o instagram.'
+    return res.status(404).send({ message })
+  }
+
+  let promoter = null
+
+  if (instagram || promoter_name) {
+    if (!user.promoter_id) {
+      const message =
+        'Para actualizar promoter_name o instagram, el usuario debe estar asociado a un promoter_id.'
+      return res.status(404).send({ message })
+    }
+
+    promoter = await helperPromoter.getPromoterById(user.promoter_id)
+
+    if (!promoter) {
+      const message = `No se encontró una productora con el id:${promoter_id}`
+      return res.status(404).send({ message })
+    }
+  }
+
+  res.locals.data = { promoter, instagram, promoter_name, email, phone }
+  next()
+}
+
+async function validateDataForgetPassword(req, res, next) {
+  const { token, newPassword } = req.body
+
+  if (!token || !newPassword) {
+    const message = 'Debe ingresar el token y newPassword.'
+    return res.status(404).send({ message })
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.SECRET_KEY_JWT)
+    const userId = decoded.id
+
+    if (!userId) {
+      const message = 'No se encontró el id del usuario en el token.'
+      return res.status(404).send({ message })
+    }
+
+    const user = await helper.getUserById(userId)
+
+    if (!user) {
+      const message = 'No se encontró el usuario.'
+      return res.status(404).send({ message })
+    }
+
+    res.locals.id = userId
+    res.locals.data = { password: newPassword }
+    next()
+  } catch (error) {
+    const message = 'Token inválido.'
+    return res.status(401).send({ message })
+  }
+}
+
 module.exports = {
   validateUserId,
   validateDataUserCreate,
@@ -185,4 +250,6 @@ module.exports = {
   validateDataUpdatePassword,
   validateUserEmail,
   validatePassword,
+  validateDataUpdateUser,
+  validateDataForgetPassword,
 }
