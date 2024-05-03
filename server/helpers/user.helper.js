@@ -2,9 +2,16 @@ const { UserFacade } = require('../facade/user.facade.js')
 const { v4: uuidv4 } = require('uuid')
 const bcrypt = require('bcryptjs')
 const { generateCode } = require('../utils/functions.js')
-const { mailOptionGeneratePassword, sendEmail } = require('../utils/nodeMailer/functions.js')
+const {
+  mailOptionGeneratePassword,
+  sendEmail,
+  mailOptionValidateEmail,
+} = require('../utils/nodeMailer/functions.js')
+const { PromoterFacade } = require('../facade/promoters.facade.js')
+const jwt = require('jsonwebtoken')
 
 const facade = new UserFacade()
+const facadePromoter = new PromoterFacade()
 
 class UserHelper {
   async getUserById(id) {
@@ -57,31 +64,41 @@ class UserHelper {
   }
 
   async updateUser(id, data) {
-    let { email, newPassword, username, phone } = data
+    let { email, password, username, phone, promoter, promoter_name, instagram } = data
 
-    if (newPassword) {
-      const passHashed = await bcrypt.hash(newPassword, 10)
+    if (password) {
+      const passHashed = await bcrypt.hash(password, 10)
 
-      data.newPassword = passHashed
+      data.password = passHashed
     }
 
-    return await facade.updateUser(id, data)
+    if (promoter) {
+      const promoterData = { name: promoter_name, instagram }
+      await facadePromoter.updatePromoter(promoter.id, promoterData)
+    }
+
+    const userUpdated = await facade.updateUser(id, data)
+
+    if (!userUpdated) return null
+
+    if (email) {
+      const emailMessage = mailOptionValidateEmail(userUpdated.email, userUpdated.username)
+
+      await sendEmail(emailMessage)
+    }
+    return userUpdated
   }
 
-  async generateNewPassword(user) {
-    const newPass = generateCode()
-
-    const passHashed = await bcrypt.hash(newPass, 10)
-
-    const userUpdated = await facade.updateUser(user.id, {
-      password: passHashed,
+  async forgetPassword(user) {
+    const token = jwt.sign({ email: user.email, id: user.id }, process.env.SECRET_KEY_JWT, {
+      expiresIn: 15 * 60,
     })
 
-    // const emailMessage = mailOptionGeneratePassword(user.email, user.username, newPass)
+    const emailMessage = mailOptionGeneratePassword(user.email, user.username, token)
 
-    // await sendEmail(emailMessage)
+    await sendEmail(emailMessage)
 
-    return newPass
+    return token
   }
 }
 
