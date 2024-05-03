@@ -7,6 +7,8 @@ const {
   validateDataUpdatePassword,
   validatePassword,
   validateUserEmail,
+  validateDataUpdateUser,
+  validateDataForgetPassword,
 } = require('../middlewares/user.middleware.js')
 
 const route = Router()
@@ -58,6 +60,18 @@ route.put('/update-password/:id', validateUserId, validateDataUpdatePassword, as
   }
 })
 
+route.put('/update/:id', validateUserId, validateDataUpdateUser, async (req, res) => {
+  try {
+    const { user, data } = res.locals
+
+    const userUpdated = await helper.updateUser(user.id, data)
+
+    res.status(200).send({ message: 'Usuario actualizado con éxito.', paramDePrueba: userUpdated })
+  } catch (error) {
+    res.status(500).send({ error: error.message })
+  }
+})
+
 route.post('/login', validateUserEmail, validatePassword, async (req, res) => {
   try {
     const { user } = res.locals
@@ -78,13 +92,25 @@ route.post('/login-auth0', validateUserEmail, async (req, res) => {
   }
 })
 
-route.patch('/generate-password', validateUserEmail, async (req, res) => {
+route.patch('/forget-password', validateUserEmail, async (req, res) => {
   try {
     const { user } = res.locals
 
-    const muestraDePrueba = await helper.generateNewPassword(user)
+    const token = await helper.forgetPassword(user)
 
-    res.status(200).send({ message: 'Nueva contraseña generada con éxito.', muestraDePrueba })
+    res.status(200).send({ message: 'Email para generar una nueva contraseña enviado con éxito.' })
+  } catch (error) {
+    res.status(500).send({ error: error.message })
+  }
+})
+
+route.patch('/new-password', validateDataForgetPassword, async (req, res) => {
+  try {
+    const { id, data } = res.locals
+
+    const muestraDePrueba = await helper.updateUser(id, data)
+
+    res.status(200).send({ message: 'Contraseña actualizada con éxito.' })
   } catch (error) {
     res.status(500).send({ error: error.message })
   }
