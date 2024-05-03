@@ -17,10 +17,19 @@ class EventFacade {
     return event.rows[0]
   }
 
-  async getEvents() {}
-
   async getEventsByFilter(data) {
-    const { dates, citiesId, search, sharedId, setOff, argentinaTime, typesId, limit } = data
+    const {
+      dates,
+      citiesId,
+      search,
+      sharedId,
+      setOff,
+      argentinaTime,
+      typesId,
+      limit,
+      status,
+      promoterId,
+    } = data
 
     let query = `
     WITH MinPriority AS (
@@ -94,6 +103,10 @@ class EventFacade {
         values.push(firstDate)
         paramCount += 1
       }
+    } else if (status) {
+      query += `AND (e.date_from < $${paramCount})`
+      values.push(argentinaTime)
+      paramCount += 1
     } else {
       query += `AND (e.date_from >= $${paramCount})`
       values.push(argentinaTime)
@@ -156,6 +169,12 @@ class EventFacade {
       paramCount++
     }
 
+    if (promoterId) {
+      query += ` AND (p.id = $${paramCount})`
+      values.push(String(promoterId))
+      paramCount++
+    }
+
     query += `GROUP BY e.id, mp.priority, ed.djs, et.types ORDER BY e.date_from ASC, mp.priority ASC, e.id ASC ${
       sharedId || !limit ? '' : `LIMIT ${limit}`
     } OFFSET $${paramCount}`
@@ -209,20 +228,6 @@ class EventFacade {
     return newEvent.rows[0].id
   }
 
-  async updateEvent(values) {
-    const query = `
-    UPDATE event
-    SET name = $1, date_from = $2, ticket_link = $3, image_url = $4, event_djs = $5
-    WHERE id = $6;
-    `
-
-    await pool.query(query, values)
-  }
-
-  async updateEventInteraction(id, interaction) {
-    await pool.query(`UPDATE events SET interactions = ${interaction} WHERE id = '${id}';`)
-  }
-
   async relationshipEventId(ids, query1, query2) {
     const query = `
           INSERT INTO public.${query1}(event_id, ${query2})
@@ -231,13 +236,47 @@ class EventFacade {
     await pool.query(query, ids)
   }
 
+  async updateEvent(id, data) {
+    const { name, date_from, ticket_link, image, venue, city_id } = data
+
+    const setParts = []
+
+    if (name) setParts.push(`name = '${name}'`)
+    if (date_from) setParts.push(`date_from = '${date_from}'`)
+    if (ticket_link) setParts.push(`ticket_link = '${ticket_link}'`)
+    if (image) setParts.push(`image = '${image}'`)
+    if (venue) setParts.push(`venue = '${venue}'`)
+    if (city_id) setParts.push(`city_id = '${city_id}'`)
+
+    setParts.push(`updatedAt = CURRENT_TIMESTAMP`)
+
+    const setClause = setParts.join(', ')
+
+    const query = `UPDATE events SET ${setClause} WHERE id = '${id}' RETURNING *;`
+
+    const eventUpdated = await pool.query(query)
+
+    if (!eventUpdated || !eventUpdated.rows[0]) return null
+    return eventUpdated.rows[0]
+  }
+
+  async updateRelationshipEvent(table, column, id, event_id) {
+    const query = `UPDATE ${table} SET ${column} = ${id} WHERE event_id = ${event_id};`
+
+    await pool.query(query)
+  }
+
+  async updateEventInteraction(id, interaction) {
+    await pool.query(`UPDATE events SET interactions = ${interaction} WHERE id = '${id}';`)
+  }
+
   async deleteEvent(id) {
     const query = `
     DELETE FROM events
     WHERE id = ANY($1);
     `
 
-    // const values = [eventIds]  //TODO para eliminar mandan mas de un id??
+    // const values = [eventIds]
     const values = [id]
 
     await pool.query(query, values)
