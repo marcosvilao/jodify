@@ -9,6 +9,7 @@ const {
   validateUserEmail,
   validateDataUpdateUser,
   validateDataForgetPassword,
+  validateDataValEmail,
 } = require('../middlewares/user.middleware.js')
 
 const route = Router()
@@ -111,6 +112,30 @@ route.patch('/new-password', validateDataForgetPassword, async (req, res) => {
     const muestraDePrueba = await helper.updateUser(id, data)
 
     res.status(200).send({ message: 'Contraseña actualizada con éxito.' })
+  } catch (error) {
+    res.status(500).send({ error: error.message })
+  }
+})
+
+route.post('/validate-email', validateDataValEmail, async (req, res) => {
+  try {
+    const { data } = res.locals
+
+    await helper.generateToken(data.email, data.username, data.adminName, 'validateEmail')
+
+    res.status(200).send({ message: `Email enviado con éxito a ${data.email}` })
+  } catch (error) {
+    res.status(500).send({ error: error.message })
+  }
+})
+
+route.post('/welcome-form', validateDataValEmail, async (req, res) => {
+  try {
+    const { data } = res.locals
+
+    await helper.generateToken(data.email, data.username, data.adminName)
+
+    res.status(200).send({ message: `Email enviado con éxito a ${data.email}` })
   } catch (error) {
     res.status(500).send({ error: error.message })
   }

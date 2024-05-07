@@ -243,6 +243,25 @@ async function validateDataForgetPassword(req, res, next) {
   }
 }
 
+async function validateDataValEmail(req, res, next) {
+  const { email, username, adminName } = req.body
+
+  if (!email || !username || !adminName) {
+    const message = 'Debe ingresar un email, username y adminName.'
+    return res.status(404).send({ message })
+  }
+
+  const user = await helper.getUserByEmail(email)
+
+  if (user) {
+    const message = `Existe un usuario registrado con el email: ${email}.`
+    return res.status(404).send({ message })
+  }
+
+  res.locals.data = { email, username, adminName }
+  next()
+}
+
 module.exports = {
   validateUserId,
   validateDataUserCreate,
@@ -252,4 +271,5 @@ module.exports = {
   validatePassword,
   validateDataUpdateUser,
   validateDataForgetPassword,
+  validateDataValEmail,
 }
