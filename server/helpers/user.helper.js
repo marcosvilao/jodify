@@ -6,6 +6,7 @@ const {
   mailOptionGeneratePassword,
   sendEmail,
   mailOptionValidateEmail,
+  mailOptionWelcomeForm,
 } = require('../utils/nodeMailer/functions.js')
 const { PromoterFacade } = require('../facade/promoters.facade.js')
 const jwt = require('jsonwebtoken')
@@ -99,6 +100,23 @@ class UserHelper {
     await sendEmail(emailMessage)
 
     return token
+  }
+
+  async generateToken(email, username, adminName, type) {
+    const token = jwt.sign({ email }, process.env.SECRET_KEY_JWT, {
+      expiresIn: 48 * 60 * 60, // horas * minutos * segundos
+    })
+
+    let emailMessage = ''
+
+    if (type === 'validateEmail') {
+      emailMessage = mailOptionValidateEmail(email, username, adminName, token)
+    } else {
+      emailMessage = mailOptionWelcomeForm(email, username, adminName, token)
+    }
+
+    await sendEmail(emailMessage)
+    return
   }
 }
 
