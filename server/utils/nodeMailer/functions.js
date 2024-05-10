@@ -92,36 +92,34 @@ const mailOptionWelcomeForm = (email, username, adminName, token) => {
     to: `${email}`,
     subject: '¡Te damos la bienvenida a Jodify!',
     html: `
-    <body>
+    <body style="font-family: Arial, sans-serif;">
       <div style="background-color:#0C0C0C; color: #fff; text-align: center; padding: 20px 0;">
-          <img src=${logo} alt="Logo" style="width: 150px; height: auto; display: inline-block;">
+          <img src=${logo} alt="Logo" style="width: 150px; height: auto;">
       </div>
-      <div style=" display: flex; flex-direction: column; padding: 20px;">
-          <p>Hola ${username}</p>
-          <div>Soy ${adminName}, ¿Cómo estas?</div>
-          <div><b>¡Quiero darte la bienvenida a Jodify!</b></div>
-          <p>Nos interesa participar en su fiesta y queremos que publiques tu evento en nuestra página</p>
-          <p>Te creamos un <b>link temporal</b> para que puedas registrarte con nosotros.</p>
-          <div style="padding: 20px;text-align: center;">
-              <a href="${process.env.HREF_ROOT}/register-promoters/${token}" style="background-color: #C18FFF; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 100px;">
+      <div style="padding: 20px;">
+          <p style="margin: 0 0 10px;">Hola ${username},</p>
+          <p style="margin: 0 0 20px;">Soy ${adminName}, ¿Cómo estás?</p>
+          <p style="margin: 0 0 20px;"><strong>¡Quiero darte la bienvenida a Jodify!</strong></p>
+          <p style="margin: 0 0 20px;">Nos interesa participar en tu fiesta y queremos que publiques tu evento en nuestra plataforma.</p>
+          <p style="margin: 0 0 20px;">Te creamos un <strong>link temporal</strong> para que puedas registrarte con nosotros.</p>
+          <div style="text-align: center; margin: 20px 0;">
+              <a href="${process.env.HREF_ROOT}/register-promoters/${token}" style="background-color: #C18FFF; color: white; padding: 15px 32px; text-decoration: none; display: inline-block; font-size: 16px; border-radius: 100px; cursor: pointer;">
                   Ir a Jodify
               </a>
           </div>
-
-          <p>Aclaramos que el link <b>solo dura 48 horas</b> pero no te preocupes, en caso de no poder completar el registro podes pedirnos otro link.</p>
-
-          <div style="margin-bottom: 0;">Abrazo.</div>
-          <div style="margin-bottom: 0;">${adminName}</div>
-          <div style="margin-bottom: 0;">Jodify</div>
-
+          <p style="margin: 0 0 20px;">Aclaramos que el link <strong>solo dura 48 horas</strong>, pero no te preocupes, en caso de no poder completar el registro puedes pedirnos otro link.</p>
+          <p style="margin: 0;">Abrazo,</p>
+          <p style="margin: 0;">${adminName}</p>
+          <p style="margin: 0;">Jodify</p>
       </div>
-      <div style="background-color: #0C0C0C; color: #FFFFFF; padding: 10px ; position: fixed; bottom: 0; width: 90%;">
+      <div style="background-color: #0C0C0C; color: #FFFFFF; padding: 10px; width: 100%; position: fixed; bottom: 0; text-align: center;">
           Jodify © 2024
       </div>
     </body>
       `,
   }
 }
+
 
 const sendEmail = (mailOption) => {
   return new Promise((resolve, reject) => {
