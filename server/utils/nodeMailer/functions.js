@@ -48,7 +48,7 @@ const mailOptionGeneratePassword = (email, username, token) => {
   }
 }
 
-const mailOptionValidateEmail = (email, username, adminName, token) => {
+const mailOptionValidateEmail = (email, username) => {
   return {
     from: 'Jodify',
     to: `${email}`,
@@ -60,10 +60,10 @@ const mailOptionValidateEmail = (email, username, adminName, token) => {
     </div>
     <div style=" display: flex; flex-direction: column; padding: 20px;">
         <p>Hola ${username}</p>
-        <p>Soy ${adminName}, ¿Cómo estas?</p>
+        <p>¿Cómo estas?</p>
         <p>Haz click en el link de abajo para confirmar tu correo electrónico.</p>
         <div style="padding: 20px;text-align: center;">
-            <a href="${process.env.HREF_ROOT}/no-se/${token}" style="background-color: #C18FFF; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 100px;">
+            <a href="${process.env.HREF_ROOT}/" style="background-color: #C18FFF; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 100px;">
                 Ir a Jodify
             </a>
         </div>
@@ -74,7 +74,6 @@ const mailOptionValidateEmail = (email, username, adminName, token) => {
         </div>
 
         <div style="margin-bottom: 0;">Abrazo.</div>
-        <div style="margin-bottom: 0;">${adminName}</div>
         <div style="margin-bottom: 0;">Jodify</div>
 
     </div>

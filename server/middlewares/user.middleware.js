@@ -180,13 +180,22 @@ async function validatePassword(req, res, next) {
 }
 
 async function validateDataUpdateUser(req, res, next) {
-  const { promoter_name, instagram, promoter_id, email, phone } = req.body
+  const { promoter_name, instagram, email, phone } = req.body
   const { user } = res.locals
 
-  if (!promoter_id && !promoter_name && !instagram && !email && !phone) {
+  if (!promoter_name && !instagram && !email && !phone) {
     const message =
-      'Para actualizar los datos del usuario debe ingresar alguno de los siguientes parámetros: email, phone, promoter_name, promoter_id o instagram.'
+      'Para actualizar los datos del usuario debe ingresar alguno de los siguientes parámetros: email, phone, promoter_name o instagram.'
     return res.status(404).send({ message })
+  }
+
+  if (email) {
+    const validateEmail = await helper.getUserByEmail(email)
+
+    if (validateEmail) {
+      const message = `Existe un usuario con el email: ${email}.`
+      return res.status(404).send({ message })
+    }
   }
 
   let promoter = null
@@ -201,8 +210,26 @@ async function validateDataUpdateUser(req, res, next) {
     promoter = await helperPromoter.getPromoterById(user.promoter_id)
 
     if (!promoter) {
-      const message = `No se encontró una productora con el id:${promoter_id}`
+      const message = `No se encontró una productora con el id:${user.promoter_id}`
       return res.status(404).send({ message })
+    }
+
+    if (promoter_name) {
+      const validateName = await helperPromoter.getPromoterByName(promoter_name)
+
+      if (validateName) {
+        const message = `Existe una productora con el nombre: ${promoter_name}.`
+        return res.status(404).send({ message })
+      }
+    }
+
+    if (instagram) {
+      const validateIg = await helperPromoter.getPromoterByInstagram(instagram)
+
+      if (validateIg) {
+        const message = `Existe una productora con el instagram: ${instagram}.`
+        return res.status(404).send({ message })
+      }
     }
   }
 
