@@ -23,6 +23,21 @@ class UserHelper {
     return await facade.getUserByEmail(email)
   }
 
+  async logIn(user) {
+    if (!user || !user.promoter_id) return user
+
+    const promoter = await facadePromoter.getPromoterById(user.promoter_id)
+
+    const { promoter_id, password, ...dataUser } = user
+
+    const response = {
+      ...dataUser,
+      promoter: promoter,
+    }
+
+    return response
+  }
+
   async createUser(data) {
     const { email, password, phone, username, promoter } = data
     const id = uuidv4()
@@ -40,10 +55,17 @@ class UserHelper {
 
     let newUser = await facade.createUser(userData)
 
-    // TODO enviar email para validar email?
-
     if (promoter) {
       newUser = await facade.updateUser(newUser.id, { promoter_id: promoter.id })
+    }
+
+    if (newUser && promoter) {
+      const { password, promoter_id, ...dataUser } = newUser
+
+      return {
+        ...dataUser,
+        promoter,
+      }
     }
 
     return newUser
@@ -65,10 +87,10 @@ class UserHelper {
   }
 
   async updateUser(id, data) {
-    let { email, password, username, phone, promoter, promoter_name, instagram } = data
+    let { email, username, phone, promoter, promoter_name, instagram } = data
 
-    if (password) {
-      const passHashed = await bcrypt.hash(password, 10)
+    if (data.password) {
+      const passHashed = await bcrypt.hash(data.password, 10)
 
       data.password = passHashed
     }
@@ -87,7 +109,19 @@ class UserHelper {
 
       await sendEmail(emailMessage)
     }
-    return userUpdated
+
+    let { password, promoter_id, ...dataUser } = userUpdated
+
+    if (!promoter && userUpdated.promoter_id) {
+      promoter = await facadePromoter.getPromoterById(userUpdated.promoter_id)
+    }
+
+    const response = {
+      ...dataUser,
+      promoter,
+    }
+
+    return response
   }
 
   async forgetPassword(user) {

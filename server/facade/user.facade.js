@@ -14,6 +14,24 @@ class UserFacade {
 
     if (!user || !user.rows[0]) return null
     return user.rows[0]
+
+    //   const query = `
+    //   SELECT
+    //     u.*,
+    //     p.*
+    //   FROM
+    //     users u
+    //   LEFT JOIN
+    //     promoters p ON u.promoter_id = p.id
+    //   WHERE
+    //     u.email = $1
+    // `
+
+    //   const result = await pool.query(query, [email])
+
+    //   if (!result || !result.rows[0]) return null
+
+    //   return result.rows[0]
   }
 
   async createUser(data) {
