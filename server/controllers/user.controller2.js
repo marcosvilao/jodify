@@ -77,7 +77,9 @@ route.post('/login', validateUserEmail, validatePassword, async (req, res) => {
   try {
     const { user } = res.locals
 
-    return res.status(200).send({ user })
+    const response = await helper.logIn(user)
+
+    return res.status(200).send({ user: response })
   } catch (error) {
     res.status(500).send({ error: error.message })
   }
@@ -87,7 +89,9 @@ route.post('/login-auth0', validateUserEmail, async (req, res) => {
   try {
     const { user } = res.locals
 
-    return res.status(200).send({ user })
+    const response = await helper.logIn(user)
+
+    return res.status(200).send({ user: response })
   } catch (error) {
     res.status(500).send({ error: error.message })
   }
