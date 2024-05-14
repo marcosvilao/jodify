@@ -67,7 +67,7 @@ route.put('/update/:id', validateUserId, validateDataUpdateUser, async (req, res
 
     const userUpdated = await helper.updateUser(user.id, data)
 
-    res.status(200).send({ message: 'Usuario actualizado con éxito.', paramDePrueba: userUpdated })
+    res.status(200).send({ message: 'Usuario actualizado con éxito.', user: userUpdated })
   } catch (error) {
     res.status(500).send({ error: error.message })
   }
