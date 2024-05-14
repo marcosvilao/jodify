@@ -16,6 +16,10 @@ class PromoterHelper {
     return await facade.getPromoterByInstagram(instagram)
   }
 
+  async getPromoterByName(name) {
+    return await facade.getPromoterByName(name)
+  }
+
   async createPromoter(data) {
     const id = uuidv4()
 
