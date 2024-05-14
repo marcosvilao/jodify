@@ -110,7 +110,7 @@ class UserHelper {
     let emailMessage = ''
 
     if (type === 'validateEmail') {
-      emailMessage = mailOptionValidateEmail(email, username, adminName, token)
+      emailMessage = mailOptionValidateEmail(email, username, token)
     } else {
       emailMessage = mailOptionWelcomeForm(email, username, adminName, token)
     }
