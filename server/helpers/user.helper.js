@@ -87,10 +87,10 @@ class UserHelper {
   }
 
   async updateUser(id, data) {
-    let { email, password, username, phone, promoter, promoter_name, instagram } = data
+    let { email, username, phone, promoter, promoter_name, instagram } = data
 
-    if (password) {
-      const passHashed = await bcrypt.hash(password, 10)
+    if (data.password) {
+      const passHashed = await bcrypt.hash(data.password, 10)
 
       data.password = passHashed
     }
@@ -109,7 +109,19 @@ class UserHelper {
 
       await sendEmail(emailMessage)
     }
-    return userUpdated
+
+    let { password, promoter_id, ...dataUser } = userUpdated
+
+    if (!promoter && userUpdated.promoter_id) {
+      promoter = await facadePromoter.getPromoterById(userUpdated.promoter_id)
+    }
+
+    const response = {
+      ...dataUser,
+      promoter,
+    }
+
+    return response
   }
 
   async forgetPassword(user) {
