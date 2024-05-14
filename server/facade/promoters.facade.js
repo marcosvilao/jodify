@@ -30,6 +30,17 @@ class PromoterFacade {
     return promoter.rows[0]
   }
 
+  async getPromoterByName(name) {
+    const queryIg = 'SELECT * FROM promoters WHERE name = $1'
+    const valuesIg = [name]
+
+    const promoter = await pool.query(queryIg, valuesIg)
+
+    if (!promoter || !promoter.rows[0]) return null
+
+    return promoter.rows[0]
+  }
+
   async createPromoter(data) {
     const { name, instagram, priority, id } = data
 
