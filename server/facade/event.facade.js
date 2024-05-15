@@ -29,8 +29,8 @@ class EventFacade {
       limit,
       status,
       promoterId,
-    } = data
-
+    } = data;
+  
     let query = `
     WITH MinPriority AS (
       SELECT ep.event_id, MIN(p.priority) AS priority
@@ -85,56 +85,60 @@ class EventFacade {
     LEFT JOIN EventDJs ed ON e.id = ed.event_id
     LEFT JOIN EventTypes et ON e.id = et.event_id
     WHERE TRUE
-  `
-    const values = []
-
-    let paramCount = 1
-
-    if (dates && dates.length === 2) {
-      const [date1, date2] = dates
-      const firstDate = formatDate(date1)
-      const secondDate = formatDate(date2)
-      if (firstDate !== secondDate) {
-        query += ` AND e.date_from >= $${paramCount} AND e.date_from <= $${paramCount + 1}`
-        values.push(firstDate, secondDate)
-        paramCount += 2
+    `;
+    const values = [];
+    let paramCount = 1;
+  
+    if (promoterId) {
+      query += ` AND p.id = $${paramCount}`;
+      values.push(String(promoterId));
+      paramCount++;
+    } else {
+      if (dates && dates.length === 2) {
+        const [date1, date2] = dates;
+        const firstDate = formatDate(date1);
+        const secondDate = formatDate(date2);
+        if (firstDate !== secondDate) {
+          query += ` AND e.date_from >= $${paramCount} AND e.date_from <= $${paramCount + 1}`;
+          values.push(firstDate, secondDate);
+          paramCount += 2;
+        } else {
+          query += ` AND (e.date_from = $${paramCount})`;
+          values.push(firstDate);
+          paramCount++;
+        }
+      } else if (status) {
+        query += ` AND (e.date_from < $${paramCount})`;
+        values.push(argentinaTime);
+        paramCount++;
       } else {
-        query += `AND (e.date_from = $${paramCount})`
-        values.push(firstDate)
-        paramCount += 1
+        query += ` AND (e.date_from >= $${paramCount})`;
+        values.push(argentinaTime);
+        paramCount++;
       }
-    } else if (status) {
-      query += `AND (e.date_from < $${paramCount})`
-      values.push(argentinaTime)
-      paramCount += 1
-    } else {
-      query += `AND (e.date_from >= $${paramCount})`
-      values.push(argentinaTime)
-      paramCount += 1
     }
-
+  
     if (citiesId && citiesId.length > 0) {
-      const cityPlaceholders = citiesId.map((_, index) => `$${paramCount + index}`).join(', ')
-      query += ` AND e.city_id IN (${cityPlaceholders})`
-      values.push(...citiesId)
-      paramCount += citiesId.length
+      const cityPlaceholders = citiesId.map((_, index) => `$${paramCount + index}`).join(', ');
+      query += ` AND e.city_id IN (${cityPlaceholders})`;
+      values.push(...citiesId);
+      paramCount += citiesId.length;
     } else {
-      query += ' AND (e.city_id IS NULL OR e.city_id = e.city_id)'
+      query += ' AND (e.city_id IS NULL OR e.city_id = e.city_id)';
     }
-
+  
     if (typesId && typesId.length > 0) {
-      const typePlaceholders = typesId.map((_, index) => `$${paramCount + index}`).join(', ')
+      const typePlaceholders = typesId.map((_, index) => `$${paramCount + index}`).join(', ');
       query += ` AND EXISTS (
         SELECT 1 FROM event_types et
         WHERE et.event_id = e.id AND et.type_id IN (${typePlaceholders})
-        )`
-      values.push(...typesId)
-      paramCount += typesId.length
+      )`;
+      values.push(...typesId);
+      paramCount += typesId.length;
     }
-
+  
     if (search) {
-      const searchWithoutAccents = removeAccents(search)
-      // Adjust the search condition to include promoters, djs, venue, and event name
+      const searchWithoutAccents = removeAccents(search);
       query += ` AND (
         unaccent(lower(e.name)) ILIKE unaccent(lower($${paramCount}))
         OR unaccent(lower(e.venue)) ILIKE unaccent(lower($${paramCount}))
@@ -142,49 +146,39 @@ class EventFacade {
           SELECT 1 FROM event_djs ed
           JOIN djs dj ON ed.dj_id = dj.id
           WHERE ed.event_id = e.id AND unaccent(lower(dj.name)) ILIKE unaccent(lower($${paramCount}))
-          )
-          OR EXISTS (
-            SELECT 1 FROM event_types et
-            JOIN types tp ON et.type_id = tp.id
-            WHERE et.event_id = e.id AND unaccent(lower(tp.name)) ILIKE unaccent(lower($${paramCount}))
-            )
-          OR EXISTS (
-            SELECT 1 FROM event_promoters ep
-            JOIN promoters p ON ep.promoter_id = p.id
-            WHERE ep.event_id = e.id AND unaccent(lower(p.name)) ILIKE unaccent(lower($${paramCount}))
-            )
-            OR EXISTS (
-              SELECT 1 FROM event_promoters ep
-              JOIN promoters p ON ep.promoter_id = p.id
-              WHERE ep.event_id = e.id AND unaccent(lower(p.name)) ILIKE unaccent(lower($${paramCount}))
-              )
-              )`
-      values.push(`%${searchWithoutAccents}%`)
-      paramCount++
+        )
+        OR EXISTS (
+          SELECT 1 FROM event_types et
+          JOIN types tp ON et.type_id = tp.id
+          WHERE et.event_id = e.id AND unaccent(lower(tp.name)) ILIKE unaccent(lower($${paramCount}))
+        )
+        OR EXISTS (
+          SELECT 1 FROM event_promoters ep
+          JOIN promoters p ON ep.promoter_id = p.id
+          WHERE ep.event_id = e.id AND unaccent(lower(p.name)) ILIKE unaccent(lower($${paramCount}))
+        )
+      )`;
+      values.push(`%${searchWithoutAccents}%`);
+      paramCount++;
     }
-
+  
     if (sharedId) {
-      query += `AND (e.id = $${paramCount} OR (e.date_from = (SELECT date_from FROM events WHERE id = $${paramCount}) AND e.id != $${paramCount}))`
-      values.push(sharedId)
-      paramCount++
+      query += ` AND (e.id = $${paramCount} OR (e.date_from = (SELECT date_from FROM events WHERE id = $${paramCount}) AND e.id != $${paramCount}))`;
+      values.push(sharedId);
+      paramCount++;
     }
-
-    if (promoterId) {
-      query += ` AND (p.id = $${paramCount})`
-      values.push(String(promoterId))
-      paramCount++
-    }
-
-    query += `GROUP BY e.id, mp.priority, ed.djs, et.types ORDER BY e.date_from ASC, mp.priority ASC, e.id ASC ${
+  
+    query += ` GROUP BY e.id, mp.priority, ed.djs, et.types ORDER BY e.date_from ASC, mp.priority ASC, e.id ASC ${
       sharedId || !limit ? '' : `LIMIT ${limit}`
-    } OFFSET $${paramCount}`
-
-    values.push(setOff)
-    const result = await pool.query(query, values)
-
-    if (!result) return []
-    return result.rows
+    } OFFSET $${paramCount}`;
+  
+    values.push(setOff);
+    const result = await pool.query(query, values);
+  
+    if (!result) return [];
+    return result.rows;
   }
+  
 
   async getEventByTicketLink(link) {
     const query = 'SELECT ticket_link FROM events WHERE ticket_link = $1'
