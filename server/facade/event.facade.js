@@ -49,7 +49,7 @@ class EventFacade {
       FROM event_djs ed
       JOIN djs d ON d.id = ed.dj_id
       GROUP BY ed.event_id
-  ), EventTypes AS (
+    ), EventTypes AS (
       SELECT
           et.event_id,
           jsonb_agg(
@@ -61,7 +61,7 @@ class EventFacade {
       FROM event_types et
       JOIN types t ON t.id = et.type_id
       GROUP BY et.event_id
-  )
+    )
     SELECT 
     e.*, 
     COALESCE(mp.priority, 4) AS min_priority,
@@ -90,7 +90,7 @@ class EventFacade {
     let paramCount = 1;
   
     if (promoterId) {
-      query += ` AND p.id = $${paramCount}`;
+      query += ` AND p.id = $${paramCount} AND e.is_active = TRUE`;
       values.push(String(promoterId));
       paramCount++;
     } else {
