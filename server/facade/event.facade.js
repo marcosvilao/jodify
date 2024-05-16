@@ -261,9 +261,9 @@ class EventFacade {
   }
 
   async updateRelationshipEvent(table, column, id, event_id) {
-    const query = `UPDATE ${table} SET ${column} = ${id} WHERE event_id = ${event_id};`
+    const query = `UPDATE ${table} SET ${column} = $1 WHERE event_id = $2;`
 
-    await pool.query(query)
+    await pool.query(query, [id, event_id])
   }
 
   async updateEventInteraction(id, interaction) {
