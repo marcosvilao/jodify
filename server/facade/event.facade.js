@@ -266,14 +266,18 @@ class EventFacade {
 
   async deleteEvent(id) {
     const query = `
-    DELETE FROM events
-    WHERE id = ANY($1);
-    `
+      UPDATE events
+      SET is_active = false
+      WHERE id = $1;
+    `;
+    const values = [id];
 
-    // const values = [eventIds]
-    const values = [id]
-
-    await pool.query(query, values)
+    try {
+      await pool.query(query, values);
+    } catch (error) {
+      console.error('Error updating event to inactive:', error);
+      throw error;
+    }
   }
 }
 
