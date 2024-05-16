@@ -59,7 +59,7 @@ class UserFacade {
   }
 
   async updateUser(id, data) {
-    const { email, password, username, phone, promoter_id } = data
+    const { password, username, phone, promoter_id } = data
 
     const setParts = []
 
@@ -67,7 +67,6 @@ class UserFacade {
     if (password) setParts.push(`password = '${password}'`)
     if (username) setParts.push(`username = '${username}'`)
     if (phone) setParts.push(`phone = '${phone}'`)
-    if (email) setParts.push(`email = '${email}'`)
 
     setParts.push(`updatedAt = CURRENT_TIMESTAMP`)
 

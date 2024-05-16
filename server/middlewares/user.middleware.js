@@ -180,22 +180,13 @@ async function validatePassword(req, res, next) {
 }
 
 async function validateDataUpdateUser(req, res, next) {
-  const { promoter_name, instagram, email, phone } = req.body
+  const { promoter_name, instagram, phone } = req.body
   const { user } = res.locals
 
   if (!promoter_name && !instagram && !email && !phone) {
     const message =
-      'Para actualizar los datos del usuario debe ingresar alguno de los siguientes parámetros: email, phone, promoter_name o instagram.'
+      'Para actualizar los datos del usuario debe ingresar alguno de los siguientes parámetros:  phone, promoter_name o instagram.'
     return res.status(404).send({ message })
-  }
-
-  if (email) {
-    const validateEmail = await helper.getUserByEmail(email)
-
-    if (validateEmail) {
-      const message = `Existe un usuario con el email: ${email}.`
-      return res.status(404).send({ message })
-    }
   }
 
   let promoter = null
@@ -214,15 +205,6 @@ async function validateDataUpdateUser(req, res, next) {
       return res.status(404).send({ message })
     }
 
-    if (promoter_name) {
-      const validateName = await helperPromoter.getPromoterByName(promoter_name)
-
-      if (validateName) {
-        const message = `Existe una productora con el nombre: ${promoter_name}.`
-        return res.status(404).send({ message })
-      }
-    }
-
     if (instagram) {
       const validateIg = await helperPromoter.getPromoterByInstagram(instagram)
 
@@ -233,7 +215,7 @@ async function validateDataUpdateUser(req, res, next) {
     }
   }
 
-  res.locals.data = { promoter, instagram, promoter_name, email, phone }
+  res.locals.data = { promoter, instagram, promoter_name, phone }
   next()
 }
 
