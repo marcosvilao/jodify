@@ -155,15 +155,20 @@ class EventHelper {
   async updateEvent(id, data, event) {
     const {
       name,
-      date_from,
-      ticket_link,
-      image,
       venue,
-      city_id,
+      date_from,
+      event_city,
+      ticket_link,
+      event_type,
       event_djs,
       event_promoter,
-      event_type,
+      image,
     } = data
+
+    let typesIDs = event_type.length > 0 ? event_type.map((type) => type.id) : null
+    let djsIDs = event_djs.length > 0 ? event_djs.map((dj) => dj.id) : null
+    let promotersIDs =
+      event_promoter.length > 0 ? event_promoter.map((promoter) => promoter.id) : null
 
     if (image) {
       const imageDelete = event.image.public_id
@@ -171,22 +176,26 @@ class EventHelper {
       await deleteImage(imageDelete)
     }
 
-    if (event_djs) {
-      for (const djId of event_djs) {
-        await facade.updateRelationshipEvent('event_djs', 'dj_id', djId, id)
-      }
+    if (djsIDs) {
+      // for (const djId of djsIDs) {
+      //   await facade.updateRelationshipEvent('event_djs', 'dj_id', djId, id)
+      // }
+      await facade.updateRelationshipEvent('event_djs', 'dj_id', id, djsIDs)
     }
 
-    if (event_promoter) {
-      for (const promoterId of event_promoter) {
-        await facade.updateRelationshipEvent('event_promoters', 'promoter_id', promoterId, id)
-      }
+    if (promotersIDs) {
+      // for (const promoterId of promotersIDs) {
+      //   await facade.updateRelationshipEvent('event_promoters', 'promoter_id', promoterId, id)
+      // }
+      await facade.updateRelationshipEvent('event_promoters', 'promoter_id', id, promotersIDs)
     }
 
-    if (event_type) {
-      for (const typeId of event_type) {
-        await facade.updateRelationshipEvent('event_types', 'type_id', typeId, id)
-      }
+    if (typesIDs) {
+      console.log('3', typesIDs)
+      // for (const typeId of typesIDs) {
+      //   await facade.updateRelationshipEvent('event_types', 'type_id', typeId, id)
+      // }
+      await facade.updateRelationshipEvent('event_types', 'type_id', id, typesIDs)
     }
 
     const eventUpdated = await facade.updateEvent(id, data)
