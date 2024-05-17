@@ -85,7 +85,7 @@ class EventHelper {
   }
 
   async createEventByForm(data) {
-    const {
+    let {
       name,
       event_type,
       date_from,
@@ -96,7 +96,11 @@ class EventHelper {
       event_promoter,
       ticket_link,
     } = data
-
+    
+    if(!name && event_djs.length > 0){
+      name = event_djs[0]?.name ? event_djs?.map((dj) => dj?.name).join(' | ') : null     
+    }
+    
     let typesIDs = event_type.length > 0 ? event_type.map((type) => type.id) : null
     let djsIDs = event_djs.length > 0 ? event_djs.map((dj) => dj.id) : null
     let promotersIDs =
