@@ -134,16 +134,15 @@ async function validateGetAllEventsQuery(req, res, next) {
 }
 
 async function validateEventUpdateData(req, res, next) {
-  const { name, date_from, ticket_link, venue, city_id, event_djs, event_promoter, event_type } =
+  let { name, venue, date_from, event_city, ticket_link, event_type, event_djs, event_promoter } =
     req.body
 
-  //TODO event_promoter tiene que ser un arreglo de id
   if (
     !name &&
     !date_from &&
     !ticket_link &&
     !venue &&
-    !city_id &&
+    !event_city &&
     !event_djs &&
     !event_promoter &&
     !event_type
@@ -153,9 +152,14 @@ async function validateEventUpdateData(req, res, next) {
     return res.status(404).send({ message })
   }
 
+  event_type = event_type ? JSON.parse(event_type) : null
+  event_djs = event_djs ? JSON.parse(event_djs) : null
+  event_promoter = event_promoter ? JSON.parse(event_promoter) : null
+  event_city = event_city ? JSON.parse(event_city) : null
+
   let imageCloud = null
 
-  if (req.file?.image) {
+  if (req.files?.image) {
     const { image } = req.files
 
     const response = await uploadImg(image, file.EVENTS)
@@ -170,14 +174,14 @@ async function validateEventUpdateData(req, res, next) {
 
   res.locals.data = {
     name,
-    date_from,
-    ticket_link,
-    image: imageCloud,
     venue,
-    city_id,
+    date_from,
+    event_city: event_city ? event_city.id : null,
+    ticket_link,
+    event_type,
     event_djs,
     event_promoter,
-    event_type,
+    image: imageCloud ?? null,
   }
 
   next()

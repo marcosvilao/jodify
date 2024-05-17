@@ -231,33 +231,82 @@ class EventFacade {
   }
 
   async updateEvent(id, data) {
-    const { name, date_from, ticket_link, image, venue, city_id } = data
+    const { name, venue, date_from, event_city, ticket_link, image } = data
 
     const setParts = []
+    const values = []
+    let paramIndex = 1
 
-    if (name) setParts.push(`name = '${name}'`)
-    if (date_from) setParts.push(`date_from = '${date_from}'`)
-    if (ticket_link) setParts.push(`ticket_link = '${ticket_link}'`)
-    if (image) setParts.push(`image = '${image}'`)
-    if (venue) setParts.push(`venue = '${venue}'`)
-    if (city_id) setParts.push(`city_id = '${city_id}'`)
+    if (name) {
+      setParts.push(`name = $${paramIndex}`)
+      values.push(name)
+      paramIndex++
+    }
+    if (date_from) {
+      setParts.push(`date_from = $${paramIndex}`)
+      values.push(date_from)
+      paramIndex++
+    }
+    if (ticket_link) {
+      setParts.push(`ticket_link = $${paramIndex}`)
+      values.push(ticket_link)
+      paramIndex++
+    }
+    if (image) {
+      setParts.push(`image = $${paramIndex}`)
+      values.push(JSON.stringify(image))
+      paramIndex++
+    }
+    if (venue) {
+      setParts.push(`venue = $${paramIndex}`)
+      values.push(venue)
+      paramIndex++
+    }
+    if (event_city) {
+      setParts.push(`city_id = $${paramIndex}`)
+      values.push(event_city)
+      paramIndex++
+    }
 
     setParts.push(`updatedAt = CURRENT_TIMESTAMP`)
 
     const setClause = setParts.join(', ')
+    const query = `UPDATE events SET ${setClause} WHERE id = $${paramIndex} RETURNING *;`
+    values.push(id)
 
-    const query = `UPDATE events SET ${setClause} WHERE id = '${id}' RETURNING *;`
-
-    const eventUpdated = await pool.query(query)
+    const eventUpdated = await pool.query(query, values)
 
     if (!eventUpdated || !eventUpdated.rows[0]) return null
     return eventUpdated.rows[0]
   }
 
-  async updateRelationshipEvent(table, column, id, event_id) {
-    const query = `UPDATE ${table} SET ${column} = ${id} WHERE event_id = ${event_id};`
+  async updateRelationshipEvent(table, column, id, arr_ids) {
+    // try {
+    //   const query = `UPDATE ${table} SET ${column} = $1 WHERE event_id = $2;`
 
-    await pool.query(query)
+    //   await pool.query(query, [id, event_id])
+    // } catch (error) {
+    //   console.log('err', { err: error.message })
+    // }
+
+    try {
+      // Paso 1: Eliminar todas las relaciones existentes para el evento especificado
+      const deleteQuery = `DELETE FROM ${table} WHERE event_id = $1;`
+      await pool.query(deleteQuery, [id])
+
+      // Paso 2: Insertar las nuevas relaciones
+      const insertQuery = `INSERT INTO ${table} (event_id, ${column}) VALUES ($1, $2);`
+
+      // Usa una transacción para asegurar que todas las operaciones sean atómicas
+      await pool.query('BEGIN')
+      for (const ID of arr_ids) {
+        await pool.query(insertQuery, [id, ID])
+      }
+      await pool.query('COMMIT')
+    } catch (error) {
+      await pool.query('ROLLBACK')
+      console.log('err', { err: error.message })
+    }
   }
 
   async updateEventInteraction(id, interaction) {

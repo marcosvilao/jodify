@@ -87,7 +87,7 @@ class UserHelper {
   }
 
   async updateUser(id, data) {
-    let { email, username, phone, promoter, promoter_name, instagram } = data
+    let { username, phone, promoter, promoter_name, instagram } = data
 
     if (data.password) {
       const passHashed = await bcrypt.hash(data.password, 10)
@@ -103,12 +103,6 @@ class UserHelper {
     const userUpdated = await facade.updateUser(id, data)
 
     if (!userUpdated) return null
-
-    if (email) {
-      const emailMessage = mailOptionValidateEmail(userUpdated.email, userUpdated.username)
-
-      await sendEmail(emailMessage)
-    }
 
     let { password, promoter_id, ...dataUser } = userUpdated
 
