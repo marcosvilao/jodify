@@ -97,7 +97,7 @@ class UserHelper {
 
     if (promoter) {
       const promoterData = { name: promoter_name, instagram }
-      await facadePromoter.updatePromoter(promoter.id, promoterData)
+      promoter = await facadePromoter.updatePromoter(promoter.id, promoterData)
     }
 
     const userUpdated = await facade.updateUser(id, data)
