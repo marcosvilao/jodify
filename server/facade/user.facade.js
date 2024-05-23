@@ -4,7 +4,7 @@ class UserFacade {
   async getUserById(id) {
     try {
       const query = `
-        SELECT u.*, p.*
+        SELECT u.*, p.name, p.instagram
         FROM users u
         LEFT JOIN promoters p ON u.promoter_id = p.id
         WHERE u.id = $1
