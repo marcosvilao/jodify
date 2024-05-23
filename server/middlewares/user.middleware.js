@@ -205,7 +205,7 @@ async function validateDataUpdateUser(req, res, next) {
       return res.status(404).send({ message })
     }
 
-    if (instagram) {
+    if (instagram !== promoter.instagram) {
       const validateIg = await helperPromoter.getPromoterByInstagram(instagram)
 
       if (validateIg) {

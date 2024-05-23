@@ -2,11 +2,22 @@ const pool = require('../db')
 
 class UserFacade {
   async getUserById(id) {
-    const query = `SELECT * FROM users WHERE id = $1`
-    const user = await pool.query(query, [id])
-    if (!user || !user.rows[0]) return null
-    return user.rows[0]
+    try {
+      const query = `
+        SELECT u.*, p.*
+        FROM users u
+        LEFT JOIN promoters p ON u.promoter_id = p.id
+        WHERE u.id = $1
+      `;
+      const user = await pool.query(query, [id]);
+      if (!user || !user.rows[0]) return null;
+      return user.rows[0];
+    } catch (error) {
+      console.error('Error fetching user by id:', error);
+      throw error;
+    }
   }
+  
 
   async getUserByEmail(email) {
     const query = `SELECT * FROM users WHERE email = $1`
