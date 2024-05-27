@@ -56,10 +56,6 @@ async function validateEventCreateData(req, res, next) {
   event_city = event_city ? JSON.parse(event_city) : null
 
   if (req.files?.image && !image_url) {
-    // if (!req.files?.image) {
-    //   const message = 'To create a product you need a image'
-    //   return res.status(404).send({ message })
-    // }
     const { image } = req.files
 
     const response = await uploadImg(image, file.EVENTS)
@@ -70,6 +66,11 @@ async function validateEventCreateData(req, res, next) {
     }
 
     imageCloud = response[0]
+  }
+
+  if (event_djs && !Array.isArray(event_djs)) {
+    const message = `events_djs debe ser un arreglo. ${event_djs}`
+    return res.status(404).send({ message })
   }
 
   const data = {
