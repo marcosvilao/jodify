@@ -4,8 +4,10 @@ const { responseGetEvents } = require('../utils/functions.js')
 const { deleteImage } = require('../utils/cloudinary/cludinary.js')
 const { linkScrapping } = require('../utils/scrapping/scrapEventData.js')
 const { getImageFromCache } = require('../utils/cacheFunction/cacheFunction.js')
+const { GenericHelper } = require('../helpers/generic.helper.js')
 
 const facade = new EventFacade()
+const helperGeneric = new GenericHelper()
 
 class EventHelper {
   async getEventById(id) {
@@ -96,15 +98,42 @@ class EventHelper {
       event_promoter,
       ticket_link,
     } = data
-    
-    if(!name && event_djs.length > 0){
-      name = event_djs[0]?.name ? event_djs?.map((dj) => dj?.name).join(' | ') : null     
+
+    if (!name && event_djs.length > 0) {
+      name = event_djs[0]?.name ? event_djs?.map((dj) => dj?.name).join(' | ') : null
     }
-    
-    let typesIDs = event_type.length > 0 ? event_type.map((type) => type.id) : null
+
+    if (event_djs && Array.isArray(event_djs)) {
+      const newDjsNames = []
+
+      for (const dj of event_djs) {
+        if (typeof dj === 'string') {
+          newDjsNames.push(dj)
+        }
+      }
+
+      const newDjs = []
+
+      if (newDjsNames[0]) {
+        for (const dj of newDjsNames) {
+          const newDj = await helperGeneric.createDj(dj)
+
+          if (!newDj) {
+            return console.log(`Error al crear dj. ${dj}`)
+          }
+
+          newDjs.push(newDj)
+        }
+      }
+
+      const djsFilters = event_djs.filter((dj) => typeof dj === 'object')
+      event_djs = [...newDjs, ...djsFilters]
+    }
+
+    let typesIDs = event_type.length > 0 ? event_type.map((type) => type?.id) : null
     let djsIDs = event_djs.length > 0 ? event_djs.map((dj) => dj.id) : null
     let promotersIDs =
-      event_promoter.length > 0 ? event_promoter.map((promoter) => promoter.id) : null
+      event_promoter.length > 0 ? event_promoter.map((promoter) => promoter?.id) : null
     let cityID = event_city.id
 
     const formattedEventDate = new Date(date_from)
@@ -133,13 +162,13 @@ class EventHelper {
 
     if (!eventId) return null
 
-    if (typesIDs[0]) {
+    if (typesIDs && typesIDs[0] && typesIDs[0] !== undefined) {
       for (const id of typesIDs) {
         await facade.relationshipEventId([eventId, id], 'event_types', 'type_id')
       }
     }
 
-    if (djsIDs[0]) {
+    if (djsIDs && djsIDs[0] && djsIDs[0] !== undefined) {
       for (const id of djsIDs) {
         if (id) {
           await facade.relationshipEventId([eventId, id], 'event_djs', 'dj_id')
@@ -147,7 +176,7 @@ class EventHelper {
       }
     }
 
-    if (promotersIDs[0]) {
+    if (promotersIDs && promotersIDs[0] && promotersIDs[0] !== undefined) {
       for (const id of promotersIDs) {
         await facade.relationshipEventId([eventId, id], 'event_promoters', 'promoter_id')
       }
