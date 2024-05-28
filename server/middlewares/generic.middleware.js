@@ -25,12 +25,22 @@ async function validateVenueId(req, res, next) {
 }
 
 async function validateDataCreateVenue(req, res, next) {
-  const { name, address, location, city, latitude, longitude } = req.body
-  console.log('body:', req.body)
+  let { name, address, neighborhood, city, province, latitude, longitude, cityLat, cityLng } =
+    req.body
 
-  if (!name || !address || !location || !city || !latitude || !longitude) {
+  if (
+    !name ||
+    !address ||
+    !neighborhood ||
+    !city ||
+    !latitude ||
+    !longitude ||
+    !province ||
+    !cityLat ||
+    !cityLng
+  ) {
     const message =
-      'Para crear un venue debe agregar name, address, location, city, latitude y longitude.'
+      'Para crear un venue debe agregar name, address, neighborhood, city, province, latitude, longitude, cityLat y cityLng.'
     return res.status(404).send({ message })
   }
 
@@ -41,14 +51,9 @@ async function validateDataCreateVenue(req, res, next) {
     return res.status(404).send({ message })
   }
 
-  let cityData = await helper.getCityByName(city) // TODO mapBox a CABA | GBA lo tira como Buenos Aires
-
-  if (!cityData) {
-    // creo una nueva city
-    console.log('no encontró la ciudad')
-
-    // cityData = await helper.createCity(city)
-    return res.status(404).send({ message: `No existe la city: ${city} en la BD.` })
+  if (typeof cityLat !== 'number' || typeof cityLng !== 'number') {
+    const message = 'cityLat y cityLng tienen que ser del tipo number.'
+    return res.status(404).send({ message })
   }
 
   if (typeof latitude !== 'number' || typeof longitude !== 'number') {
@@ -56,10 +61,25 @@ async function validateDataCreateVenue(req, res, next) {
     return res.status(404).send({ message })
   }
 
+  let cityData = await helper.getCityByCoords(cityLat, cityLng)
+
+  if (!cityData) {
+    const newCity = await helper.createCity(city, cityLat, cityLng)
+
+    if (!newCity) {
+      return res.status(404).send({
+        message: `Error al crear una nueva city. Name: ${city}, coords: lat ${cityLat} | long ${cityLng}`,
+      })
+    }
+
+    cityData = newCity
+  }
+
   res.locals.data = {
     name,
     address,
-    location,
+    neighborhood,
+    province,
     city_id: cityData.id,
     coordinates: { latitude, longitude },
   }
