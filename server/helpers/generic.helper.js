@@ -48,10 +48,14 @@ class GenericHelper {
     return await facade.getCityByName(name)
   }
 
-  async createCity(name) {
+  async getCityByCoords(lat, lng) {
+    return await facade.getCityByCoords(lat, lng)
+  }
+
+  async createCity(name, latitude, longitude) {
     const id = uuidv4()
 
-    return await facade.createCity(id, name)
+    return await facade.createCity(id, name, latitude, longitude)
   }
   //---------------TYPES----------------------------
 
