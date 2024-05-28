@@ -56,14 +56,22 @@ class GenericFacade {
 
   async createVenue(data) {
     try {
-      const { id, name, city_id, location, address, coordinates } = data
+      const { id, name, city_id, neighborhood, address, coordinates, province } = data
       const query = `
-          INSERT INTO venue(id, name, city_id, location, address, coordinates)
-          VALUES($1, $2, $3, $4, $5, $6)
+          INSERT INTO venue(id, name, city_id, neighborhood, address, coordinates, province)
+          VALUES($1, $2, $3, $4, $5, $6, $7)
           RETURNING *;
         `
 
-      const newVenue = await pool.query(query, [id, name, city_id, location, address, coordinates])
+      const newVenue = await pool.query(query, [
+        id,
+        name,
+        city_id,
+        neighborhood,
+        address,
+        coordinates,
+        province,
+      ])
 
       if (!newVenue || !newVenue.rows[0]) return null
 
@@ -76,15 +84,7 @@ class GenericFacade {
   async updateVenue() {}
 
   async deleteVenue() {}
-  /*
-  +get venue by id, 
-  +get venues, 
-  +create venue, 
-  +update venue, 
-  +delete venue, 
-  +el evento lo relaciono al venue que se creo, sino le pasan el venue_id
-  
-  */
+
   //----------------- DJS-----------------------
 
   async getDjs() {
@@ -144,15 +144,37 @@ class GenericFacade {
     }
   }
 
-  async createCity(id, name) {
+  async getCityByCoords(lat, lng) {
+    try {
+      const tolerance = 0.01
+      const query = `
+        SELECT * 
+        FROM cities 
+        WHERE 
+          ABS(latitude - $1) < $3 
+          AND ABS(longitude - $2) < $3;
+      `
+
+      const city = await pool.query(query, [lat, lng, tolerance])
+
+      if (!city || !city.rows[0]) return null
+
+      return city.rows[0]
+    } catch (error) {
+      console.error('Error al buscar city por coords. Error:', error)
+      return null
+    }
+  }
+
+  async createCity(id, name, latitude, longitude) {
     try {
       const query = `
-          INSERT INTO cities(id, city_name)
-          VALUES($1, $2)
+          INSERT INTO cities(id, city_name, latitude, longitude)
+          VALUES($1, $2, $3, $4)
           RETURNING *;
         `
 
-      const newCity = await pool.query(query, [id, name])
+      const newCity = await pool.query(query, [id, name, latitude, longitude])
 
       if (!newCity) return null
 
