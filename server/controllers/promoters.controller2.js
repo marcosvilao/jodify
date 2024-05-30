@@ -1,7 +1,7 @@
 const { Router } = require('express')
 const { PromoterHelper } = require('../helpers/promoters.helper.js')
 const { validateCreatePromoterData } = require('../middlewares/promoters.middleware.js')
-
+const { scrapInstagram } = require('../Brain/getEventData.js')
 const route = Router()
 
 const helper = new PromoterHelper()
@@ -23,6 +23,16 @@ route.post('/create-promoter', validateCreatePromoterData, async (req, res) => {
     await helper.createPromoter(data)
 
     return res.status(200).send('productora creada correctamente')
+  } catch (error) {
+    res.status(500).send({ message: error.message })
+  }
+})
+
+route.get('/scrap-promoter', async (req, res) => {
+  try {
+    await scrapInstagram()
+
+    return res.status(200).send({ message: 'scrap de Ig finalizado :)' })
   } catch (error) {
     res.status(500).send({ message: error.message })
   }
