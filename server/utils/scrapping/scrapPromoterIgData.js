@@ -5,7 +5,10 @@ const scrapPromoterData = async (urls) => {
     return 'url debe ser un arreglo de urls'
   }
 
-  const browser = await puppeteer.launch({ headless: true }) // Configurar en false para ver lo que hace el navegador
+  const browser = await puppeteer.launch({
+    headless: false,
+    executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+  }) // Configurar en false para ver lo que hace el navegador
   const page = await browser.newPage()
 
   const username = 'maxtest145'
@@ -23,6 +26,12 @@ const scrapPromoterData = async (urls) => {
 
   const data = []
   for (const url of urls) {
+    if (!url || typeof url !== 'string' || !url.includes('instagram.com/')) {
+      console.log(`URL no válida: ${url}`)
+      continue // Saltar al siguiente loop
+    }
+
+    // try {
     await page.goto(url, { waitUntil: 'networkidle2' })
 
     // Esperar a que el selector esté presente
@@ -39,7 +48,6 @@ const scrapPromoterData = async (urls) => {
       }
       return null
     })
-    console.log(`Biografía: ${bio}`)
 
     // Verificar si el usuario ha publicado una historia
     const story = await page.evaluate(() => {
@@ -47,8 +55,6 @@ const scrapPromoterData = async (urls) => {
       const hasStory = storySection ? storySection.querySelector('canvas') !== null : false
       return hasStory
     })
-
-    console.log(`¿El usuario ha publicado una historia?: ${story}`)
 
     // Esperar a que el contenedor de la publicación esté presente
     await page
@@ -74,11 +80,16 @@ const scrapPromoterData = async (urls) => {
       return timeElement ? timeElement.getAttribute('datetime') : null
     })
 
-    console.log(`Fecha de la última publicación: ${postDate}`)
+    // console.log(`Fecha de la última publicación: ${postDate}`)
     data.push({ url, bio, lastPostDate: postDate ?? null, story })
+    // } catch (error) {
+    //   console.log(`Error al procesar la URL ${url}:`, error)
+    //   continue // Saltar al siguiente loop en caso de error
+    // }
   }
 
   await browser.close()
+
   return data
 }
 
