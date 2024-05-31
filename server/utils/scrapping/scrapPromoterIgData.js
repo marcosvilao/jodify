@@ -1,28 +1,31 @@
 const puppeteer = require('puppeteer-extra')
 
-const scrapPromoterData = async (urls) => {
+const scrapPromoterData = async (urls, start, vuelta, numeroVuelta) => {
   if (!Array.isArray(urls)) {
     return 'url debe ser un arreglo de urls'
   }
 
-  const browser = await puppeteer.launch({
-    headless: false,
-    executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
-  }) // Configurar en false para ver lo que hace el navegador
-  const page = await browser.newPage()
+  console.log('start', start)
+  if (start) {
+    const browser = await puppeteer.launch({
+      headless: false,
+      executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+    }) // Configurar en false para ver lo que hace el navegador
+    const page = await browser.newPage()
 
-  const username = 'maxtest145'
-  const password = 'Flatron2000'
+    const username = 'maxtest145'
+    const password = 'Flatron2000'
 
-  await page.goto('https://www.instagram.com/accounts/login/', { waitUntil: 'networkidle2' })
+    await page.goto('https://www.instagram.com/accounts/login/', { waitUntil: 'networkidle2' })
 
-  // Iniciar sesión
-  await page.type('input[name="username"]', username, { delay: 100 })
-  await page.type('input[name="password"]', password, { delay: 100 })
-  await page.click('button[type="submit"]')
+    // Iniciar sesión
+    await page.type('input[name="username"]', username, { delay: 100 })
+    await page.type('input[name="password"]', password, { delay: 100 })
+    await page.click('button[type="submit"]')
 
-  // Esperar a que se redirija a la página principal
-  await page.waitForNavigation({ waitUntil: 'networkidle2' })
+    // Esperar a que se redirija a la página principal
+    await page.waitForNavigation({ waitUntil: 'networkidle2' })
+  }
 
   const data = []
   for (const url of urls) {
@@ -31,7 +34,8 @@ const scrapPromoterData = async (urls) => {
       continue // Saltar al siguiente loop
     }
 
-    // try {
+    console.log('url scrap', url)
+
     await page.goto(url, { waitUntil: 'networkidle2' })
 
     // Esperar a que el selector esté presente
@@ -80,15 +84,12 @@ const scrapPromoterData = async (urls) => {
       return timeElement ? timeElement.getAttribute('datetime') : null
     })
 
-    // console.log(`Fecha de la última publicación: ${postDate}`)
     data.push({ url, bio, lastPostDate: postDate ?? null, story })
-    // } catch (error) {
-    //   console.log(`Error al procesar la URL ${url}:`, error)
-    //   continue // Saltar al siguiente loop en caso de error
-    // }
   }
 
-  await browser.close()
+  if (vuelta === numeroVuelta) {
+    await browser.close()
+  }
 
   return data
 }
