@@ -97,19 +97,16 @@ const mailOptionWelcomeForm = (email, username, adminName, token) => {
       </div>
       <div style="padding: 20px;">
           <p style="margin: 0 0 10px;">Hola ${username},</p>
-          <p style="margin: 0 0 20px;">Soy ${adminName}, ¿Cómo estás?</p>
+          <p style="margin: 0 0 20px;">Soy ${adminName}, un gusto hablar con vos y conocer más acerca de tu productora. Te creamos un <a href="${process.env.HREF_ROOT}/register-promoters/${token}" style="color: #C18FFF; text-decoration: underline; cursor: pointer;">link</a> temporal para que puedas registrarte con el correo electrónico ${email} y así empezar a compartir tus eventos.</p>
           <p style="margin: 0 0 20px;"><strong>¡Quiero darte la bienvenida a Jodify!</strong></p>
-          <p style="margin: 0 0 20px;">Nos interesa participar en tu fiesta y queremos que publiques tu evento en nuestra plataforma.</p>
-          <p style="margin: 0 0 20px;">Te creamos un <strong>link temporal</strong> para que puedas registrarte con nosotros.</p>
           <div style="text-align: center; margin: 20px 0;">
               <a href="${process.env.HREF_ROOT}/register-promoters/${token}" style="background-color: #C18FFF; color: white; padding: 15px 32px; text-decoration: none; display: inline-block; font-size: 16px; border-radius: 100px; cursor: pointer;">
-                  Ir a Jodify
+                  Registrarse
               </a>
           </div>
-          <p style="margin: 0 0 20px;">Aclaramos que el link <strong>solo dura 48 horas</strong>, pero no te preocupes, en caso de no poder completar el registro puedes pedirnos otro link.</p>
-          <p style="margin: 0;">Abrazo,</p>
+          <p style="margin: 0 0 20px;">Aclaramos que el link <strong>solo dura 48 horas</strong> y <strong>solo sirve para ese mail.</strong></p>
+          <p style="margin: 0;">Saludos,</p>
           <p style="margin: 0;">${adminName}</p>
-          <p style="margin: 0;">Jodify</p>
       </div>
       <div style="background-color: #0C0C0C; color: #FFFFFF; padding: 10px; width: 100%; position: fixed; bottom: 0; text-align: center;">
           Jodify © 2024
