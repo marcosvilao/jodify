@@ -30,13 +30,13 @@ const scrapInstagram = async () => {
     console.log('exist json', existingJson)
     console.log('.length', existingJson.length)
 
-    if (existingJson.length > 1) {
-      // El archivo tiene más que solo el encabezado
-      lastProcessedIndex = existingJson.length - 1 // -1 porque tiene el header
-    } else {
-      // El archivo solo tiene el encabezado
-      lastProcessedIndex = 0
-    }
+    // if (existingJson.length > 1) {
+    // El archivo tiene más que solo el encabezado
+    lastProcessedIndex = existingJson.length //- 1 // -1 porque tiene el header
+    // } else {
+    //   // El archivo solo tiene el encabezado
+    //   lastProcessedIndex = 0
+    // }
 
     console.log('exist? en que linea quedo?:', lastProcessedIndex)
 
@@ -67,9 +67,29 @@ const scrapInstagram = async () => {
   }
 
   // Continuar desde el último chunk procesado
+
+  let page = null
+
   for (let i = Math.floor(lastProcessedIndex / chunkSize); i < urlsDivididas.length; i++) {
     try {
-      const profilesData = await scrapPromoterData(urlsDivididas[i], start, i, urlsDivididas.length)
+      console.log('i:', i)
+      let profilesData = null
+      if (!page) {
+        const response = await scrapPromoterData(urlsDivididas[i], start, i, urlsDivididas.length)
+        profilesData = response?.data
+
+        page = response?.page // me guardo la page asi no tengo que volver a iniciar sesión
+      } else {
+        const response = await scrapPromoterData(
+          urlsDivididas[i],
+          start,
+          i,
+          urlsDivididas.length,
+          page
+        )
+        profilesData = response?.data
+        page = response?.page // me guardo la page asi no tengo que volver a iniciar sesión
+      }
 
       start = false
 
@@ -106,12 +126,14 @@ const scrapInstagram = async () => {
         writeSQL.write(newRow + '\n')
       }
     } catch (error) {
+      start = false
       console.log(`Error en la vuelta ${i + 1}:`, error)
       continue // Continuar con el siguiente chunk en caso de error
     }
 
     // Esperar 3 minutos antes de procesar el siguiente chunk
-    await delay(3 * 60 * 1000) // 3 minutos en milisegundos
+    // console.log('Lote de 50 listo, esperando 3 minutos')
+    // await delay(3 * 60 * 1000) // 3 minutos en milisegundos
 
     console.log(`vuelta ${i} de ${urlsDivididas.length}`)
   }

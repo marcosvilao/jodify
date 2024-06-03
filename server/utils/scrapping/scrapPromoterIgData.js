@@ -1,20 +1,23 @@
 const puppeteer = require('puppeteer-extra')
 
-const scrapPromoterData = async (urls, start, vuelta, numeroVuelta) => {
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+
+const scrapPromoterData = async (urls, start, vuelta, numeroVuelta, page) => {
   if (!Array.isArray(urls)) {
     return 'url debe ser un arreglo de urls'
   }
 
   console.log('start', start)
+
   if (start) {
     const browser = await puppeteer.launch({
       headless: false,
       executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
     }) // Configurar en false para ver lo que hace el navegador
-    const page = await browser.newPage()
+    page = await browser.newPage()
 
-    const username = 'maxtest145'
-    const password = 'Flatron2000'
+    const username = 'jorib86699'
+    const password = 'Flatron2009'
 
     await page.goto('https://www.instagram.com/accounts/login/', { waitUntil: 'networkidle2' })
 
@@ -85,13 +88,16 @@ const scrapPromoterData = async (urls, start, vuelta, numeroVuelta) => {
     })
 
     data.push({ url, bio, lastPostDate: postDate ?? null, story })
+
+    console.log('esperando 10 segundos..')
+    await delay(10 * 1000) // 3 minutos en milisegundos
   }
 
   if (vuelta === numeroVuelta) {
     await browser.close()
   }
 
-  return data
+  return { page, data }
 }
 
 module.exports = {
