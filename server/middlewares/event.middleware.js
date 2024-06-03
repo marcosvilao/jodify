@@ -11,13 +11,14 @@ const helperGeneric = new GenericHelper()
 
 async function validateEventId(req, res, next) {
   const { id } = req.params
-
+  console.log('id', id)
   if (!UUIDV4RegEx.test(id)) {
     const message = 'Debe ingresar un ID valido.'
     return res.status(404).send({ message })
   }
 
   const event = await helper.getEventById(id)
+  console.log('event', event)
 
   if (!event) {
     const message = `No se encontro ningun evento con el id: ${id}`

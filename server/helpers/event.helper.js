@@ -11,6 +11,7 @@ const helperGeneric = new GenericHelper()
 
 class EventHelper {
   async getEventById(id) {
+    console.log('id', id)
     return await facade.getEventById(id)
   }
 
@@ -237,8 +238,9 @@ class EventHelper {
   }
 
   async updateEventInteraction(id, event) {
+    console.log({id, event})
     const interaction = event.interactions + 1
-
+    console.log('addinteraction', interaction)
     await facade.updateEventInteraction(id, interaction)
   }
 
