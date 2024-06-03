@@ -41,11 +41,7 @@ app.set('view engine', 'ejs') // Set EJS as the view engine
 app.set('views', path.join(__dirname, 'views')) // Set the views directory
 app.use(bodyParser.urlencoded({ extended: false }))
 
-app.use(cors({
-  methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
-  optionsSuccessStatus: 204
-}));
+app.use(cors());
 app.use(morgan('dev'))
 app.use(express.json())
 
