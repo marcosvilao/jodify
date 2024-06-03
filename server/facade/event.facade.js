@@ -360,9 +360,20 @@ class EventFacade {
     }
   }
 
-  async updateEventInteraction(id, interaction) {
-    await pool.query(`UPDATE events SET interactions = ${interaction} WHERE id = '${id}';`)
-  }
+  async updateEventInteraction(id, interaction)  {
+    console.log('id', id);
+    console.log('interaction', interaction);
+  
+    const query = 'UPDATE events SET interactions = $1 WHERE id = $2';
+    const values = [interaction, id];
+  
+    try {
+      await pool.query(query, values);
+      console.log('Event interaction updated successfully');
+    } catch (error) {
+      console.error('Error updating event interaction:', error);
+    }
+  };
 
   async deleteEvent(id) {
     const query = `
