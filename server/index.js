@@ -1,60 +1,79 @@
-const express = require('express');
-const routes = require('./routes/routes.js');
-const eventRoutes = require('./routes/events.routes');
-const morgan = require('morgan');
-const cors = require('cors');
-const flash = require('express-flash');
-const path = require('path');
-const bodyParser = require('body-parser');
-require('dotenv').config();
+const express = require('express')
+//-------------------
+const routes = require('./routes/routes.js')
+//------------------
+// const passport = require('passport');
+const morgan = require('morgan')
+const cors = require('cors')
+// const session = require('express-session')
+// const FileStore = require('session-file-store')(session)
+// const {v4: uuidv4} = require('uuid')
+// const passportConfig = require('./passport-config');
+const flash = require('express-flash')
+const path = require('path')
+const bodyParser = require('body-parser')
 
-const app = express();
+require('dotenv').config()
 
-// Configuración de CORS
-const allowedOrigins = [
-  'https://jodify.com.ar',
-  'https://jodify.vercel.app',
-  'https://jodify-qa-client.vercel.app',
-  'https://l.instagram.com/',
-  'https://jodifynext.vercel.app',
-  'https://jodify-qa-next.vercel.app',
-];
+const eventRoutes = require('./routes/events.routes')
 
-app.use(cors({
-  origin: function(origin, callback) {
-    // permitir solicitudes sin origin, como las de curl
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    } else {
-      return callback(new Error('Not allowed by CORS'));
-    }
-  },
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-  allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
-  credentials: true
-}));
+const app = express()
 
-app.use(morgan('dev'));
-app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(function (req, res, next) {
+  var allowedOrigins = [
+    'https://jodify.com.ar',
+    'https://jodify.vercel.app',
+    'https://jodify-qa-client.vercel.app',
+    'https://l.instagram.com/',
+    'https://jodifynext.vercel.app',
+    'https://jodify-qa-next.vercel.app',
+  ]
+  var origin = req.headers.origin
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin)
+  }
 
-app.set('view engine', 'ejs'); // Set EJS as the view engine
-app.set('views', path.join(__dirname, 'views')); // Set the views directory
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+  next()
+})
 
-app.use(flash());
+app.set('view engine', 'ejs') // Set EJS as the view engine
+app.set('views', path.join(__dirname, 'views')) // Set the views directory
+app.use(bodyParser.urlencoded({ extended: false }))
 
-// Rutas
-app.use('/events', eventRoutes);
+app.use(cors());
+app.use(morgan('dev'))
+app.use(express.json())
+
+// app.use(flash());
+// app.use(
+//     session({
+//         genid:(req) => {
+//             return uuidv4()
+//         },
+//         store: new FileStore(),
+//         secret: process.env.PRIVATE_SESSION_KEY,
+//         resave: false,
+//         saveUninitialized: false
+//     })
+// )
+
+// app.use(passport.initialize());
+// app.use(passport.session());
+
+// passportConfig(passport);
+
+//-------------------------
+
+// app.use(eventRoutes);
+
+
 app.use(routes);
 
-// Manejo de errores
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({
+  return res.json({
     message: err.message,
-  });
-});
+  })
+})
 
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+app.listen(3001, () => console.log(`listening on port 3001`))
