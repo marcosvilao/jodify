@@ -21,6 +21,7 @@ const app = express();
 
 // Configuración de CORS
 const allowedOrigins = [
+  'http://localhost:3000',
   'https://jodify.com.ar',
   'https://jodify.vercel.app',
   'https://jodify-qa-client.vercel.app',
