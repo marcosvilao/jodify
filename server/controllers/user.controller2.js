@@ -10,6 +10,7 @@ const {
   validateDataUpdateUser,
   validateDataForgetPassword,
   validateDataValEmail,
+  validateUserTypePromoter,
 } = require('../middlewares/user.middleware.js')
 
 const route = Router()
@@ -73,19 +74,25 @@ route.put('/update/:id', validateUserId, validateDataUpdateUser, async (req, res
   }
 })
 
-route.post('/login', validateUserEmail, validatePassword, async (req, res) => {
-  try {
-    const { user } = res.locals
+route.post(
+  '/login',
+  validateUserEmail,
+  validateUserTypePromoter,
+  validatePassword,
+  async (req, res) => {
+    try {
+      const { user } = res.locals
 
-    const response = await helper.logIn(user)
+      const response = await helper.logIn(user)
 
-    return res.status(200).send({ user: response })
-  } catch (error) {
-    res.status(500).send({ error: error.message })
+      return res.status(200).send({ user: response })
+    } catch (error) {
+      res.status(500).send({ error: error.message })
+    }
   }
-})
+)
 
-route.post('/login-auth0', validateUserEmail, async (req, res) => {
+route.post('/login-auth0', validateUserEmail, validateUserTypePromoter, async (req, res) => {
   try {
     const { user } = res.locals
 

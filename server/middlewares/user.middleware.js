@@ -179,6 +179,23 @@ async function validatePassword(req, res, next) {
   next()
 }
 
+async function validateUserTypePromoter(req, res, next) {
+  const { promoterLogin } = req.body
+  const { user } = res.locals
+
+  if (promoterLogin === undefined) {
+    const message = "Debe pasar la propiedad 'promoterLogin' como booleano para iniciar sesión."
+    return res.status(404).send({ message })
+  }
+
+  if (promoterLogin && !user.promoter_id) {
+    const message = `El usuario con email: ${user.email}, no es una productora registrada.`
+    return res.status(404).send({ message })
+  }
+
+  next()
+}
+
 async function validateDataUpdateUser(req, res, next) {
   const { promoter_name, instagram, phone } = req.body
   const { user } = res.locals
@@ -281,4 +298,5 @@ module.exports = {
   validateDataUpdateUser,
   validateDataForgetPassword,
   validateDataValEmail,
+  validateUserTypePromoter,
 }
