@@ -7,10 +7,9 @@ const scrapPromoterData = async (urls, start, vuelta, numeroVuelta, page) => {
     return 'url debe ser un arreglo de urls'
   }
 
-  console.log('start', start)
-
+  let browser
   if (start) {
-    const browser = await puppeteer.launch({
+    browser = await puppeteer.launch({
       headless: false,
       executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
     }) // Configurar en false para ver lo que hace el navegador
@@ -37,8 +36,6 @@ const scrapPromoterData = async (urls, start, vuelta, numeroVuelta, page) => {
       continue // Saltar al siguiente loop
     }
 
-    console.log('url scrap', url)
-
     await page.goto(url, { waitUntil: 'networkidle2' })
 
     // Esperar a que el selector esté presente
@@ -63,34 +60,83 @@ const scrapPromoterData = async (urls, start, vuelta, numeroVuelta, page) => {
       return hasStory
     })
 
-    // Esperar a que el contenedor de la publicación esté presente
-    await page
-      .waitForSelector('div._aagw', { timeout: 5000 })
-      .catch(() => console.log('No se encontraron publicaciones'))
+    const getLastPostDate = async () => {
+      const pinnedDates = []
+      let latestNonPinnedDate = null
 
-    // Hacer clic en la última publicación
-    await page.evaluate(() => {
-      const posts = document.querySelectorAll('div._aagw')
-      if (posts.length > 0) {
-        posts[0].click()
+      // Esperar a que el div contenedor de las publicaciones esté presente
+      await page.waitForSelector(
+        'div.x1lliihq.x1n2onr6.xh8yej3.x4gyw5p.xfllauq.xo2y696.x11i5rnm.x2pgyrj',
+        { timeout: 10000 }
+      )
+
+      // Obtener todos los posts
+      const posts = await page.$$(
+        'div.x1lliihq.x1n2onr6.xh8yej3.x4gyw5p.xfllauq.xo2y696.x11i5rnm.x2pgyrj'
+      )
+
+      // Iterar sobre cada post
+      for (let i = 0; i < posts.length; i++) {
+        await posts[i].click()
+
+        // Verificar si el post está fijado
+        const isPinned = await page.evaluate((post) => {
+          const svgElement = post.querySelector('svg[aria-label="Icono de publicación fijada"]')
+          if (!svgElement) return false // Si no encuentra el SVG, no está fijado
+
+          const titleElement = svgElement.querySelector('title')
+          return titleElement && titleElement.textContent.trim() === 'Icono de publicación fijada'
+        }, posts[i])
+
+        // Si el post no está fijado, capturar su fecha
+        if (!isPinned) {
+          // Esperar a que el modal se abra
+          await page
+            .waitForSelector('div.x1yztbdb time', { timeout: 5000 })
+            .catch(() => console.log('No se encontró la fecha de la publicación'))
+
+          const postDate = await page.evaluate(() => {
+            const timeElement = document.querySelector('div.x1yztbdb time')
+            return timeElement ? timeElement.getAttribute('datetime') : null
+          })
+
+          // Almacenar la fecha del post no fijado
+          latestNonPinnedDate = postDate
+
+          // Cerrar el modal
+          await page.click('svg[aria-label="Cerrar"]')
+          break
+        }
+
+        // Si el post está fijado, capturar su fecha y agregarla al array de fechas fijadas
+        const postDate = await page.evaluate(() => {
+          const timeElement = document.querySelector('div.x1yztbdb time')
+          return timeElement ? timeElement.getAttribute('datetime') : null
+        })
+
+        pinnedDates.push(postDate)
+
+        // Cerrar el modal
+        await page.click('svg[aria-label="Cerrar"]')
       }
-    })
 
-    // Esperar a que el modal se abra
-    await page
-      .waitForSelector('div.x1yztbdb time', { timeout: 5000 })
-      .catch(() => console.log('No se encontró la fecha de la publicación'))
-
-    // Extraer la fecha de la publicación
-    const postDate = await page.evaluate(() => {
-      const timeElement = document.querySelector('div.x1yztbdb time')
-      return timeElement ? timeElement.getAttribute('datetime') : null
-    })
+      // Comparar las fechas y retornar la más reciente
+      if (latestNonPinnedDate) {
+        const latestPinnedDate = Math.max(...pinnedDates.map((date) => new Date(date).getTime()))
+        const latestNonPinnedTimestamp = new Date(latestNonPinnedDate).getTime()
+        return new Date(Math.max(latestPinnedDate, latestNonPinnedTimestamp)).toISOString()
+      } else {
+        return pinnedDates.length > 0
+          ? new Date(Math.max(...pinnedDates.map((date) => new Date(date).getTime()))).toISOString()
+          : null
+      }
+    }
+    const postDate = await getLastPostDate()
 
     data.push({ url, bio, lastPostDate: postDate ?? null, story })
 
     console.log('esperando 10 segundos..')
-    await delay(10 * 1000) // 3 minutos en milisegundos
+    await delay(10 * 1000) // 10 segundos en milisegundos
   }
 
   if (vuelta === numeroVuelta) {

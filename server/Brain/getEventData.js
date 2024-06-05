@@ -30,13 +30,7 @@ const scrapInstagram = async () => {
     console.log('exist json', existingJson)
     console.log('.length', existingJson.length)
 
-    // if (existingJson.length > 1) {
-    // El archivo tiene más que solo el encabezado
     lastProcessedIndex = existingJson.length //- 1 // -1 porque tiene el header
-    // } else {
-    //   // El archivo solo tiene el encabezado
-    //   lastProcessedIndex = 0
-    // }
 
     console.log('exist? en que linea quedo?:', lastProcessedIndex)
 
