@@ -4,7 +4,60 @@ const pool = require('../db')
 class EventFacade {
   async getEventById(id) {
     const query = `
-    SELECT * FROM events WHERE id = $1;
+    WITH MinPriority AS (
+      SELECT ep.event_id, MIN(p.priority) AS priority
+      FROM event_promoters ep
+      JOIN promoters p ON p.id = ep.promoter_id
+      GROUP BY ep.event_id
+    ), EventDJs AS (
+      SELECT
+          ed.event_id,
+          jsonb_agg(
+              jsonb_build_object(
+                  'id', d.id,
+                  'name', d.name
+              ) ORDER BY d.name ASC
+          ) AS djs
+      FROM event_djs ed
+      JOIN djs d ON d.id = ed.dj_id
+      GROUP BY ed.event_id
+    ), EventTypes AS (
+      SELECT
+          et.event_id,
+          jsonb_agg(
+              jsonb_build_object(
+                  'id', t.id,
+                  'name', t.name
+              ) ORDER BY t.name ASC
+          ) AS types
+      FROM event_types et
+      JOIN types t ON t.id = et.type_id
+      GROUP BY et.event_id
+    )
+    SELECT 
+    e.*, 
+    COALESCE(mp.priority, 4) AS min_priority,
+    COALESCE(
+      jsonb_agg(
+        jsonb_build_object(
+          'id', p.id,
+          'name', p.name, 
+          'priority', p.priority, 
+          'instagram', p.instagram
+        ) ORDER BY p.priority ASC
+      ) FILTER (WHERE p.id IS NOT NULL),
+      '[]'
+    ) AS promoters,
+    COALESCE(ed.djs, '[]') AS djs,
+    COALESCE(et.types, '[]') AS types
+    FROM events e 
+    LEFT JOIN MinPriority mp ON e.id = mp.event_id
+    LEFT JOIN event_promoters ep ON e.id = ep.event_id
+    LEFT JOIN promoters p ON p.id = ep.promoter_id
+    LEFT JOIN EventDJs ed ON e.id = ed.event_id
+    LEFT JOIN EventTypes et ON e.id = et.event_id
+    WHERE e.id = $1
+    GROUP BY e.id, mp.priority, ed.djs, et.types
     `
 
     const values = [id]
@@ -13,14 +66,22 @@ class EventFacade {
 
     if (!event) return null
 
-    // console.log('evento:', event)
     return event.rows[0]
   }
 
-  async getEvents() {}
-
   async getEventsByFilter(data) {
-    const { dates, citiesId, search, sharedId, setOff, argentinaTime, typesId, limit } = data
+    const {
+      dates,
+      citiesId,
+      search,
+      sharedId,
+      setOff,
+      argentinaTime,
+      typesId,
+      limit,
+      status,
+      promoterId,
+    } = data
 
     let query = `
     WITH MinPriority AS (
@@ -40,7 +101,7 @@ class EventFacade {
       FROM event_djs ed
       JOIN djs d ON d.id = ed.dj_id
       GROUP BY ed.event_id
-  ), EventTypes AS (
+    ), EventTypes AS (
       SELECT
           et.event_id,
           jsonb_agg(
@@ -52,7 +113,7 @@ class EventFacade {
       FROM event_types et
       JOIN types t ON t.id = et.type_id
       GROUP BY et.event_id
-  )
+    )
     SELECT 
     e.*, 
     COALESCE(mp.priority, 4) AS min_priority,
@@ -76,28 +137,37 @@ class EventFacade {
     LEFT JOIN EventDJs ed ON e.id = ed.event_id
     LEFT JOIN EventTypes et ON e.id = et.event_id
     WHERE TRUE
-  `
+    `
     const values = []
-
     let paramCount = 1
 
-    if (dates && dates.length === 2) {
-      const [date1, date2] = dates
-      const firstDate = formatDate(date1)
-      const secondDate = formatDate(date2)
-      if (firstDate !== secondDate) {
-        query += ` AND e.date_from >= $${paramCount} AND e.date_from <= $${paramCount + 1}`
-        values.push(firstDate, secondDate)
-        paramCount += 2
-      } else {
-        query += `AND (e.date_from = $${paramCount})`
-        values.push(firstDate)
-        paramCount += 1
-      }
+    if (promoterId) {
+      query += ` AND p.id = $${paramCount} AND e.is_active = TRUE`
+      values.push(String(promoterId))
+      paramCount++
     } else {
-      query += `AND (e.date_from >= $${paramCount})`
-      values.push(argentinaTime)
-      paramCount += 1
+      if (dates && dates.length === 2) {
+        const [date1, date2] = dates
+        const firstDate = formatDate(date1)
+        const secondDate = formatDate(date2)
+        if (firstDate !== secondDate) {
+          query += ` AND e.date_from >= $${paramCount} AND e.date_from <= $${paramCount + 1}`
+          values.push(firstDate, secondDate)
+          paramCount += 2
+        } else {
+          query += ` AND (e.date_from = $${paramCount})`
+          values.push(firstDate)
+          paramCount++
+        }
+      } else if (status) {
+        query += ` AND (e.date_from < $${paramCount})`
+        values.push(argentinaTime)
+        paramCount++
+      } else {
+        query += ` AND (e.date_from >= $${paramCount})`
+        values.push(argentinaTime)
+        paramCount++
+      }
     }
 
     if (citiesId && citiesId.length > 0) {
@@ -114,14 +184,13 @@ class EventFacade {
       query += ` AND EXISTS (
         SELECT 1 FROM event_types et
         WHERE et.event_id = e.id AND et.type_id IN (${typePlaceholders})
-        )`
+      )`
       values.push(...typesId)
       paramCount += typesId.length
     }
 
     if (search) {
       const searchWithoutAccents = removeAccents(search)
-      // Adjust the search condition to include promoters, djs, venue, and event name
       query += ` AND (
         unaccent(lower(e.name)) ILIKE unaccent(lower($${paramCount}))
         OR unaccent(lower(e.venue)) ILIKE unaccent(lower($${paramCount}))
@@ -129,34 +198,29 @@ class EventFacade {
           SELECT 1 FROM event_djs ed
           JOIN djs dj ON ed.dj_id = dj.id
           WHERE ed.event_id = e.id AND unaccent(lower(dj.name)) ILIKE unaccent(lower($${paramCount}))
-          )
-          OR EXISTS (
-            SELECT 1 FROM event_types et
-            JOIN types tp ON et.type_id = tp.id
-            WHERE et.event_id = e.id AND unaccent(lower(tp.name)) ILIKE unaccent(lower($${paramCount}))
-            )
-          OR EXISTS (
-            SELECT 1 FROM event_promoters ep
-            JOIN promoters p ON ep.promoter_id = p.id
-            WHERE ep.event_id = e.id AND unaccent(lower(p.name)) ILIKE unaccent(lower($${paramCount}))
-            )
-            OR EXISTS (
-              SELECT 1 FROM event_promoters ep
-              JOIN promoters p ON ep.promoter_id = p.id
-              WHERE ep.event_id = e.id AND unaccent(lower(p.name)) ILIKE unaccent(lower($${paramCount}))
-              )
-              )`
+        )
+        OR EXISTS (
+          SELECT 1 FROM event_types et
+          JOIN types tp ON et.type_id = tp.id
+          WHERE et.event_id = e.id AND unaccent(lower(tp.name)) ILIKE unaccent(lower($${paramCount}))
+        )
+        OR EXISTS (
+          SELECT 1 FROM event_promoters ep
+          JOIN promoters p ON ep.promoter_id = p.id
+          WHERE ep.event_id = e.id AND unaccent(lower(p.name)) ILIKE unaccent(lower($${paramCount}))
+        )
+      )`
       values.push(`%${searchWithoutAccents}%`)
       paramCount++
     }
 
     if (sharedId) {
-      query += `AND (e.id = $${paramCount} OR (e.date_from = (SELECT date_from FROM events WHERE id = $${paramCount}) AND e.id != $${paramCount}))`
+      query += ` AND (e.id = $${paramCount} OR (e.date_from = (SELECT date_from FROM events WHERE id = $${paramCount}) AND e.id != $${paramCount}))`
       values.push(sharedId)
       paramCount++
     }
 
-    query += `GROUP BY e.id, mp.priority, ed.djs, et.types ORDER BY e.date_from ASC, mp.priority ASC, e.id ASC ${
+    query += ` GROUP BY e.id, mp.priority, ed.djs, et.types ORDER BY e.date_from ASC, mp.priority ASC, e.id ASC ${
       sharedId || !limit ? '' : `LIMIT ${limit}`
     } OFFSET $${paramCount}`
 
@@ -209,20 +273,6 @@ class EventFacade {
     return newEvent.rows[0].id
   }
 
-  async updateEvent(values) {
-    const query = `
-    UPDATE event
-    SET name = $1, date_from = $2, ticket_link = $3, image_url = $4, event_djs = $5
-    WHERE id = $6;
-    `
-
-    await pool.query(query, values)
-  }
-
-  async updateEventInteraction(id, interaction) {
-    await pool.query(`UPDATE events SET interactions = ${interaction} WHERE id = '${id}';`)
-  }
-
   async relationshipEventId(ids, query1, query2) {
     const query = `
           INSERT INTO public.${query1}(event_id, ${query2})
@@ -231,16 +281,114 @@ class EventFacade {
     await pool.query(query, ids)
   }
 
+  async updateEvent(id, data) {
+    const { name, venue, date_from, event_city, ticket_link, image } = data
+
+    const setParts = []
+    const values = []
+    let paramIndex = 1
+
+    if (name) {
+      setParts.push(`name = $${paramIndex}`)
+      values.push(name)
+      paramIndex++
+    }
+    if (date_from) {
+      setParts.push(`date_from = $${paramIndex}`)
+      values.push(date_from)
+      paramIndex++
+    }
+    if (ticket_link) {
+      setParts.push(`ticket_link = $${paramIndex}`)
+      values.push(ticket_link)
+      paramIndex++
+    }
+    if (image) {
+      setParts.push(`image = $${paramIndex}`)
+      values.push(JSON.stringify(image))
+      paramIndex++
+    }
+    if (venue) {
+      setParts.push(`venue = $${paramIndex}`)
+      values.push(venue)
+      paramIndex++
+    }
+    if (event_city) {
+      setParts.push(`city_id = $${paramIndex}`)
+      values.push(event_city)
+      paramIndex++
+    }
+
+    setParts.push(`updatedAt = CURRENT_TIMESTAMP`)
+
+    const setClause = setParts.join(', ')
+    const query = `UPDATE events SET ${setClause} WHERE id = $${paramIndex} RETURNING *;`
+    values.push(id)
+
+    const eventUpdated = await pool.query(query, values)
+
+    if (!eventUpdated || !eventUpdated.rows[0]) return null
+    return eventUpdated.rows[0]
+  }
+
+  async updateRelationshipEvent(table, column, id, arr_ids) {
+    // try {
+    //   const query = `UPDATE ${table} SET ${column} = $1 WHERE event_id = $2;`
+
+    //   await pool.query(query, [id, event_id])
+    // } catch (error) {
+    //   console.log('err', { err: error.message })
+    // }
+
+    try {
+      // Paso 1: Eliminar todas las relaciones existentes para el evento especificado
+      const deleteQuery = `DELETE FROM ${table} WHERE event_id = $1;`
+      await pool.query(deleteQuery, [id])
+
+      // Paso 2: Insertar las nuevas relaciones
+      const insertQuery = `INSERT INTO ${table} (event_id, ${column}) VALUES ($1, $2);`
+
+      // Usa una transacción para asegurar que todas las operaciones sean atómicas
+      await pool.query('BEGIN')
+      for (const ID of arr_ids) {
+        await pool.query(insertQuery, [id, ID])
+      }
+      await pool.query('COMMIT')
+    } catch (error) {
+      await pool.query('ROLLBACK')
+      console.log('err', { err: error.message })
+    }
+  }
+
+  async updateEventInteraction(id, interaction)  {
+    console.log('id', id);
+    console.log('interaction', interaction);
+  
+    const query = 'UPDATE events SET interactions = $1 WHERE id = $2';
+    const values = [interaction, id];
+  
+    try {
+      await pool.query(query, values);
+      console.log('Event interaction updated successfully');
+    } catch (error) {
+      console.error('Error updating event interaction:', error);
+    }
+  };
+
   async deleteEvent(id) {
     const query = `
-    DELETE FROM events
-    WHERE id = ANY($1);
+      UPDATE events
+      SET is_active = false
+      WHERE id = $1;
     `
-
-    // const values = [eventIds]  //TODO para eliminar mandan mas de un id??
     const values = [id]
 
-    await pool.query(query, values)
+    try {
+      await pool.query(query, values)
+    } catch (error) {
+      console.error('Error updating event to inactive:', error)
+      throw error
+    }
   }
 }
 
