@@ -171,7 +171,7 @@ async function validatePassword(req, res, next) {
   const validatePass = await bcrypt.compare(password, user.password)
 
   if (!validatePass) {
-    const message = 'Password invalida.'
+    const message = 'Contraseña incorrecta.'
     return res.status(404).send({ message })
   }
 
