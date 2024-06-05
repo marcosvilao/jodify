@@ -34,40 +34,42 @@ const linkScrapping = async (link) => {
       'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36'
     )
 
-    console.log('page', page)
-    let response
+    // console.log('3')
+    // console.log('3_ serUserAgent')
+
+    let response = null
     try {
       response = await page.goto(link, {
         waitUntil: 'domcontentloaded',
-        timeout: 30000,
+        timeout: 0,
       })
     } catch (error) {
-      console.log(error)
+      console.log('error con el goto hdp:', error.message)
     }
-    console.log(response)
 
-    const statusCode = response.status()
+    // console.log('4')
+    // console.log('4_ response goto:', response)
+    let statusCode
+    if (response) {
+      statusCode = await response.status()
+    }
 
+    // console.log('5')
+    // console.log('5_ statusCode:', statusCode)
     if (statusCode !== 200) {
       console.error(`No se pudo acceder a la página. Código de estado: ${statusCode}`)
       return {
         error: `No se pudo acceder a la página. Código de estado: ${statusCode}`,
       }
     }
-
-    console.log('Lanzando el navegador')
-    console.log('Navegando a:', link)
-
+    // console.log('6')
     if (link.includes('ticketpass')) {
-      console.log('Ingreso a la pagina')
       await page.waitForSelector('img', { timeout: 10000 }) // Espera hasta 10 segundos.
       let dateText = ''
       let tittle = ''
       let location = ''
-
       const sectionTittleFecha = await page.$('.event-card__container-title')
       const sectionLocation = await page.$('.event-card__tag-location')
-
       if (sectionTittleFecha) {
         try {
           tittle = await sectionTittleFecha.$eval('h3', (h3) => h3.textContent.trim())
@@ -131,19 +133,25 @@ const linkScrapping = async (link) => {
         location: location || '',
         tittle: tittle || '',
       }
-
       return result
     } else if (link.includes('passline')) {
-      console.log('Ingreso a la pagina')
-      await page.waitForSelector('img', { timeout: 10000 })
+      // console.log('7')
 
+      let section = null
+      let div = null
+      try {
+        // console.log('7.1')
+        // await page.waitForSelector('img', { timeout: 10000 })
+        section = await page.$('.cont-head-ficha.contenedor')
+        div = await page.$('.donde')
+
+        console.log('7.2')
+      } catch (error) {
+        console.log('wait for selector:', error.message)
+      }
       let dateText = ''
       let tittle = ''
       let location = ''
-
-      const section = await page.$('.cont-head-ficha.contenedor')
-      const div = await page.$('.donde')
-
       if (section) {
         try {
           dateText = await section.$eval('li', (li) => li.textContent.trim())
@@ -214,16 +222,14 @@ const linkScrapping = async (link) => {
         location: location || '',
         tittle: tittle || '',
       }
-
+      // console.log('9, result:', result)
       return result
     } else if (link.includes('venti')) {
-      console.log('Ingreso a la pagina')
       let dateText = ''
       let location = ''
       let jpgImgSrc = ''
       let tittle = ''
       let horario = ''
-
       try {
         await page.waitForSelector('.jss96', { timeout: 10000 })
         await page.waitForSelector('.jss97', { timeout: 10000 })
