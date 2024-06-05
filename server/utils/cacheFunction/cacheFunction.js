@@ -7,7 +7,7 @@ async function getImageFromCache(imageUrl) {
   const cachedImage = cache.get(imageUrl)
 
   if (cachedImage) {
-    // console.log('imagen de chace')
+    console.log('imagen de chace')
     return cachedImage
   } else {
     try {
@@ -15,7 +15,7 @@ async function getImageFromCache(imageUrl) {
 
       cache.set(imageUrl, Buffer.from(response.data))
 
-      //   console.log('imagen guardada en el cache')
+      console.log('imagen guardada en el cache')
 
       return Buffer.from(response.data)
     } catch (error) {
