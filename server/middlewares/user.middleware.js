@@ -29,8 +29,8 @@ async function validateUserId(req, res, next) {
 async function validateDataUserCreate(req, res, next) {
   const { email, password, name, phone, username, instagram, priority } = req.body
 
-  if (!email || !password || !phone || !username) {
-    const message = `Para crear un usuario debe agregar email, password, username y phone.`
+  if (!email || !phone || !username) {
+    const message = `Para crear un usuario debe agregar email, username y phone.`
     return res.status(404).send({ message })
   }
 
