@@ -56,7 +56,7 @@ class EventHelper {
       if (e.image.secure_url) {
         const buffer = await getImageFromCache(e.image.secure_url)
 
-        //se convierte el buffer en una url para mandar al front
+        // se convierte el buffer en una url para mandar al front
 
         const base64Image = Buffer.from(buffer).toString('base64')
 
@@ -238,7 +238,7 @@ class EventHelper {
   }
 
   async updateEventInteraction(id, event) {
-    console.log({id, event})
+    console.log({ id, event })
     const interaction = event.interactions + 1
     console.log('addinteraction', interaction)
     await facade.updateEventInteraction(id, interaction)
