@@ -3,8 +3,6 @@ const path = require('path')
 const csvToJson = require('csvtojson')
 const { scrapPromoterData } = require('../utils/scrapping/scrapPromoterIgData.js')
 
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
-
 const scrapInstagram = async () => {
   let start = true
   let cwd = path.join(__dirname)
@@ -46,7 +44,7 @@ const scrapInstagram = async () => {
   const urls = json.map((row) => row['Profile URL'])
 
   // Dividir las URLs en chunks
-  const chunkSize = 50
+  const chunkSize = 10
   const urlsDivididas = []
   const jsonDividido = []
   const cleanData = (data) => {
@@ -121,13 +119,10 @@ const scrapInstagram = async () => {
       }
     } catch (error) {
       start = false
+      page = null
       console.log(`Error en la vuelta ${i + 1}:`, error)
       continue // Continuar con el siguiente chunk en caso de error
     }
-
-    // Esperar 3 minutos antes de procesar el siguiente chunk
-    // console.log('Lote de 50 listo, esperando 3 minutos')
-    // await delay(3 * 60 * 1000) // 3 minutos en milisegundos
 
     console.log(`vuelta ${i} de ${urlsDivididas.length}`)
   }
