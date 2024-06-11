@@ -11,6 +11,7 @@ const {
   validateDataForgetPassword,
   validateDataValEmail,
   validateUserTypePromoter,
+  validateDataClerkEmail
 } = require('../middlewares/user.middleware.js')
 
 const route = Router()
@@ -151,6 +152,21 @@ route.post('/welcome-form', validateDataValEmail, async (req, res) => {
     res.status(500).send({ error: error.message })
   }
 })
+
+
+route.post('/check-email', validateDataClerkEmail, async (req, res) => {
+  console.log(req.body)
+  try {
+    const { data } = res.locals
+
+
+
+    res.status(200).json({ exist: false, message: `Valido para registrarse con el correo ${data.email}` })
+  } catch (error) {
+    res.status(500).send({ error: error.message })
+  }
+})
+
 
 /*
 get userById, <----

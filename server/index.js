@@ -28,6 +28,8 @@ const allowedOrigins = [
   'https://l.instagram.com/',
   'https://jodifynext.vercel.app',
   'https://jodify-qa-next.vercel.app',
+  'http://192.168.1.11:8081',
+  'http://localhost:8081'
 ];
 
 app.use(cors({

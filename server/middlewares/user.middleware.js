@@ -288,6 +288,26 @@ async function validateDataValEmail(req, res, next) {
   next()
 }
 
+async function validateDataClerkEmail(req, res, next) {
+  const { email } = req.body
+  console.log(email)
+  if (!email) {
+    const message = 'Debe ingresar un email.'
+    return res.status(404).send({ message })
+  }
+
+  const user = await helper.getUserByClerkEmail(email)
+
+  if (user) {
+    const message = `Existe un usuario registrado con el email: ${email}.`
+    return res.status(404).send({exist: true, message })
+  }
+
+  res.locals.data = { email }
+  next()
+}
+
+
 module.exports = {
   validateUserId,
   validateDataUserCreate,
@@ -299,4 +319,5 @@ module.exports = {
   validateDataForgetPassword,
   validateDataValEmail,
   validateUserTypePromoter,
+  validateDataClerkEmail
 }

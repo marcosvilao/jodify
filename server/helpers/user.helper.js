@@ -23,6 +23,10 @@ class UserHelper {
     return await facade.getUserByEmail(email)
   }
 
+  async getUserByClerkEmail(email) {
+    return await facade.getUserByClerkEmail(email)
+  }
+
   async logIn(user) {
     if (!user || !user.promoter_id) return user
 
