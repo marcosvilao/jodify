@@ -18,11 +18,11 @@ const mailOptionGeneratePassword = (email, username, token) => {
     to: `${email}`,
     subject: 'Nueva contraseña Jodify',
     html: `
-    <body>
-        <div style="background-color:#0C0C0C; color: #fff; text-align: center; padding: 20px 0;">
+    <body style="font-family: Arial, sans-serif; margin:0; padding:0;">
+    <div style="max-width: 600px; margin: 0 auto; background-color: #0C0C0C; text-align: center; padding: 20px;">
             <img src=${logo} alt="Logo" style="width: 150px; height: auto; display: inline-block;">
         </div>
-        <div style=" display: flex; flex-direction: column; padding: 20px;">
+        <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
             <p>Hola ${username},</p>
             <p>Haz click en el link de abajo para confirmar el cambio de contraseña:</p>
             <div style="padding: 20px;text-align: center;">
@@ -40,7 +40,7 @@ const mailOptionGeneratePassword = (email, username, token) => {
             <div style="margin-bottom: 0;">Equipo de Jodify.</div>
 
         </div>
-        <div style="background-color: #0C0C0C; color: #FFFFFF; padding: 10px ; position: fixed; bottom: 0; width: 90%;">
+        <div style="max-width: 600px; margin: 0 auto; background-color: #0C0C0C; color: #FFFFFF; padding: 10px; text-align: center;">
             Jodify © 2024
         </div>
     </body>
@@ -54,11 +54,11 @@ const mailOptionValidateEmail = (email, username) => {
     to: `${email}`,
     subject: 'Valida el email de tu cuenta de Jodify',
     html: `
-    <body>
-    <div style="background-color:#0C0C0C; color: #fff; text-align: center; padding: 20px 0;">
+    <body style="font-family: Arial, sans-serif; margin:0; padding:0;">
+    <div style="max-width: 600px; margin: 0 auto; background-color: #0C0C0C; text-align: center; padding: 20px;">
         <img src=${logo} alt="Logo" style="width: 150px; height: auto; display: inline-block;">
     </div>
-    <div style=" display: flex; flex-direction: column; padding: 20px;">
+    <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
         <p>Hola ${username}</p>
         <p>¿Cómo estas?</p>
         <p>Haz click en el link de abajo para confirmar tu correo electrónico.</p>
@@ -77,7 +77,7 @@ const mailOptionValidateEmail = (email, username) => {
         <div style="margin-bottom: 0;">Jodify</div>
 
     </div>
-    <div style="background-color: #0C0C0C; color: #FFFFFF; padding: 10px ; position: fixed; bottom: 0; width: 90%;">
+    <div style="max-width: 600px; margin: 0 auto; background-color: #0C0C0C; color: #FFFFFF; padding: 10px; text-align: center;">
         Jodify © 2024
     </div>
 </body>
@@ -91,11 +91,11 @@ const mailOptionWelcomeForm = (email, username, adminName, token) => {
     to: `${email}`,
     subject: '¡Te damos la bienvenida a Jodify!',
     html: `
-    <body style="font-family: Arial, sans-serif;">
-      <div style="background-color:#0C0C0C; color: #fff; text-align: center; padding: 20px 0;">
-          <img src=${logo} alt="Logo" style="width: 150px; height: auto;">
+    <body style="font-family: Arial, sans-serif; margin:0; padding:0;">
+      <div style="max-width: 600px; margin: 0 auto; background-color: #0C0C0C; text-align: center; padding: 20px;">
+          <img src="${logo}" alt="Logo" style="width: 150px; height: auto;">
       </div>
-      <div style="padding: 20px;">
+      <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
           <p style="margin: 0 0 10px;">Hola ${username},</p>
           <p style="margin: 0 0 20px;">Soy ${adminName}, un gusto hablar con vos y conocer más acerca de tu productora. Te creamos un <a href="${process.env.HREF_ROOT}/register-promoters/${token}" style="color: #C18FFF; text-decoration: underline; cursor: pointer;">link</a> temporal para que puedas registrarte con el correo electrónico ${email} y así empezar a compartir tus eventos.</p>
           <p style="margin: 0 0 20px;"><strong>¡Quiero darte la bienvenida a Jodify!</strong></p>
@@ -108,14 +108,14 @@ const mailOptionWelcomeForm = (email, username, adminName, token) => {
           <p style="margin: 0;">Saludos,</p>
           <p style="margin: 0;">${adminName}</p>
       </div>
-      <div style="background-color: #0C0C0C; color: #FFFFFF; padding: 10px; width: 100%; position: fixed; bottom: 0; text-align: center;">
+      <div style="max-width: 600px; margin: 0 auto; background-color: #0C0C0C; color: #FFFFFF; padding: 10px; text-align: center;">
           Jodify © 2024
       </div>
-    </body>
+  </body>
+
       `,
   }
 }
-
 
 const sendEmail = (mailOption) => {
   return new Promise((resolve, reject) => {
