@@ -7,6 +7,7 @@ const {
   sendEmail,
   mailOptionValidateEmail,
   mailOptionWelcomeForm,
+  mailOptionUserPromoterRegister,
 } = require('../utils/nodeMailer/functions.js')
 const { PromoterFacade } = require('../facade/promoters.facade.js')
 const jwt = require('jsonwebtoken')
@@ -61,6 +62,10 @@ class UserHelper {
 
     if (newUser && promoter) {
       const { password, promoter_id, ...dataUser } = newUser
+
+      const emailMessage = mailOptionUserPromoterRegister(newUser.email, newUser.username)
+
+      await sendEmail(emailMessage)
 
       return {
         ...dataUser,
