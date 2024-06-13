@@ -300,7 +300,10 @@ async function validateDataClerkEmail(req, res, next) {
 
   if (user) {
     const message = `Existe un usuario registrado con el email: ${email}.`
-    return res.status(404).send({exist: true, message })
+    return res.status(200).send({exist: true, passwordEnabled: user.passwordEnabled, message })
+  } else {
+    const message = `No existe un usuario registrado con el email: ${email}.`
+    return res.status(200).send({exist: false, message })
   }
 
   res.locals.data = { email }

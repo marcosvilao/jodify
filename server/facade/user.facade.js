@@ -57,7 +57,9 @@ class UserFacade {
       const response = await Clerk.users.getUserList({ emailAddress: email });
   
       if (response.totalCount > 0) {
-        return true
+        return {
+          passwordEnabled: response.data[0].passwordEnabled
+        }
       } else {
         return false
       }
