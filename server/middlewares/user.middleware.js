@@ -27,7 +27,7 @@ async function validateUserId(req, res, next) {
 }
 
 async function validateDataUserCreate(req, res, next) {
-  const { email, password, name, phone, username, instagram, priority } = req.body
+  let { email, password, name, phone, username, instagram, priority } = req.body
 
   if (!email || !phone || !username) {
     const message = `Para crear un usuario debe agregar email, username y phone.`
@@ -44,6 +44,10 @@ async function validateDataUserCreate(req, res, next) {
   let promoter = null
 
   if (instagram) {
+    if (typeof instagram === 'string' && instagram[0] === '@') {
+      instagram = instagram.slice(1)
+    }
+
     promoter = await helperPromoter.getPromoterByInstagram(instagram)
 
     if (!promoter) {
@@ -71,7 +75,7 @@ async function validateDataUserCreate(req, res, next) {
 }
 
 async function validateDataUserAuth0Create(req, res, next) {
-  const { email, name, phone, username, instagram, priority } = req.body
+  let { email, name, phone, username, instagram, priority } = req.body
 
   if (!email || !phone || !username) {
     const message = `Para crear un usuario debe agregar email, username y phone.`
@@ -88,6 +92,10 @@ async function validateDataUserAuth0Create(req, res, next) {
   let promoter = null
 
   if (instagram) {
+    if (typeof instagram === 'string' && instagram[0] === '@') {
+      instagram = instagram.slice(1)
+    }
+
     promoter = await helperPromoter.getPromoterByInstagram(instagram)
 
     if (!promoter) {
@@ -197,7 +205,7 @@ async function validateUserTypePromoter(req, res, next) {
 }
 
 async function validateDataUpdateUser(req, res, next) {
-  const { promoter_name, instagram, phone } = req.body
+  let { promoter_name, instagram, phone } = req.body
   const { user } = res.locals
 
   if (!promoter_name && !instagram && !email && !phone) {
@@ -223,6 +231,10 @@ async function validateDataUpdateUser(req, res, next) {
     }
 
     if (instagram !== promoter.instagram) {
+      if (typeof instagram === 'string' && instagram[0] === '@') {
+        instagram = instagram.slice(1)
+      }
+
       const validateIg = await helperPromoter.getPromoterByInstagram(instagram)
 
       if (validateIg) {

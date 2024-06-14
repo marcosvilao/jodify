@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer-extra')
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
-const scrapPromoterData = async (urls, start, vuelta, numeroVuelta, page) => {
+const scrapPromoterData = async (urls, start, vuelta, numeroVuelta, username, password, page) => {
   if (!Array.isArray(urls)) {
     return 'url debe ser un arreglo de urls'
   }
@@ -15,12 +15,14 @@ const scrapPromoterData = async (urls, start, vuelta, numeroVuelta, page) => {
     }) // Configurar en false para ver lo que hace el navegador
     page = await browser.newPage()
 
-    const username = 'nico.perez2024'
-    const password = 'AlignItems24'
-
     await page.goto('https://www.instagram.com/accounts/login/', { waitUntil: 'networkidle2' })
 
     // Iniciar sesión
+
+    await page
+      .waitForSelector('input[name="username"]', { timeout: 5000 })
+      .catch(() => console.log('input[name="username"] no encontrado'))
+
     await page.type('input[name="username"]', username, { delay: 100 })
     await page.type('input[name="password"]', password, { delay: 100 })
     await page.click('button[type="submit"]')

@@ -28,11 +28,16 @@ route.post('/create-promoter', validateCreatePromoterData, async (req, res) => {
   }
 })
 
-route.get('/scrap-promoter', async (req, res) => {
+route.post('/scrapping-promoter', async (req, res) => {
   try {
-    await scrapInstagram()
+    const { username, password } = req.body
+    if (!username || !password) {
+      return res.status(404).send({ response: 'falta ingresar username y password' })
+    }
 
-    return res.status(200).send({ message: 'scrap de Ig finalizado :)' })
+    await scrapInstagram(username, password)
+
+    return res.status(200).send({ message: 'scrapping de Ig finalizado :)' })
   } catch (error) {
     res.status(500).send({ message: error.message })
   }
