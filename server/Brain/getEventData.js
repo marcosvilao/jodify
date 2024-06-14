@@ -3,7 +3,7 @@ const path = require('path')
 const csvToJson = require('csvtojson')
 const { scrapPromoterData } = require('../utils/scrapping/scrapPromoterIgData.js')
 
-const scrapInstagram = async () => {
+const scrapInstagram = async (username, password) => {
   let start = true
   let cwd = path.join(__dirname)
   const filePathSQLWrite = path.join(cwd, 'imports/new_division_Productoras.csv')
@@ -23,10 +23,6 @@ const scrapInstagram = async () => {
   if (fs.existsSync(filePathSQLWrite)) {
     const existingCsv = fs.readFileSync(filePathSQLWrite, 'utf8')
     const existingJson = await csvToJson().fromString(existingCsv)
-
-    console.log('exist', existingCsv)
-    console.log('exist json', existingJson)
-    console.log('.length', existingJson.length)
 
     lastProcessedIndex = existingJson.length //- 1 // -1 porque tiene el header
 
@@ -67,7 +63,14 @@ const scrapInstagram = async () => {
       // console.log('i:', i)
       let profilesData = null
       if (!page) {
-        const response = await scrapPromoterData(urlsDivididas[i], start, i, urlsDivididas.length)
+        const response = await scrapPromoterData(
+          urlsDivididas[i],
+          start,
+          i,
+          urlsDivididas.length,
+          username,
+          password
+        )
         profilesData = response?.data
 
         page = response?.page // me guardo la page asi no tengo que volver a iniciar sesión
@@ -77,6 +80,8 @@ const scrapInstagram = async () => {
           start,
           i,
           urlsDivididas.length,
+          username,
+          password,
           page
         )
         profilesData = response?.data
