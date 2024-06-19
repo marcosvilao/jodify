@@ -1,5 +1,12 @@
 const pool = require('../db')
+const {createClerkClient }  = require('@clerk/clerk-sdk-node');
+require('dotenv').config();
 
+
+const Clerk = new createClerkClient({
+  secretKey: process.env.CLERK_SECRET_KEY,
+});
+console.log(process.env.CLERK_SECRET_KEY)
 class UserFacade {
   async getUserById(id) {
     try {
@@ -44,6 +51,23 @@ class UserFacade {
 
     //   return result.rows[0]
   }
+
+  async getUserByClerkEmail(email) {
+    try {
+      const response = await Clerk.users.getUserList({ emailAddress: email });
+  
+      if (response.totalCount > 0) {
+        return {
+          passwordEnabled: response.data[0].passwordEnabled
+        }
+      } else {
+        return false
+      }
+    } catch (error) {
+      console.error('Error checking email:', error);
+    }
+  }
+
 
   async createUser(data) {
     const query = `INSERT INTO users (id, username, password, email, phone) VALUES ($1, $2, $3, $4, $5) RETURNING *`
