@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer-extra')
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
-const scrapPromoterData = async (urls, start, vuelta, numeroVuelta, page) => {
+const scrapPromoterData = async (urls, start, vuelta, numeroVuelta, username, password, page) => {
   if (!Array.isArray(urls)) {
     return 'url debe ser un arreglo de urls'
   }
@@ -15,12 +15,14 @@ const scrapPromoterData = async (urls, start, vuelta, numeroVuelta, page) => {
     }) // Configurar en false para ver lo que hace el navegador
     page = await browser.newPage()
 
-    const username = 'jorib86699'
-    const password = 'Flatron2009'
-
     await page.goto('https://www.instagram.com/accounts/login/', { waitUntil: 'networkidle2' })
 
     // Iniciar sesión
+
+    await page
+      .waitForSelector('input[name="username"]', { timeout: 5000 })
+      .catch(() => console.log('input[name="username"] no encontrado'))
+
     await page.type('input[name="username"]', username, { delay: 100 })
     await page.type('input[name="password"]', password, { delay: 100 })
     await page.click('button[type="submit"]')
@@ -65,10 +67,11 @@ const scrapPromoterData = async (urls, start, vuelta, numeroVuelta, page) => {
       let latestNonPinnedDate = null
 
       // Esperar a que el div contenedor de las publicaciones esté presente
-      await page.waitForSelector(
-        'div.x1lliihq.x1n2onr6.xh8yej3.x4gyw5p.xfllauq.xo2y696.x11i5rnm.x2pgyrj',
-        { timeout: 10000 }
-      )
+      await page
+        .waitForSelector('div.x1lliihq.x1n2onr6.xh8yej3.x4gyw5p.xfllauq.xo2y696.x11i5rnm.x2pgyrj', {
+          timeout: 10000,
+        })
+        .catch(() => console.log('Selector no encontrado, perfil privado?'))
 
       // Obtener todos los posts
       const posts = await page.$$(
@@ -78,6 +81,7 @@ const scrapPromoterData = async (urls, start, vuelta, numeroVuelta, page) => {
       // Iterar sobre cada post
       for (let i = 0; i < posts.length; i++) {
         await posts[i].click()
+        await delay(3 * 1000)
 
         // Verificar si el post está fijado
         const isPinned = await page.evaluate((post) => {

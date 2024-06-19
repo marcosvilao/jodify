@@ -136,7 +136,7 @@ class EventFacade {
     LEFT JOIN promoters p ON p.id = ep.promoter_id
     LEFT JOIN EventDJs ed ON e.id = ed.event_id
     LEFT JOIN EventTypes et ON e.id = et.event_id
-    WHERE TRUE
+    WHERE e.is_active = TRUE
     `
     const values = []
     let paramCount = 1
@@ -360,20 +360,20 @@ class EventFacade {
     }
   }
 
-  async updateEventInteraction(id, interaction)  {
-    console.log('id', id);
-    console.log('interaction', interaction);
-  
-    const query = 'UPDATE events SET interactions = $1 WHERE id = $2';
-    const values = [interaction, id];
-  
+  async updateEventInteraction(id, interaction) {
+    console.log('id', id)
+    console.log('interaction', interaction)
+
+    const query = 'UPDATE events SET interactions = $1 WHERE id = $2'
+    const values = [interaction, id]
+
     try {
-      await pool.query(query, values);
-      console.log('Event interaction updated successfully');
+      await pool.query(query, values)
+      console.log('Event interaction updated successfully')
     } catch (error) {
-      console.error('Error updating event interaction:', error);
+      console.error('Error updating event interaction:', error)
     }
-  };
+  }
 
   async deleteEvent(id) {
     const query = `
