@@ -10,6 +10,14 @@ const facade = new EventFacade()
 const helperGeneric = new GenericHelper()
 
 class EventHelper {
+  async getEventQuantity() {
+    const currentDate = new Date()
+    currentDate.setDate(currentDate.getDate() - 1)
+    const options = { timeZone: 'America/Argentina/Buenos_Aires' }
+    const argentinaTime = currentDate.toLocaleString('en-US', options)
+    return await facade.getEventCount(argentinaTime)
+  }
+
   async getEventById(id) {
     console.log('id', id)
     return await facade.getEventById(id)
@@ -30,7 +38,7 @@ class EventHelper {
   }
 
   async getAllEventsByFilter(data) {
-    const { page, sharedId, pagination } = data
+    const { page, sharedId } = data
 
     const setOff = page * 20
     const currentDate = new Date()
@@ -68,12 +76,6 @@ class EventHelper {
 
     if (response[0] && sharedId) {
       response.push({ date: events[0].date_from })
-    }
-
-    if (pagination) {
-      const totalEvents = await facade.getEventCount(argentinaTime)
-
-      response.push({ totalEvents })
     }
 
     return response

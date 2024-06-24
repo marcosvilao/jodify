@@ -91,8 +91,7 @@ async function validateEventCreateData(req, res, next) {
 }
 
 async function validateGetAllEventsQuery(req, res, next) {
-  let { dates, citiesId, typesId, search, page, sharedId, limit, status, promoterId, pagination } =
-    req.query
+  let { dates, citiesId, typesId, search, page, sharedId, limit, status, promoterId } = req.query
 
   if (typesId) {
     typesId = String(typesId).split(',')
@@ -141,7 +140,6 @@ async function validateGetAllEventsQuery(req, res, next) {
     limit,
     status,
     promoterId,
-    pagination,
   }
 
   next()

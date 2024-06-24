@@ -26,6 +26,16 @@ route.get('/search', async (req, res) => {
   }
 })
 
+route.get('/total-events', async (req, res) => {
+  try {
+    const totalEvents = await helper.getEventQuantity()
+
+    return res.status(200).send({ totalEvents })
+  } catch (error) {
+    res.status(500).json({ message: 'Error total events' })
+  }
+})
+
 route.get('/filters', validateGetAllEventsQuery, async (req, res) => {
   const { data } = res.locals
   try {
@@ -75,7 +85,7 @@ route.post('/check-link', async (req, res) => {
 
 route.patch('/add-interaction/:id', validateEventId, async (req, res) => {
   const { id, event } = res.locals
-  console.log({id, event})
+  console.log({ id, event })
   try {
     await helper.updateEventInteraction(id, event)
 
