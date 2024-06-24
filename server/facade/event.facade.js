@@ -69,6 +69,18 @@ class EventFacade {
     return event.rows[0]
   }
 
+  async getEventCount(argentinaTime) {
+    try {
+      const res = await pool.query(
+        'SELECT COUNT(*) FROM events WHERE is_active = true AND date_from >= $1',
+        [argentinaTime]
+      )
+      return res.rows[0].count
+    } catch (err) {
+      console.error('Error executing query', err.stack)
+    }
+  }
+
   async getEventsByFilter(data) {
     const {
       dates,

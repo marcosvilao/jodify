@@ -30,9 +30,7 @@ class EventHelper {
   }
 
   async getAllEventsByFilter(data) {
-    const { page, sharedId } = data
-
-    // console.log('data', data)
+    const { page, sharedId, pagination } = data
 
     const setOff = page * 20
     const currentDate = new Date()
@@ -43,13 +41,7 @@ class EventHelper {
     data.argentinaTime = argentinaTime
     data.setOff = setOff
 
-    // if (types) {
-    //   const mappedTypes = types.map((type) => type?.id)
-    //   data.mappedTypes = mappedTypes
-    // }
-
     const events = await facade.getEventsByFilter(data)
-    // console.log('event', events)
 
     for (const e of events) {
       // if (e.image.image_url.startsWith('https://res.cloudinary.com')) {
@@ -76,6 +68,12 @@ class EventHelper {
 
     if (response[0] && sharedId) {
       response.push({ date: events[0].date_from })
+    }
+
+    if (pagination) {
+      const totalEvents = await facade.getEventCount(argentinaTime)
+
+      response.push({ totalEvents })
     }
 
     return response
