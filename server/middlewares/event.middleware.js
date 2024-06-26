@@ -130,7 +130,17 @@ async function validateGetAllEventsQuery(req, res, next) {
     page = 0
   }
 
-  res.locals.data = { dates, citiesId, typesId, search, page, sharedId, limit, status, promoterId }
+  res.locals.data = {
+    dates,
+    citiesId,
+    typesId,
+    search,
+    page,
+    sharedId,
+    limit,
+    status,
+    promoterId,
+  }
 
   next()
 }

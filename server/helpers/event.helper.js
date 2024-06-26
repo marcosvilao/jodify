@@ -10,6 +10,14 @@ const facade = new EventFacade()
 const helperGeneric = new GenericHelper()
 
 class EventHelper {
+  async getEventQuantity() {
+    const currentDate = new Date()
+    currentDate.setDate(currentDate.getDate() - 1)
+    const options = { timeZone: 'America/Argentina/Buenos_Aires' }
+    const argentinaTime = currentDate.toLocaleString('en-US', options)
+    return await facade.getEventCount(argentinaTime)
+  }
+
   async getEventById(id) {
     console.log('id', id)
     return await facade.getEventById(id)
@@ -32,8 +40,6 @@ class EventHelper {
   async getAllEventsByFilter(data) {
     const { page, sharedId } = data
 
-    // console.log('data', data)
-
     const setOff = page * 20
     const currentDate = new Date()
     currentDate.setDate(currentDate.getDate() - 1)
@@ -43,13 +49,7 @@ class EventHelper {
     data.argentinaTime = argentinaTime
     data.setOff = setOff
 
-    // if (types) {
-    //   const mappedTypes = types.map((type) => type?.id)
-    //   data.mappedTypes = mappedTypes
-    // }
-
     const events = await facade.getEventsByFilter(data)
-    // console.log('event', events)
 
     for (const e of events) {
       // if (e.image.image_url.startsWith('https://res.cloudinary.com')) {
