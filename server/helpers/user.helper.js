@@ -20,6 +20,10 @@ class UserHelper {
     return await facade.getUserById(id)
   }
 
+  async getUserByClerkId(id) {
+    return await facade.getUserByClerkId(id)
+  }
+
   async getUserByEmail(email) {
     return await facade.getUserByEmail(email)
   }
@@ -43,8 +47,12 @@ class UserHelper {
     return response
   }
 
+  async createUserInClerk(email, password, username) {
+    return facade.createUserInClerk(email, password, username)
+  }
+
   async createUser(data) {
-    const { email, password, phone, username, promoter } = data
+    const { email, password, phone, username, promoter, clerk_id } = data
     const id = uuidv4()
     const passHashed = await bcrypt.hash(password, 10)
 
@@ -52,10 +60,11 @@ class UserHelper {
 
     const userData = {
       id,
-      email,
+      email: email.toLowerCase(),
       password: passHashed,
       phone,
       username,
+      clerk_id,
     }
 
     let newUser = await facade.createUser(userData)
@@ -85,6 +94,7 @@ class UserHelper {
 
     const id = uuidv4()
     userData.id = id
+    userData.email = userData.email.toLowerCase()
 
     let newUser = await facade.createUserAuth0(userData)
 
@@ -112,6 +122,10 @@ class UserHelper {
     const userUpdated = await facade.updateUser(id, data)
 
     if (!userUpdated) return null
+
+    if (!userUpdated.promoter_id) {
+      return userUpdated
+    }
 
     let { password, promoter_id, ...dataUser } = userUpdated
 
