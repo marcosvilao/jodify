@@ -11,11 +11,24 @@ const {
   validateDataForgetPassword,
   validateDataValEmail,
   validateUserTypePromoter,
-  validateDataClerkEmail
+  validateAppEmail,
+  validateAppLoginData,
 } = require('../middlewares/user.middleware.js')
 
 const route = Router()
 const helper = new UserHelper()
+
+route.get('/clerk-id/:id', async (req, res) => {
+  try {
+    const { id } = req.params
+
+    const user = await helper.getUserByClerkId(id)
+
+    return res.status(200).send({ user })
+  } catch (error) {
+    res.status(500).send({ error: error.message })
+  }
+})
 
 route.get('/:id', validateUserId, async (req, res) => {
   try {
@@ -55,7 +68,7 @@ route.put('/update-password/:id', validateUserId, validateDataUpdatePassword, as
   try {
     const { user, newPassword } = res.locals
 
-    const userUpdated = await helper.updateUser(user.id, { newPassword })
+    const userUpdated = await helper.updateUser(user.id, { password: newPassword })
 
     res.status(200).send({ message: 'Password actualizada con éxito.' })
   } catch (error) {
@@ -153,30 +166,40 @@ route.post('/welcome-form', validateDataValEmail, async (req, res) => {
   }
 })
 
-
-route.post('/check-email', validateDataClerkEmail, async (req, res) => {
-  console.log(req.body)
+route.post('/check-email', validateAppEmail, async (req, res) => {
   try {
-    const { data } = res.locals
+    const { email } = res.locals
 
-
-
-    res.status(200).json({ exist: false, message: `Valido para registrarse con el correo ${data.email}` })
+    res
+      .status(200)
+      .json({ exist: false, message: `Valido para registrarse con el correo ${email}` })
   } catch (error) {
     res.status(500).send({ error: error.message })
   }
 })
 
+//---------------------------APP-----------------------------
 
-/*
-get userById, <----
-createUser auth0, <------
-login user, <----
-cambiar pass, <.......
-olvide pass, <---
-validar email, 
-login user auth0 <---
+route.post('/login-app', validateAppLoginData, async (req, res) => {
+  try {
+    const { user } = res.locals
 
-*/
+    res.status(200).json({ user })
+  } catch (error) {
+    res.status(500).send({ error: error.message })
+  }
+})
+
+route.post('/check-email', validateAppEmail, async (req, res) => {
+  try {
+    const { email } = res.locals
+
+    res
+      .status(200)
+      .json({ exist: false, message: `Valido para registrarse con el correo ${email}` })
+  } catch (error) {
+    res.status(500).send({ error: error.message })
+  }
+})
 
 module.exports = route

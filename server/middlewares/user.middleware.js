@@ -300,28 +300,99 @@ async function validateDataValEmail(req, res, next) {
   next()
 }
 
-async function validateDataClerkEmail(req, res, next) {
-  const { email } = req.body
-  console.log(email)
+//------------------------------APP-------------------------------------------
+
+async function validateAppLoginData(req, res, next) {
+  const { email, clerk_id, username, password } = req.body
+  // console.log('body', req.body)
   if (!email) {
     const message = 'Debe ingresar un email.'
     return res.status(404).send({ message })
   }
 
-  const user = await helper.getUserByClerkEmail(email)
+  let user = await helper.getUserByEmail(email.toLowerCase())
 
-  if (user) {
-    const message = `Existe un usuario registrado con el email: ${email}.`
-    return res.status(200).send({exist: true, passwordEnabled: user.passwordEnabled, message })
-  } else {
-    const message = `No existe un usuario registrado con el email: ${email}.`
-    return res.status(200).send({exist: false, message })
+  // console.log('user 1', user)
+
+  if (user && password) {
+    const validatePass = await bcrypt.compare(password, user.password)
+
+    if (!validatePass) {
+      const message = 'Contraseña incorrecta.'
+      return res.status(404).send({ message })
+    }
+
+    if (!user.clerk_id) {
+      let clerkId = null
+
+      const userClerkByEmail = await helper.getUserByClerkEmail(email.toLowerCase())
+
+      if (!userClerkByEmail) {
+        const userClerk = await helper.createUserInClerk(
+          email,
+          password,
+          user.username.replaceAll(' ', '_')
+        )
+
+        clerkId = userClerk._User.id
+        // console.log('clerkId', clerkId)
+      } else {
+        clerkId = userClerkByEmail.id
+      }
+
+      user = await helper.updateUser(user.id, { clerk_id: clerkId })
+    }
   }
 
-  res.locals.data = { email }
+  if (!user) {
+    if (password) {
+      user = await helper.createUser({ email, clerk_id, username, password })
+    } else {
+      user = await helper.createUserAuth0({ email, clerk_id, username })
+    }
+
+    if (!user) {
+      const message = 'Error al crear usuario.'
+      return res.status(404).send({ message })
+    }
+    // console.log('user 2', user)
+  }
+
+  if (!user.clerk_id && clerk_id) {
+    user = await helper.updateUser(user.id, { clerk_id })
+
+    if (!user) {
+      const message = 'Error al actualizar usuario.'
+      return res.status(404).send({ message })
+    }
+    // console.log('user 3', user)
+  }
+
+  res.locals.user = user
   next()
 }
 
+async function validateAppEmail(req, res, next) {
+  const { email } = req.body
+
+  console.log('e', email)
+  if (!email) {
+    const message = 'Debe ingresar un email.'
+    return res.status(404).send({ message })
+  }
+
+  const user = await helper.getUserByEmail(email.toLowerCase())
+  const userClerk = await helper.getUserByClerkEmail(email.toLowerCase())
+
+  console.log('user C', userClerk)
+  if (user) {
+    const message = `Existe un usuario registrado con el email: ${email}.`
+    return res.status(200).send({ exist: true, passwordEnabled: !!user.password, message })
+  }
+
+  res.locals.email = { email }
+  next()
+}
 
 module.exports = {
   validateUserId,
@@ -334,5 +405,6 @@ module.exports = {
   validateDataForgetPassword,
   validateDataValEmail,
   validateUserTypePromoter,
-  validateDataClerkEmail
+  validateAppEmail,
+  validateAppLoginData,
 }
