@@ -19,10 +19,22 @@ const eventRoutes = require('./routes/events.routes')
 
 const app = express()
 
+const allowedIPs = [
+  '192.168.1.8',
+];
+
+const ipFilter = (req, res, next) => {
+  const clientIP = req.ip || req.connection.remoteAddress;
+  if (allowedIPs.includes(clientIP)) {
+    next();
+  } else {
+    res.status(403).json({ message: 'Forbidden' });
+  }
+};
+
 app.use(function (req, res, next) {
   var allowedOrigins = [
     'https://jodify.com.ar',
-    'https://jodify.vercel.app',
     'https://jodify-qa-client.vercel.app',
     'https://l.instagram.com/',
     'https://jodifynext.vercel.app',
@@ -39,7 +51,7 @@ app.use(function (req, res, next) {
 app.set('view engine', 'ejs') // Set EJS as the view engine
 app.set('views', path.join(__dirname, 'views')) // Set the views directory
 app.use(bodyParser.urlencoded({ extended: false }))
-
+app.use(ipFilter)
 app.use(cors());
 app.use(morgan('dev'))
 app.use(express.json())
