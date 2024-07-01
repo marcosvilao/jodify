@@ -28,7 +28,7 @@ const allowedOrigins = [
 const originAndIPFilter = (req, res, next) => {
   const origin = req.headers.origin;
   const clientIP = req.ip || req.connection.remoteAddress;
-
+  console.log(clientIP)
   if (allowedOrigins.includes(origin)) {
     res.setHeader('Access-Control-Allow-Origin', origin);
     return next();
