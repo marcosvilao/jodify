@@ -404,10 +404,17 @@ class EventFacade {
   }
 
   async setFeaturedEvent(id) {
-    const query = `
-      UPDATE events SET is_featured = true WHERE id = $1
-    `
+
+    const getQuery = `
+    SELECT is_featured FROM events WHERE id = $1
+  `
+
     try {
+      let isFeatured = await pool.query(getQuery, [id])
+      isFeatured = isFeatured.rows[0].is_featured
+      const query = `
+      UPDATE events SET is_featured = ${isFeatured ? false : true} WHERE id = $1
+    `
       let featuredEvents = await pool.query(query, [id])
       return featuredEvents.rows
     } catch (error) {
