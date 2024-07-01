@@ -59,6 +59,18 @@ route.get('/carousel', async (req, res) => {
   }
 })
 
+route.put('/set-is-featured/:id', async (req, res) => {
+  const {id} = req.params
+  try {
+    let data = await helper.setFeaturedEvent(id)
+
+    res.status(200).json(data)
+  } catch (error) {
+    console.log(error)
+    res.status(500).send({ message: message.error })
+  }
+})
+
 route.get('/:id', validateEventId, async (req, res) => {
   const { event } = res.locals
 

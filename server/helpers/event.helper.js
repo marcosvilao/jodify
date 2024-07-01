@@ -258,6 +258,10 @@ class EventHelper {
     return await facade.getFeaturedEvents()
   }
 
+  async setFeaturedEvent(id) {
+    return await facade.setFeaturedEvent(id)
+  }
+
   async scrapDataEvent(url) {
     return await linkScrapping(url)
   }

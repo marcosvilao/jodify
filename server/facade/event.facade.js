@@ -403,6 +403,19 @@ class EventFacade {
     }
   }
 
+  async setFeaturedEvent(id) {
+    const query = `
+      UPDATE events SET is_featured = true WHERE id = $1
+    `
+    try {
+      let featuredEvents = await pool.query(query, [id])
+      return featuredEvents.rows
+    } catch (error) {
+      console.error('Error fetching featured events:', error)
+      throw error
+    }
+  }
+
   async getFeaturedEvents() {
     const query = `
       SELECT * FROM events WHERE is_featured = true ORDER BY RANDOM() LIMIT 10
