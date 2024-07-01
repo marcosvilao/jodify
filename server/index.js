@@ -24,17 +24,19 @@ const allowedOrigins = [
   'https://jodifynext.vercel.app',
 ];
 
+app.set('trust proxy', true);
+
 // Middleware para verificar el origen y las IPs
 const originAndIPFilter = (req, res, next) => {
   const origin = req.headers.origin;
-  const clientIP = req.ip || req.connection.remoteAddress;
-  console.log(clientIP)
+  var ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
+  console.log('ip address', ip)
   if (allowedOrigins.includes(origin)) {
     res.setHeader('Access-Control-Allow-Origin', origin);
     return next();
   }
 
-  if (allowedIPs.includes(clientIP)) {
+  if (allowedIPs.includes(ip)) {
     return next();
   }
 
@@ -59,7 +61,6 @@ app.use(originAndIPFilter);
 
 // Rutas de la aplicación
 app.use(routes);
-// app.use(eventRoutes);
 
 app.use((err, req, res, next) => {
   return res.json({
