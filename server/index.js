@@ -15,7 +15,8 @@ const app = express();
 const allowedIPs = [
   '181.117.167.211',
   '181.46.138.66',
-  '190.97.16.232'
+  '190.97.16.232',
+  '::1'
 ];
 
 // Lista de dominios permitidos
