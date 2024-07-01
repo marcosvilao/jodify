@@ -47,6 +47,18 @@ route.get('/filters', validateGetAllEventsQuery, async (req, res) => {
   }
 })
 
+route.get('/carousel', async (req, res) => {
+  console.log('entrando al controller')
+  try {
+    let data = await helper.getFeaturedEvents()
+
+    res.status(200).json(data)
+  } catch (error) {
+    console.log(error)
+    res.status(500).send({ message: message.error })
+  }
+})
+
 route.get('/:id', validateEventId, async (req, res) => {
   const { event } = res.locals
 
@@ -131,18 +143,6 @@ route.post('/get-event-data', async (req, res) => {
     const LINK = req.body.link
     console.log(LINK)
     let data = await linkScrapping(LINK)
-
-    res.status(200).json(data)
-  } catch (error) {
-    console.log(error)
-    res.status(500).send({ message: message.error })
-  }
-})
-
-route.get('/', async (req, res) => {
-  console.log('entrando al controller')
-  try {
-    let data = await helper.getFeaturedEvents()
 
     res.status(200).json(data)
   } catch (error) {
