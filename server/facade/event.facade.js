@@ -402,6 +402,20 @@ class EventFacade {
       throw error
     }
   }
+
+  async getFeaturedEvents() {
+    const query = `
+      SELECT * FROM events WHERE is_featured = true ORDER BY RANDOM() LIMIT 10
+    `
+    try {
+      let featuredEvents = await pool.query(query)
+      return featuredEvents.rows
+    } catch (error) {
+      console.error('Error fetching featured events:', error)
+      throw error
+    }
+  }
+  
 }
 
 module.exports = {

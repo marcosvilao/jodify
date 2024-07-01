@@ -139,4 +139,16 @@ route.post('/get-event-data', async (req, res) => {
   }
 })
 
+route.get('/', async (req, res) => {
+  console.log('entrando al controller')
+  try {
+    let data = await helper.getFeaturedEvents()
+
+    res.status(200).json(data)
+  } catch (error) {
+    console.log(error)
+    res.status(500).send({ message: message.error })
+  }
+})
+
 module.exports = route
