@@ -59,11 +59,11 @@ route.get('/carousel', async (req, res) => {
   }
 })
 
-route.put('/set-is-featured/:id', async (req, res) => {
+route.put('/set-is-featured/:id', validateEventId, async (req, res) => {
   const {id} = req.params
   try {
     let data = await helper.setFeaturedEvent(id)
-
+    if(typeof data !== 'boolean')res.status(404).json({message: 'no es booleano'})
     res.status(200).json(data)
   } catch (error) {
     console.log(error)

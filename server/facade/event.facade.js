@@ -413,10 +413,10 @@ class EventFacade {
       let isFeatured = await pool.query(getQuery, [id])
       isFeatured = isFeatured.rows[0].is_featured
       const query = `
-      UPDATE events SET is_featured = ${isFeatured ? false : true} WHERE id = $1
+      UPDATE events SET is_featured = ${isFeatured ? false : true} WHERE id = $1 RETURNING is_featured
     `
       let featuredEvents = await pool.query(query, [id])
-      return featuredEvents.rows
+      return featuredEvents?.rows[0]?.is_featured
     } catch (error) {
       console.error('Error fetching featured events:', error)
       throw error
