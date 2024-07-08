@@ -1,35 +1,43 @@
 const { UserFacade } = require('../facade/user.facade.js')
 const { v4: uuidv4 } = require('uuid')
 const bcrypt = require('bcryptjs')
-const { generateCode } = require('../utils/functions.js')
+const { generateCode, sanitizeUsername } = require('../utils/functions.js')
 const {
   mailOptionGeneratePassword,
   sendEmail,
   mailOptionValidateEmail,
   mailOptionWelcomeForm,
   mailOptionUserPromoterRegister,
+  mailOptionUpdatePassApp,
 } = require('../utils/nodeMailer/functions.js')
 const { PromoterFacade } = require('../facade/promoters.facade.js')
 const jwt = require('jsonwebtoken')
+const UserFacade2 = require('../facade/user.facade2.js')
+const PromoterFacade2 = require('../facade/promoters.facade2.js')
 
 const facade = new UserFacade()
-const facadePromoter = new PromoterFacade()
+const facadePromoter = new PromoterFacade2()
+const facade2 = new UserFacade2()
 
 class UserHelper {
   async getUserById(id) {
-    return await facade.getUserById(id)
+    return await facade2.getUserById(id)
   }
 
   async getUserByClerkId(id) {
-    return await facade.getUserByClerkId(id)
+    return await facade2.getUserByClerkId(id)
   }
 
   async getUserByEmail(email) {
-    return await facade.getUserByEmail(email)
+    return await facade2.getUserByEmail(email)
+  }
+
+  async getUserByUsername(username) {
+    return await facade2.getUserByUsername(username)
   }
 
   async getUserByClerkEmail(email) {
-    return await facade.getUserByClerkEmail(email)
+    return await facade2.getUserByClerkEmail(email)
   }
 
   async logIn(user) {
@@ -48,29 +56,28 @@ class UserHelper {
   }
 
   async createUserInClerk(email, password, username) {
-    return facade.createUserInClerk(email, password, username)
+    return facade2.createUserInClerk(email, password, username)
   }
 
   async createUser(data) {
     const { email, password, phone, username, promoter, clerk_id } = data
-    const id = uuidv4()
+
     const passHashed = await bcrypt.hash(password, 10)
 
     data.password = passHashed
 
     const userData = {
-      id,
       email: email.toLowerCase(),
       password: passHashed,
       phone,
-      username,
+      username: sanitizeUsername(username),
       clerk_id,
     }
 
-    let newUser = await facade.createUser(userData)
+    let newUser = await facade2.createUser(userData)
 
     if (promoter) {
-      newUser = await facade.updateUser(newUser.id, { promoter_id: promoter.id })
+      newUser = await facade2.updateUser(newUser.id, { promoter_id: promoter.id })
     }
 
     if (newUser && promoter) {
@@ -92,34 +99,47 @@ class UserHelper {
   async createUserAuth0(data) {
     const { promoter, ...userData } = data
 
-    const id = uuidv4()
-    userData.id = id
     userData.email = userData.email.toLowerCase()
 
-    let newUser = await facade.createUserAuth0(userData)
+    userData.username = sanitizeUsername(userData.username)
+
+    let newUser = await facade2.createUser(userData)
 
     if (promoter) {
-      newUser = await facade.updateUser(newUser.id, { promoter_id: promoter.id })
+      newUser = await facade2.updateUser(newUser.id, { promoter_id: promoter.id })
     }
 
     return newUser
   }
 
   async updateUser(id, data) {
-    let { username, phone, promoter, promoter_name, instagram } = data
+    let { username, phone, promoter, promoter_name, instagram, email, password, clerk_id } = data
 
-    if (data.password) {
+    const originPass = password
+    if (password) {
       const passHashed = await bcrypt.hash(data.password, 10)
 
       data.password = passHashed
     }
+
+    let userUpdatedInClerk = null
+
+    if (clerk_id) {
+      userUpdatedInClerk = await facade2.updateUserInClerk(clerk_id, {
+        password: originPass,
+        username,
+        email,
+      })
+    }
+
+    if (clerk_id && !userUpdatedInClerk) return null
 
     if (promoter) {
       const promoterData = { name: promoter_name, instagram }
       promoter = await facadePromoter.updatePromoter(promoter.id, promoterData)
     }
 
-    const userUpdated = await facade.updateUser(id, data)
+    const userUpdated = await facade2.updateUser(id, { ...data })
 
     if (!userUpdated) return null
 
@@ -127,7 +147,7 @@ class UserHelper {
       return userUpdated
     }
 
-    let { password, promoter_id, ...dataUser } = userUpdated
+    let { promoter_id, ...dataUser } = userUpdated
 
     if (!promoter && userUpdated.promoter_id) {
       promoter = await facadePromoter.getPromoterById(userUpdated.promoter_id)
@@ -166,6 +186,12 @@ class UserHelper {
       emailMessage = mailOptionWelcomeForm(email, username, adminName, token)
     }
 
+    await sendEmail(emailMessage)
+    return
+  }
+
+  async sendEmailUpdatePasswordInApp(user) {
+    const emailMessage = mailOptionUpdatePassApp(user.email, user.username)
     await sendEmail(emailMessage)
     return
   }

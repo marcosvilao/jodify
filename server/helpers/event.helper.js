@@ -5,8 +5,11 @@ const { deleteImage } = require('../utils/cloudinary/cludinary.js')
 const { linkScrapping } = require('../utils/scrapping/scrapEventData.js')
 const { getImageFromCache } = require('../utils/cacheFunction/cacheFunction.js')
 const { GenericHelper } = require('../helpers/generic.helper.js')
+const { EventFacade2 } = require('../facade/event.facade2.js')
+const moment = require('moment-timezone')
 
 const facade = new EventFacade()
+const facade2 = new EventFacade2()
 const helperGeneric = new GenericHelper()
 
 class EventHelper {
@@ -19,12 +22,11 @@ class EventHelper {
   }
 
   async getEventById(id) {
-    console.log('id', id)
-    return await facade.getEventById(id)
+    return await facade2.getEventById(id)
   }
 
   async getEventByTicketLink(link) {
-    const event = await facade.getEventByTicketLink(link)
+    const event = await facade2.getEventByTicketLink(link)
 
     if (
       event &&
@@ -49,7 +51,7 @@ class EventHelper {
     data.argentinaTime = argentinaTime
     data.setOff = setOff
 
-    const events = await facade.getEventsByFilter(data)
+    const events = await facade2.getEventsByFilter(data)
 
     for (const e of events) {
       // if (e.image.image_url.startsWith('https://res.cloudinary.com')) {
@@ -82,7 +84,7 @@ class EventHelper {
   }
 
   async searchEvent(searchQuery) {
-    const event = await facade.searchEvent(searchQuery)
+    const event = await facade2.searchEvent(searchQuery)
 
     return responseGetEvents(event)
   }
@@ -137,53 +139,35 @@ class EventHelper {
       event_promoter.length > 0 ? event_promoter.map((promoter) => promoter?.id) : null
     let cityID = event_city.id
 
-    const formattedEventDate = new Date(date_from)
-    formattedEventDate.setHours(9, 0, 0)
+    const dateFormatted = new Date(date_from)
+    dateFormatted.setUTCHours(9)
 
-    const event = {
-      id: uuidv4(),
+    const dataCreate = {
       name,
-      date_from,
+      date_from: dateFormatted,
       venue,
       ticket_link,
       image,
+      city_id: cityID,
     }
 
-    const values = [
-      event.id,
-      event.name,
-      formattedEventDate,
-      event.venue,
-      event.ticket_link,
-      event.image,
-      cityID,
-    ]
+    const newEvent = await facade2.createEvent(dataCreate)
 
-    const eventId = await facade.createEvent(values)
-
-    if (!eventId) return null
+    if (!newEvent) return null
 
     if (typesIDs && typesIDs[0] && typesIDs[0] !== undefined) {
-      for (const id of typesIDs) {
-        await facade.relationshipEventId([eventId, id], 'event_types', 'type_id')
-      }
+      await facade2.relationshipEvent(newEvent, 'addTypes', typesIDs)
     }
 
     if (djsIDs && djsIDs[0] && djsIDs[0] !== undefined) {
-      for (const id of djsIDs) {
-        if (id) {
-          await facade.relationshipEventId([eventId, id], 'event_djs', 'dj_id')
-        }
-      }
+      await facade2.relationshipEvent(newEvent, 'addDjs', djsIDs)
     }
 
     if (promotersIDs && promotersIDs[0] && promotersIDs[0] !== undefined) {
-      for (const id of promotersIDs) {
-        await facade.relationshipEventId([eventId, id], 'event_promoters', 'promoter_id')
-      }
+      await facade2.relationshipEvent(newEvent, 'addPromoters', promotersIDs)
     }
 
-    return eventId
+    return newEvent.id
   }
 
   async updateEvent(id, data, event) {
@@ -191,7 +175,7 @@ class EventHelper {
       name,
       venue,
       date_from,
-      event_city,
+      city_id,
       ticket_link,
       event_type,
       event_djs,
@@ -199,10 +183,13 @@ class EventHelper {
       image,
     } = data
 
-    let typesIDs = event_type.length > 0 ? event_type.map((type) => type.id) : null
-    let djsIDs = event_djs.length > 0 ? event_djs.map((dj) => dj.id) : null
+    let typesIDs =
+      event_type.length > 0 ? event_type.map((type) => type.id).filter((id) => id) : null
+    let djsIDs = event_djs.length > 0 ? event_djs.map((dj) => dj.id).filter((id) => id) : null
     let promotersIDs =
-      event_promoter.length > 0 ? event_promoter.map((promoter) => promoter.id) : null
+      event_promoter.length > 0
+        ? event_promoter.map((promoter) => promoter.id).filter((id) => id)
+        : null
 
     if (image) {
       const imageDelete = event.image.public_id
@@ -210,38 +197,28 @@ class EventHelper {
       await deleteImage(imageDelete)
     }
 
-    if (djsIDs) {
-      // for (const djId of djsIDs) {
-      //   await facade.updateRelationshipEvent('event_djs', 'dj_id', djId, id)
-      // }
-      await facade.updateRelationshipEvent('event_djs', 'dj_id', id, djsIDs)
+    const eventInstance = await facade2.getEventById(id, true)
+
+    if (djsIDs && djsIDs[0]) {
+      await facade2.updateRelationshipEvent(eventInstance, 'setDjs', djsIDs)
     }
 
-    if (promotersIDs) {
-      // for (const promoterId of promotersIDs) {
-      //   await facade.updateRelationshipEvent('event_promoters', 'promoter_id', promoterId, id)
-      // }
-      await facade.updateRelationshipEvent('event_promoters', 'promoter_id', id, promotersIDs)
+    if (promotersIDs && promotersIDs[0]) {
+      await facade2.updateRelationshipEvent(eventInstance, 'setPromoters', promotersIDs)
     }
 
-    if (typesIDs) {
-      console.log('3', typesIDs)
-      // for (const typeId of typesIDs) {
-      //   await facade.updateRelationshipEvent('event_types', 'type_id', typeId, id)
-      // }
-      await facade.updateRelationshipEvent('event_types', 'type_id', id, typesIDs)
+    if (typesIDs && typesIDs[0]) {
+      await facade2.updateRelationshipEvent(eventInstance, 'setTypes', typesIDs)
     }
 
-    const eventUpdated = await facade.updateEvent(id, data)
+    const eventUpdated = await facade2.updateEvent(id, data)
 
     return eventUpdated
   }
 
   async updateEventInteraction(id, event) {
-    console.log({ id, event })
     const interaction = event.interactions + 1
-    console.log('addinteraction', interaction)
-    await facade.updateEventInteraction(id, interaction)
+    await facade2.updateEventInteraction(id, interaction)
   }
 
   async deleteEvent(id, event) {
@@ -250,16 +227,16 @@ class EventHelper {
     if (image.public_id) {
       await deleteImage(image.public_id)
     }
-    await facade.deleteEvent(id)
+    await facade2.deleteEvent(id)
     return
   }
 
   async getFeaturedEvents() {
-    return await facade.getFeaturedEvents()
+    return await facade2.getFeaturedEvents()
   }
 
-  async setFeaturedEvent(id) {
-    return await facade.setFeaturedEvent(id)
+  async setFeaturedEvent(id, event) {
+    return await facade2.setFeaturedEvent(id, event.is_featured)
   }
 
   async scrapDataEvent(url) {

@@ -7,7 +7,6 @@ const {
   validateGetAllEventsQuery,
   validateEventUpdateData,
 } = require('../middlewares/event.middleware.js')
-const { linkScrap } = require('../Brain/getEventData.js')
 const { linkScrapping } = require('../utils/scrapping/scrapEventData.js')
 
 const route = Router()
@@ -48,7 +47,6 @@ route.get('/filters', validateGetAllEventsQuery, async (req, res) => {
 })
 
 route.get('/carousel', async (req, res) => {
-  console.log('entrando al controller')
   try {
     let data = await helper.getFeaturedEvents()
 
@@ -60,10 +58,11 @@ route.get('/carousel', async (req, res) => {
 })
 
 route.put('/set-is-featured/:id', validateEventId, async (req, res) => {
-  const {id} = req.params
+  //TODO esto esta andando bien¡?
+  const { id, event } = res.locals
   try {
-    let data = await helper.setFeaturedEvent(id)
-    if(typeof data !== 'boolean')res.status(404).json({message: 'no es booleano'})
+    let data = await helper.setFeaturedEvent(id, event)
+    if (typeof data !== 'boolean') res.status(404).json({ message: 'no es booleano' })
     res.status(200).json(data)
   } catch (error) {
     console.log(error)
@@ -85,6 +84,8 @@ route.post('/create', fileUploadMiddleware, validateEventCreateData, async (req,
   const { data } = res.locals
   try {
     const response = await helper.createEventByForm(data)
+
+    if (!response) return res.status(404).send({ message: 'Error al crear evento' })
 
     return res.status(200).send({ message: 'Event created successfully', eventId: response })
   } catch (error) {
@@ -109,7 +110,7 @@ route.post('/check-link', async (req, res) => {
 
 route.patch('/add-interaction/:id', validateEventId, async (req, res) => {
   const { id, event } = res.locals
-  console.log({ id, event })
+
   try {
     await helper.updateEventInteraction(id, event)
 

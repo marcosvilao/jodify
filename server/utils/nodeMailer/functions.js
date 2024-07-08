@@ -156,6 +156,42 @@ const mailOptionUserPromoterRegister = (email, username) => {
   }
 }
 
+const mailOptionUpdatePassApp = (email, username) => {
+  return {
+    from: 'Jodify',
+    to: `${email}`,
+    subject: 'Actualización de contraseña Jodify',
+    html: `
+    <body style="font-family: Arial, sans-serif; margin:0; padding:0;">
+    <div style="max-width: 600px; margin: 0 auto; background-color: #0C0C0C; text-align: center; padding: 20px;">
+            <img src=${logo} alt="Logo" style="width: 150px; height: auto; display: inline-block;">
+        </div>
+        <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+            <p>Hola ${username},</p>
+            <p>Haz click en el link de abajo para confirmar el cambio de contraseña:</p>
+            <div style="padding: 20px; text-align: center;">
+                <a href="${process.env.HREF_ROOT}/" style="background-image: url(${imageBtnDegrade}); color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 100px; background-size: cover;">
+                    Ir a Jodify
+                </a>
+            </div>
+
+            <div style="display:flex; padding-bottom:30px">
+              <div style="background-color:#C18FFF; width:11px;"> </div>
+                <p style="padding-left:5px">Si no estas tratando de cambiar los datos de tu cuenta, por favor ignora este correo electrónico. Es posible que otro usuario haya introducido su información de forma incorrecta.</p>
+            </div>
+
+            <div style="margin-bottom: 0;">Abrazo.</div>
+            <div style="margin-bottom: 0;">Equipo de Jodify.</div>
+
+        </div>
+        <div style="max-width: 600px; margin: 0 auto; background-color: #0C0C0C; color: #FFFFFF; padding: 10px; text-align: center;">
+            Jodify © 2024
+        </div>
+    </body>
+      `,
+  }
+}
+
 const sendEmail = (mailOption) => {
   return new Promise((resolve, reject) => {
     transporter.sendMail(mailOption, (err, info) => {
@@ -176,4 +212,5 @@ module.exports = {
   mailOptionValidateEmail,
   mailOptionWelcomeForm,
   mailOptionUserPromoterRegister,
+  mailOptionUpdatePassApp,
 }

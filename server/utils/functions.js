@@ -24,7 +24,30 @@ const generateCode = () => {
   return code
 }
 
+const filterUpdatedData = (data) => {
+  const filteredData = {}
+  Object.keys(data).forEach((key) => {
+    if (data[key] !== null && data[key] !== '') {
+      filteredData[key] = data[key]
+    }
+  })
+
+  return filteredData
+}
+
+function sanitizeUsername(username) {
+  // Reemplaza los espacios con _
+  let sanitized = username.replace(/\s+/g, '_')
+
+  // Elimina los caracteres que no sean letras, números o _
+  sanitized = sanitized.replace(/[^\w]/g, '')
+
+  return sanitized
+}
+
 module.exports = {
   responseGetEvents,
   generateCode,
+  filterUpdatedData,
+  sanitizeUsername,
 }

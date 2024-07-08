@@ -1,7 +1,7 @@
 const { Router } = require('express')
 const { PromoterHelper } = require('../helpers/promoters.helper.js')
 const { validateCreatePromoterData } = require('../middlewares/promoters.middleware.js')
-const { scrapInstagram } = require('../Brain/getEventData.js')
+const { scrapInstagram } = require('../Brain/scrappingPromoterIG.js')
 const route = Router()
 
 const helper = new PromoterHelper()
