@@ -13,6 +13,7 @@ const {
   validateUserTypePromoter,
   validateAppEmail,
   validateAppLoginData,
+  validateDataUpdateUserApp,
 } = require('../middlewares/user.middleware.js')
 
 const route = Router()
@@ -25,6 +26,35 @@ route.get('/clerk-id/:id', async (req, res) => {
     const user = await helper.getUserByClerkId(id)
 
     return res.status(200).send({ user })
+  } catch (error) {
+    res.status(500).send({ error: error.message })
+  }
+})
+
+route.get('/check-username', async (req, res) => {
+  try {
+    const { username } = req.query
+
+    const user = await helper.getUserByUsername(String(username))
+
+    if (!user)
+      return res
+        .status(200)
+        .send({ message: `No existe un usuario con el username: ${String(username)}` })
+
+    return res.status(200).send({ user })
+  } catch (error) {
+    res.status(500).send({ error: error.message })
+  }
+})
+
+route.get('/send-email-update-pass/:id', validateUserId, async (req, res) => {
+  try {
+    const { user } = res.params
+
+    await helper.sendEmailUpdatePasswordInApp(user)
+
+    return res.status(200).send({ message: 'Email enviado exitosamente.' })
   } catch (error) {
     res.status(500).send({ error: error.message })
   }
@@ -81,6 +111,9 @@ route.put('/update/:id', validateUserId, validateDataUpdateUser, async (req, res
     const { user, data } = res.locals
 
     const userUpdated = await helper.updateUser(user.id, data)
+
+    if (!userUpdated)
+      return res.status(404).send({ message: 'Error al actualizar datos del usuario.' })
 
     res.status(200).send({ message: 'Usuario actualizado con éxito.', user: userUpdated })
   } catch (error) {
@@ -166,18 +199,6 @@ route.post('/welcome-form', validateDataValEmail, async (req, res) => {
   }
 })
 
-route.post('/check-email', validateAppEmail, async (req, res) => {
-  try {
-    const { email } = res.locals
-
-    res
-      .status(200)
-      .json({ exist: false, message: `Valido para registrarse con el correo ${email}` })
-  } catch (error) {
-    res.status(500).send({ error: error.message })
-  }
-})
-
 //---------------------------APP-----------------------------
 
 route.post('/login-app', validateAppLoginData, async (req, res) => {
@@ -197,6 +218,20 @@ route.post('/check-email', validateAppEmail, async (req, res) => {
     res
       .status(200)
       .json({ exist: false, message: `Valido para registrarse con el correo ${email}` })
+  } catch (error) {
+    res.status(500).send({ error: error.message })
+  }
+})
+
+route.put('/update-app/:id', validateUserId, validateDataUpdateUserApp, async (req, res) => {
+  try {
+    const { user, data } = res.locals
+
+    const userUpdated = await helper.updateUser(user.id, data)
+
+    if (!userUpdated) return res.status(404).send({ message: 'Error al editar usuario' })
+
+    res.status(200).send({ message: 'Usuario actualizado con éxito.', user: userUpdated })
   } catch (error) {
     res.status(500).send({ error: error.message })
   }

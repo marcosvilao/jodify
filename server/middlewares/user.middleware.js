@@ -3,6 +3,7 @@ const { PromoterHelper } = require('../helpers/promoters.helper.js')
 const bcrypt = require('bcryptjs')
 const { UUIDV4RegEx } = require('../utils/regex.js')
 const jwt = require('jsonwebtoken')
+const { sanitizeUsername } = require('../utils/functions.js')
 
 const helper = new UserHelper()
 const helperPromoter = new PromoterHelper()
@@ -42,6 +43,13 @@ async function validateDataUserCreate(req, res, next) {
   }
 
   let promoter = null
+
+  const checkUsername = await helper.getUserByUsername(sanitizeUsername(username))
+
+  if (checkUsername) {
+    const message = `Ya existe un usuario registrado con el username: '${username}'`
+    return res.status(404).send({ message })
+  }
 
   if (instagram) {
     if (typeof instagram === 'string' && instagram[0] === '@') {
@@ -86,6 +94,12 @@ async function validateDataUserAuth0Create(req, res, next) {
 
   if (user) {
     const message = `Ya existe un usuario registrado con el email: '${email}'`
+    return res.status(404).send({ message })
+  }
+  const checkUsername = await helper.getUserByUsername(sanitizeUsername(username))
+
+  if (checkUsername) {
+    const message = `Ya existe un usuario registrado con el username: '${username}'`
     return res.status(404).send({ message })
   }
 
@@ -214,6 +228,15 @@ async function validateDataUpdateUser(req, res, next) {
     return res.status(404).send({ message })
   }
 
+  if (username && username !== user.username) {
+    const checkUsername = await helper.getUserByUsername(sanitizeUsername(username))
+
+    if (checkUsername) {
+      const message = `Ya existe un usuario registrado con el username: '${username}'`
+      return res.status(404).send({ message })
+    }
+  }
+
   let promoter = null
 
   if (instagram || promoter_name) {
@@ -327,12 +350,19 @@ async function validateAppLoginData(req, res, next) {
 
       const userClerkByEmail = await helper.getUserByClerkEmail(email.toLowerCase())
 
+      console.log('user clerk eail', userClerkByEmail)
+
       if (!userClerkByEmail) {
         const userClerk = await helper.createUserInClerk(
           email,
           password,
-          user.username.replaceAll(' ', '_')
+          sanitizeUsername(user.username)
         )
+
+        if (!userClerk) {
+          const message = 'No se creo el usuario en clerk.'
+          return res.status(404).send({ message })
+        }
 
         clerkId = userClerk._User.id
         // console.log('clerkId', clerkId)
@@ -345,6 +375,13 @@ async function validateAppLoginData(req, res, next) {
   }
 
   if (!user) {
+    const checkUsername = await helper.getUserByUsername(sanitizeUsername(username))
+
+    if (checkUsername) {
+      const message = `Ya existe un usuario registrado con el username: '${username}'`
+      return res.status(404).send({ message })
+    }
+
     if (password) {
       user = await helper.createUser({ email, clerk_id, username, password })
     } else {
@@ -394,6 +431,24 @@ async function validateAppEmail(req, res, next) {
   next()
 }
 
+async function validateDataUpdateUserApp(req, res, next) {
+  const { password, username, email } = req.body
+  const { user } = res.locals
+
+  if ((password || email) && !user.password) {
+    const message = `El usuario con email: ${user.email} se registro con google. No puede cambiar password o email.`
+    return res.status(404).send({ message })
+  }
+
+  res.locals.data = {
+    password: password ?? null,
+    username: username ? username.replaceAll(' ', '_') : null,
+    email: email ?? null,
+    clerk_id: user.clerk_id,
+  }
+  next()
+}
+
 module.exports = {
   validateUserId,
   validateDataUserCreate,
@@ -407,4 +462,5 @@ module.exports = {
   validateUserTypePromoter,
   validateAppEmail,
   validateAppLoginData,
+  validateDataUpdateUserApp,
 }
