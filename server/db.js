@@ -1,4 +1,5 @@
 const { Sequelize } = require('sequelize')
+const pg = require('pg')
 require('dotenv').config()
 
 const DB_CONNECTION = process.env.DB_CONNECTION
@@ -8,7 +9,7 @@ let sequelize
 if (DB_CONNECTION === 'DEPLOY') {
   sequelize = new Sequelize(process.env.POSTGRES_URL, {
     logging: false,
-    dialect: 'postgres',
+    dialectModule: pg,
     dialectOptions: {
       ssl: {
         require: true,
