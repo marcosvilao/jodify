@@ -170,7 +170,7 @@ const mailOptionUpdatePassApp = (email, username) => {
             <p>Hola ${username},</p>
             <p>Haz click en el link de abajo para confirmar el cambio de contraseña:</p>
             <div style="padding: 20px; text-align: center;">
-                <a href="${process.env.HREF_ROOT}/" style="background-image: url(${imageBtnDegrade}); color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 100px; background-size: cover;">
+                <a href="${process.env.HREF_ROOT_APP}" style="background-image: url(${imageBtnDegrade}); color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 100px; background-size: cover;">
                     Ir a Jodify
                 </a>
             </div>

@@ -50,12 +50,13 @@ route.get('/check-username', async (req, res) => {
 
 route.get('/send-email-update-pass/:id', validateUserId, async (req, res) => {
   try {
-    const { user } = res.params
+    const { user } = res.locals
 
     await helper.sendEmailUpdatePasswordInApp(user)
 
     return res.status(200).send({ message: 'Email enviado exitosamente.' })
   } catch (error) {
+    console.log(error)
     res.status(500).send({ error: error.message })
   }
 })
