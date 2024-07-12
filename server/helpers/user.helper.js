@@ -1,7 +1,5 @@
-const { UserFacade } = require('../facade/user.facade.js')
-const { v4: uuidv4 } = require('uuid')
 const bcrypt = require('bcryptjs')
-const { generateCode, sanitizeUsername } = require('../utils/functions.js')
+const { sanitizeUsername } = require('../utils/functions.js')
 const {
   mailOptionGeneratePassword,
   sendEmail,
@@ -10,34 +8,32 @@ const {
   mailOptionUserPromoterRegister,
   mailOptionUpdatePassApp,
 } = require('../utils/nodeMailer/functions.js')
-const { PromoterFacade } = require('../facade/promoters.facade.js')
 const jwt = require('jsonwebtoken')
-const UserFacade2 = require('../facade/user.facade2.js')
-const PromoterFacade2 = require('../facade/promoters.facade2.js')
+const UserFacade = require('../facade/user.facade.js')
+const PromoterFacade = require('../facade/promoters.facade.js')
 
+const facadePromoter = new PromoterFacade()
 const facade = new UserFacade()
-const facadePromoter = new PromoterFacade2()
-const facade2 = new UserFacade2()
 
 class UserHelper {
   async getUserById(id) {
-    return await facade2.getUserById(id)
+    return await facade.getUserById(id)
   }
 
   async getUserByClerkId(id) {
-    return await facade2.getUserByClerkId(id)
+    return await facade.getUserByClerkId(id)
   }
 
   async getUserByEmail(email) {
-    return await facade2.getUserByEmail(email)
+    return await facade.getUserByEmail(email)
   }
 
   async getUserByUsername(username) {
-    return await facade2.getUserByUsername(username)
+    return await facade.getUserByUsername(username)
   }
 
   async getUserByClerkEmail(email) {
-    return await facade2.getUserByClerkEmail(email)
+    return await facade.getUserByClerkEmail(email)
   }
 
   async logIn(user) {
@@ -56,7 +52,7 @@ class UserHelper {
   }
 
   async createUserInClerk(email, password, username) {
-    return facade2.createUserInClerk(email, password, username)
+    return facade.createUserInClerk(email, password, username)
   }
 
   async createUser(data) {
@@ -74,10 +70,12 @@ class UserHelper {
       clerk_id,
     }
 
-    let newUser = await facade2.createUser(userData)
+    let newUser = await facade.createUser(userData)
 
     if (promoter) {
-      newUser = await facade2.updateUser(newUser.id, { promoter_id: promoter.id })
+      newUser = await facade.updateUser(newUser.id, {
+        promoter_id: promoter.id,
+      })
     }
 
     if (newUser && promoter) {
@@ -103,10 +101,12 @@ class UserHelper {
 
     userData.username = sanitizeUsername(userData.username)
 
-    let newUser = await facade2.createUser(userData)
+    let newUser = await facade.createUser(userData)
 
     if (promoter) {
-      newUser = await facade2.updateUser(newUser.id, { promoter_id: promoter.id })
+      newUser = await facade.updateUser(newUser.id, {
+        promoter_id: promoter.id,
+      })
     }
 
     return newUser
@@ -125,10 +125,10 @@ class UserHelper {
     let userUpdatedInClerk = null
 
     if (clerk_id) {
-      userUpdatedInClerk = await facade2.updateUserInClerk(clerk_id, {
+      userUpdatedInClerk = await facade.updateUserInClerk(clerk_id, {
         password: originPass,
-        username,
-        email,
+        firstName: username,
+        primaryEmailAddress: { emailAddress: email },
       })
     }
 
@@ -139,7 +139,7 @@ class UserHelper {
       promoter = await facadePromoter.updatePromoter(promoter.id, promoterData)
     }
 
-    const userUpdated = await facade2.updateUser(id, { ...data })
+    const userUpdated = await facade.updateUser(id, { ...data })
 
     if (!userUpdated) return null
 
@@ -159,6 +159,14 @@ class UserHelper {
     }
 
     return response
+  }
+
+  async deleteUser(user) {
+    if (user.clerk_id) {
+      const response = await facade.deleteUserInClerk(user.clerk_id)
+    }
+
+    return await facade.deleteUser(user.id)
   }
 
   async forgetPassword(user) {

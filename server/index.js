@@ -18,6 +18,7 @@ const allowedIPs = [
   '::ffff:181.13.127.90',
   '::ffff:10.0.0.185',
   '::ffff:192.168.2.2',
+  '::ffff:192.168.2.3',
   '181.117.167.211',
   '181.46.138.66',
   '190.97.16.232',
@@ -77,7 +78,7 @@ app.use((err, req, res, next) => {
 })
 
 sequelize
-  .sync({ alter: true })
+  .sync({ alter: false })
   .then(() => {
     app.listen(3001, () => console.log('listening on port 3001'))
   })

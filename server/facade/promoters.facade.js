@@ -1,79 +1,92 @@
-const pool = require('../db')
+const { PromoterModel } = require('../models/associations.js')
+const PostgresDBStorage = require('../storage/postgresDBStorage.js')
+const { filterUpdatedData } = require('../utils/functions.js')
+
+const storage = new PostgresDBStorage()
 
 class PromoterFacade {
   async getPromoters() {
-    const promoters = await pool.query('SELECT * FROM promoters ORDER BY "name" ASC')
+    try {
+      const filter = {}
 
-    if (!promoters) return []
+      filter.order = [['name', 'asc']]
+      const promoters = await storage.find(PromoterModel, filter)
 
-    return promoters.rows
+      if (!promoters) return []
+
+      return promoters
+    } catch (error) {
+      console.error('Error get promoters', error)
+    }
   }
 
   async getPromoterById(id) {
-    const query = `SELECT * FROM promoters WHERE id = '${id}'`
+    try {
+      const promoter = await storage.findById(PromoterModel, id)
 
-    const promoter = await pool.query(query)
+      if (!promoter) return null
 
-    if (!promoter || !promoter.rows[0]) return null
-
-    return promoter.rows[0]
+      return promoter
+    } catch (error) {
+      console.error('Error get promoter by id', error)
+    }
   }
 
   async getPromoterByInstagram(instagram) {
-    const queryIg = 'SELECT * FROM promoters WHERE instagram = $1'
-    const valuesIg = [instagram]
+    try {
+      const promoter = await storage.find(PromoterModel, { where: { instagram } })
 
-    const promoter = await pool.query(queryIg, valuesIg)
+      if (!promoter || !promoter[0]) return null
 
-    if (!promoter || !promoter.rows[0]) return null
-
-    return promoter.rows[0]
+      return promoter[0].dataValues
+    } catch (error) {
+      console.error('Error get promoter by instagram', error)
+    }
   }
 
   async getPromoterByName(name) {
-    const queryIg = 'SELECT * FROM promoters WHERE name = $1'
-    const valuesIg = [name]
+    try {
+      const promoter = await storage.find(PromoterModel, { where: { name } })
 
-    const promoter = await pool.query(queryIg, valuesIg)
+      if (!promoter || !promoter[0]) return null
 
-    if (!promoter || !promoter.rows[0]) return null
-
-    return promoter.rows[0]
+      return promoter[0].dataValues
+    } catch (error) {
+      console.error('Error get promoters by name', error)
+    }
   }
 
   async createPromoter(data) {
-    const { name, instagram, priority, id } = data
+    try {
+      const promoter = await storage.create(PromoterModel, data)
 
-    const queryString = `INSERT INTO promoters (name, instagram, priority, id) VALUES ($1, $2, $3, $4) RETURNING *`
-    const values = [name, instagram, priority, id]
-    const promoter = await pool.query(queryString, values)
-
-    if (!promoter || !promoter.rows[0]) return null
-    return promoter.rows[0]
+      if (!promoter) return null
+      return promoter
+    } catch (error) {
+      console.error('Error create promoter:', error)
+    }
   }
 
   async updatePromoter(id, data) {
-    const { name, instagram, priority } = data
-    const setParts = []
+    try {
+      const filteredData = filterUpdatedData(data)
 
-    if (name) setParts.push(`name = '${name}'`)
-    if (instagram) setParts.push(`instagram = '${instagram}'`)
-    if (priority) setParts.push(`priority = '${priority}'`)
+      const [numberUpdatedRows, [promoterUpdated]] = await storage.update(
+        PromoterModel,
+        filteredData,
+        {
+          where: { id },
+          returning: true,
+        }
+      )
 
-    setParts.push(`updatedAt = CURRENT_TIMESTAMP`)
+      if (numberUpdatedRows === 0) return null
 
-    const setClause = setParts.join(', ')
-
-    const query = `UPDATE promoters SET ${setClause} WHERE id = '${id}' RETURNING *;`
-
-    const promoterUpdated = await pool.query(query)
-
-    if (!promoterUpdated || !promoterUpdated.rows[0]) return null
-
-    return promoterUpdated.rows[0]
+      return promoterUpdated.dataValues
+    } catch (error) {
+      console.error('Error update promoter', error)
+    }
   }
 }
 
-module.exports = {
-  PromoterFacade,
-}
+module.exports = PromoterFacade

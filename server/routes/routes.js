@@ -1,8 +1,8 @@
 const { Router } = require('express')
-const event = require('../controllers/event.controller2.js')
-const promoter = require('../controllers/promoters.controller2.js')
+const event = require('../controllers/event.controller.js')
+const promoter = require('../controllers/promoters.controller.js')
 const generic = require('../controllers/generic.controller.js')
-const user = require('../controllers/user.controller2.js')
+const user = require('../controllers/user.controller.js')
 
 const router = Router()
 

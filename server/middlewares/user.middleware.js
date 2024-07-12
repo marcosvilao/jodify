@@ -69,7 +69,11 @@ async function validateDataUserCreate(req, res, next) {
         return res.status(404).send({ message })
       }
 
-      promoter = await helperPromoter.createPromoter({ instagram, priority, name })
+      promoter = await helperPromoter.createPromoter({
+        instagram,
+        priority,
+        name,
+      })
 
       if (!promoter) {
         const message = 'Error al crear productora.'
@@ -118,7 +122,11 @@ async function validateDataUserAuth0Create(req, res, next) {
         return res.status(404).send({ message })
       }
 
-      promoter = await helperPromoter.createPromoter({ instagram, priority, name })
+      promoter = await helperPromoter.createPromoter({
+        instagram,
+        priority,
+        name,
+      })
 
       if (!promoter) {
         const message = 'Error al crear productora.'
@@ -442,10 +450,23 @@ async function validateDataUpdateUserApp(req, res, next) {
 
   res.locals.data = {
     password: password ?? null,
-    username: username ? username.replaceAll(' ', '_') : null,
+    username: username,
     email: email ?? null,
     clerk_id: user.clerk_id,
   }
+  next()
+}
+
+async function validateUserDelete(req, res, next) {
+  const { user } = res.locals
+
+  console.log('user', user)
+
+  if (user.promoter_id) {
+    const message = `La productora ${user.email} no puede eliminar la cuenta.`
+    return res.status(404).send({ message })
+  }
+
   next()
 }
 
@@ -463,4 +484,5 @@ module.exports = {
   validateAppEmail,
   validateAppLoginData,
   validateDataUpdateUserApp,
+  validateUserDelete,
 }
