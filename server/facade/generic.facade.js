@@ -1,15 +1,30 @@
-const pool = require('../db')
+const { Op } = require('sequelize')
+const { CityModel, TypeModel, DjModel, VenueModel } = require('../models/associations')
+const PostgresDBStorage = require('../storage/postgresDBStorage')
+const namesTypes = require('../utils/associationsNames')
+
+const storage = new PostgresDBStorage()
 
 class GenericFacade {
   //------------------VENUE-----------------------
-  async getVenueById(id) {
+  async getVenueById(id, verbose) {
     try {
-      const query = `SELECT * FROM venue WHERE id= $1;`
+      const filter = {}
 
-      const venue = await pool.query(query, [id])
+      if (verbose) {
+        filter.include = [
+          {
+            model: CityModel,
+            attributes: ['id', 'city_name', 'latitude', 'longitude', 'country'],
+            as: namesTypes.City,
+          },
+        ]
+      }
 
-      if (!venue || !venue.rows[0]) return null
-      return venue.rows[0]
+      const venue = await storage.findById(VenueModel, id, filter)
+
+      if (!venue || !venue) return null
+      return venue
     } catch (error) {
       console.error('error al buscar venue por id.', error)
     }
@@ -17,24 +32,25 @@ class GenericFacade {
 
   async getVenues(city) {
     try {
-      let query = `
-        SELECT venue.*, cities.city_name 
-        FROM venue
-        JOIN cities ON venue.city_id = cities.id
-      `
+      const filter = {}
 
-      const queryParams = []
+      filter.include = [
+        {
+          model: CityModel,
+          attributes: ['id', 'city_name', 'latitude', 'longitude', 'country'],
+          as: namesTypes.City,
+        },
+      ]
 
       if (city) {
-        query += ` WHERE cities.city_name = $1`
-        queryParams.push(city)
+        filter.include[0].where = { city_name: city }
       }
 
-      const venues = await pool.query(query, queryParams)
+      const venues = await storage.find(VenueModel, filter)
 
       if (!venues) return []
 
-      return venues.rows
+      return venues
     } catch (error) {
       console.error('Error getVenues facade.', error)
     }
@@ -42,13 +58,15 @@ class GenericFacade {
 
   async getVenueByName(name) {
     try {
-      const query = `SELECT * FROM venue WHERE name = $1;`
+      const filter = {}
 
-      const venue = await pool.query(query, [name])
+      filter.where = { name }
 
-      if (!venue || !venue.rows[0]) return null
+      const venue = await storage.find(VenueModel, filter)
 
-      return venue.rows[0]
+      if (!venue || !venue[0]) return null
+
+      return venue[0].dataValues
     } catch (error) {
       console.error('error al buscar venue por name. Error:', error)
     }
@@ -56,26 +74,11 @@ class GenericFacade {
 
   async createVenue(data) {
     try {
-      const { id, name, city_id, neighborhood, address, coordinates, province } = data
-      const query = `
-          INSERT INTO venue(id, name, city_id, neighborhood, address, coordinates, province)
-          VALUES($1, $2, $3, $4, $5, $6, $7)
-          RETURNING *;
-        `
+      const newVenue = await storage.create(VenueModel, data)
 
-      const newVenue = await pool.query(query, [
-        id,
-        name,
-        city_id,
-        neighborhood,
-        address,
-        coordinates,
-        province,
-      ])
+      if (!newVenue || !newVenue) return null
 
-      if (!newVenue || !newVenue.rows[0]) return null
-
-      return newVenue.rows[0]
+      return newVenue
     } catch (error) {
       console.error('Error crear venue. Error:', error)
     }
@@ -88,34 +91,51 @@ class GenericFacade {
   //----------------- DJS-----------------------
 
   async getDjs() {
-    const query = `
-    SELECT d.id, d.name, json_agg(t.*) as types
-    FROM djs d
-    LEFT JOIN dj_types dt ON d.id = dt.dj_id
-    LEFT JOIN types t ON dt.type_id = t.id
-    GROUP BY d.id
-    ORDER BY d.name ASC
-    `
+    try {
+      const filter = {}
 
-    const djsWithTypes = await pool.query(query)
+      filter.include = [
+        {
+          model: TypeModel,
+          through: { attributes: [] },
+          attributes: ['id', 'name'],
+          as: namesTypes.Type,
+        },
+      ]
 
-    if (!djsWithTypes) return []
-    return djsWithTypes.rows
+      filter.order = [['name', 'asc']]
+
+      const djsWithTypes = await storage.find(DjModel, filter)
+
+      if (!djsWithTypes) return []
+      return djsWithTypes
+    } catch (error) {
+      console.error('Error get djs. Error:', error)
+    }
   }
 
-  async createDj(id, name) {
+  async getDjByName(name) {
     try {
-      const query = `
-          INSERT INTO djs(id, name)
-          VALUES($1, $2)
-          RETURNING *;
-        `
+      const filter = {}
 
-      const newDj = await pool.query(query, [id, name])
+      filter.where = { name }
 
-      if (!newDj || !newDj.rows[0]) return null
+      const dj = await storage.findOne(DjModel, filter)
 
-      return newDj.rows[0]
+      if (!dj) return null
+      return dj
+    } catch (error) {
+      console.error('Error get dj by name. Error:', error)
+    }
+  }
+
+  async createDj(data) {
+    try {
+      const newDj = await storage.create(DjModel, data)
+
+      if (!newDj || !newDj) return null
+
+      return newDj
     } catch (error) {
       console.error('Error crear dj. Error:', error)
     }
@@ -124,21 +144,32 @@ class GenericFacade {
   //----------------CITY--------------------------
 
   async getCities() {
-    const cities = await pool.query('SELECT * FROM cities ORDER BY city_name ASC')
-    if (!cities) return []
+    try {
+      const filter = {}
 
-    return cities.rows
+      filter.order = [['city_name', 'asc']]
+
+      const cities = await storage.find(CityModel, filter)
+
+      if (!cities || !cities[0]) return []
+
+      return cities
+    } catch (error) {
+      console.error('error al buscar cities. Error:', error)
+    }
   }
 
   async getCityByName(name) {
     try {
-      const query = `SELECT * FROM cities WHERE city_name = $1;`
+      const filter = {}
 
-      const city = await pool.query(query, [name])
+      filter.where = { city_name: name }
 
-      if (!city || !city.rows[0]) return null
+      const city = await storage.find(CityModel, filter)
 
-      return city.rows[0]
+      if (!city || !city[0]) return null
+
+      return city[0].dataValues
     } catch (error) {
       console.error('error al buscar city por name. Error:', error)
     }
@@ -146,39 +177,36 @@ class GenericFacade {
 
   async getCityByCoords(lat, lng) {
     try {
+      const filter = {}
       const tolerance = 0.01
-      const query = `
-        SELECT * 
-        FROM cities 
-        WHERE 
-          ABS(latitude - $1) < $3 
-          AND ABS(longitude - $2) < $3;
-      `
 
-      const city = await pool.query(query, [lat, lng, tolerance])
+      filter.where = {
+        latitude: {
+          [Op.between]: [lat - tolerance, lat + tolerance],
+        },
+        longitude: {
+          [Op.between]: [lng - tolerance, lng + tolerance],
+        },
+      }
 
-      if (!city || !city.rows[0]) return null
+      const city = await storage.find(CityModel, filter)
 
-      return city.rows[0]
+      if (!city || !city[0]) return null
+
+      return city[0].dataValues
     } catch (error) {
       console.error('Error al buscar city por coords. Error:', error)
       return null
     }
   }
 
-  async createCity(id, name, latitude, longitude) {
+  async createCity(data) {
     try {
-      const query = `
-          INSERT INTO cities(id, city_name, latitude, longitude)
-          VALUES($1, $2, $3, $4)
-          RETURNING *;
-        `
-
-      const newCity = await pool.query(query, [id, name, latitude, longitude])
+      const newCity = await storage.create(CityModel, data)
 
       if (!newCity) return null
 
-      return newCity.rows[0]
+      return newCity
     } catch (error) {
       console.error('Error crear city. Error:', error)
     }
@@ -186,14 +214,15 @@ class GenericFacade {
   //---------------TYPES----------------------------
 
   async getTypes() {
-    const types = await pool.query('SELECT * FROM types ORDER BY "name" ASC')
+    const filter = {}
+
+    filter.order = [['name', 'asc']]
+    const types = await storage.find(TypeModel, filter)
 
     if (!types) return []
 
-    return types.rows
+    return types
   }
 }
 
-module.exports = {
-  GenericFacade,
-}
+module.exports = GenericFacade

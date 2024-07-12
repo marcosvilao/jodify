@@ -14,6 +14,7 @@ const {
   validateAppEmail,
   validateAppLoginData,
   validateDataUpdateUserApp,
+  validateUserDelete,
 } = require('../middlewares/user.middleware.js')
 
 const route = Router()
@@ -233,6 +234,18 @@ route.put('/update-app/:id', validateUserId, validateDataUpdateUserApp, async (r
     if (!userUpdated) return res.status(404).send({ message: 'Error al editar usuario' })
 
     res.status(200).send({ message: 'Usuario actualizado con éxito.', user: userUpdated })
+  } catch (error) {
+    res.status(500).send({ error: error.message })
+  }
+})
+
+route.delete('/:id', validateUserId, validateUserDelete, async (req, res) => {
+  try {
+    const { user } = res.locals
+
+    const response = await helper.deleteUser(user)
+
+    res.status(200).send({ message: `Usuario ${user.email} eliminado exitosamente :(`, response })
   } catch (error) {
     res.status(500).send({ error: error.message })
   }

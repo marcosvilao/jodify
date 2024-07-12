@@ -111,6 +111,7 @@ route.post('/check-link', async (req, res) => {
 route.patch('/add-interaction/:id', validateEventId, async (req, res) => {
   const { id, event } = res.locals
 
+  console.log('event', event)
   try {
     await helper.updateEventInteraction(id, event)
 
