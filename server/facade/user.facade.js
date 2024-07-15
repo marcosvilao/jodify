@@ -161,7 +161,7 @@ class UserFacade {
 
   async deleteUser(id) {
     try {
-      const response = await storage.delete(UserModel, { id })
+      const response = await storage.delete(UserModel, { where: { id } })
 
       return response
     } catch (error) {
