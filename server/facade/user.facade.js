@@ -3,7 +3,6 @@ const PostgresDBStorage = require('../storage/postgresDBStorage.js')
 const { createClerkClient } = require('@clerk/clerk-sdk-node')
 const namesTypes = require('../utils/associationsNames.js')
 const { filterUpdatedData } = require('../utils/functions.js')
-const { where } = require('sequelize')
 require('dotenv').config()
 
 const storage = new PostgresDBStorage()
