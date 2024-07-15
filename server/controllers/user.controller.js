@@ -233,7 +233,7 @@ route.put('/update-app/:id', validateUserId, validateDataUpdateUserApp, async (r
 
     if (!userUpdated) return res.status(404).send({ message: 'Error al editar usuario' })
 
-    res.status(200).send({ message: 'Usuario actualizado con éxito.', user: userUpdated })
+    res.status(200).send({ user: userUpdated })
   } catch (error) {
     res.status(500).send({ error: error.message })
   }
