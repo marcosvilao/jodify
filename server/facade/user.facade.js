@@ -3,6 +3,7 @@ const PostgresDBStorage = require('../storage/postgresDBStorage.js')
 const { createClerkClient } = require('@clerk/clerk-sdk-node')
 const namesTypes = require('../utils/associationsNames.js')
 const { filterUpdatedData } = require('../utils/functions.js')
+const { where } = require('sequelize')
 require('dotenv').config()
 
 const storage = new PostgresDBStorage()
@@ -161,7 +162,7 @@ class UserFacade {
 
   async deleteUser(id) {
     try {
-      const response = await storage.delete(UserModel, { id })
+      const response = await storage.delete(UserModel, { where: { id } })
 
       return response
     } catch (error) {
