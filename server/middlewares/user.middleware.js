@@ -335,7 +335,6 @@ async function validateDataValEmail(req, res, next) {
 
 async function validateAppLoginData(req, res, next) {
   const { email, clerk_id, username, password } = req.body
-  // console.log('body', req.body)
   if (!email) {
     const message = 'Debe ingresar un email.'
     return res.status(404).send({ message })
@@ -383,12 +382,6 @@ async function validateAppLoginData(req, res, next) {
   }
 
   if (!user) {
-    const checkUsername = await helper.getUserByUsername(sanitizeUsername(username))
-
-    if (checkUsername) {
-      const message = `Ya existe un usuario registrado con el username: '${username}'`
-      return res.status(404).send({ message })
-    }
 
     if (password) {
       user = await helper.createUser({ email, clerk_id, username, password })

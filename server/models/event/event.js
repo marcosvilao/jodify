@@ -53,6 +53,10 @@ const EventModel = sequelize.define(
       allowNull: false,
       defaultValue: true,
     },
+    discount: {
+      type: DataTypes.JSONB,
+      allowNull: true
+    }
   },
   {
     tableName: 'events',

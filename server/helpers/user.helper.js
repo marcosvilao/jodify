@@ -99,7 +99,6 @@ class UserHelper {
 
     userData.email = userData.email.toLowerCase()
 
-    userData.username = sanitizeUsername(userData.username)
 
     let newUser = await facade.createUser(userData)
 
