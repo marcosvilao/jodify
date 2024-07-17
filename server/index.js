@@ -42,20 +42,22 @@ app.set('trust proxy', true)
 
 // Middleware para verificar el origen y las IPs
 const originAndIPFilter = (req, res, next) => {
-  const origin = req.headers.origin
-  var ip = req.header('x-forwarded-for') || req.connection.remoteAddress
-  console.log('ip address', ip)
-  if (allowedOrigins.includes(origin)) {
-    res.setHeader('Access-Control-Allow-Origin', origin)
-    return next()
+  const origin = req.headers.origin;
+  var ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
+  console.log('ip address', ip);
+
+  // Verifica si '*' está presente en allowedOrigins o allowedIPs
+  if (allowedOrigins.includes('*') || allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin || '*');
+    return next();
   }
 
-  if (allowedIPs.includes(ip)) {
-    return next()
+  if (allowedIPs.includes('*') || allowedIPs.includes(ip)) {
+    return next();
   }
 
-  res.status(403).json({ message: 'Forbidden' })
-}
+  res.status(403).json({ message: 'Forbidden' });
+};
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
