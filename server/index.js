@@ -23,7 +23,9 @@ const allowedIPs = [
   '181.117.167.211',
   '181.46.138.66',
   '190.97.16.232',
+  '159.223.206.132',
   '::1',
+  '*'
 ]
 
 // Lista de dominios permitidos
@@ -32,6 +34,8 @@ const allowedOrigins = [
   'https://jodify-qa-client.vercel.app',
   'https://l.instagram.com/',
   'https://jodifynext.vercel.app',
+  'jodify://',
+  '*'
 ]
 
 app.set('trust proxy', true)
