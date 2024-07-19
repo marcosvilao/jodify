@@ -167,7 +167,7 @@ class EventFacade {
           values.push(firstDate, secondDate)
           paramCount += 2
         } else {
-          query += ` AND (e.date_from = $${paramCount})`
+          query += ` AND (e.date_from::date = $${paramCount}::date)`
           values.push(firstDate)
           paramCount++
         }
