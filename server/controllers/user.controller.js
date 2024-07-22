@@ -49,7 +49,7 @@ route.get('/check-username', async (req, res) => {
   }
 })
 
-route.get('/send-email-update-pass/:id', validateUserId, async (req, res) => {
+route.post('/send-email-update-pass', validateUserEmail, async (req, res) => {
   try {
     const { user } = res.locals
 
