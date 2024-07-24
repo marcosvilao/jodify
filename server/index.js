@@ -87,7 +87,7 @@ app.use((err, req, res, next) => {
 })
 
 sequelize
-  .sync({ alter: true })
+  .sync({ alter: false })
   .then(() => {
     app.listen(3001, () => console.log('listening on port 3001'))
   })
