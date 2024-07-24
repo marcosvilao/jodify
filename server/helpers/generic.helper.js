@@ -1,5 +1,4 @@
-const { GenericFacade } = require('../facade/generic.facade.js')
-const { v4: uuidv4 } = require('uuid')
+const GenericFacade = require('../facade/generic.facade.js')
 
 const facade = new GenericFacade()
 
@@ -19,7 +18,6 @@ class GenericHelper {
   }
 
   async createVenue(data) {
-    data.id = uuidv4()
     return await facade.createVenue(data)
   }
 
@@ -34,9 +32,11 @@ class GenericHelper {
   }
 
   async createDj(name) {
-    const id = uuidv4()
+    return await facade.createDj({ name })
+  }
 
-    return await facade.createDj(id, name)
+  async getDjByName(name) {
+    return await facade.getDjByName(name)
   }
 
   //----------------CITY--------------------------
@@ -53,9 +53,9 @@ class GenericHelper {
   }
 
   async createCity(name, latitude, longitude) {
-    const id = uuidv4()
+    const data = { city_name: name, latitude, longitude }
 
-    return await facade.createCity(id, name, latitude, longitude)
+    return await facade.createCity(data)
   }
   //---------------TYPES----------------------------
 

@@ -1,5 +1,4 @@
-const { PromoterFacade } = require('../facade/promoters.facade.js')
-const { v4: uuidv4 } = require('uuid')
+const PromoterFacade = require('../facade/promoters.facade.js')
 
 const facade = new PromoterFacade()
 
@@ -21,10 +20,6 @@ class PromoterHelper {
   }
 
   async createPromoter(data) {
-    const id = uuidv4()
-
-    data.id = id
-
     const newPromoter = await facade.createPromoter(data)
     return newPromoter
   }

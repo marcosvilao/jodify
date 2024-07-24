@@ -1,81 +1,70 @@
-const { removeAccents, formatDate } = require('../Brain/Utils.js')
-const pool = require('../db')
+const { Op, literal } = require('sequelize')
+const { parseISO, startOfDay, endOfDay } = require('date-fns')
+const { removeAccents } = require('../Brain/Utils.js')
+const {
+  EventModel,
+  DjModel,
+  TypeModel,
+  PromoterModel,
+  sequelize,
+} = require('../models/associations.js')
+const PostgresDBStorage = require('../storage/postgresDBStorage.js')
+const namesTypes = require('../utils/associationsNames.js')
+const { filterUpdatedData } = require('../utils/functions.js')
+
+const storage = new PostgresDBStorage()
 
 class EventFacade {
-  async getEventById(id) {
-    const query = `
-    WITH MinPriority AS (
-      SELECT ep.event_id, MIN(p.priority) AS priority
-      FROM event_promoters ep
-      JOIN promoters p ON p.id = ep.promoter_id
-      GROUP BY ep.event_id
-    ), EventDJs AS (
-      SELECT
-          ed.event_id,
-          jsonb_agg(
-              jsonb_build_object(
-                  'id', d.id,
-                  'name', d.name
-              ) ORDER BY d.name ASC
-          ) AS djs
-      FROM event_djs ed
-      JOIN djs d ON d.id = ed.dj_id
-      GROUP BY ed.event_id
-    ), EventTypes AS (
-      SELECT
-          et.event_id,
-          jsonb_agg(
-              jsonb_build_object(
-                  'id', t.id,
-                  'name', t.name
-              ) ORDER BY t.name ASC
-          ) AS types
-      FROM event_types et
-      JOIN types t ON t.id = et.type_id
-      GROUP BY et.event_id
-    )
-    SELECT 
-    e.*, 
-    COALESCE(mp.priority, 4) AS min_priority,
-    COALESCE(
-      jsonb_agg(
-        jsonb_build_object(
-          'id', p.id,
-          'name', p.name, 
-          'priority', p.priority, 
-          'instagram', p.instagram
-        ) ORDER BY p.priority ASC
-      ) FILTER (WHERE p.id IS NOT NULL),
-      '[]'
-    ) AS promoters,
-    COALESCE(ed.djs, '[]') AS djs,
-    COALESCE(et.types, '[]') AS types
-    FROM events e 
-    LEFT JOIN MinPriority mp ON e.id = mp.event_id
-    LEFT JOIN event_promoters ep ON e.id = ep.event_id
-    LEFT JOIN promoters p ON p.id = ep.promoter_id
-    LEFT JOIN EventDJs ed ON e.id = ed.event_id
-    LEFT JOIN EventTypes et ON e.id = et.event_id
-    WHERE e.id = $1
-    GROUP BY e.id, mp.priority, ed.djs, et.types
-    `
+  async getEventById(id, eventInstance) {
+    try {
+      const filter = {}
 
-    const values = [id]
+      filter.where = { id }
 
-    const event = await pool.query(query, values)
+      filter.include = [
+        {
+          model: DjModel,
+          attributes: ['id', 'name'],
+          through: { attributes: [] },
+          as: namesTypes.Dj,
+        },
+        {
+          model: TypeModel,
+          attributes: ['id', 'name'],
+          through: { attributes: [] },
+          as: namesTypes.Type,
+        },
+        {
+          model: PromoterModel,
+          attributes: ['id', 'name', 'priority', 'instagram'],
+          through: { attributes: [] },
+          as: namesTypes.Promoter,
+        },
+      ]
 
-    if (!event) return null
+      // console.log('Is event instance of EventModel:', event instanceof EventModel)
+      // console.log('Methods for event:', Object.keys(event.__proto__))
 
-    return event.rows[0]
+      const event = await storage.findOne(EventModel, filter)
+
+      if (!event) return null
+
+      if (eventInstance) {
+        return event
+      }
+
+      return event.dataValues
+    } catch (error) {
+      console.log('get event by id err', { err: error })
+    }
   }
 
   async getEventCount(argentinaTime) {
     try {
-      const res = await pool.query(
-        'SELECT COUNT(*) FROM events WHERE is_active = true AND date_from >= $1',
-        [argentinaTime]
-      )
-      return res.rows[0].count
+      const filter = { where: { [Op.and]: [{ is_active: true }, { date_from: argentinaTime }] } }
+      const res = await storage.count(EventModel, filter)
+
+      return res
     } catch (err) {
       console.error('Error executing query', err.stack)
     }
@@ -95,292 +84,212 @@ class EventFacade {
       promoterId,
     } = data
 
-    let query = `
-    WITH MinPriority AS (
-      SELECT ep.event_id, MIN(p.priority) AS priority
-      FROM event_promoters ep
-      JOIN promoters p ON p.id = ep.promoter_id
-      GROUP BY ep.event_id
-    ), EventDJs AS (
-      SELECT
-          ed.event_id,
-          jsonb_agg(
-              jsonb_build_object(
-                  'id', d.id,
-                  'name', d.name
-              ) ORDER BY d.name ASC
-          ) AS djs
-      FROM event_djs ed
-      JOIN djs d ON d.id = ed.dj_id
-      GROUP BY ed.event_id
-    ), EventTypes AS (
-      SELECT
-          et.event_id,
-          jsonb_agg(
-              jsonb_build_object(
-                  'id', t.id,
-                  'name', t.name
-              ) ORDER BY t.name ASC
-          ) AS types
-      FROM event_types et
-      JOIN types t ON t.id = et.type_id
-      GROUP BY et.event_id
-    )
-    SELECT 
-    e.*, 
-    COALESCE(mp.priority, 4) AS min_priority,
-    COALESCE(
-      jsonb_agg(
-        jsonb_build_object(
-          'id', p.id,
-          'name', p.name, 
-          'priority', p.priority, 
-          'instagram', p.instagram
-        ) ORDER BY p.priority ASC
-      ) FILTER (WHERE p.id IS NOT NULL),
-      '[]'
-    ) AS promoters,
-    COALESCE(ed.djs, '[]') AS djs,
-    COALESCE(et.types, '[]') AS types
-    FROM events e 
-    LEFT JOIN MinPriority mp ON e.id = mp.event_id
-    LEFT JOIN event_promoters ep ON e.id = ep.event_id
-    LEFT JOIN promoters p ON p.id = ep.promoter_id
-    LEFT JOIN EventDJs ed ON e.id = ed.event_id
-    LEFT JOIN EventTypes et ON e.id = et.event_id
-    WHERE e.is_active = TRUE
-    `
-    const values = []
-    let paramCount = 1
+    try {
+      const filter = {
+        where: {
+          is_active: true,
+          date_from: { [Op.gte]: argentinaTime },
+        },
+        include: [
+          {
+            model: DjModel,
+            attributes: ['id', 'name'],
+            through: { attributes: [] },
+            as: namesTypes.Dj,
+          },
+          {
+            model: TypeModel,
+            attributes: ['id', 'name'],
+            through: { attributes: [] },
+            as: namesTypes.Type,
+          },
+          {
+            model: PromoterModel,
+            attributes: ['id', 'name', 'priority', 'instagram'],
+            through: { attributes: [] },
+            as: namesTypes.Promoter,
+            where: promoterId ? { id: promoterId } : undefined,
+          },
+        ],
+        order: [['date_from', 'ASC']],
+      }
 
-    if (promoterId) {
-      query += ` AND p.id = $${paramCount} AND e.is_active = TRUE`
-      values.push(String(promoterId))
-      paramCount++
-    } else {
       if (dates && dates.length === 2) {
-        const [date1, date2] = dates
-        const firstDate = formatDate(date1)
-        const secondDate = formatDate(date2)
-        if (firstDate !== secondDate) {
-          query += ` AND e.date_from >= $${paramCount} AND e.date_from <= $${paramCount + 1}`
-          values.push(firstDate, secondDate)
-          paramCount += 2
+        const [date1, date2] = dates.map((date) => parseISO(new Date(date).toISOString()))
+
+        if (date1 !== date2) {
+          filter.where.date_from = {
+            [Op.between]: [startOfDay(date1), endOfDay(date2)],
+          }
         } else {
-          query += ` AND (e.date_from::date = $${paramCount}::date)`
-          values.push(firstDate)
-          paramCount++
+          filter.where.date_from = {
+            [Op.eq]: startOfDay(date1),
+          }
         }
       } else if (status) {
-        query += ` AND (e.date_from < $${paramCount})`
-        values.push(argentinaTime)
-        paramCount++
-      } else {
-        query += ` AND (e.date_from >= $${paramCount})`
-        values.push(argentinaTime)
-        paramCount++
+        filter.where.date_from = {
+          [Op.lt]: argentinaTime,
+        }
       }
+
+      if (citiesId && citiesId.length > 0) {
+        filter.where.city_id = {
+          [Op.in]: citiesId,
+        }
+      }
+
+      if (typesId && typesId.length > 0) {
+        filter.include.push({
+          model: TypeModel,
+          attributes: ['id', 'name'],
+          through: { attributes: [] },
+          where: { id: typesId },
+          as: namesTypes.Type,
+        })
+      }
+
+      if (search) {
+        const searchWithoutAccents = removeAccents(search)
+        const searchCondition = literal(`
+          EXISTS (
+            SELECT 1 FROM event_djs ed
+            JOIN djs dj ON ed.dj_id = dj.id
+            WHERE ed.event_id = "Event".id AND unaccent(lower(dj.name)) ILIKE unaccent(lower('%${searchWithoutAccents}%')) AND "Event".date_from >= '${argentinaTime}'
+          ) OR EXISTS (
+            SELECT 1 FROM event_types et
+            JOIN types tp ON et.type_id = tp.id
+            WHERE et.event_id = "Event".id AND unaccent(lower(tp.name)) ILIKE unaccent(lower('%${searchWithoutAccents}%')) AND "Event".date_from >= '${argentinaTime}'
+          ) OR EXISTS (
+            SELECT 1 FROM event_promoters ep
+            JOIN promoters p ON ep.promoter_id = p.id
+            WHERE ep.event_id = "Event".id AND unaccent(lower(p.name)) ILIKE unaccent(lower('%${searchWithoutAccents}%')) AND "Event".date_from >= '${argentinaTime}'
+          ) OR unaccent(lower("Event".name)) ILIKE unaccent(lower('%${searchWithoutAccents}%')) AND "Event".date_from >= '${argentinaTime}' OR unaccent(lower("Event".venue)) ILIKE unaccent(lower('%${searchWithoutAccents}%')) AND "Event".date_from >= '${argentinaTime}'
+        `)
+        filter.where[Op.and] = searchCondition
+      }
+
+      if (sharedId) {
+        filter.where[Op.or] = [
+          { id: sharedId },
+          {
+            [Op.and]: [
+              {
+                date_from: {
+                  [Op.eq]: literal(`(SELECT date_from FROM events WHERE id = '${sharedId}')`),
+                },
+              },
+              { id: { [Op.ne]: sharedId } },
+            ],
+          },
+        ]
+      }
+
+      if (limit) {
+        filter.limit = limit
+      }
+
+      if (setOff) {
+        filter.offset = setOff
+      }
+
+      const result = await storage.find(EventModel, filter)
+
+      if (!result) return []
+      return result
+    } catch (error) {
+      console.log('filters events err', { err: error })
     }
-
-    if (citiesId && citiesId.length > 0) {
-      const cityPlaceholders = citiesId.map((_, index) => `$${paramCount + index}`).join(', ')
-      query += ` AND e.city_id IN (${cityPlaceholders})`
-      values.push(...citiesId)
-      paramCount += citiesId.length
-    } else {
-      query += ' AND (e.city_id IS NULL OR e.city_id = e.city_id)'
-    }
-
-    if (typesId && typesId.length > 0) {
-      const typePlaceholders = typesId.map((_, index) => `$${paramCount + index}`).join(', ')
-      query += ` AND EXISTS (
-        SELECT 1 FROM event_types et
-        WHERE et.event_id = e.id AND et.type_id IN (${typePlaceholders})
-      )`
-      values.push(...typesId)
-      paramCount += typesId.length
-    }
-
-    if (search) {
-      const searchWithoutAccents = removeAccents(search)
-      query += ` AND (
-        unaccent(lower(e.name)) ILIKE unaccent(lower($${paramCount}))
-        OR unaccent(lower(e.venue)) ILIKE unaccent(lower($${paramCount}))
-        OR EXISTS (
-          SELECT 1 FROM event_djs ed
-          JOIN djs dj ON ed.dj_id = dj.id
-          WHERE ed.event_id = e.id AND unaccent(lower(dj.name)) ILIKE unaccent(lower($${paramCount}))
-        )
-        OR EXISTS (
-          SELECT 1 FROM event_types et
-          JOIN types tp ON et.type_id = tp.id
-          WHERE et.event_id = e.id AND unaccent(lower(tp.name)) ILIKE unaccent(lower($${paramCount}))
-        )
-        OR EXISTS (
-          SELECT 1 FROM event_promoters ep
-          JOIN promoters p ON ep.promoter_id = p.id
-          WHERE ep.event_id = e.id AND unaccent(lower(p.name)) ILIKE unaccent(lower($${paramCount}))
-        )
-      )`
-      values.push(`%${searchWithoutAccents}%`)
-      paramCount++
-    }
-
-    if (sharedId) {
-      query += ` AND (e.id = $${paramCount} OR (e.date_from = (SELECT date_from FROM events WHERE id = $${paramCount}) AND e.id != $${paramCount}))`
-      values.push(sharedId)
-      paramCount++
-    }
-
-    query += ` GROUP BY e.id, mp.priority, ed.djs, et.types ORDER BY e.date_from ASC, mp.priority ASC, e.id ASC ${
-      sharedId || !limit ? '' : `LIMIT ${limit}`
-    } OFFSET $${paramCount}`
-
-    values.push(setOff)
-    const result = await pool.query(query, values)
-
-    if (!result) return []
-    return result.rows
   }
 
   async getEventByTicketLink(link) {
-    const query = 'SELECT ticket_link FROM events WHERE ticket_link = $1'
-    const valuesLink = [link]
+    try {
+      const filter = {}
 
-    const event = await pool.query(query, valuesLink)
+      filter.where = { ticket_link: link }
 
-    if (!event) return null
-    return event.rows[0]
+      const event = await storage.find(EventModel, filter)
+
+      if (!event || !event[0]) return null
+      return event[0].dataValues
+    } catch (error) {
+      console.log('get ticket link err', { err: error })
+    }
   }
 
   async searchEvent(searchQuery) {
-    const query = `
-        SELECT * FROM events
-        WHERE name ILIKE $1
-           OR venue ILIKE $1
-           OR event_type ILIKE $1
-           OR $1 = ANY(event_djs);
-        `
+    try {
+      const filter = {}
 
-    const values = [`%${searchQuery}%`] // Using ILIKE for case-insensitive search
+      filter.where[Op.or] = [
+        { name: { [Op.iLike]: `%${searchQuery}%` } },
+        { venue: { [Op.iLike]: `%${searchQuery}%` } },
+        { '$Types.name$': { [Op.iLike]: `%${searchQuery}%` } },
+        { '$Djs.name': { [Op.any]: `%${searchQuery}%` } },
+      ]
 
-    const result = await pool.query(query, values)
+      const result = await storage.find(EventModel, filter)
 
-    if (!result) return []
+      if (!result) return []
 
-    return result.rows
+      return result
+    } catch (error) {
+      console.log('search event err', { err: error })
+    }
   }
 
-  async createEvent(values) {
-    const query = `
-          INSERT INTO events(id, name, date_from, venue, ticket_link, image, city_id)
-          VALUES($1, $2, $3, $4, $5, $6, $7)
-          RETURNING id;
-      `
+  async createEvent(data) {
+    try {
+      const newEvent = await storage.create(EventModel, data)
+      if (!newEvent) return null
 
-    const newEvent = await pool.query(query, values)
-
-    if (!newEvent) return null
-
-    return newEvent.rows[0].id
+      return newEvent
+    } catch (error) {
+      console.log('err create event', { err: error })
+    }
   }
 
-  async relationshipEventId(ids, query1, query2) {
-    const query = `
-          INSERT INTO public.${query1}(event_id, ${query2})
-          VALUES ($1, $2);
-        `
-    await pool.query(query, ids)
+  async relationshipEvent(event, relationMethod, id) {
+    try {
+      await storage.relationship(event, relationMethod, id)
+    } catch (error) {
+      console.log('relation event err', { err: error })
+    }
   }
 
   async updateEvent(id, data) {
-    const { name, venue, date_from, event_city, ticket_link, image } = data
+    try {
+      const filteredData = filterUpdatedData(data)
+      const [numberUpdatedRows, [eventUpdated]] = await storage.update(EventModel, filteredData, {
+        where: { id },
+        returning: true,
+      })
 
-    const setParts = []
-    const values = []
-    let paramIndex = 1
+      if (numberUpdatedRows === 0) return null
 
-    if (name) {
-      setParts.push(`name = $${paramIndex}`)
-      values.push(name)
-      paramIndex++
+      return eventUpdated
+    } catch (error) {
+      console.log('update event err', { err: error })
     }
-    if (date_from) {
-      setParts.push(`date_from = $${paramIndex}`)
-      values.push(date_from)
-      paramIndex++
-    }
-    if (ticket_link) {
-      setParts.push(`ticket_link = $${paramIndex}`)
-      values.push(ticket_link)
-      paramIndex++
-    }
-    if (image) {
-      setParts.push(`image = $${paramIndex}`)
-      values.push(JSON.stringify(image))
-      paramIndex++
-    }
-    if (venue) {
-      setParts.push(`venue = $${paramIndex}`)
-      values.push(venue)
-      paramIndex++
-    }
-    if (event_city) {
-      setParts.push(`city_id = $${paramIndex}`)
-      values.push(event_city)
-      paramIndex++
-    }
-
-    setParts.push(`updatedAt = CURRENT_TIMESTAMP`)
-
-    const setClause = setParts.join(', ')
-    const query = `UPDATE events SET ${setClause} WHERE id = $${paramIndex} RETURNING *;`
-    values.push(id)
-
-    const eventUpdated = await pool.query(query, values)
-
-    if (!eventUpdated || !eventUpdated.rows[0]) return null
-    return eventUpdated.rows[0]
   }
 
-  async updateRelationshipEvent(table, column, id, arr_ids) {
-    // try {
-    //   const query = `UPDATE ${table} SET ${column} = $1 WHERE event_id = $2;`
-
-    //   await pool.query(query, [id, event_id])
-    // } catch (error) {
-    //   console.log('err', { err: error.message })
-    // }
-
+  async updateRelationshipEvent(event, associationMethod, arr_ids) {
+    const transactions = await sequelize.transaction()
     try {
-      // Paso 1: Eliminar todas las relaciones existentes para el evento especificado
-      const deleteQuery = `DELETE FROM ${table} WHERE event_id = $1;`
-      await pool.query(deleteQuery, [id])
+      // Paso 2: Usar el método de asociación para actualizar las relaciones
+      await event[associationMethod](arr_ids, { transaction: transactions })
 
-      // Paso 2: Insertar las nuevas relaciones
-      const insertQuery = `INSERT INTO ${table} (event_id, ${column}) VALUES ($1, $2);`
-
-      // Usa una transacción para asegurar que todas las operaciones sean atómicas
-      await pool.query('BEGIN')
-      for (const ID of arr_ids) {
-        await pool.query(insertQuery, [id, ID])
-      }
-      await pool.query('COMMIT')
+      // Paso 3: Confirmar la transacción
+      await transactions.commit()
     } catch (error) {
-      await pool.query('ROLLBACK')
-      console.log('err', { err: error.message })
+      // Paso 4: Revertir la transacción en caso de error
+      await transactions.rollback()
+      console.error('Error updating relationships:', error.message)
     }
   }
 
   async updateEventInteraction(id, interaction) {
-    console.log('id', id)
-    console.log('interaction', interaction)
-
-    const query = 'UPDATE events SET interactions = $1 WHERE id = $2'
-    const values = [interaction, id]
-
     try {
-      await pool.query(query, values)
+      await storage.update(EventModel, { interactions: interaction }, { where: { id } })
       console.log('Event interaction updated successfully')
     } catch (error) {
       console.error('Error updating event interaction:', error)
@@ -388,18 +297,48 @@ class EventFacade {
   }
 
   async deleteEvent(id) {
-    const query = `
-      UPDATE events
-      SET is_active = false
-      WHERE id = $1;
-    `
-    const values = [id]
-
     try {
-      await pool.query(query, values)
+      await storage.update(EventModel, { is_active: false }, { where: { id } })
     } catch (error) {
       console.error('Error updating event to inactive:', error)
       throw error
+    }
+  }
+
+  async setFeaturedEvent(id, isFeatured) {
+    try {
+      const [numberUpdatedRows, [eventUpdated]] = await storage.update(
+        EventModel,
+        { is_featured: !isFeatured },
+        { where: { id }, returning: true }
+      )
+      if (numberUpdatedRows === 0) return null
+
+      return eventUpdated.is_featured
+    } catch (error) {
+      console.error('Error fetching featured events:', error)
+      // throw error
+    }
+  }
+
+  async getFeaturedEvents() {
+    const filter = {}
+
+    filter.where = { is_featured: true }
+
+    filter.limit = 10
+
+    filter.order = literal('RANDOM()')
+
+    try {
+      const featuredEvents = await storage.find(EventModel, filter)
+
+      if (!featuredEvents) return []
+
+      return featuredEvents
+    } catch (error) {
+      console.error('Error fetching featured events:', error)
+      // throw error
     }
   }
 }

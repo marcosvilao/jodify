@@ -1,56 +1,46 @@
-const pool = require("../db");
-const { v4: uuidv4 } = require("uuid");
+const { Router } = require('express')
+const { PromoterHelper } = require('../helpers/promoters.helper.js')
+const { validateCreatePromoterData } = require('../middlewares/promoters.middleware.js')
+const { scrapInstagram } = require('../Brain/scrappingPromoterIG.js')
+const route = Router()
 
-const getPromoters = async (req, res, next) => {
+const helper = new PromoterHelper()
+
+route.get('/', async (req, res) => {
   try {
-    const allPromoters = await pool.query(
-      'SELECT * FROM promoters ORDER BY "name" ASC'
-    );
+    const promoters = await helper.getPromoters()
 
-    if (allPromoters.rows) {
-      res.status(200).json(allPromoters.rows);
-    } else {
-      res.status(404).send({
-        message: "Cannot receive promoters from Database, please try again",
-      });
-    }
+    return res.status(200).send(promoters)
   } catch (error) {
-    next(error);
+    res.status(500).send({ message: error.message })
   }
-};
+})
 
-const postPromoters = async (req, res) => {
+route.post('/create-promoter', validateCreatePromoterData, async (req, res) => {
+  const { data } = res.locals
+
   try {
-    var { name, instagram, priority } = req.body;
-    var id = uuidv4();
+    await helper.createPromoter(data)
 
-    if (!name || !instagram || !priority) {
-      res.status(400).send("Faltan enviar datos obligatorios");
-    } else {
-      const queryIg = "SELECT instagram FROM promoters WHERE instagram = $1";
-      const valuesIg = [instagram];
-
-      let duplicatePromoter = await pool.query(queryIg, valuesIg);
-      duplicatePromoter = duplicatePromoter.rows;
-      if (
-        duplicatePromoter.length > 0) {
-        res.status(404).send({ message: "Ya existe esta productora" });
-        return;
-      }
-
-      const queryString = `INSERT INTO promoters (name, instagram, priority, id) VALUES ($1, $2, $3, $4)`;
-      const values = [name, instagram, priority, id];
-      const { rows } = await pool.query(queryString, values);
-
-      res.status(201).send(`Productora creada correctamente`);
-    }
+    return res.status(200).send('productora creada correctamente')
   } catch (error) {
-    console.error("Error interno del servidor:", error);
-    res.status(500).send("Error interno del servidor");
+    res.status(500).send({ message: error.message })
   }
-};
+})
 
-module.exports = {
-  getPromoters,
-  postPromoters,
-};
+route.post('/scrapping-promoter', async (req, res) => {
+  try {
+    const { username, password } = req.body
+    if (!username || !password) {
+      return res.status(404).send({ response: 'falta ingresar username y password' })
+    }
+
+    await scrapInstagram(username, password)
+
+    return res.status(200).send({ message: 'scrapping de Ig finalizado :)' })
+  } catch (error) {
+    res.status(500).send({ message: error.message })
+  }
+})
+
+module.exports = route

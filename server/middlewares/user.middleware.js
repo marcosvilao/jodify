@@ -3,6 +3,7 @@ const { PromoterHelper } = require('../helpers/promoters.helper.js')
 const bcrypt = require('bcryptjs')
 const { UUIDV4RegEx } = require('../utils/regex.js')
 const jwt = require('jsonwebtoken')
+const { sanitizeUsername } = require('../utils/functions.js')
 
 const helper = new UserHelper()
 const helperPromoter = new PromoterHelper()
@@ -43,6 +44,13 @@ async function validateDataUserCreate(req, res, next) {
 
   let promoter = null
 
+  const checkUsername = await helper.getUserByUsername(sanitizeUsername(username))
+
+  if (checkUsername) {
+    const message = `Ya existe un usuario registrado con el username: '${username}'`
+    return res.status(404).send({ message })
+  }
+
   if (instagram) {
     if (typeof instagram === 'string' && instagram[0] === '@') {
       instagram = instagram.slice(1)
@@ -61,7 +69,11 @@ async function validateDataUserCreate(req, res, next) {
         return res.status(404).send({ message })
       }
 
-      promoter = await helperPromoter.createPromoter({ instagram, priority, name })
+      promoter = await helperPromoter.createPromoter({
+        instagram,
+        priority,
+        name,
+      })
 
       if (!promoter) {
         const message = 'Error al crear productora.'
@@ -88,6 +100,12 @@ async function validateDataUserAuth0Create(req, res, next) {
     const message = `Ya existe un usuario registrado con el email: '${email}'`
     return res.status(404).send({ message })
   }
+  const checkUsername = await helper.getUserByUsername(sanitizeUsername(username))
+
+  if (checkUsername) {
+    const message = `Ya existe un usuario registrado con el username: '${username}'`
+    return res.status(404).send({ message })
+  }
 
   let promoter = null
 
@@ -104,7 +122,11 @@ async function validateDataUserAuth0Create(req, res, next) {
         return res.status(404).send({ message })
       }
 
-      promoter = await helperPromoter.createPromoter({ instagram, priority, name })
+      promoter = await helperPromoter.createPromoter({
+        instagram,
+        priority,
+        name,
+      })
 
       if (!promoter) {
         const message = 'Error al crear productora.'
@@ -214,6 +236,15 @@ async function validateDataUpdateUser(req, res, next) {
     return res.status(404).send({ message })
   }
 
+  if (username && username !== user.username) {
+    const checkUsername = await helper.getUserByUsername(sanitizeUsername(username))
+
+    if (checkUsername) {
+      const message = `Ya existe un usuario registrado con el username: '${username}'`
+      return res.status(404).send({ message })
+    }
+  }
+
   let promoter = null
 
   if (instagram || promoter_name) {
@@ -300,28 +331,137 @@ async function validateDataValEmail(req, res, next) {
   next()
 }
 
-async function validateDataClerkEmail(req, res, next) {
-  const { email } = req.body
-  console.log(email)
+//------------------------------APP-------------------------------------------
+
+async function validateAppLoginData(req, res, next) {
+  const { email, clerk_id, username, password } = req.body
   if (!email) {
     const message = 'Debe ingresar un email.'
     return res.status(404).send({ message })
   }
 
-  const user = await helper.getUserByClerkEmail(email)
+  let user = await helper.getUserByEmail(email.toLowerCase())
 
-  if (user) {
-    const message = `Existe un usuario registrado con el email: ${email}.`
-    return res.status(200).send({exist: true, passwordEnabled: user.passwordEnabled, message })
-  } else {
-    const message = `No existe un usuario registrado con el email: ${email}.`
-    return res.status(200).send({exist: false, message })
+  // console.log('user 1', user)
+
+  if (user && password) {
+    const validatePass = await bcrypt.compare(password, user.password)
+
+    if (!validatePass) {
+      const message = 'Contraseña incorrecta.'
+      return res.status(404).send({ message })
+    }
+
+    if (!user.clerk_id) {
+      let clerkId = null
+
+      const userClerkByEmail = await helper.getUserByClerkEmail(email.toLowerCase())
+
+      console.log('user clerk eail', userClerkByEmail)
+
+      if (!userClerkByEmail) {
+        const userClerk = await helper.createUserInClerk(
+          email,
+          password,
+          sanitizeUsername(user.username)
+        )
+
+        if (!userClerk) {
+          const message = 'No se creo el usuario en clerk.'
+          return res.status(404).send({ message })
+        }
+
+        clerkId = userClerk._User.id
+        // console.log('clerkId', clerkId)
+      } else {
+        clerkId = userClerkByEmail.id
+      }
+
+      user = await helper.updateUser(user.id, { clerk_id: clerkId })
+    }
   }
 
-  res.locals.data = { email }
+  if (!user) {
+
+    if (password) {
+      user = await helper.createUser({ email, clerk_id, username, password })
+    } else {
+      user = await helper.createUserAuth0({ email, clerk_id, username })
+    }
+
+    if (!user) {
+      const message = 'Error al crear usuario.'
+      return res.status(404).send({ message })
+    }
+    // console.log('user 2', user)
+  }
+
+  if (!user.clerk_id && clerk_id) {
+    user = await helper.updateUser(user.id, { clerk_id })
+
+    if (!user) {
+      const message = 'Error al actualizar usuario.'
+      return res.status(404).send({ message })
+    }
+    // console.log('user 3', user)
+  }
+
+  res.locals.user = user
   next()
 }
 
+async function validateAppEmail(req, res, next) {
+  const { email } = req.body
+
+  console.log('e', email)
+  if (!email) {
+    const message = 'Debe ingresar un email.'
+    return res.status(404).send({ message })
+  }
+
+  const user = await helper.getUserByEmail(email.toLowerCase())
+  const userClerk = await helper.getUserByClerkEmail(email.toLowerCase())
+
+  console.log('user C', userClerk)
+  if (user) {
+    const message = `Existe un usuario registrado con el email: ${email}.`
+    return res.status(200).send({ exist: true, passwordEnabled: !!user.password, message })
+  }
+
+  res.locals.email = { email }
+  next()
+}
+
+async function validateDataUpdateUserApp(req, res, next) {
+  const { password, username, email } = req.body
+  const { user } = res.locals
+
+  if ((password || email) && !user.password) {
+    const message = `El usuario con email: ${user.email} se registro con google. No puede cambiar password o email.`
+    return res.status(404).send({ message })
+  }
+
+  res.locals.data = {
+    password: password ?? null,
+    username: username,
+    email: email ?? null,
+    clerk_id: user.clerk_id,
+  }
+  next()
+}
+
+async function validateUserDelete(req, res, next) {
+  const { user } = res.locals
+
+  console.log('user', user)
+
+  if (user.promoter_id) {
+    const message = `La productora ${user.email} no puede eliminar la cuenta.`
+    return res.status(404).send({ message })
+  }
+
+  next()
+}
 
 module.exports = {
   validateUserId,
@@ -334,5 +474,8 @@ module.exports = {
   validateDataForgetPassword,
   validateDataValEmail,
   validateUserTypePromoter,
-  validateDataClerkEmail
+  validateAppEmail,
+  validateAppLoginData,
+  validateDataUpdateUserApp,
+  validateUserDelete,
 }

@@ -1,121 +1,173 @@
-const pool = require('../db')
-const {createClerkClient }  = require('@clerk/clerk-sdk-node');
-require('dotenv').config();
+const { PromoterModel, UserModel } = require('../models/associations.js')
+const PostgresDBStorage = require('../storage/postgresDBStorage.js')
+const { createClerkClient } = require('@clerk/clerk-sdk-node')
+const namesTypes = require('../utils/associationsNames.js')
+const { filterUpdatedData } = require('../utils/functions.js')
+require('dotenv').config()
 
+const storage = new PostgresDBStorage()
 
 const Clerk = new createClerkClient({
   secretKey: process.env.CLERK_SECRET_KEY,
-});
-console.log(process.env.CLERK_SECRET_KEY)
+})
+
 class UserFacade {
   async getUserById(id) {
     try {
-      const query = `
-        SELECT u.*, p.name, p.instagram
-        FROM users u
-        LEFT JOIN promoters p ON u.promoter_id = p.id
-        WHERE u.id = $1
-      `;
-      const user = await pool.query(query, [id]);
-      if (!user || !user.rows[0]) return null;
-      return user.rows[0];
+      const filter = {}
+
+      filter.where = { id }
+
+      filter.include = [
+        {
+          model: PromoterModel,
+          attributes: ['id', 'name', 'priority', 'instagram'],
+          as: namesTypes.Promoter,
+        },
+      ]
+
+      const user = await storage.find(UserModel, filter)
+
+      if (!user || !user[0]) return null
+      return user[0].dataValues
     } catch (error) {
-      console.error('Error fetching user by id:', error);
-      throw error;
+      console.error('Error fetching user by id:', error)
+      //   throw error
     }
   }
-  
+
+  async getUserByClerkId(id) {
+    try {
+      const user = await storage.find(UserModel, { where: { clerk_id: id } })
+      if (!user || !user[0]) return null
+      return user[0].dataValues
+    } catch (error) {
+      console.error('Error fetching user by clerk_id:', error)
+      //   throw error
+    }
+  }
 
   async getUserByEmail(email) {
-    const query = `SELECT * FROM users WHERE email = $1`
-    const user = await pool.query(query, [email])
+    try {
+      const user = await storage.find(UserModel, { where: { email } })
 
-    if (!user || !user.rows[0]) return null
-    return user.rows[0]
+      if (!user || !user[0]) return null
+      return user[0].dataValues
+    } catch (error) {
+      console.error('Error get user by email', error)
+    }
+  }
 
-    //   const query = `
-    //   SELECT
-    //     u.*,
-    //     p.*
-    //   FROM
-    //     users u
-    //   LEFT JOIN
-    //     promoters p ON u.promoter_id = p.id
-    //   WHERE
-    //     u.email = $1
-    // `
+  async getUserByUsername(username) {
+    try {
+      const user = await storage.find(UserModel, { where: { username } })
 
-    //   const result = await pool.query(query, [email])
-
-    //   if (!result || !result.rows[0]) return null
-
-    //   return result.rows[0]
+      if (!user || !user[0]) return null
+      return user[0].dataValues
+    } catch (error) {
+      console.error('Error get user by username', error)
+    }
   }
 
   async getUserByClerkEmail(email) {
     try {
-      const response = await Clerk.users.getUserList({ emailAddress: email });
-  
+      const response = await Clerk.users.getUserList({ emailAddress: email })
+
       if (response.totalCount > 0) {
         return {
-          passwordEnabled: response.data[0].passwordEnabled
+          passwordEnabled: response.data[0].passwordEnabled,
+          id: response.data[0].id,
         }
       } else {
         return false
       }
     } catch (error) {
-      console.error('Error checking email:', error);
+      console.error('Error checking email:', error)
     }
   }
 
-
-  async createUser(data) {
-    const query = `INSERT INTO users (id, username, password, email, phone) VALUES ($1, $2, $3, $4, $5) RETURNING *`
-
-    const { id, username, email, password, phone } = data
-
-    const newUser = await pool.query(query, [id, username, password, email, phone])
-
-    if (!newUser || !newUser.rows[0]) return null
-
-    return newUser.rows[0]
+  async createUserInClerk(email, password, username) {
+    try {
+      const user = await Clerk.users.createUser({
+        emailAddress: [email],
+        password: password,
+        username: username,
+      })
+      // console.log('User created in Clerk:', user)
+      if (!user || !user._User || !user._User.id) {
+        console.log('Clerk no retorno el id')
+        return null
+      }
+      return user
+    } catch (error) {
+      console.error('Error creating user in Clerk:', error)
+    }
   }
 
-  async createUserAuth0(data) {
-    const query = `INSERT INTO users (id, username, email, phone) VALUES ($1, $2, $3, $4) RETURNING *`
+  async updateUserInClerk(userId, data) {
+    try {
+      const filteredData = Object.fromEntries(
+        Object.entries(data).filter(([_, value]) => value !== null)
+      )
 
-    const { id, username, email, phone } = data
+      // console.log('filter', filteredData)
 
-    const newUser = await pool.query(query, [id, username, email, phone])
+      const user = await Clerk.users.updateUser(userId, filteredData)
+      // console.log('User updated in Clerk:', user)
+      return user
+    } catch (error) {
+      console.error('Error updating user in Clerk:', error)
+      return null
+    }
+  }
 
-    if (!newUser || !newUser.rows[0]) return null
+  async deleteUserInClerk(userId) {
+    try {
+      const response = await Clerk.users.deleteUser(userId)
+      console.log('User deleted in Clerk:', response)
+      return response
+    } catch (error) {
+      console.error('Error delete user in Clerk:', error)
+      return null
+    }
+  }
 
-    return newUser.rows[0]
+  async createUser(data) {
+    try {
+      const newUser = await storage.create(UserModel, data)
+
+      if (!newUser) return null
+
+      return newUser
+    } catch (error) {
+      console.error('Error create user', error)
+    }
   }
 
   async updateUser(id, data) {
-    const { password, username, phone, promoter_id } = data
+    try {
+      const filteredData = filterUpdatedData(data)
+      const [numberUpdatedRows, [userUpdated]] = await storage.update(UserModel, filteredData, {
+        where: { id },
+        returning: true,
+      })
 
-    const setParts = []
+      if (numberUpdatedRows === 0) return null
+      return userUpdated.dataValues
+    } catch (error) {
+      console.error('Error update user', error)
+    }
+  }
 
-    if (promoter_id) setParts.push(`promoter_id = '${promoter_id}'`)
-    if (password) setParts.push(`password = '${password}'`)
-    if (username) setParts.push(`username = '${username}'`)
-    if (phone) setParts.push(`phone = '${phone}'`)
+  async deleteUser(id) {
+    try {
+      const response = await storage.delete(UserModel, { where: { id } })
 
-    setParts.push(`updatedAt = CURRENT_TIMESTAMP`)
-
-    const setClause = setParts.join(', ')
-
-    const query = `UPDATE users SET ${setClause} WHERE id = '${id}' RETURNING *;`
-
-    const userUpdated = await pool.query(query)
-
-    if (!userUpdated || !userUpdated.rows[0]) return null
-    return userUpdated.rows[0]
+      return response
+    } catch (error) {
+      console.error('Error delete user', error)
+    }
   }
 }
 
-module.exports = {
-  UserFacade,
-}
+module.exports = UserFacade
