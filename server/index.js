@@ -20,12 +20,14 @@ const allowedIPs = [
   '::ffff:10.0.0.185',
   '::ffff:192.168.2.2',
   '::ffff:192.168.2.3',
+  '::ffff:192.168.2.4',
   '181.117.167.211',
   '181.46.138.66',
   '190.97.16.232',
   '159.223.206.132',
   '::1',
-  '*'
+
+  // '*',
 ]
 
 // Lista de dominios permitidos
@@ -34,30 +36,30 @@ const allowedOrigins = [
   'https://jodify-qa-client.vercel.app',
   'https://l.instagram.com/',
   'https://jodifynext.vercel.app',
-  'jodify://',
-  '*'
+
+  // '*',
 ]
 
 app.set('trust proxy', true)
 
 // Middleware para verificar el origen y las IPs
 const originAndIPFilter = (req, res, next) => {
-  const origin = req.headers.origin;
-  var ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
-  console.log('ip address', ip);
+  const origin = req.headers.origin
+  var ip = req.header('x-forwarded-for') || req.connection.remoteAddress
+  console.log('ip address', ip)
 
   // Verifica si '*' está presente en allowedOrigins o allowedIPs
   if (allowedOrigins.includes('*') || allowedOrigins.includes(origin)) {
-    res.setHeader('Access-Control-Allow-Origin', origin || '*');
-    return next();
+    res.setHeader('Access-Control-Allow-Origin', origin || '*')
+    return next()
   }
 
   if (allowedIPs.includes('*') || allowedIPs.includes(ip)) {
-    return next();
+    return next()
   }
 
-  res.status(403).json({ message: 'Forbidden' });
-};
+  res.status(403).json({ message: 'Forbidden' })
+}
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
@@ -85,7 +87,7 @@ app.use((err, req, res, next) => {
 })
 
 sequelize
-  .sync({ alter: false })
+  .sync({ alter: true })
   .then(() => {
     app.listen(3001, () => console.log('listening on port 3001'))
   })
