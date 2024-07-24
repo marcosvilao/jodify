@@ -27,7 +27,7 @@ const allowedIPs = [
   '159.223.206.132',
   '::1',
 
-  // '*',
+  '*',
 ]
 
 // Lista de dominios permitidos
@@ -37,7 +37,7 @@ const allowedOrigins = [
   'https://l.instagram.com/',
   'https://jodifynext.vercel.app',
 
-  // '*',
+  '*',
 ]
 
 app.set('trust proxy', true)
