@@ -150,22 +150,50 @@ class EventFacade {
 
       if (search) {
         const searchWithoutAccents = removeAccents(search)
+        const cityCondition =
+          citiesId && citiesId.length > 0
+            ? `AND "Event".city_id IN (${citiesId.map((id) => `'${id}'`).join(', ')})`
+            : ''
+
+        let date1
+        let date2
+
+        if (dates) {
+          ;[date1, date2] = dates?.map((date) => {
+            const parsedDate = parseISO(new Date(date).toISOString())
+            if (isNaN(parsedDate)) {
+              throw new Error(`Invalid date: ${date}`)
+            }
+            return parsedDate
+          })
+        }
+
+        const dateCondition =
+          date1 && date2
+            ? `AND "Event".date_from BETWEEN '${startOfDay(date1).toISOString()}' AND '${endOfDay(
+                date2
+              ).toISOString()}'`
+            : ''
         const searchCondition = literal(`
           EXISTS (
             SELECT 1 FROM event_djs ed
             JOIN djs dj ON ed.dj_id = dj.id
-            WHERE ed.event_id = "Event".id AND unaccent(lower(dj.name)) ILIKE unaccent(lower('%${searchWithoutAccents}%')) AND "Event".date_from >= '${argentinaTime}'
+            WHERE ed.event_id = "Event".id AND unaccent(lower(dj.name)) ILIKE unaccent(lower('%${searchWithoutAccents}%')) ${cityCondition} ${dateCondition}
           ) OR EXISTS (
             SELECT 1 FROM event_types et
             JOIN types tp ON et.type_id = tp.id
-            WHERE et.event_id = "Event".id AND unaccent(lower(tp.name)) ILIKE unaccent(lower('%${searchWithoutAccents}%')) AND "Event".date_from >= '${argentinaTime}'
+            WHERE et.event_id = "Event".id AND unaccent(lower(tp.name)) ILIKE unaccent(lower('%${searchWithoutAccents}%')) ${cityCondition} ${dateCondition}
           ) OR EXISTS (
             SELECT 1 FROM event_promoters ep
             JOIN promoters p ON ep.promoter_id = p.id
-            WHERE ep.event_id = "Event".id AND unaccent(lower(p.name)) ILIKE unaccent(lower('%${searchWithoutAccents}%')) AND "Event".date_from >= '${argentinaTime}'
-          ) OR unaccent(lower("Event".name)) ILIKE unaccent(lower('%${searchWithoutAccents}%')) AND "Event".date_from >= '${argentinaTime}' OR unaccent(lower("Event".venue)) ILIKE unaccent(lower('%${searchWithoutAccents}%')) AND "Event".date_from >= '${argentinaTime}'
+            WHERE ep.event_id = "Event".id AND unaccent(lower(p.name)) ILIKE unaccent(lower('%${searchWithoutAccents}%')) ${cityCondition} ${dateCondition}
+          ) OR unaccent(lower("Event".name)) ILIKE unaccent(lower('%${searchWithoutAccents}%')) ${cityCondition} ${dateCondition}
+          OR unaccent(lower("Event".venue)) ILIKE unaccent(lower('%${searchWithoutAccents}%')) ${cityCondition} ${dateCondition}
         `)
-        filter.where[Op.and] = searchCondition
+        filter.where = {
+          ...filter.where,
+          [Op.and]: [filter.where, searchCondition],
+        }
       }
 
       if (sharedId) {
