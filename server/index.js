@@ -37,7 +37,7 @@ const allowedOrigins = [
   'https://l.instagram.com/',
   'https://jodifynext.vercel.app',
 
-  // '*',
+  '*',
 ]
 
 app.set('trust proxy', true)
@@ -54,9 +54,9 @@ const originAndIPFilter = (req, res, next) => {
     return next()
   }
 
-  // if (allowedIPs.includes('*') || allowedIPs.includes(ip)) {
-  //   return next()
-  // }
+  if (allowedIPs.includes('*') || allowedIPs.includes(ip)) {
+    return next()
+  }
 
   res.status(403).json({ message: 'Forbidden' })
 }
