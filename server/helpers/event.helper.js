@@ -1,4 +1,4 @@
-const { responseGetEvents } = require('../utils/functions.js')
+const { responseGetEvents, getArgentinaTime } = require('../utils/functions.js')
 const { deleteImage } = require('../utils/cloudinary/cludinary.js')
 const { linkScrapping } = require('../utils/scrapping/scrapEventData.js')
 const { getImageFromCache } = require('../utils/cacheFunction/cacheFunction.js')
@@ -261,7 +261,8 @@ class EventHelper {
   }
 
   async getFeaturedEvents() {
-    return await facade.getFeaturedEvents()
+    const argentinaTime = getArgentinaTime()
+    return await facade.getFeaturedEvents(argentinaTime)
   }
 
   async setFeaturedEvent(id, event) {
