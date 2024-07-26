@@ -36,6 +36,7 @@ const allowedOrigins = [
   'https://jodify-qa-client.vercel.app',
   'https://l.instagram.com/',
   'https://jodifynext.vercel.app',
+  'https://jodify.vercel.app',
 
   '*',
 ]
