@@ -45,9 +45,18 @@ function sanitizeUsername(username) {
   return sanitized
 }
 
+const getArgentinaTime = () => {
+  const currentDate = new Date()
+  currentDate.setDate(currentDate.getDate() - 1)
+  const options = { timeZone: 'America/Argentina/Buenos_Aires' }
+  const argentinaTime = currentDate.toLocaleString('en-US', options)
+  return argentinaTime
+}
+
 module.exports = {
   responseGetEvents,
   generateCode,
   filterUpdatedData,
   sanitizeUsername,
+  getArgentinaTime,
 }

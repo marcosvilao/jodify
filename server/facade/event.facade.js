@@ -349,12 +349,10 @@ class EventFacade {
     }
   }
 
-  async getFeaturedEvents() {
+  async getFeaturedEvents(argentinaTime) {
     const filter = {}
 
-    filter.where = { is_featured: true }
-
-    filter.limit = 10
+    filter.where = { is_featured: true, date_from: { [Op.gte]: argentinaTime } }
 
     filter.order = literal('RANDOM()')
 
