@@ -47,7 +47,21 @@ class EventHelper {
     data.argentinaTime = argentinaTime
     data.setOff = setOff
 
-    const events = await facade.getEventsByFilter(data)
+    let events = await facade.getEventsByFilter(data)
+
+    if (events.length > 20 && sharedId) {
+      const eventShared = events.find((e) => e.id === sharedId)
+      const filteredEvents = events.filter((e) => e.id !== sharedId)
+
+      const twentyEvents = filteredEvents.slice(0, 20)
+
+      events = []
+      if (eventShared) {
+        events.push(eventShared)
+      }
+
+      events.push(...twentyEvents)
+    }
 
     for (const e of events) {
       // if (e.image.image_url.startsWith('https://res.cloudinary.com')) {
