@@ -156,7 +156,7 @@ const mailOptionUserPromoterRegister = (email, username) => {
   }
 }
 
-const mailOptionUpdatePassApp = (email, username) => {
+const mailOptionUpdatePassApp = (email, username, code) => {
   return {
     from: 'Jodify',
     to: `${email}`,
@@ -168,11 +168,11 @@ const mailOptionUpdatePassApp = (email, username) => {
         </div>
         <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
             <p>Hola ${username},</p>
-            <p>Haz click en el link de abajo para confirmar el cambio de contraseña:</p>
+            <p>Copia el código para confirmar el cambio de contraseña:</p>
             <div style="padding: 20px; text-align: center;">
-                <a href="${process.env.HREF_ROOT_APP}resetPassword" style="background-image: url(${imageBtnDegrade}); color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 100px; background-size: cover;">
-                    Ir a Jodify
-                </a>
+                <div style="background-image: url(${imageBtnDegrade}); color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 100px; background-size: cover;">
+                    ${code}
+                </div>
             </div>
 
             <div style="display:flex; padding-bottom:30px">

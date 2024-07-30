@@ -382,7 +382,6 @@ async function validateAppLoginData(req, res, next) {
   }
 
   if (!user) {
-
     if (password) {
       user = await helper.createUser({ email, clerk_id, username, password })
     } else {
@@ -463,6 +462,26 @@ async function validateUserDelete(req, res, next) {
   next()
 }
 
+async function validateUserEmailByParams(req, res, next) {
+  const { email } = req.params
+
+  if (!email) {
+    const message = 'Debe ingresar un email.'
+    return res.status(404).send({ message })
+  }
+
+  const user = await helper.getUserByEmail(email)
+
+  if (!user) {
+    const message = `No hay un usuario registrado con el email: '${email}'.`
+    return res.status(404).send({ message })
+  }
+
+  res.locals.email = email
+  res.locals.user = user
+  next()
+}
+
 module.exports = {
   validateUserId,
   validateDataUserCreate,
@@ -478,4 +497,5 @@ module.exports = {
   validateAppLoginData,
   validateDataUpdateUserApp,
   validateUserDelete,
+  validateUserEmailByParams,
 }
