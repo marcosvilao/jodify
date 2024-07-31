@@ -18,6 +18,7 @@ const allowedIPs = [
   '::ffff:10.0.1.72',
   '::ffff:181.13.127.90',
   '::ffff:10.0.0.185',
+  '::ffff:10.0.0.195',
   '::ffff:192.168.2.2',
   '::ffff:192.168.2.3',
   '::ffff:192.168.2.4',
@@ -54,9 +55,9 @@ const originAndIPFilter = (req, res, next) => {
     return next()
   }
 
-  // if (allowedIPs.includes('*') || allowedIPs.includes(ip)) {
-  //   return next()
-  // }
+  if (allowedIPs.includes('*') || allowedIPs.includes(ip)) {
+    return next()
+  }
 
   res.status(403).json({ message: 'Forbidden' })
 }
