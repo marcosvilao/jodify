@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs')
-const { sanitizeUsername } = require('../utils/functions.js')
+const { sanitizeUsername, codeUserVerification } = require('../utils/functions.js')
 const {
   mailOptionGeneratePassword,
   sendEmail,
@@ -99,7 +99,6 @@ class UserHelper {
 
     userData.email = userData.email.toLowerCase()
 
-
     let newUser = await facade.createUser(userData)
 
     if (promoter) {
@@ -198,9 +197,11 @@ class UserHelper {
   }
 
   async sendEmailUpdatePasswordInApp(user) {
-    const emailMessage = mailOptionUpdatePassApp(user.email, user.username)
+    const code = codeUserVerification()
+
+    const emailMessage = mailOptionUpdatePassApp(user.email, user.username, code)
     await sendEmail(emailMessage)
-    return
+    return code
   }
 }
 

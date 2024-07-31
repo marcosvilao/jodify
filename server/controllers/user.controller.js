@@ -15,6 +15,7 @@ const {
   validateAppLoginData,
   validateDataUpdateUserApp,
   validateUserDelete,
+  validateUserEmailByParams,
 } = require('../middlewares/user.middleware.js')
 
 const route = Router()
@@ -53,9 +54,9 @@ route.post('/send-email-update-pass', validateUserEmail, async (req, res) => {
   try {
     const { user } = res.locals
 
-    await helper.sendEmailUpdatePasswordInApp(user)
+    const code = await helper.sendEmailUpdatePasswordInApp(user)
 
-    return res.status(200).send({ message: 'Email enviado exitosamente.' })
+    return res.status(200).send({ code })
   } catch (error) {
     console.log(error)
     res.status(500).send({ error: error.message })
@@ -225,19 +226,24 @@ route.post('/check-email', validateAppEmail, async (req, res) => {
   }
 })
 
-route.put('/update-app/:id', validateUserId, validateDataUpdateUserApp, async (req, res) => {
-  try {
-    const { user, data } = res.locals
+route.put(
+  '/update-app/:email',
+  validateUserEmailByParams,
+  validateDataUpdateUserApp,
+  async (req, res) => {
+    try {
+      const { user, data } = res.locals
 
-    const userUpdated = await helper.updateUser(user.id, data)
+      const userUpdated = await helper.updateUser(user.id, data)
 
-    if (!userUpdated) return res.status(404).send({ message: 'Error al editar usuario' })
+      if (!userUpdated) return res.status(404).send({ message: 'Error al editar usuario' })
 
-    res.status(200).send({ user: userUpdated })
-  } catch (error) {
-    res.status(500).send({ error: error.message })
+      res.status(200).send({ user: userUpdated })
+    } catch (error) {
+      res.status(500).send({ error: error.message })
+    }
   }
-})
+)
 
 route.delete('/:id', validateUserId, validateUserDelete, async (req, res) => {
   try {
