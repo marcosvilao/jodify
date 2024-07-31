@@ -111,7 +111,7 @@ class EventFacade {
             where: promoterId ? { id: promoterId } : undefined,
           },
         ],
-        order: [['date_from', 'ASC']],
+        order: [['date_from', 'ASC'],['id', 'ASC']],
       }
 
       if (dates && dates.length === 2) {
