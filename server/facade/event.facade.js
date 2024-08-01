@@ -244,16 +244,64 @@ class EventFacade {
     }
   }
 
-  async searchEvent(searchQuery) {
+  async searchEvent(search, limit, setOff, argentinaTime) {
     try {
-      const filter = {}
+      const searchWithoutAccents = removeAccents(search)
 
-      filter.where[Op.or] = [
-        { name: { [Op.iLike]: `%${searchQuery}%` } },
-        { venue: { [Op.iLike]: `%${searchQuery}%` } },
-        { '$Types.name$': { [Op.iLike]: `%${searchQuery}%` } },
-        { '$Djs.name': { [Op.any]: `%${searchQuery}%` } },
-      ]
+      const filter = {
+        where: {
+          is_active: true,
+          date_from: { [Op.gte]: argentinaTime },
+        },
+        include: [
+          {
+            model: DjModel,
+            attributes: ['id', 'name'],
+            through: { attributes: [] },
+            as: namesTypes.Dj,
+          },
+          {
+            model: TypeModel,
+            attributes: ['id', 'name'],
+            through: { attributes: [] },
+            as: namesTypes.Type,
+          },
+          {
+            model: PromoterModel,
+            attributes: ['id', 'name', 'priority', 'instagram'],
+            through: { attributes: [] },
+            as: namesTypes.Promoter,
+          },
+        ],
+        order: [
+          ['date_from', 'asc'],
+          ['id', 'asc'],
+        ],
+        limit: limit,
+        offset: setOff,
+      }
+
+      const searchCondition = literal(`
+        EXISTS (
+            SELECT 1 FROM event_djs ed
+            JOIN djs dj ON ed.dj_id = dj.id
+            WHERE ed.event_id = "Event".id AND unaccent(lower(dj.name)) ILIKE unaccent(lower('%${searchWithoutAccents}%'))
+          ) OR EXISTS (
+            SELECT 1 FROM event_types et
+            JOIN types tp ON et.type_id = tp.id
+            WHERE et.event_id = "Event".id AND unaccent(lower(tp.name)) ILIKE unaccent(lower('%${searchWithoutAccents}%'))
+          ) OR EXISTS (
+            SELECT 1 FROM event_promoters ep
+            JOIN promoters p ON ep.promoter_id = p.id
+            WHERE ep.event_id = "Event".id AND unaccent(lower(p.name)) ILIKE unaccent(lower('%${searchWithoutAccents}%'))
+          ) OR unaccent(lower("Event".name)) ILIKE unaccent(lower('%${searchWithoutAccents}%'))
+          OR unaccent(lower("Event".venue)) ILIKE unaccent(lower('%${searchWithoutAccents}%'))
+        `)
+
+      filter.where = {
+        ...filter.where,
+        [Op.and]: [filter.where, searchCondition],
+      }
 
       const result = await storage.find(EventModel, filter)
 

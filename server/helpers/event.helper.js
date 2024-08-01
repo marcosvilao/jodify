@@ -93,10 +93,32 @@ class EventHelper {
     return response
   }
 
-  async searchEvent(searchQuery) {
-    const event = await facade.searchEvent(searchQuery)
+  async searchEvent(searchQuery, page, limit) {
+    const setOff = page * 20
 
-    return responseGetEvents(event)
+    const currentDate = new Date()
+    currentDate.setDate(currentDate.getDate() - 1)
+    const options = { timeZone: 'America/Argentina/Buenos_Aires' }
+    const argentinaTime = currentDate.toLocaleString('en-US', options)
+
+    const events = await facade.searchEvent(searchQuery, limit, setOff, argentinaTime)
+
+    for (const e of events) {
+      if (e.image.secure_url) {
+        const buffer = await getImageFromCache(e.image.secure_url)
+
+        const base64Image = Buffer.from(buffer).toString('base64')
+        const type = e.image.secure_url.match(/\.([^.]+)$/)
+        if (!type) return null
+        const contentType = type[1].toLowerCase()
+
+        const imageUrl = `data:${contentType};base64,${base64Image}`
+
+        e.image.image_url = imageUrl
+      }
+    }
+
+    return responseGetEvents(events)
   }
 
   async createEventByForm(data) {
