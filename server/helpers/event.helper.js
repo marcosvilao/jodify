@@ -82,6 +82,18 @@ class EventHelper {
         e.image.image_url = imageUrl
         // e.image.image_url = e.image.secure_url
       }
+      if (e.image.secure_url_banner) {
+        const buffer = await getImageFromCache(e.image.secure_url_banner)
+
+        const base64Image = Buffer.from(buffer).toString('base64')
+        const type = e.image.secure_url_banner.match(/\.([^.]+)$/)
+        if (!type) return null
+        const contentType = type[1].toLowerCase()
+
+        const bannerUrl = `data:${contentType};base64,${base64Image}`
+
+        e.image.banner_url = bannerUrl
+      }
     }
 
     const response = responseGetEvents(events)
@@ -115,6 +127,18 @@ class EventHelper {
         const imageUrl = `data:${contentType};base64,${base64Image}`
 
         e.image.image_url = imageUrl
+      }
+      if (e.image.secure_url_banner) {
+        const buffer = await getImageFromCache(e.image.secure_url_banner)
+
+        const base64Image = Buffer.from(buffer).toString('base64')
+        const type = e.image.secure_url_banner.match(/\.([^.]+)$/)
+        if (!type) return null
+        const contentType = type[1].toLowerCase()
+
+        const bannerUrl = `data:${contentType};base64,${base64Image}`
+
+        e.image.banner_url = bannerUrl
       }
     }
 
@@ -213,9 +237,10 @@ class EventHelper {
       event_djs,
       event_promoter,
       image,
+      banner,
     } = data
 
-    console.log(event_djs)
+    const imageUpdate = {}
 
     if (event_djs && Array.isArray(event_djs)) {
       const newDjsNames = []
@@ -260,6 +285,23 @@ class EventHelper {
       const imageDelete = event.image.public_id
 
       await deleteImage(imageDelete)
+
+      imageUpdate = {
+        ...image,
+        secure_url_banner: banner ? banner.secure_url_banner : event.image.secure_url_banner,
+        public_id_banner: banner ? banner.public_id_banner : event.image.public_id_banner,
+      }
+    }
+
+    if (banner) {
+      const imageDelete = event.image.public_id_banner
+
+      await deleteImage(imageDelete)
+      imageUpdate = {
+        ...banner,
+        secure_url: image ? image.secure_url : event.image.secure_url,
+        public_id: image ? image.public_id : event.image.public_id,
+      }
     }
 
     const eventInstance = await facade.getEventById(id, true)
@@ -275,6 +317,8 @@ class EventHelper {
     if (typesIDs && typesIDs[0]) {
       await facade.updateRelationshipEvent(eventInstance, 'setTypes', typesIDs)
     }
+
+    data.image = image || banner ? imageUpdate : null
 
     const eventUpdated = await facade.updateEvent(id, data)
 
