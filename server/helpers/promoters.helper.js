@@ -12,7 +12,7 @@ class PromoterHelper {
   }
 
   async getPromoterByInstagram(instagram) {
-    return await facade.getPromoterByInstagram(instagram)
+    return await facade.getPromoterByInstagram(instagram.toLowerCase())
   }
 
   async getPromoterByName(name) {
