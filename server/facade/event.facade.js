@@ -6,6 +6,7 @@ const {
   DjModel,
   TypeModel,
   PromoterModel,
+  CityModel,
   sequelize,
 } = require('../models/associations.js')
 const PostgresDBStorage = require('../storage/postgresDBStorage.js')
@@ -111,7 +112,10 @@ class EventFacade {
             where: promoterId ? { id: promoterId } : undefined,
           },
         ],
-        order: [['date_from', 'ASC'],['id', 'ASC']],
+        order: [
+          ['date_from', 'ASC'],
+          ['id', 'ASC'],
+        ],
       }
 
       if (dates && dates.length === 2) {
@@ -272,9 +276,14 @@ class EventFacade {
             through: { attributes: [] },
             as: namesTypes.Promoter,
           },
+          {
+            model: CityModel,
+            attributes: ['id', 'city_name'],
+            as: namesTypes.City,
+          },
         ],
         order: [
-          ['date_from', 'asc'],
+          // ['date_from', 'asc'],
           ['id', 'asc'],
         ],
         limit: limit,
@@ -283,20 +292,23 @@ class EventFacade {
 
       const searchCondition = literal(`
         EXISTS (
-            SELECT 1 FROM event_djs ed
-            JOIN djs dj ON ed.dj_id = dj.id
-            WHERE ed.event_id = "Event".id AND unaccent(lower(dj.name)) ILIKE unaccent(lower('%${searchWithoutAccents}%'))
-          ) OR EXISTS (
-            SELECT 1 FROM event_types et
-            JOIN types tp ON et.type_id = tp.id
-            WHERE et.event_id = "Event".id AND unaccent(lower(tp.name)) ILIKE unaccent(lower('%${searchWithoutAccents}%'))
-          ) OR EXISTS (
-            SELECT 1 FROM event_promoters ep
-            JOIN promoters p ON ep.promoter_id = p.id
-            WHERE ep.event_id = "Event".id AND unaccent(lower(p.name)) ILIKE unaccent(lower('%${searchWithoutAccents}%'))
-          ) OR unaccent(lower("Event".name)) ILIKE unaccent(lower('%${searchWithoutAccents}%'))
-          OR unaccent(lower("Event".venue)) ILIKE unaccent(lower('%${searchWithoutAccents}%'))
-        `)
+          SELECT 1 FROM event_djs ed
+          JOIN djs dj ON ed.dj_id = dj.id
+          WHERE ed.event_id = "Event".id AND unaccent(lower(dj.name)) ILIKE unaccent(lower('%${searchWithoutAccents}%'))
+        ) OR EXISTS (
+          SELECT 1 FROM event_types et
+          JOIN types tp ON et.type_id = tp.id
+          WHERE et.event_id = "Event".id AND unaccent(lower(tp.name)) ILIKE unaccent(lower('%${searchWithoutAccents}%'))
+        ) OR EXISTS (
+          SELECT 1 FROM event_promoters ep
+          JOIN promoters p ON ep.promoter_id = p.id
+          WHERE ep.event_id = "Event".id AND unaccent(lower(p.name)) ILIKE unaccent(lower('%${searchWithoutAccents}%'))
+        ) OR EXISTS (
+          SELECT 1 FROM cities c
+          WHERE c.id = "Event".city_id AND unaccent(lower(c.city_name)) ILIKE unaccent(lower('%${searchWithoutAccents}%'))
+        ) OR unaccent(lower("Event".name)) ILIKE unaccent(lower('%${searchWithoutAccents}%'))
+        OR unaccent(lower("Event".venue)) ILIKE unaccent(lower('%${searchWithoutAccents}%'))
+      `)
 
       filter.where = {
         ...filter.where,
