@@ -44,7 +44,7 @@ async function validateEventCreateData(req, res, next) {
     event_promoter,
   } = req.body
 
-  const image = {}
+  let imageCloud = {}
 
   if (!venue || !date_from || !event_city || !ticket_link) {
     const message =
@@ -66,7 +66,7 @@ async function validateEventCreateData(req, res, next) {
       return res.status(404).send({ message })
     }
 
-    image = response[0]
+    imageCloud = response[0]
   }
 
   if (req.files?.banner && !banner_url) {
@@ -79,7 +79,7 @@ async function validateEventCreateData(req, res, next) {
       return res.status(404).send({ message })
     }
 
-    image = {
+    imageCloud = {
       ...image,
       secure_url_banner: response[0].secure_url,
       public_id_banner: response[0].public_id,
@@ -92,16 +92,16 @@ async function validateEventCreateData(req, res, next) {
   }
 
   if (image_url) {
-    image.image_url = image_url
+    imageCloud.image_url = image_url
   }
 
   if (banner_url) {
-    image.banner_url = banner_url
+    imageCloud.banner_url = banner_url
   }
 
   const data = {
     name,
-    image: image,
+    image: imageCloud,
     venue,
     date_from,
     event_city,
