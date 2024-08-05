@@ -14,8 +14,12 @@ async function uploadImage(filePath, folder) {
 }
 
 async function deleteImage(public_id) {
-  const response = await cloudinary.uploader.destroy(public_id)
-  return response
+  try {
+    const response = await cloudinary.uploader.destroy(public_id)
+    return response
+  } catch (error) {
+    console.log({ message: 'error al eliminar imagen de cloudinary', error })
+  }
 }
 
 module.exports = {

@@ -134,7 +134,7 @@ route.put(
 
       return res.status(200).send({ message: 'Event updated successfully' })
     } catch (error) {
-      res.status(500).json({ message: 'Error updating event' })
+      res.status(500).json({ message: 'Error updating event', error: error.message })
     }
   }
 )
