@@ -35,6 +35,7 @@ async function validateEventCreateData(req, res, next) {
     name,
     venue,
     image_url,
+    banner_url,
     date_from,
     event_city,
     ticket_link,
@@ -43,7 +44,7 @@ async function validateEventCreateData(req, res, next) {
     event_promoter,
   } = req.body
 
-  let imageCloud
+  let imageCloud = {}
 
   if (!venue || !date_from || !event_city || !ticket_link) {
     const message =
@@ -68,14 +69,39 @@ async function validateEventCreateData(req, res, next) {
     imageCloud = response[0]
   }
 
+  if (req.files?.banner && !banner_url) {
+    const { banner } = req.files
+
+    const response = await uploadImg(banner, file.EVENTS)
+
+    if (typeof response === 'string') {
+      const message = 'Error Cloudinary response banner'
+      return res.status(404).send({ message })
+    }
+
+    imageCloud = {
+      ...imageCloud,
+      secure_url_banner: response[0].secure_url,
+      public_id_banner: response[0].public_id,
+    }
+  }
+
   if (event_djs && !Array.isArray(event_djs)) {
     const message = `events_djs debe ser un arreglo. ${event_djs}`
     return res.status(404).send({ message })
   }
 
+  if (image_url) {
+    imageCloud.image_url = image_url
+  }
+
+  if (banner_url) {
+    imageCloud.banner_url = banner_url
+  }
+
   const data = {
     name,
-    image: image_url ? { image_url } : imageCloud,
+    image: imageCloud,
     venue,
     date_from,
     event_city,
@@ -169,6 +195,7 @@ async function validateEventUpdateData(req, res, next) {
   event_city = event_city ? JSON.parse(event_city) : null
 
   let imageCloud = null
+  let bannerCloud = null
 
   if (req.files?.image) {
     const { image } = req.files
@@ -183,6 +210,21 @@ async function validateEventUpdateData(req, res, next) {
     imageCloud = response[0]
   }
 
+  if (req.files?.banner) {
+    const { banner } = req.files
+
+    const response = await uploadImg(banner, file.EVENTS)
+
+    if (typeof response === 'string') {
+      const message = 'Error Cloudinary response banner'
+      return res.status(404).send({ message })
+    }
+
+    bannerCloud = {}
+    bannerCloud.secure_url_banner = response[0].secure_url
+    bannerCloud.public_id_banner = response[0].public_id
+  }
+
   res.locals.data = {
     name,
     venue,
@@ -193,6 +235,7 @@ async function validateEventUpdateData(req, res, next) {
     event_djs,
     event_promoter,
     image: imageCloud ?? null,
+    banner: bannerCloud ?? null,
   }
 
   next()

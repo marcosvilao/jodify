@@ -133,7 +133,7 @@ class UserHelper {
     if (clerk_id && !userUpdatedInClerk) return null
 
     if (promoter) {
-      const promoterData = { name: promoter_name, instagram }
+      const promoterData = { name: promoter_name, instagram: instagram?.toLowerCase() }
       promoter = await facadePromoter.updatePromoter(promoter.id, promoterData)
     }
 

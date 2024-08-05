@@ -14,10 +14,10 @@ const route = Router()
 const helper = new EventHelper()
 
 route.get('/search', async (req, res) => {
-  const { searchQuery } = req.query
+  const { searchQuery, limit, page } = req.query
 
   try {
-    const event = await helper.searchEvent(searchQuery)
+    const event = await helper.searchEvent(String(searchQuery), Number(page), Number(limit))
 
     return res.status(200).send(event)
   } catch (error) {
@@ -134,7 +134,7 @@ route.put(
 
       return res.status(200).send({ message: 'Event updated successfully' })
     } catch (error) {
-      res.status(500).json({ message: 'Error updating event' })
+      res.status(500).json({ message: 'Error updating event', error: error.message })
     }
   }
 )
