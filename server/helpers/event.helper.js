@@ -240,7 +240,7 @@ class EventHelper {
       banner,
     } = data
 
-    const imageUpdate = {}
+    let imageUpdate = {}
 
     if (event_djs && Array.isArray(event_djs)) {
       const newDjsNames = []
@@ -297,6 +297,7 @@ class EventHelper {
       const imageDelete = event.image.public_id_banner
 
       await deleteImage(imageDelete)
+
       imageUpdate = {
         ...banner,
         secure_url: image ? image.secure_url : event.image.secure_url,

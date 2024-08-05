@@ -80,7 +80,7 @@ async function validateEventCreateData(req, res, next) {
     }
 
     imageCloud = {
-      ...image,
+      ...imageCloud,
       secure_url_banner: response[0].secure_url,
       public_id_banner: response[0].public_id,
     }
@@ -220,6 +220,7 @@ async function validateEventUpdateData(req, res, next) {
       return res.status(404).send({ message })
     }
 
+    bannerCloud = {}
     bannerCloud.secure_url_banner = response[0].secure_url
     bannerCloud.public_id_banner = response[0].public_id
   }
