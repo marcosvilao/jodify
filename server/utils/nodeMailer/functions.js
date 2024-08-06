@@ -156,7 +156,7 @@ const mailOptionUserPromoterRegister = (email, username) => {
   }
 }
 
-const mailOptionUpdatePassApp = (email, username, code) => {
+const mailOptionForgotPassApp = (email, username, code) => {
   return {
     from: 'Jodify',
     to: `${email}`,
@@ -174,6 +174,37 @@ const mailOptionUpdatePassApp = (email, username, code) => {
                     ${code}
                 </div>
             </div>
+
+            <div style="display:flex; padding-bottom:30px">
+              <div style="background-color:#C18FFF; width:11px;"> </div>
+                <p style="padding-left:5px">Si no estas tratando de cambiar los datos de tu cuenta, por favor ignora este correo electrónico. Es posible que otro usuario haya introducido su información de forma incorrecta.</p>
+            </div>
+
+            <div style="margin-bottom: 0;">Abrazo.</div>
+            <div style="margin-bottom: 0;">Equipo de Jodify.</div>
+
+        </div>
+        <div style="max-width: 600px; margin: 0 auto; background-color: #0C0C0C; color: #FFFFFF; padding: 10px; text-align: center;">
+            Jodify © 2024
+        </div>
+    </body>
+      `,
+  }
+}
+
+const mailOptionUpdatePassApp = (email, username) => {
+  return {
+    from: 'Jodify',
+    to: `${email}`,
+    subject: 'Actualización de contraseña Jodify',
+    html: `
+    <body style="font-family: Arial, sans-serif; margin:0; padding:0;">
+    <div style="max-width: 600px; margin: 0 auto; background-color: #0C0C0C; text-align: center; padding: 20px;">
+            <img src=${logo} alt="Logo" style="width: 150px; height: auto; display: inline-block;">
+        </div>
+        <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+            <p>Hola ${username},</p>
+            <p>Tu contraseña se modifico con éxito:</p>
 
             <div style="display:flex; padding-bottom:30px">
               <div style="background-color:#C18FFF; width:11px;"> </div>
@@ -213,4 +244,5 @@ module.exports = {
   mailOptionWelcomeForm,
   mailOptionUserPromoterRegister,
   mailOptionUpdatePassApp,
+  mailOptionForgotPassApp,
 }

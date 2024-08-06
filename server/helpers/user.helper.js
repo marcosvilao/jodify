@@ -7,6 +7,7 @@ const {
   mailOptionWelcomeForm,
   mailOptionUserPromoterRegister,
   mailOptionUpdatePassApp,
+  mailOptionForgotPassApp,
 } = require('../utils/nodeMailer/functions.js')
 const jwt = require('jsonwebtoken')
 const UserFacade = require('../facade/user.facade.js')
@@ -141,6 +142,11 @@ class UserHelper {
 
     if (!userUpdated) return null
 
+    if (password) {
+      const emailMessage = mailOptionUpdatePassApp(userUpdated.email, userUpdated.username)
+      await sendEmail(emailMessage)
+    }
+
     if (!userUpdated.promoter_id) {
       return userUpdated
     }
@@ -199,7 +205,7 @@ class UserHelper {
   async sendEmailUpdatePasswordInApp(user) {
     const code = codeUserVerification()
 
-    const emailMessage = mailOptionUpdatePassApp(user.email, user.username, code)
+    const emailMessage = mailOptionForgotPassApp(user.email, user.username, code)
     await sendEmail(emailMessage)
     return code
   }
