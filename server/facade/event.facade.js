@@ -113,8 +113,13 @@ class EventFacade {
           },
         ],
         order: [
-          [{ model: PromoterModel, as: namesTypes.Promoter }, 'priority', 'ASC'],
           ['date_from', 'ASC'],
+          [literal(`(
+            SELECT MIN(p.priority)
+            FROM event_promoters ep
+            JOIN promoters p ON ep.promoter_id = p.id
+            WHERE ep.event_id = "Event"."id"
+          )`), 'ASC'],
           ['id', 'ASC'],
         ],
       }
@@ -228,12 +233,6 @@ class EventFacade {
       const result = await storage.find(EventModel, filter)
 
       if (!result) return []
-
-      result.sort((a, b) => {
-        const dateA = new Date(a.date_from)
-        const dateB = new Date(b.date_from)
-        return dateA - dateB
-      })
 
       return result
     } catch (error) {
