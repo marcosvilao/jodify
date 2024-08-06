@@ -113,6 +113,7 @@ class EventFacade {
           },
         ],
         order: [
+          [{ model: PromoterModel, as: namesTypes.Promoter }, 'priority', 'ASC'],
           ['date_from', 'ASC'],
           ['id', 'ASC'],
         ],
@@ -227,6 +228,13 @@ class EventFacade {
       const result = await storage.find(EventModel, filter)
 
       if (!result) return []
+
+      result.sort((a, b) => {
+        const dateA = new Date(a.date_from)
+        const dateB = new Date(b.date_from)
+        return dateA - dateB
+      })
+
       return result
     } catch (error) {
       console.log('filters events err', { err: error })
