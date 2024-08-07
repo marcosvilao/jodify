@@ -227,7 +227,7 @@ async function validateUserTypePromoter(req, res, next) {
 }
 
 async function validateDataUpdateUser(req, res, next) {
-  let { promoter_name, instagram, phone } = req.body
+  let { promoter_name, instagram, phone, username } = req.body
   const { user } = res.locals
 
   if (!promoter_name && !instagram && !email && !phone) {
@@ -236,7 +236,7 @@ async function validateDataUpdateUser(req, res, next) {
     return res.status(404).send({ message })
   }
 
-  if (username && username !== user.username) {
+  if (username && username !== user?.username) {
     const checkUsername = await helper.getUserByUsername(sanitizeUsername(username))
 
     if (checkUsername) {
