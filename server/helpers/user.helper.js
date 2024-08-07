@@ -185,7 +185,12 @@ class UserHelper {
     return token
   }
 
-  async generateToken(email, username, adminName, type) {
+  async generateTokenResponse(data) {
+    const token = jwt.sign(data, process.env.SECRET_KEY_JWT)
+    return token
+  }
+
+  async generateTokenEmail(email, username, adminName, type) {
     const token = jwt.sign({ email }, process.env.SECRET_KEY_JWT, {
       expiresIn: 48 * 60 * 60, // horas * minutos * segundos
     })
