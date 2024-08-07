@@ -151,7 +151,9 @@ route.post('/login-auth0', validateUserEmail, validateUserTypePromoter, async (r
 
     const response = await helper.logIn(user)
 
-    return res.status(200).send({ user: response })
+    const token = await helper.generateTokenResponse(response)
+
+    return res.status(200).send({ token })
   } catch (error) {
     res.status(500).send({ error: error.message })
   }
