@@ -118,6 +118,7 @@ route.put('/update/:id', validateUserId, validateDataUpdateUser, async (req, res
     if (!userUpdated)
       return res.status(404).send({ message: 'Error al actualizar datos del usuario.' })
 
+    // const response = await helper.generateTokenResponse(user)
     res.status(200).send({ message: 'Usuario actualizado con éxito.', user: userUpdated })
   } catch (error) {
     res.status(500).send({ error: error.message })
@@ -135,7 +136,9 @@ route.post(
 
       const response = await helper.logIn(user)
 
-      return res.status(200).send({ user: response })
+      const tokenResponse = await helper.generateTokenResponse(response)
+
+      return res.status(200).send({ token: tokenResponse })
     } catch (error) {
       res.status(500).send({ error: error.message })
     }
@@ -182,7 +185,7 @@ route.post('/validate-email', validateDataValEmail, async (req, res) => {
   try {
     const { data } = res.locals
 
-    await helper.generateToken(data.email, data.username, data.adminName, 'validateEmail')
+    await helper.generateTokenEmail(data.email, data.username, data.adminName, 'validateEmail')
 
     res.status(200).send({ message: `Email enviado con éxito a ${data.email}` })
   } catch (error) {
@@ -194,7 +197,7 @@ route.post('/welcome-form', validateDataValEmail, async (req, res) => {
   try {
     const { data } = res.locals
 
-    await helper.generateToken(data.email, data.username, data.adminName)
+    await helper.generateTokenEmail(data.email, data.username, data.adminName)
 
     res.status(200).send({ message: `Email enviado con éxito a ${data.email}` })
   } catch (error) {
