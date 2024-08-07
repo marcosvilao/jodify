@@ -26,6 +26,10 @@ const CityModel = sequelize.define(
       type: DataTypes.STRING,
       allowNull: true,
     },
+    alias: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   },
   {
     tableName: 'cities',
